@@ -242,8 +242,8 @@
 					documentos gráficos u objetos tridimensionales que estén provistos de escenas, temáticas, 
 					simbologías e instrumentos vinculados con la música.</p>
 					<p class="text-center">
-						<?php echo $this->Html->link('Información', '/', array('class' => 'btn btn-primary', 'onclick' => 'alert("Módulo en construcción."); return false;')); ?>
-						<?php echo $this->Html->link('Entrar', '/', array('class' => 'btn btn-primary', 'onclick' => 'alert("Módulo en construcción."); return false;')); ?>
+						<?php echo $this->Html->link('Información', '/iconographies/intro', array('class' => 'btn btn-primary')); ?>
+						<?php echo $this->Html->link('Entrar', '/iconographies', array('class' => 'btn btn-primary')); ?>
 					</p>
 				</div>
 			</div>

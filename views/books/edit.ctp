@@ -125,8 +125,8 @@ th {
 		<?php
 		echo $this->Form->input('h-007', array('label' => false, 'class' => 'form-control',
 			'options' => array(
-				/*'a' => 'a - Parte componente monográfica.',
-				'b' => 'b - Parte componente seriada.',
+				'a' => 'a - Parte componente monográfica.',
+				/*'b' => 'b - Parte componente seriada.',
 				'c' => 'c - Colección.',
 				'd' => 'd - Subunidad.',
 				'i' => 'i - Recurso integrable.',*/
@@ -2670,9 +2670,9 @@ th {
 		<td>
 			<?php
 			if (isset($c500['a'])) {
-				echo $this->Form->input('500a', array('id' => '500a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c500['a']));
+				echo $this->Form->input('500a', array('id' => '500a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3', 'value' => $c500['a']));
 			} else {
-				echo $this->Form->input('500a', array('id' => '500a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+				echo $this->Form->input('500a', array('id' => '500a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3'));
 			}
 			?>
 		</td>
@@ -2695,9 +2695,9 @@ th {
 		<td>
 			<?php
 			if (isset($c501['a'])) {
-				echo $this->Form->input('501a', array('id' => '501a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c501['a']));
+				echo $this->Form->input('501a', array('id' => '501a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3', 'value' => $c501['a']));
 			} else {
-				echo $this->Form->input('501a', array('id' => '501a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+				echo $this->Form->input('501a', array('id' => '501a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3'));
 			}
 			?>
 		</td>
@@ -2742,9 +2742,9 @@ th {
 		<td>
 			<?php
 			if (isset($c505['a'])) {
-				echo $this->Form->input('505a', array('id' => '505a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c505['a']));
+				echo $this->Form->input('505a', array('id' => '505a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3', 'value' => $c505['a']));
 			} else {
-				echo $this->Form->input('505a', array('id' => '505a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+				echo $this->Form->input('505a', array('id' => '505a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3'));
 			}
 			?>
 		</td>
@@ -2789,9 +2789,9 @@ th {
 		<td>
 			<?php
 			if (isset($c510['a'])) {
-				echo $this->Form->input('510a', array('id' => '510a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c510['a']));
+				echo $this->Form->input('510a', array('id' => '510a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3', 'value' => $c510['a']));
 			} else {
-				echo $this->Form->input('510a', array('id' => '510a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+				echo $this->Form->input('510a', array('id' => '510a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3'));
 			}
 			?>
 		</td>
@@ -2802,9 +2802,9 @@ th {
 		<td>
 			<?php
 			if (isset($c510['c'])) {
-				echo $this->Form->input('510c', array('id' => '510c', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c510['c']));
+				echo $this->Form->input('510c', array('id' => '510c', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3', 'value' => $c510['c']));
 			} else {
-				echo $this->Form->input('510c', array('id' => '510c', 'label' => false, 'div' => false, 'class' => 'form-control'));
+				echo $this->Form->input('510c', array('id' => '510c', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3'));
 			}
 			?>
 		</td>
@@ -2827,9 +2827,9 @@ th {
 		<td>
 			<?php
 			if (isset($c515['a'])) {
-				echo $this->Form->input('515a', array('id' => '515a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c515['a']));
+				echo $this->Form->input('515a', array('id' => '515a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3', 'value' => $c515['a']));
 			} else {
-				echo $this->Form->input('515a', array('id' => '515a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+				echo $this->Form->input('515a', array('id' => '515a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3'));
 			}
 			?>
 		</td>
@@ -2876,9 +2876,9 @@ th {
 		<td>
 			<?php
 			if (isset($c520['a'])) {
-				echo $this->Form->input('520a', array('id' => '520a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c520['a']));
+				echo $this->Form->input('520a', array('id' => '520a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3', 'value' => $c520['a']));
 			} else {
-				echo $this->Form->input('520a', array('id' => '520a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+				echo $this->Form->input('520a', array('id' => '520a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3'));
 			}
 			?>
 		</td>
@@ -2901,9 +2901,9 @@ th {
 		<td>
 			<?php
 			if (isset($c530['a'])) {
-				echo $this->Form->input('530a', array('id' => '530a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c530['a']));
+				echo $this->Form->input('530a', array('id' => '530a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3', 'value' => $c530['a']));
 			} else {
-				echo $this->Form->input('530a', array('id' => '530a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+				echo $this->Form->input('530a', array('id' => '530a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3'));
 			}
 			?>
 		</td>
@@ -2914,9 +2914,9 @@ th {
 		<td>
 			<?php
 			if (isset($c530['c'])) {
-				echo $this->Form->input('530c', array('id' => '530c', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c530['c']));
+				echo $this->Form->input('530c', array('id' => '530c', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3', 'value' => $c530['c']));
 			} else {
-				echo $this->Form->input('530c', array('id' => '530c', 'label' => false, 'div' => false, 'class' => 'form-control'));
+				echo $this->Form->input('530c', array('id' => '530c', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3'));
 			}
 			?>
 		</td>
@@ -2927,9 +2927,9 @@ th {
 		<td>
 			<?php
 			if (isset($c530['u'])) {
-				echo $this->Form->input('530u', array('id' => '530u', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c530['u']));
+				echo $this->Form->input('530u', array('id' => '530u', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3', 'value' => $c530['u']));
 			} else {
-				echo $this->Form->input('530u', array('id' => '530u', 'label' => false, 'div' => false, 'class' => 'form-control'));
+				echo $this->Form->input('530u', array('id' => '530u', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3'));
 			}
 			?>
 		</td>
@@ -2952,9 +2952,9 @@ th {
 		<td>
 			<?php
 			if (isset($c534['a'])) {
-				echo $this->Form->input('534a', array('id' => '534a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c534['a']));
+				echo $this->Form->input('534a', array('id' => '534a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3', 'value' => $c534['a']));
 			} else {
-				echo $this->Form->input('534a', array('id' => '534a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+				echo $this->Form->input('534a', array('id' => '534a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3'));
 			}
 			?>
 		</td>
@@ -2965,9 +2965,9 @@ th {
 		<td>
 			<?php
 			if (isset($c534['c'])) {
-				echo $this->Form->input('534c', array('id' => '534c', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c534['c']));
+				echo $this->Form->input('534c', array('id' => '534c', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3', 'value' => $c534['c']));
 			} else {
-				echo $this->Form->input('534c', array('id' => '534c', 'label' => false, 'div' => false, 'class' => 'form-control'));
+				echo $this->Form->input('534c', array('id' => '534c', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3'));
 			}
 			?>
 		</td>
@@ -2978,9 +2978,9 @@ th {
 		<td>
 			<?php
 			if (isset($c534['l'])) {
-				echo $this->Form->input('534l', array('id' => '534l', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c534['l']));
+				echo $this->Form->input('534l', array('id' => '534l', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3', 'value' => $c534['l']));
 			} else {
-				echo $this->Form->input('534l', array('id' => '534l', 'label' => false, 'div' => false, 'class' => 'form-control'));
+				echo $this->Form->input('534l', array('id' => '534l', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3'));
 			}
 			?>
 		</td>
@@ -2991,9 +2991,9 @@ th {
 		<td>
 			<?php
 			if (isset($c534['p'])) {
-				echo $this->Form->input('534p', array('id' => '534p', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c534['p']));
+				echo $this->Form->input('534p', array('id' => '534p', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3', 'value' => $c534['p']));
 			} else {
-				echo $this->Form->input('534p', array('id' => '534p', 'label' => false, 'div' => false, 'class' => 'form-control'));
+				echo $this->Form->input('534p', array('id' => '534p', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3'));
 			}
 			?>
 		</td>
@@ -3016,9 +3016,9 @@ th {
 		<td>
 			<?php
 			if (isset($c546['a'])) {
-				echo $this->Form->input('546a', array('id' => '546a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c546['a']));
+				echo $this->Form->input('546a', array('id' => '546a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3', 'value' => $c546['a']));
 			} else {
-				echo $this->Form->input('546a', array('id' => '546a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+				echo $this->Form->input('546a', array('id' => '546a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3'));
 			}
 			?>
 		</td>
@@ -3029,9 +3029,9 @@ th {
 		<td>
 			<?php
 			if (isset($c546['c'])) {
-				echo $this->Form->input('546c', array('id' => '546c', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c546['c']));
+				echo $this->Form->input('546c', array('id' => '546c', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3', 'value' => $c546['c']));
 			} else {
-				echo $this->Form->input('546c', array('id' => '546c', 'label' => false, 'div' => false, 'class' => 'form-control'));
+				echo $this->Form->input('546c', array('id' => '546c', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3'));
 			}
 			?>
 		</td>
@@ -3054,9 +3054,9 @@ th {
 		<td>
 			<?php
 			if (isset($c555['a'])) {
-				echo $this->Form->input('555a', array('id' => '555a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c555['a']));
+				echo $this->Form->input('555a', array('id' => '555a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3', 'value' => $c555['a']));
 			} else {
-				echo $this->Form->input('555a', array('id' => '555a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+				echo $this->Form->input('555a', array('id' => '555a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3'));
 			}
 			?>
 		</td>
@@ -3067,9 +3067,9 @@ th {
 		<td>
 			<?php
 			if (isset($c555['b'])) {
-				echo $this->Form->input('555b', array('id' => '555b', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c555['b']));
+				echo $this->Form->input('555b', array('id' => '555b', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3', 'value' => $c555['b']));
 			} else {
-				echo $this->Form->input('555b', array('id' => '555b', 'label' => false, 'div' => false, 'class' => 'form-control'));
+				echo $this->Form->input('555b', array('id' => '555b', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3'));
 			}
 			?>
 		</td>
@@ -3080,9 +3080,9 @@ th {
 		<td>
 			<?php
 			if (isset($c555['d'])) {
-				echo $this->Form->input('555d', array('id' => '555d', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c555['d']));
+				echo $this->Form->input('555d', array('id' => '555d', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3', 'value' => $c555['d']));
 			} else {
-				echo $this->Form->input('555d', array('id' => '555d', 'label' => false, 'div' => false, 'class' => 'form-control'));
+				echo $this->Form->input('555d', array('id' => '555d', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3'));
 			}
 			?>
 		</td>
@@ -3093,9 +3093,9 @@ th {
 		<td>
 			<?php
 			if (isset($c555['u'])) {
-				echo $this->Form->input('555u', array('id' => '555u', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c555['u']));
+				echo $this->Form->input('555u', array('id' => '555u', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3', 'value' => $c555['u']));
 			} else {
-				echo $this->Form->input('555u', array('id' => '555u', 'label' => false, 'div' => false, 'class' => 'form-control'));
+				echo $this->Form->input('555u', array('id' => '555u', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3'));
 			}
 			?>
 		</td>
@@ -3118,9 +3118,9 @@ th {
 		<td>
 			<?php
 			if (isset($c588['a'])) {
-				echo $this->Form->input('588a', array('id' => '588a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c588['a']));
+				echo $this->Form->input('588a', array('id' => '588a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3', 'value' => $c588['a']));
 			} else {
-				echo $this->Form->input('588a', array('id' => '588a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+				echo $this->Form->input('588a', array('id' => '588a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3'));
 			}
 			?>
 		</td>

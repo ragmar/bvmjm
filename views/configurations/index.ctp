@@ -4,33 +4,32 @@
 </ul>
 
 <div class="text-center">
-	<div style="width: 50%; float: left;"><br />
+	<div style="width: 25%; float: left;"><br />
 		<?php echo $this->Html->link($html->image('ts/ima_libros.jpg', array('alt' => 'Libros', 'width' => '50px', 'class' => 'img-polaroid')), '/books', array('escape' => false)); ?>
 		<h5>Libros</h5>
 	</div>
-	<div style="width: 50%; float: left;"><br />
-		<?php echo $this->Html->link($html->image('ts/ima_hemero.jpg', array('alt' => 'Hemerografias', 'width' => '50px', 'class' => 'img-polaroid')), '/magazines', array('escape' => false)); ?>
-		<h5>Hemerografias</h5>
+	<div style="width: 25%; float: left;"><br />
+		<?php echo $this->Html->link($html->image('ts/ima_hemero.jpg', array('alt' => 'Revistas', 'width' => '50px', 'class' => 'img-polaroid')), '/magazines', array('escape' => false)); ?>
+		<h5>Revistas</h5>
+	</div>
+	<div style="width: 25%; float: left;"><br />
+		<?php echo $this->Html->link($html->image('ts/ima_iconog.jpg', array('alt' => 'Iconogafías', 'width' => '50px', 'class' => 'img-polaroid')), '/iconographies', array('escape' => false)); ?>
+		<h5>Iconografías</h5>
+	</div>
+	<div style="width: 25%; float: left;"><br />
+		<?php echo $this->Html->link($html->image('ts/ima_docum.jpg', array('alt' => 'Documentos', 'width' => '50px', 'class' => 'img-polaroid')), '/documents', array('escape' => false)); ?>
+		<h5>Documentos</h5><br />
 	</div>
 	<!--
-	<div style="width: 100%; float: left;"><br />
-		<?php //echo $this->Html->link($html->image('ts/admin_obras.png', array('alt' => 'Works', 'class' => 'img-polaroid')), '/items/', array('escape' => false)); ?>
-		<h5>Obras</h5>
-	</div>
 	<div style="width: 25%; float: left;"><br />
-		<?php //echo $this->Html->link($html->image('ts/admin_autores.png', array('alt' => 'Authors', 'class' => 'img-polaroid')), '/authors/', array('escape' => false)); ?>
-		<h5>Autores</h5><br />
-	</div>
-	<div style="width: 25%; float: left;"><br />
-		<?php //echo $this->Html->link($html->image('ts/admin_materiales.png', array('alt' => 'Materials Types', 'class' => 'img-polaroid')), '/types/', array('escape' => false)); ?>
+		<?php //echo $this->Html->link($html->image('ts/admin_materiales.png', array('alt' => 'Materials Types', 'width' => '50px', 'class' => 'img-polaroid')), '/types/', array('escape' => false)); ?>
 		<h5>Tipos</h5><br />
 	</div>
 	<div style="width: 25%; float: left;"><br />
-		<?php //echo $this->Html->link($html->image('ts/admin_materias.png', array('alt' => 'Topics', 'class' => 'img-polaroid')), '/topics/', array('escape' => false)); ?>
+		<?php //echo $this->Html->link($html->image('ts/admin_materias.png', array('alt' => 'Topics', 'width' => '50px', 'class' => 'img-polaroid')), '/topics/', array('escape' => false)); ?>
 		<h5>Tópicos</h5><br />
 	</div>
 	-->
-	
 	<?php if ($this->Session->read('Auth.User.group_id') == '1') { ?>
 	<div style="width: 25%; float: left;">
 		<br />

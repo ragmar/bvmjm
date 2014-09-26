@@ -1,4 +1,24 @@
 <?php echo $this->Html->css('autocomplete/autocomplete'); ?>
+<?php
+function marc21_decode($camp = null) {
+	if (!empty($camp)) {
+		$c = explode('^', $camp);
+		$indicators = $c[0];
+		unset($c[0]);
+
+		$i = 0;
+		foreach ($c as $v){
+			$c[substr($v, 0, 1)] = substr($v, 1, strlen($v)-1);
+			$i++;
+			unset($c[$i]);
+		}
+		$c['indicators'] = $indicators;
+		return $c;
+	} else {
+		return false;
+	}
+}
+?>
 <style>
 .table {
 	border: solid 1px #6c3f30;
@@ -12,15 +32,16 @@ th {
 </style>
 <ul class="breadcrumb" style="margin: 0">
   <li><a href="<?php echo $this->base; ?>">Inicio</a></li>
-  <li><a href="<?php echo $this->base; ?>/books">Libros</a></li>
-  <li>Agregar Libro</li>
+  <li><a href="<?php echo $this->base; ?>/iconographies">Iconografía Musical Venezolana</a></li>
+  <li>Modificar Obra</li>
 </ul>
 
 <div class="items">
 <div class="col-md-12 column">
-<h2>Agregar Libro</h2>
+<h2>Modificar Obra</h2>
 
-<?php echo $this->Form->create('Book', array('enctype' => 'multipart/form-data')); ?>
+<?php echo $this->Form->create('Iconographie', array('enctype' => 'multipart/form-data')); ?>
+<?php echo $this->Form->hidden('id', array('value' => $item['Item']['id']));?>
 
 <h5>Datos de Cabecera o Líder</h5>
 
@@ -67,7 +88,7 @@ th {
 					'n' => 'n - Nuevo.',
 					'p' => 'p - Aumentado el nivel de codificación utilizado antes de la publicación.'
 					),
-				'selected' => 'n',
+				'selected' => $item['Item']['h-005'],
 				'empty' => 'Seleccione'
 			));?>
 		</td>
@@ -78,22 +99,22 @@ th {
 		<?php
 		echo $this->Form->input('h-006', array('label' => false, 'class' => 'form-control',
 			'options' => array(
-				'a' => 'a - Material textual.'/*,
+				/*'a' => 'a - Material textual.',
 				'c' => 'c - Música notada impresa.',
 				'd' => 'd - Música notada manuscrita.',
 				'e' => 'e - Material cartográfico.',
 				'f' => 'f - Material cartográfico manuscrito.',
 				'g' => 'g - Material gráfico proyectable.',
 				'i' => 'i - Grabación sonora no musical.',
-				'j' => 'j - Grabación sonora musical.',
+				'j' => 'j - Grabación sonora musical.',*/
 				'k' => 'k - Material gráfico bidimensional, no proyectable.',
-				'm' => 'm - Archivo de ordenador.',
+				/*'m' => 'm - Archivo de ordenador.',
 				'o' => 'o - Kit.',
 				'p' => 'p - Material mixto.',
 				'r' => 'r - Objeto tridimensional artificial o natural.',
 				't' => 't - Material textual manuscrito.'*/
 				),
-			'selected' => 'a'/*,
+			'selected' => $item['Item']['h-006']/*,
 			'empty' => 'Seleccione'*/
 		)); ?>
 		</td>
@@ -105,14 +126,14 @@ th {
 		echo $this->Form->input('h-007', array('label' => false, 'class' => 'form-control',
 			'options' => array(
 				'a' => 'a - Parte componente monográfica.',
-				/*'b' => 'b - Parte componente seriada.',
-				'c' => 'c - Colección.',
+				'b' => 'b - Parte componente seriada.',
+				/*'c' => 'c - Colección.',
 				'd' => 'd - Subunidad.',
 				'i' => 'i - Recurso integrable.',*/
 				'm' => 'm - Monografía.'/*,
 				's' => 's - Publicación seriada.'*/
 			),
-			'selected' => 'm'/*,
+			'selected' => $item['Item']['h-007']/*,
 			'empty' => 'Seleccione'*/
 		));?>
 		</td>
@@ -134,7 +155,7 @@ th {
 				'u' => 'u - Desconocido.',
 				'z' => 'z - No aplicable.'
 			),
-			'selected' => '7',
+			'selected' => $item['Item']['h-017'],
 			'empty' => 'Seleccione'
 		));?>
 		</td>
@@ -151,7 +172,7 @@ th {
 				'i' => 'i - ISBD con puntuación.',
 				'u' => 'u - Desconocida.'
 			),
-			'selected' => 'a',
+			'selected' => $item['Item']['h-018'],
 			'empty' => 'Seleccione'
 		));
 		?>
@@ -166,7 +187,7 @@ th {
 	<li><a class="tab" href="" id="t1xx">1XX</a></li>
 	<li><a class="tab" href="" id="t2xx">2XX</a></li>
 	<li><a class="tab" href="" id="t3xx">3XX</a></li>
-	<li class="disabled"><a class="tab" href="" id="t4xx">4XX</a></li>
+	<li><a class="tab" href="" id="t4xx">4XX</a></li>
 	<li><a class="tab" href="" id="t5xx">5XX</a></li>
 	<li><a class="tab" href="" id="t6xx">6XX</a></li>
 	<li><a class="tab" href="" id="t7xx">7XX</a></li>
@@ -182,14 +203,23 @@ th {
 		<th style="width: 10%;"><b>008</b></th>
 		<th style="width: 45%;"><b>Códigos de información de longitud fija.</b></th>
 		<th style="width: 45%;">
-			<label id="l-008"><?php echo date('ymd', time()); ?></label>
-			<?php echo $this->Form->hidden('008', array('id' => '008', 'label' => false, 'div' => false, 'value' => date('ymd', time()))); ?>
+			<?php
+				$c008 = "";
+				if ($item['Item']['008']) {
+					$c008 = $item['Item']['008'];
+				} else {
+					$c008 = date('ymd', time());
+				}
+			?>
+			<label id="l-008"><?php echo $c008; ?></label>
+			<?php echo $this->Form->hidden('008', array('id' => '008', 'label' => false, 'div' => false, 'value' => $item['Item']['008'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>008 [06]</b></td>
 		<td>Tipo de fecha/estado de la publicación.</td>
-		<td><?php echo $this->Form->input('008-06', array('id' => '008-06', 'label' => false, 'class' => 'form-control', 'div' => false, 
+		<td>
+			<?php echo $this->Form->input('008-06', array('id' => '008-06', 'label' => false, 'class' => 'form-control', 'div' => false, 
 			'options' => array(
 				'b' => 'b - No consta información; implica fechas A.C.',
 				'c' => 'c - Recurso continuado con publicación en curso',
@@ -206,7 +236,7 @@ th {
 				't' => 't - Fechas de publicación y de copyright',
 				'u' => 'u - Estado desconocido',
 				'|' => '| - No se utiliza'
-			), 'selected' => 'c'
+			), 'selected' => substr($c008, 6, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -216,17 +246,121 @@ th {
 			<table id="008pf">
 				<tr>
 					<td>
+						<?php
+							// Decodifica el campo 008.
+							$c0080710_1 = substr($c008, 7, 1);
+							$c0080710_2 = "aammdd"; // Fecha 1
+							$c0080710_3 = "";
+							$c0080710_4 = "aammdd"; // Fecha 2
+							$c0081517 = "";
+							$c00818 = "";
+							$c00820 = "";
+							$c00819 = "";
+							$c00821 = "";
+							$c0083537 = "";
+							
+							// La primera fecha no se utiliza (||||).
+							if ($c0080710_1 == '|') { // Caso 4.
+								$c0080710_1 = "||||";
+								
+								if ((substr($c008, 11, 1) != '|') && (substr($c008, 11, 1) != '#') && (substr($c008, 11, 1) != 'u')) {
+									$c0080710_3 = "sf";
+									$c0080710_4 = substr($c008, 11, 6);
+								} else {
+									if (substr($c008, 13, 1) == '|') {
+										$c0080710_3 = "||||";
+									} else {
+										$c0080710_3 = substr($c008, 11, 1);
+									}
+								}
+							}
+
+							// La primera fecha se utiliza (pf - aammdd).
+							if (($c0080710_1 != "||||") && ($c0080710_1 != '#') && ($c0080710_1 != 'u')) { // Caso 1.
+								$c0080710_1 = "pf";
+								$c0080710_2 = substr($c008, 7, 6);
+								
+								if ((substr($c008, 13, 1) != '#') && (substr($c008, 13, 1) != '|') && (substr($c008, 13, 1) != 'u')) {
+									$c0080710_3 = "sf";
+									$c0080710_4 = substr($c008, 13, 6);
+									$c0081517 = substr($c008, 19, 3);
+									$c00818 = substr($c008, 22, 1);
+									$c00819 = substr($c008, 23, 1);
+									$c00820 = substr($c008, 24, 1);
+									$c00821 = substr($c008, 25, 1);
+									$c0083537 = substr($c008, 26, 3);
+								} else {
+									if (substr($c008, 13, 1) == '|') {
+										$c0080710_3 = "||||";
+										$c0081517 = substr($c008, 17, 3);
+										$c00818 = substr($c008, 20, 1);
+										$c00819 = substr($c008, 21, 1);
+										$c00820 = substr($c008, 22, 1);
+										$c00821 = substr($c008, 23, 1);
+										$c0083537 = substr($c008, 24, 3);
+									} else {
+										$c0080710_3 = substr($c008, 13, 1);
+										$c0081517 = substr($c008, 14, 3);
+										$c00818 = substr($c008, 17, 1);
+										$c00819 = substr($c008, 18, 1);
+										$c00820 = substr($c008, 19, 1);
+										$c00821 = substr($c008, 20, 1);
+										$c0083537 = substr($c008, 21, 3);
+									}
+								}
+							}
+							
+							// La primera fecha es '#' o 'u'.
+							if (($c0080710_1 == '#') || ($c0080710_1 == 'u')) { // Caso 2 y 3. 
+								$c0080710_3 = substr($c008, 8, 6);
+								
+								if ((substr($c008, 8, 1) != '|') && (substr($c008, 8, 1) != '#') && (substr($c008, 8, 1) != 'u')) {
+									$c0080710_3 = "sf";
+									$c0080710_4 = substr($c008, 8, 6);
+									$c0081517 = substr($c008, 14, 3);
+									$c00818 = substr($c008, 17, 1);
+									$c00819 = substr($c008, 18, 1);
+									$c00820 = substr($c008, 19, 1);
+									$c00821 = substr($c008, 20, 1);
+									$c0083537 = substr($c008, 21, 3);
+								} else {
+									if (substr($c008, 11, 1) == '|') {
+										$c0080710_3 = "||||";
+										$c0081517 = substr($c008, 12, 3);
+										$c00818 = substr($c008, 15, 1);
+										$c00819 = substr($c008, 16, 1);
+										$c00820 = substr($c008, 17, 1);
+										$c00821 = substr($c008, 18, 1);
+										$c0083537 = substr($c008, 19, 3);
+									} else {
+										$c0080710_3 = substr($c008, 8, 1);
+										$c0081517 = substr($c008, 9, 3);
+										$c00818 = substr($c008, 12, 1);
+										$c00819 = substr($c008, 13, 1);
+										$c00820 = substr($c008, 14, 1);
+										$c00821 = substr($c008, 15, 1);
+										$c0083537 = substr($c008, 16, 3);
+									}
+								}
+							}
+						?>
 						<?php echo $this->Form->input('008-07-10', array('id' => '008-07-10', 'label' => false, 'class' => 'form-control', 'div' => false,
 						'options' => array(
 							'pf' => 'Primera Fecha (aammdd)',
 							'#' => '# - El elemento fecha no es aplicable',
 							'u' => 'u - Fecha total o parcialmente desconocida',
 							'||||' => '|||| - No se utiliza'
-							)
+							), 'selected' => $c0080710_1
 						)); ?>
 					</td>
 					<td>
-						<?php echo $this->Form->input('fecha1-008-07-10', array('id' => 'fecha008-07-10', 'label' => false, 'class' => 'form-control', 'div' => false, 'maxlength' => '6', 'value' => 'yymmdd')); ?>
+						<?php
+							if ($c0080710_1 != 'pf') {
+								echo $this->Form->input('fecha1-008-07-10', array('id' => 'fecha008-07-10', 'label' => false, 'class' => 'form-control', 'div' => false, 'maxlength' => '6', 'disabled' => 'disabled', 'value' => $c0080710_2));
+							} else {
+								echo $this->Form->input('fecha1-008-07-10', array('id' => 'fecha008-07-10', 'label' => false, 'class' => 'form-control', 'div' => false, 'maxlength' => '6', 'value' => $c0080710_2));
+							}
+						?>
 					</td>
 				</tr>
 			</table>
@@ -245,11 +379,17 @@ th {
 							'#' => '# - El elemento fecha no es aplicable',
 							'u' => 'u - Fecha total o parcialmente desconocida',
 							'||||' => '|||| - No se utiliza'
-							)
+							), 'selected' => $c0080710_3
 						)); ?>
 					</td>
 					<td>
-						<?php echo $this->Form->input('fecha2-008-11-14', array('id' => 'fecha008-11-14', 'label' => false, 'class' => 'form-control', 'div' => false, 'maxlength' => '6', 'value' => 'yymmdd')); ?>
+						<?php
+							if ($c0080710_3 != 'sf') {
+								echo $this->Form->input('fecha2-008-11-14', array('id' => 'fecha008-11-14', 'label' => false, 'class' => 'form-control', 'div' => false, 'maxlength' => '6', 'disabled' => 'disabled', 'value' => $c0080710_4));
+							} else {
+								echo $this->Form->input('fecha2-008-11-14', array('id' => 'fecha008-11-14', 'label' => false, 'class' => 'form-control', 'div' => false, 'maxlength' => '6', 'value' => $c0080710_4));
+							}
+						?>
 					</td>
 				</tr>
 			</table>
@@ -626,8 +766,17 @@ th {
 				'-ys' => 'Yemen (People’s Democratic Republic)',
 				'-yu' => 'Serbia and Montenegro',
 				'-za' => 'Zambia'
-			), 'default' => 'xxx'
-		)); ?></td>
+			), 'selected' => $c0081517
+		)); ?>
+		<script type="text/javascript">
+			// Se ordena la lista.
+			$("#008-15-17").append($("#008-15-17 option").remove().sort(function(a, b) {
+			    var at = $(a).text(), bt = $(b).text();
+			    return (at > bt)?1:((at < bt)?-1:0);
+			}));
+			$('#008-15-17').val('<?php echo $c0081517; ?>');
+		</script>
+		</td>
 	</tr>
 	<tr>
 		<td><b>008 [18]</b></td>
@@ -653,7 +802,7 @@ th {
 				'w' => 'w - Semanal',
 				'z' => 'z - Otro',
 				'|' => '| - No se utiliza'
-			)
+			), 'selected' => $c00818
 		)); ?></td>
 	</tr>
 	<tr>
@@ -666,7 +815,7 @@ th {
 				'u' => 'u - Desconocida',
 				'x' => 'x - Completamente irregular',
 				'|' => '| - No se utiliza'
-			)
+			), 'selected' => $c00819
 		)); ?></td>
 	</tr>
 	<tr>
@@ -675,7 +824,7 @@ th {
 		<td><?php echo $this->Form->input('008-20', array('id' => '008-20', 'label' => false, 'class' => 'form-control', 'div' => false,
 			'options' => array(
 				'#' => '# - No definida'
-			)
+			), 'selected' => $c00820
 		)); ?></td>
 	</tr>
 	<tr>
@@ -691,7 +840,7 @@ th {
 				'p' => 'p - Revista',
 				'w' => 'w - Sitio web actualizable',
 				'|' => '| - No se utiliza'
-			)
+			), 'selected' => $c00821
 		)); ?></td>
 	</tr>
 	<tr>
@@ -1205,123 +1354,218 @@ th {
 				'zun' => 'Zuni',
 				'zxx' => 'No linguistic content',
 				'zza' => 'Zaza'
-			), 'default' => 'und'
-		)); ?></td>
+			), 'selected' => $c0083537
+		)); ?>
+		<script type="text/javascript">
+			// Se ordena la lista.
+			$("#008-35-37").append($("#008-35-37 option").remove().sort(function(a, b) {
+			    var at = $(a).text(), bt = $(b).text();
+			    return (at > bt)?1:((at < bt)?-1:0);
+			}));
+			$('#008-35-37').val('<?php echo $c0083537; ?>');
+		</script>
+		</td>
 	</tr>
 </table>
 
+<?php $c017 = marc21_decode($item['Item']['017']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>017</b></th>
 		<th style="width: 45%;"><b>Número de copyright o de depósito legal.</b></th>
 		<th style="width: 45%;">
-			<label id="l-017">&nbsp;</label>
-			<?php echo $this->Form->hidden('017', array('id' => '017', 'label' => false, 'div' => false)); ?>
+			<label id="l-017"><?php echo $item['Item']['017']; ?></label>
+			<?php echo $this->Form->hidden('017', array('id' => '017', 'label' => false, 'div' => false, 'value' => $item['Item']['017'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Número de copyright o de depósito legal.</td>
-		<td><?php echo $this->Form->input('017a', array('id' => '017a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c017['a'])) {
+				echo $this->Form->input('017a', array('id' => '017a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c017['a']));
+			} else {
+				echo $this->Form->input('017a', array('id' => '017a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c020 = marc21_decode($item['Item']['020']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>020</b></th>
 		<th style="width: 45%;"><b>Número Internacional Normalizado para Libros (ISBN).</b></th>
 		<th style="width: 45%;">
-			<label id="l-020">&nbsp;</label>
-			<?php echo $this->Form->hidden('020', array('id' => '020', 'label' => false, 'div' => false)); ?>
+			<label id="l-020"><?php echo $item['Item']['020']; ?></label>
+			<?php echo $this->Form->hidden('020', array('id' => '020', 'label' => false, 'div' => false, 'value' => $item['Item']['020'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>ISBN.</td>
-		<td><?php echo $this->Form->input('020a', array('id' => '020a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c020['a'])) {
+				echo $this->Form->input('020a', array('id' => '020a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c020['a']));
+			} else {
+				echo $this->Form->input('020a', array('id' => '020a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
 		<td>Términos de disponibilidad.</td>
-		<td><?php echo $this->Form->input('020c', array('id' => '020c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c020['c'])) {
+				echo $this->Form->input('020c', array('id' => '020c', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c020['c']));
+			} else {
+				echo $this->Form->input('020c', array('id' => '020c', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$z</b></td>
 		<td>ISBN Inválido/Cancelado.</td>
-		<td><?php echo $this->Form->input('020z', array('id' => '020z', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c020['z'])) {
+				echo $this->Form->input('020z', array('id' => '020z', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c020['z']));
+			} else {
+				echo $this->Form->input('020z', array('id' => '020z', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c022 = marc21_decode($item['Item']['022']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>022</b></th>
 		<th style="width: 45%;"><b>Número Internacional Normalizado para Publicaciones Seriadas (ISSN).</b></th>
 		<th style="width: 45%;">
-			<label id="l-022">&nbsp;</label>
-			<?php echo $this->Form->hidden('022', array('id' => '022', 'label' => false, 'div' => false)); ?>
+			<label id="l-022"><?php echo $item['Item']['022']; ?></label>
+			<?php echo $this->Form->hidden('022', array('id' => '022', 'label' => false, 'div' => false, 'value' => $item['Item']['022'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>ISSN.</td>
-		<td><?php echo $this->Form->input('022a', array('id' => '022a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c022['a'])) {
+				echo $this->Form->input('022a', array('id' => '022a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c022['a']));
+			} else {
+				echo $this->Form->input('022a', array('id' => '022a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$y</b></td>
 		<td>ISSN incorrecto.</td>
-		<td><?php echo $this->Form->input('022y', array('id' => '022y', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c022['y'])) {
+				echo $this->Form->input('022y', array('id' => '022y', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c022['y']));
+			} else {
+				echo $this->Form->input('022y', array('id' => '022y', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$z</b></td>
 		<td>ISSN cancelado.</td>
-		<td><?php echo $this->Form->input('022z', array('id' => '022z', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c022['z'])) {
+				echo $this->Form->input('022z', array('id' => '022z', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c022['z']));
+			} else {
+				echo $this->Form->input('022z', array('id' => '022z', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c028 = marc21_decode($item['Item']['028']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>028</b></th>
 		<th style="width: 45%;"><b>Número de plancha.</b></th>
 		<th style="width: 45%;">
-			<label id="l-028">&nbsp;</label>
-			<?php echo $this->Form->hidden('028', array('id' => '028', 'label' => false, 'div' => false)); ?>
+			<label id="l-028"><?php echo $item['Item']['028']; ?></label>
+			<?php echo $this->Form->hidden('028', array('id' => '028', 'label' => false, 'div' => false, 'value' => $item['Item']['028'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Número de plancha.</td>
-		<td><?php echo $this->Form->input('028a', array('id' => '028a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c028['a'])) {
+				echo $this->Form->input('028a', array('id' => '028a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c028['a']));
+			} else {
+				echo $this->Form->input('028a', array('id' => '028a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
 		<td>Fuente del número de plancha.</td>
-		<td><?php echo $this->Form->input('028b', array('id' => '028b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c028['b'])) {
+				echo $this->Form->input('028b', array('id' => '028b', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c028['b']));
+			} else {
+				echo $this->Form->input('028b', array('id' => '028b', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c040 = marc21_decode($item['Item']['040']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>040</b></th>
 		<th style="width: 45%;"><b>Fuente de la catalogación.</b></th>
 		<th style="width: 45%;">
-			<label id="l-040">&nbsp;</label>
-			<?php echo $this->Form->hidden('040', array('id' => '040', 'label' => false, 'div' => false)); ?>
+			<label id="l-040"><?php echo $item['Item']['040']; ?></label>
+			<?php echo $this->Form->hidden('040', array('id' => '040', 'label' => false, 'div' => false, 'value' => $item['Item']['040'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Centro catalogador de origen.</td>
-		<td><?php echo $this->Form->input('040a', array('id' => '040a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c040['a'])) {
+				echo $this->Form->input('040a', array('id' => '040a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c040['a']));
+			} else {
+				echo $this->Form->input('040a', array('id' => '040a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c041 = marc21_decode($item['Item']['041']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>041</b></th>
 		<th style="width: 45%;"><b>Código de lengua.</b></th>
 		<th style="width: 45%;">
-			<label id="l-041">&nbsp;</label>
-			<?php echo $this->Form->hidden('041', array('id' => '041', 'label' => false, 'div' => false)); ?>
+			<label id="l-041"><?php echo $item['Item']['041']; ?></label>
+			<?php echo $this->Form->hidden('041', array('id' => '041', 'label' => false, 'div' => false, 'value' => $item['Item']['041'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -1332,7 +1576,7 @@ th {
 				'#' => '# - No se proporciona información',
 				'0' => '0 - El documento no es ni incluye una traducción',
 				'1' => '1 - El documento es o incluye una traducción'
-			), 'selected' => '0'
+			), 'selected' => substr($c041['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -1342,49 +1586,83 @@ th {
 			'options' => array(
 					'#' => '# - Código MARC de lengua',
 					'7' => '7 - Fuente especificada en el subcampo $b'
-			)
+			), 'selected' => substr($c041['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Código del idioma.</td>
-		<td><?php echo $this->Form->input('041a', array('id' => '041a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c041['a'])) {
+				echo $this->Form->input('041a', array('id' => '041a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c041['a']));
+			} else {
+				echo $this->Form->input('041a', array('id' => '041a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
 		<td>Código de idioma del sumario o resumen.</td>
-		<td><?php echo $this->Form->input('041b', array('id' => '041b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c041['b'])) {
+				echo $this->Form->input('041b', array('id' => '041b', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c041['b']));
+			} else {
+				echo $this->Form->input('041b', array('id' => '041b', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$h</b></td>
 		<td>Código de idioma original.</td>
-		<td><?php echo $this->Form->input('041h', array('id' => '041h', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c041['h'])) {
+				echo $this->Form->input('041h', array('id' => '041h', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c041['h']));
+			} else {
+				echo $this->Form->input('041h', array('id' => '041h', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c044 = marc21_decode($item['Item']['044']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>044</b></th>
 		<th style="width: 45%;"><b>Código del país de la entidad editora/productora.</b></th>
 		<th style="width: 45%;">
-			<label id="l-044">&nbsp;</label>
-			<?php echo $this->Form->hidden('044', array('id' => '044', 'label' => false, 'div' => false)); ?>
+			<label id="l-044"><?php echo $item['Item']['044']; ?></label>
+			<?php echo $this->Form->hidden('044', array('id' => '044', 'label' => false, 'div' => false, 'value' => $item['Item']['044'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Código MARC del país.</td>
-		<td><?php echo $this->Form->input('044a', array('id' => '044a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c044['a'])) {
+				echo $this->Form->input('044a', array('id' => '044a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c044['a']));
+			} else {
+				echo $this->Form->input('044a', array('id' => '044a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c082 = marc21_decode($item['Item']['082']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>082</b></th>
 		<th style="width: 45%;"><b>Número de la Clasificación Decimal Dewey.</b></th>
 		<th style="width: 45%;">
-			<label id="l-082">&nbsp;</label>
-			<?php echo $this->Form->hidden('082', array('id' => '082', 'label' => false, 'div' => false)); ?>
+			<label id="l-082"><?php echo $item['Item']['082']; ?></label>
+			<?php echo $this->Form->hidden('082', array('id' => '082', 'label' => false, 'div' => false, 'value' => $item['Item']['082'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -1394,7 +1672,7 @@ th {
 			'options' => array(
 				'0' => '0 - Completa',
 				'1' => '1 - Abreviada'
-			), 'selected' => '0'
+			), 'selected' => substr($c082['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -1405,56 +1683,98 @@ th {
 				'#' => '# - No se proporciona información',
 				'0' => '0 - Asignado por la LC',
 				'4' => '4 - Asignado por una agencia distinta de la LC'
-			)
+			), 'selected' => substr($c082['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Número de clasificación.</td>
-		<td><?php echo $this->Form->input('082a', array('id' => '082a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c082['a'])) {
+				echo $this->Form->input('082a', array('id' => '082a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c082['a']));
+			} else {
+				echo $this->Form->input('082a', array('id' => '082a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
 		<td>Número de documento.</td>
-		<td><?php echo $this->Form->input('082b', array('id' => '082b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c082['b'])) {
+				echo $this->Form->input('082b', array('id' => '082b', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c082['b']));
+			} else {
+				echo $this->Form->input('082b', array('id' => '082b', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c092 = marc21_decode($item['Item']['092']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>092</b></th>
 		<th style="width: 45%;"><b>Clasificación local (COTA).</b></th>
 		<th style="width: 45%;">
-			<label id="l-092">&nbsp;</label>
-			<?php echo $this->Form->hidden('092', array('id' => '092', 'label' => false, 'div' => false)); ?>
+			<label id="l-092"><?php echo $item['Item']['092']; ?></label>
+			<?php echo $this->Form->hidden('092', array('id' => '092', 'label' => false, 'div' => false, 'value' => $item['Item']['092'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>A disposición del centro catalogador.</td>
-		<td><?php echo $this->Form->input('092a', array('id' => '092a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c092['a'])) {
+				echo $this->Form->input('092a', array('id' => '092a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c092['a']));
+			} else {
+				echo $this->Form->input('092a', array('id' => '092a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
 		<td>A disposición del centro catalogador.</td>
-		<td><?php echo $this->Form->input('092b', array('id' => '092b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c092['b'])) {
+				echo $this->Form->input('092b', array('id' => '092b', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c092['b']));
+			} else {
+				echo $this->Form->input('092b', array('id' => '092b', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
 		<td>A disposición del centro catalogador.</td>
-		<td><?php echo $this->Form->input('092c', array('id' => '092c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c092['c'])) {
+				echo $this->Form->input('092c', array('id' => '092c', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c092['c']));
+			} else {
+				echo $this->Form->input('092c', array('id' => '092c', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 </div>
 
 <div id="1xx" class="tabs" style="display: none;">
+<?php $c100 = marc21_decode($item['Item']['100']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>100</b></th>
 		<th style="width: 45%;"><b>Punto de acceso principal - Nombre de persona.</b></th>
 		<th style="width: 45%;">
-			<label id="l-100">&nbsp;</label>
-			<?php echo $this->Form->hidden('100', array('id' => '100', 'label' => false, 'div' => false)); ?>
+			<label id="l-100"><?php echo $item['Item']['100']; ?></label>
+			<?php echo $this->Form->hidden('100', array('id' => '100', 'label' => false, 'div' => false, 'value' => $item['Item']['100'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -1465,7 +1785,7 @@ th {
 				'0' => '0 - Nombre',
 				'1' => '1 - Apellido (s)',
 				'3' => '3 - Nombre de familia'
-			), 'selected' => '1'
+			), 'selected' => substr($c100['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -1474,28 +1794,45 @@ th {
 		<td><?php echo $this->Form->input('100i2', array('id' => '100i2', 'label' => false, 'div' => false, 'class' => 'form-control',
 			'options' => array(
 				'#' => '# - No definido'
-			)
+			), 'selected' => substr($c100['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nombre de persona <font color="red">(Obligatorio)</font>.</td>
-		<td><?php echo $this->Form->input('100a', array('id' => '100a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c100['a'])) {
+				echo $this->Form->input('100a', array('id' => '100a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c100['a']));
+			} else {
+				echo $this->Form->input('100a', array('id' => '100a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$d</b></td>
 		<td>Fechas asociadas al nombre.</td>
-		<td><?php echo $this->Form->input('100d', array('id' => '100d', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c100['d'])) {
+				echo $this->Form->input('100d', array('id' => '100d', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c100['d']));
+			} else {
+				echo $this->Form->input('100d', array('id' => '100d', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c110 = marc21_decode($item['Item']['110']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>110</b></th>
 		<th style="width: 45%;"><b>Autor corporativo.</b></th>
 		<th style="width: 45%;">
-			<label id="l-110">&nbsp;</label>
-			<?php echo $this->Form->hidden('110', array('id' => '110', 'label' => false, 'div' => false)); ?>
+			<label id="l-110"><?php echo $item['Item']['110']; ?></label>
+			<?php echo $this->Form->hidden('110', array('id' => '110', 'label' => false, 'div' => false, 'value' => $item['Item']['110'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -1507,7 +1844,7 @@ th {
 				'0' => '0 - Nombre en orden inverso',
 				'1' => '1 - Nombre de jurisdicción',
 				'2' => '2 - Nombre en orden directo'
-			), 'selected' => '2'
+			), 'selected' => substr($c110['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -1516,28 +1853,45 @@ th {
 		<td><?php echo $this->Form->input('110i2', array('id' => '110i2', 'label' => false, 'div' => false, 'class' => 'form-control',
 			'options' => array(
 				'#' => '# - No definido'
-			)
+			), 'selected' => substr($c110['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nombre de autor corporativo.</td>
-		<td><?php echo $this->Form->input('110a', array('id' => '110a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c110['a'])) {
+				echo $this->Form->input('110a', array('id' => '110a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c110['a']));
+			} else {
+				echo $this->Form->input('110a', array('id' => '110a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
 		<td>Unidad subordinada.</td>
-		<td><?php echo $this->Form->input('110b', array('id' => '110b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c110['b'])) {
+				echo $this->Form->input('110b', array('id' => '110b', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c110['b']));
+			} else {
+				echo $this->Form->input('110b', array('id' => '110b', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c130 = marc21_decode($item['Item']['130']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>130</b></th>
 		<th style="width: 45%;"><b>Título uniforme (Punto de acceso).</b></th>
 		<th style="width: 45%;">
-			<label id="l-130">&nbsp;</label>
-			<?php echo $this->Form->hidden('130', array('id' => '130', 'label' => false, 'div' => false)); ?>
+			<label id="l-130"><?php echo $item['Item']['130']; ?></label>
+			<?php echo $this->Form->hidden('130', array('id' => '130', 'label' => false, 'div' => false, 'value' => $item['Item']['130'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -1555,7 +1909,7 @@ th {
 				'7' => '7',
 				'8' => '8',
 				'9' => '9',		
-			), 'selected' => '0'
+			), 'selected' => substr($c130['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -1564,35 +1918,60 @@ th {
 		<td><?php echo $this->Form->input('130i2', array('id' => '130i2', 'label' => false, 'div' => false, 'class' => 'form-control',
 			'options' => array(
 					'#' => '# - No definido'
-			)
+			), 'selected' => substr($c130['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Título uniforme.</td>
-		<td><?php echo $this->Form->input('130a', array('id' => '130a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c130['a'])) {
+				echo $this->Form->input('130a', array('id' => '130a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c130['a']));
+			} else {
+				echo $this->Form->input('130a', array('id' => '130a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$n</b></td>
 		<td>Número de parte o sección de la obra.</td>
-		<td><?php echo $this->Form->input('130n', array('id' => '130n', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c130['n'])) {
+				echo $this->Form->input('130n', array('id' => '130n', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c130['n']));
+			} else {
+				echo $this->Form->input('130n', array('id' => '130n', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$p</b></td>
 		<td>Nombre de parte o sección de la obra.</td>
-		<td><?php echo $this->Form->input('130p', array('id' => '130p', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c130['p'])) {
+				echo $this->Form->input('130p', array('id' => '130p', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c130['p']));
+			} else {
+				echo $this->Form->input('130p', array('id' => '130p', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 </div>
 
 <div id="2xx" class="tabs" style="display: none;">
+<?php $c222 = marc21_decode($item['Item']['222']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>222</b></th>
 		<th style="width: 45%;"><b>Título clave.</b></th>
 		<th style="width: 45%;">
-			<label id="l-222">&nbsp;</label>
-			<?php echo $this->Form->hidden('222', array('id' => '222', 'label' => false, 'div' => false)); ?>
+			<label id="l-222"><?php echo $item['Item']['222']; ?></label>
+			<?php echo $this->Form->hidden('222', array('id' => '222', 'label' => false, 'div' => false, 'value' => $item['Item']['222'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -1601,7 +1980,7 @@ th {
 		<td><?php echo $this->Form->input('222i1', array('id' => '222i1', 'label' => false, 'div' => false, 'class' => 'form-control', 
 			'options' => array(
 				'#' => '# - No definido'
-			)
+			), 'selected' => substr($c222['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -1619,28 +1998,45 @@ th {
 				'7' => '7',
 				'8' => '8',
 				'9' => '9'
-			)
+			), 'selected' => substr($c222['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Título clave.</td>
-		<td><?php echo $this->Form->input('222a', array('id' => '222a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c222['a'])) {
+				echo $this->Form->input('222a', array('id' => '222a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c222['a']));
+			} else {
+				echo $this->Form->input('222a', array('id' => '222a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
 		<td>Información adicional.</td>
-		<td><?php echo $this->Form->input('222b', array('id' => '222b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c222['b'])) {
+				echo $this->Form->input('222b', array('id' => '222b', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c222['b']));
+			} else {
+				echo $this->Form->input('222b', array('id' => '222b', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c240 = marc21_decode($item['Item']['240']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>240</b></th>
 		<th style="width: 45%;"><b>Título uniforme.</b></th>
 		<th style="width: 45%;">
-			<label id="l-240">&nbsp;</label>
-			<?php echo $this->Form->hidden('240', array('id' => '240', 'label' => false, 'div' => false)); ?>
+			<label id="l-240"><?php echo $item['Item']['240']; ?></label>
+			<?php echo $this->Form->hidden('240', array('id' => '240', 'label' => false, 'div' => false, 'value' => $item['Item']['240'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -1650,7 +2046,7 @@ th {
 			'options' => array(
 				'0' => '0 - No se imprime ni se visualiza',
 				'1' => '1 - Se imprime o se visualiza'
-			), 'selected' => '1'
+			), 'selected' => substr($c240['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -1668,33 +2064,58 @@ th {
 				'7' => '7',
 				'8' => '8',
 				'9' => '9',		
-			), 'selected' => '0'
+			), 'selected' => substr($c240['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Título uniforme.</td>
-		<td><?php echo $this->Form->input('240a', array('id' => '240a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c240['a'])) {
+				echo $this->Form->input('240a', array('id' => '240a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c240['a']));
+			} else {
+				echo $this->Form->input('240a', array('id' => '240a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$n</b></td>
 		<td>Número de parte o sección de la obra.</td>
-		<td><?php echo $this->Form->input('240n', array('id' => '240n', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c240['n'])) {
+				echo $this->Form->input('240n', array('id' => '240n', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c240['n']));
+			} else {
+				echo $this->Form->input('240n', array('id' => '240n', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$p</b></td>
 		<td>Nombre de parte o sección de la obra.</td>
-		<td><?php echo $this->Form->input('240p', array('id' => '240p', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c240['p'])) {
+				echo $this->Form->input('240p', array('id' => '240p', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c240['p']));
+			} else {
+				echo $this->Form->input('240p', array('id' => '240p', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c245 = marc21_decode($item['Item']['245']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>245</b></th>
 		<th style="width: 45%;"><b>Mención de título.</b></th>
 		<th style="width: 45%;">
-			<label id="l-245">&nbsp;</label>
-			<?php echo $this->Form->hidden('245', array('id' => '245', 'label' => false, 'div' => false)); ?>
+			<label id="l-245"><?php echo $item['Item']['245']; ?></label>
+			<?php echo $this->Form->hidden('245', array('id' => '245', 'label' => false, 'div' => false, 'value' => $item['Item']['245'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -1704,7 +2125,7 @@ th {
 			'options' => array(
 				'0' => '0 - No hay punto de acceso adicional',
 				'1' => '1 - Hay punto de acceso adicional'
-			), 'selected' => '1'
+			), 'selected' => substr($c245['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -1722,38 +2143,71 @@ th {
 				'7' => '7',
 				'8' => '8',
 				'9' => '9',		
-			), 'selected' => '0'
+			), 'selected' => substr($c245['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Título <font color="red">(Obligatorio)</font>.</td>
-		<td><?php echo $this->Form->input('245a', array('id' => '245a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c245['a'])) {
+				echo $this->Form->input('245a', array('id' => '245a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c245['a']));
+			} else {
+				echo $this->Form->input('245a', array('id' => '245a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
 		<td>Subtítulo o título paralelo.</td>
-		<td><?php echo $this->Form->input('245b', array('id' => '245b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c245['b'])) {
+				echo $this->Form->input('245b', array('id' => '245b', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c245['b']));
+			} else {
+				echo $this->Form->input('245b', array('id' => '245b', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
 		<td>Mención de responsabilidad.</td>
-		<td><?php echo $this->Form->input('245c', array('id' => '245c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c245['c'])) {
+				echo $this->Form->input('245c', array('id' => '245c', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c245['c']));
+			} else {
+				echo $this->Form->input('245c', array('id' => '245c', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$h</b></td>
 		<td>Tipo de material.</td>
-		<td><?php echo $this->Form->input('245h', array('id' => '245h', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c245['h'])) {
+				echo $this->Form->input('245h', array('id' => '245h', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c245['h']));
+			} else {
+				echo $this->Form->input('245h', array('id' => '245h', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c246 = marc21_decode($item['Item']['246']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>246</b></th>
 		<th style="width: 45%;"><b>Variante de título.</b></th>
 		<th style="width: 45%;">
-			<label id="l-246">&nbsp;</label>
-			<?php echo $this->Form->hidden('246', array('id' => '246', 'label' => false, 'div' => false)); ?>
+			<label id="l-246"><?php echo $item['Item']['246']; ?></label>
+			<?php echo $this->Form->hidden('246', array('id' => '246', 'label' => false, 'div' => false, 'value' => $item['Item']['246'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -1765,7 +2219,7 @@ th {
 				'1' => '1 - Nota, hay punto de acceso adicional',
 				'2' => '2 - Ni hay nota ni punto de acceso adicional',
 				'3' => '3 - No hay nota, hay punto de acceso adicional'
-			)
+			), 'selected' => substr($c246['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -1783,262 +2237,557 @@ th {
 				'6' => '6 - Título de la cabecera',
 				'7' => '7 - “Titulillo”, título de margen',
 				'8' => '8 - Título del lomo'		
-			)
+			), 'selected' => substr($c246['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Título.</td>
-		<td><?php echo $this->Form->input('246a', array('id' => '246a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c246['a'])) {
+				echo $this->Form->input('246a', array('id' => '246a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c246['a']));
+			} else {
+				echo $this->Form->input('246a', array('id' => '246a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
 		<td>Subtítulo o título paralelo.</td>
-		<td><?php echo $this->Form->input('246b', array('id' => '246b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c246['b'])) {
+				echo $this->Form->input('246b', array('id' => '246b', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c246['b']));
+			} else {
+				echo $this->Form->input('246b', array('id' => '246b', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$i</b></td>
 		<td>Texto de visualización.</td>
-		<td><?php echo $this->Form->input('246i', array('id' => '246i', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c246['i'])) {
+				echo $this->Form->input('246i', array('id' => '246i', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c246['i']));
+			} else {
+				echo $this->Form->input('246i', array('id' => '246i', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c247 = marc21_decode($item['Item']['247']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>247</b></th>
 		<th style="width: 45%;"><b>Título anterior.</b></th>
 		<th style="width: 45%;">
-			<label id="l-247">&nbsp;</label>
-			<?php echo $this->Form->hidden('247', array('id' => '247', 'label' => false, 'div' => false)); ?>
+			<label id="l-247"><?php echo $item['Item']['247']; ?></label>
+			<?php echo $this->Form->hidden('247', array('id' => '247', 'label' => false, 'div' => false, 'value' => $item['Item']['247'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Título.</td>
-		<td><?php echo $this->Form->input('247a', array('id' => '247a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c247['a'])) {
+				echo $this->Form->input('247a', array('id' => '247a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c247['a']));
+			} else {
+				echo $this->Form->input('247a', array('id' => '247a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
 		<td>Subtítulo o título paralelo.</td>
-		<td><?php echo $this->Form->input('247b', array('id' => '247b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c247['b'])) {
+				echo $this->Form->input('247b', array('id' => '247b', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c247['b']));
+			} else {
+				echo $this->Form->input('247b', array('id' => '247b', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$f</b></td>
 		<td>Fecha o designación secuencial.</td>
-		<td><?php echo $this->Form->input('247f', array('id' => '247f', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c247['f'])) {
+				echo $this->Form->input('247f', array('id' => '247f', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c247['f']));
+			} else {
+				echo $this->Form->input('247f', array('id' => '247f', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$g</b></td>
 		<td>Nota sobre el título anterior.</td>
-		<td><?php echo $this->Form->input('247g', array('id' => '247g', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c247['g'])) {
+				echo $this->Form->input('247g', array('id' => '247g', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c247['g']));
+			} else {
+				echo $this->Form->input('247g', array('id' => '247g', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$n</b></td>
 		<td>Número de parte o sección de la obra.</td>
-		<td><?php echo $this->Form->input('247n', array('id' => '247n', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c247['n'])) {
+				echo $this->Form->input('247n', array('id' => '247n', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c247['n']));
+			} else {
+				echo $this->Form->input('247n', array('id' => '247n', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$p</b></td>
 		<td>Nombre de parte o sección de la obra.</td>
-		<td><?php echo $this->Form->input('247p', array('id' => '247p', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c247['p'])) {
+				echo $this->Form->input('247p', array('id' => '247p', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c247['p']));
+			} else {
+				echo $this->Form->input('247p', array('id' => '247p', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c250 = marc21_decode($item['Item']['250']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>250</b></th>
 		<th style="width: 45%;"><b>Mención de edición.</b></th>
 		<th style="width: 45%;">
-			<label id="l-250">&nbsp;</label>
-			<?php echo $this->Form->hidden('250', array('id' => '250', 'label' => false, 'div' => false)); ?>
+			<label id="l-250"><?php echo $item['Item']['250']; ?></label>
+			<?php echo $this->Form->hidden('250', array('id' => '250', 'label' => false, 'div' => false, 'value' => $item['Item']['250'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Mención de edición.</td>
-		<td><?php echo $this->Form->input('250a', array('id' => '250a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c250['a'])) {
+				echo $this->Form->input('250a', array('id' => '250a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c250['a']));
+			} else {
+				echo $this->Form->input('250a', array('id' => '250a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
 		<td>Resto de la mención de edición.</td>
-		<td><?php echo $this->Form->input('250b', array('id' => '250b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c250['b'])) {
+				echo $this->Form->input('250b', array('id' => '250b', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c250['b']));
+			} else {
+				echo $this->Form->input('250b', array('id' => '250b', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c260 = marc21_decode($item['Item']['260']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>260</b></th>
 		<th style="width: 45%;"><b>Publicación, distribución, etc. (pie de imprenta).</b></th>
 		<th style="width: 45%;">
-			<label id="l-260">&nbsp;</label>
-			<?php echo $this->Form->hidden('260', array('id' => '260', 'label' => false, 'div' => false)); ?>
+			<label id="l-260"><?php echo $item['Item']['260']; ?></label>
+			<?php echo $this->Form->hidden('260', array('id' => '260', 'label' => false, 'div' => false, 'value' => $item['Item']['260'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Lugar de publicación, distribución, etc <font color="red">(Obligatorio)</font>.</td>
-		<td><?php echo $this->Form->input('260a', array('id' => '260a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c260['a'])) {
+				echo $this->Form->input('260a', array('id' => '260a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c260['a']));
+			} else {
+				echo $this->Form->input('260a', array('id' => '260a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
 		<td>Nombre del editor, distribuidor, etc <font color="red">(Obligatorio)</font>.</td>
-		<td><?php echo $this->Form->input('260b', array('id' => '260b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c260['b'])) {
+				echo $this->Form->input('260b', array('id' => '260b', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c260['b']));
+			} else {
+				echo $this->Form->input('260b', array('id' => '260b', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
 		<td>Fecha de publicación, distribución, etc <font color="red">(Obligatorio)</font>.</td>
-		<td><?php echo $this->Form->input('260c', array('id' => '260c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c260['c'])) {
+				echo $this->Form->input('260c', array('id' => '260c', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c260['c']));
+			} else {
+				echo $this->Form->input('260c', array('id' => '260c', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 </div>
 
 <div id="3xx" class="tabs" style="display: none;">
+<?php $c300 = marc21_decode($item['Item']['300']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>300</b></th>
 		<th style="width: 45%;"><b>Descripción física.</b></th>
 		<th style="width: 45%;">
-			<label id="l-300">&nbsp;</label>
-			<?php echo $this->Form->hidden('300', array('id' => '300', 'label' => false, 'div' => false)); ?>
+			<label id="l-300"><?php echo $item['Item']['300']; ?></label>
+			<?php echo $this->Form->hidden('300', array('id' => '300', 'label' => false, 'div' => false, 'value' => $item['Item']['300'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Extensión.</td>
-		<td><?php echo $this->Form->input('300a', array('id' => '300a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c300['a'])) {
+				echo $this->Form->input('300a', array('id' => '300a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c300['a']));
+			} else {
+				echo $this->Form->input('300a', array('id' => '300a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
 		<td>Otras características físicas.</td>
-		<td><?php echo $this->Form->input('300b', array('id' => '300b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c300['b'])) {
+				echo $this->Form->input('300b', array('id' => '300b', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c300['b']));
+			} else {
+				echo $this->Form->input('300b', array('id' => '300b', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
 		<td>Dimensiones.</td>
-		<td><?php echo $this->Form->input('300c', array('id' => '300c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c300['c'])) {
+				echo $this->Form->input('300c', array('id' => '300c', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c300['c']));
+			} else {
+				echo $this->Form->input('300c', array('id' => '300c', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$e</b></td>
 		<td>Material anejo.</td>
-		<td><?php echo $this->Form->input('300e', array('id' => '300e', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c300['e'])) {
+				echo $this->Form->input('300e', array('id' => '300e', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c300['e']));
+			} else {
+				echo $this->Form->input('300e', array('id' => '300e', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c310 = marc21_decode($item['Item']['310']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>310</b></th>
 		<th style="width: 45%;"><b>Periodicidad actual.</b></th>
 		<th style="width: 45%;">
-			<label id="l-310">&nbsp;</label>
-			<?php echo $this->Form->hidden('310', array('id' => '310', 'label' => false, 'div' => false)); ?>
+			<label id="l-310"><?php echo $item['Item']['310']; ?></label>
+			<?php echo $this->Form->hidden('310', array('id' => '310', 'label' => false, 'div' => false, 'value' => $item['Item']['310'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Periodicidad actual.</td>
-		<td><?php echo $this->Form->input('310a', array('id' => '310a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c310['a'])) {
+				echo $this->Form->input('310a', array('id' => '310a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c310['a']));
+			} else {
+				echo $this->Form->input('310a', array('id' => '310a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
 		<td>Fecha de comienzo de la periodicidad actual.</td>
-		<td><?php echo $this->Form->input('310b', array('id' => '310b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c310['b'])) {
+				echo $this->Form->input('310b', array('id' => '310b', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c310['b']));
+			} else {
+				echo $this->Form->input('310b', array('id' => '310b', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c321 = marc21_decode($item['Item']['321']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>321</b></th>
 		<th style="width: 45%;"><b>Periodicidad anterior.</b></th>
 		<th style="width: 45%;">
-			<label id="l-321">&nbsp;</label>
-			<?php echo $this->Form->hidden('321', array('id' => '321', 'label' => false, 'div' => false)); ?>
+			<label id="l-321"><?php echo $item['Item']['321']; ?></label>
+			<?php echo $this->Form->hidden('321', array('id' => '321', 'label' => false, 'div' => false, 'value' => $item['Item']['321'])); ?>
 		</t>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Periodicidad anterior.</td>
-		<td><?php echo $this->Form->input('321a', array('id' => '321a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c321['a'])) {
+				echo $this->Form->input('321a', array('id' => '321a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c321['a']));
+			} else {
+				echo $this->Form->input('321a', array('id' => '321a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
 		<td>Fechas de la periodicidad anterior.</td>
-		<td><?php echo $this->Form->input('321b', array('id' => '321b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c321['b'])) {
+				echo $this->Form->input('321b', array('id' => '321b', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c321['b']));
+			} else {
+				echo $this->Form->input('321b', array('id' => '321b', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c362 = marc21_decode($item['Item']['362']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>362</b></th>
 		<th style="width: 45%;"><b>Fechas de publicación y/o designación secuencial.</b></th>
 		<th style="width: 45%;">
-			<label id="l-362">&nbsp;</label>
-			<?php echo $this->Form->hidden('362', array('id' => '362', 'label' => false, 'div' => false)); ?>
+			<label id="l-362"><?php echo $item['Item']['362']; ?></label>
+			<?php echo $this->Form->hidden('362', array('id' => '362', 'label' => false, 'div' => false, 'value' => $item['Item']['362'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Fechas de publicación y/o designación secuencial.</td>
-		<td><?php echo $this->Form->input('362a', array('id' => '362a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c362['a'])) {
+				echo $this->Form->input('362a', array('id' => '362a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c362['a']));
+			} else {
+				echo $this->Form->input('362a', array('id' => '362a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c380 = marc21_decode($item['Item']['380']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>380</b></th>
 		<th style="width: 45%;"><b>Forma de la obra.</b></th>
 		<th style="width: 45%;">
-			<label id="l-380">&nbsp;</label>
-			<?php echo $this->Form->hidden('380', array('id' => '380', 'label' => false, 'div' => false)); ?>
+			<label id="l-380"><?php echo $item['Item']['380']; ?></label>
+			<?php echo $this->Form->hidden('380', array('id' => '380', 'label' => false, 'div' => false, 'value' => $item['Item']['380'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Forma de la obra.</td>
-		<td><?php echo $this->Form->input('380a', array('id' => '380a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c380['a'])) {
+				echo $this->Form->input('380a', array('id' => '380a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c380['a']));
+			} else {
+				echo $this->Form->input('380a', array('id' => '380a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 </div>
+<div id="4xx" class="tabs" style="display: none;">
 
+<table class="table">
+	<tr>
+		<th style="width: 10%;"><b>440</b></th>
+		<th style="width: 45%;"><b>Mencion de serie/Asiento secundario-titulo.</b></th>
+		<th style="width: 45%;">
+			<label id="l-440">&nbsp;</label>
+			<?php echo $this->Form->hidden('440', array('id' => '440', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Título de la serie.</td>
+		<td><?php echo $this->Form->input('440a', array('id' => '440a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$n</b></td>
+		<td>Número de parte o seccion de la obra.</td>
+		<td><?php echo $this->Form->input('440n', array('id' => '440n', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$p</b></td>
+		<td>Nombre de parte o seccion de la obra.</td>
+		<td><?php echo $this->Form->input('440p', array('id' => '440p', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$x</b></td>
+		<td>Número normalizado de la serie.</td>
+		<td><?php echo $this->Form->input('440x', array('id' => '440x', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$v</b></td>
+		<td>Volúmen.</td>
+		<td><?php echo $this->Form->input('440v', array('id' => '440v', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+</table>
+<table class="table">
+	<tr>
+		<th style="width: 1o%;"><b>490</b></th>
+		<th style="width: 45%;"><b> Mención de la serie.</b></th>
+		<th style="width: 45%;">
+			<label id="l-490">&nbsp;</label>
+			<?php echo $this->Form->hidden('490', array('id' => '490', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>I1</b></td>
+		<td>Política de recuperación de series.</td>
+		<td><?php echo $this->Form->input('490i1', array('id' => '490i1', 'label' => false, 'div' => false,  'class' => 'form-control',
+			'options' => array(
+					'0' => '0 - Serie sin recuperación',
+					'1' => '1 - Serie con recuperación'
+			), 'selected' => '0'
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>I2</b></td>
+		<td>No definido.</td>
+		<td><?php echo $this->Form->input('490i2', array('id' => '490i2', 'label' => false, 'div' => false, 'class' => 'form-control',
+			'options' => array(
+					'#' => '# - No definido'
+			), 'selected' => '#'
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Nombre de la fuente.</td>
+		<td><?php echo $this->Form->input('490a', array('id' => '490a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$v</b></td>
+		<td>Localización dentro de la fuente.</td>
+		<td><?php echo $this->Form->input('490v', array('id' => '490v', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+</table>
+</div>
 <div id="5xx" class="tabs" style="display: none;">
+<?php $c500 = marc21_decode($item['Item']['500']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>500</b></th>
 		<th style="width: 45%;"><b>Nota general.</b></th>
 		<th style="width: 45%;">
-			<label id="l-500">&nbsp;</label>
-			<?php echo $this->Form->hidden('500', array('id' => '500', 'label' => false, 'div' => false)); ?>
+			<label id="l-500"><?php echo $item['Item']['500']; ?></label>
+			<?php echo $this->Form->hidden('500', array('id' => '500', 'label' => false, 'div' => false, 'value' => $item['Item']['500'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nota general.</td>
-		<td><?php echo $this->Form->input('500a', array('id' => '500a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td>
+			<?php
+			if (isset($c500['a'])) {
+				echo $this->Form->input('500a', array('id' => '500a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c500['a']));
+			} else {
+				echo $this->Form->input('500a', array('id' => '500a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c501 = marc21_decode($item['Item']['501']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>501</b></th>
 		<th style="width: 45%;"><b>Nota de “Con”.</b></th>
 		<th style="width: 45%;">
-			<label id="l-501">&nbsp;</label>
-			<?php echo $this->Form->hidden('501', array('id' => '501', 'label' => false, 'div' => false)); ?>
+			<label id="l-501"><?php echo $item['Item']['501']; ?></label>
+			<?php echo $this->Form->hidden('501', array('id' => '501', 'label' => false, 'div' => false, 'value' => $item['Item']['501'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Con.</td>
-		<td><?php echo $this->Form->input('501a', array('id' => '501a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td>
+			<?php
+			if (isset($c501['a'])) {
+				echo $this->Form->input('501a', array('id' => '501a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c501['a']));
+			} else {
+				echo $this->Form->input('501a', array('id' => '501a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c505 = marc21_decode($item['Item']['505']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>505</b></th>
 		<th style="width: 45%;"><b>Nota de contenido con formato.</b></th>
 		<th style="width: 45%;">
-			<label id="l-505">&nbsp;</label>
-			<?php echo $this->Form->hidden('505', array('id' => '505', 'label' => false, 'div' => false)); ?>
+			<label id="l-505"><?php echo $item['Item']['505']; ?></label>
+			<?php echo $this->Form->hidden('505', array('id' => '505', 'label' => false, 'div' => false, 'value' => $item['Item']['505'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -2050,7 +2799,7 @@ th {
 				'1' => '1 - Contenido incompleto',
 				'2' => '2 - Contenido parcial',
 				'8' => '8 - No genera visualización asociada'
-			), 'selected' => '2'
+			), 'selected' => substr($c505['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -2060,23 +2809,32 @@ th {
 			'options' => array(
 					'#' => '# - Básico',
 					'0' => '0 - Completo'
-			)
+			), 'selected' => substr($c505['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nota de contenido con formato.</td>
-		<td><?php echo $this->Form->input('505a', array('id' => '505a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td>
+			<?php
+			if (isset($c505['a'])) {
+				echo $this->Form->input('505a', array('id' => '505a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c505['a']));
+			} else {
+				echo $this->Form->input('505a', array('id' => '505a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c510 = marc21_decode($item['Item']['510']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>510</b></th>
 		<th style="width: 45%;"><b>Nota de citas o referencias bibliográficas.</b></th>
 		<th style="width: 45%;">
-			<label id="l-510">&nbsp;</label>
-			<?php echo $this->Form->hidden('510', array('id' => '510', 'label' => false, 'div' => false)); ?>
+			<label id="l-510"><?php echo $item['Item']['510']; ?></label>
+			<?php echo $this->Form->hidden('510', array('id' => '510', 'label' => false, 'div' => false, 'value' => $item['Item']['510'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -2089,7 +2847,7 @@ th {
 				'2' => '2 - Cobertura selectiva',
 				'3' => '3 - No se indica la localización dentro de la fuente',
 				'4' => '4 - Se indica la localización dentro de la fuente'
-			), 'selected' => '3'
+			), 'selected' => substr($c510['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -2098,44 +2856,70 @@ th {
 		<td><?php echo $this->Form->input('510i2', array('id' => '510i2', 'label' => false, 'div' => false, 'class' => 'form-control',
 			'options' => array(
 					'#' => '# - No definido'
-			)
+			), 'selected' => substr($c510['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nombre de la fuente.</td>
-		<td><?php echo $this->Form->input('510a', array('id' => '510a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td>
+			<?php
+			if (isset($c510['a'])) {
+				echo $this->Form->input('510a', array('id' => '510a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c510['a']));
+			} else {
+				echo $this->Form->input('510a', array('id' => '510a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
 		<td>Localización dentro de la fuente.</td>
-		<td><?php echo $this->Form->input('510c', array('id' => '510c', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td>
+			<?php
+			if (isset($c510['c'])) {
+				echo $this->Form->input('510c', array('id' => '510c', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c510['c']));
+			} else {
+				echo $this->Form->input('510c', array('id' => '510c', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c515 = marc21_decode($item['Item']['515']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>515</b></th>
 		<th style="width: 45%;"><b>Nota de peculiaridades de la numeración.</b></th>
 		<th style="width: 45%;">
-			<label id="l-515">&nbsp;</label>
-			<?php echo $this->Form->hidden('515', array('id' => '515', 'label' => false, 'div' => false)); ?>
+			<label id="l-515"><?php echo $item['Item']['515']; ?></label>
+			<?php echo $this->Form->hidden('515', array('id' => '515', 'label' => false, 'div' => false, 'value' => $item['Item']['515'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nota de peculiaridades de la numeración.</td>
-		<td><?php echo $this->Form->input('515a', array('id' => '515a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td>
+			<?php
+			if (isset($c515['a'])) {
+				echo $this->Form->input('515a', array('id' => '515a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c515['a']));
+			} else {
+				echo $this->Form->input('515a', array('id' => '515a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c520 = marc21_decode($item['Item']['520']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>520</b></th>
 		<th style="width: 45%;"><b>Nota de sumario, etc.</b></th>
 		<th style="width: 45%;">
-			<label id="l-520">&nbsp;</label>
-			<?php echo $this->Form->hidden('520', array('id' => '520', 'label' => false, 'div' => false)); ?>
+			<label id="l-520"><?php echo $item['Item']['520']; ?></label>
+			<?php echo $this->Form->hidden('520', array('id' => '520', 'label' => false, 'div' => false, 'value' => $item['Item']['520'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -2150,7 +2934,7 @@ th {
 				'3' => '3 - Resumen',
 				'4' => '4 - Aviso sobre el contenido',
 				'8' => '8 - No genera visualización asociada'
-			), 'selected' => '#'
+			), 'selected' => substr($c520['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -2159,150 +2943,276 @@ th {
 		<td><?php echo $this->Form->input('520i2', array('id' => '520i2', 'label' => false, 'div' => false, 'class' => 'form-control',
 			'options' => array(
 					'#' => '# - No definido'
-			)
+			), 'selected' => substr($c520['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Sumario, etc.</td>
-		<td><?php echo $this->Form->input('520a', array('id' => '520a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td>
+			<?php
+			if (isset($c520['a'])) {
+				echo $this->Form->input('520a', array('id' => '520a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c520['a']));
+			} else {
+				echo $this->Form->input('520a', array('id' => '520a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c530 = marc21_decode($item['Item']['530']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>530</b></th>
 		<th style="width: 45%;"><b>Nota de formato físico adicional disponible.</b></th>
 		<th style="width: 45%;">
-			<label id="l-530">&nbsp;</label>
-			<?php echo $this->Form->hidden('530', array('id' => '530', 'label' => false, 'div' => false)); ?>
+			<label id="l-530"><?php echo $item['Item']['530']; ?></label>
+			<?php echo $this->Form->hidden('530', array('id' => '530', 'label' => false, 'div' => false, 'value' => $item['Item']['530'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nota de formato físico adicional disponible.</td>
-		<td><?php echo $this->Form->input('530a', array('id' => '530a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td>
+			<?php
+			if (isset($c530['a'])) {
+				echo $this->Form->input('530a', array('id' => '530a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c530['a']));
+			} else {
+				echo $this->Form->input('530a', array('id' => '530a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
 		<td>Condiciones de adquisición.</td>
-		<td><?php echo $this->Form->input('530c', array('id' => '530c', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td>
+			<?php
+			if (isset($c530['c'])) {
+				echo $this->Form->input('530c', array('id' => '530c', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c530['c']));
+			} else {
+				echo $this->Form->input('530c', array('id' => '530c', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$u</b></td>
 		<td>Dirección electrónica.</td>
-		<td><?php echo $this->Form->input('530u', array('id' => '530u', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td>
+			<?php
+			if (isset($c530['u'])) {
+				echo $this->Form->input('530u', array('id' => '530u', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c530['u']));
+			} else {
+				echo $this->Form->input('530u', array('id' => '530u', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c534 = marc21_decode($item['Item']['534']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>534</b></th>
 		<th style="width: 45%;"><b>Nota sobre la versión original.</b></th>
 		<th style="width: 45%;">
-			<label id="l-534">&nbsp;</label>
-			<?php echo $this->Form->hidden('534', array('id' => '534', 'label' => false, 'div' => false)); ?>
+			<label id="l-534"><?php echo $item['Item']['534']; ?></label>
+			<?php echo $this->Form->hidden('534', array('id' => '534', 'label' => false, 'div' => false, 'value' => $item['Item']['534'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Autor.</td>
-		<td><?php echo $this->Form->input('534a', array('id' => '534a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td>
+			<?php
+			if (isset($c534['a'])) {
+				echo $this->Form->input('534a', array('id' => '534a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c534['a']));
+			} else {
+				echo $this->Form->input('534a', array('id' => '534a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
 		<td>Publicación, distribución, etc. del original.</td>
-		<td><?php echo $this->Form->input('534c', array('id' => '534c', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td>
+			<?php
+			if (isset($c534['c'])) {
+				echo $this->Form->input('534c', array('id' => '534c', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c534['c']));
+			} else {
+				echo $this->Form->input('534c', array('id' => '534c', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$l</b></td>
 		<td>Localización del original.</td>
-		<td><?php echo $this->Form->input('534l', array('id' => '534l', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td>
+			<?php
+			if (isset($c534['l'])) {
+				echo $this->Form->input('534l', array('id' => '534l', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c534['l']));
+			} else {
+				echo $this->Form->input('534l', array('id' => '534l', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$p</b></td>
 		<td>Frase introductoria.</td>
-		<td><?php echo $this->Form->input('534p', array('id' => '534p', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td>
+			<?php
+			if (isset($c534['p'])) {
+				echo $this->Form->input('534p', array('id' => '534p', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c534['p']));
+			} else {
+				echo $this->Form->input('534p', array('id' => '534p', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c546 = marc21_decode($item['Item']['546']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>546</b></th>
 		<th style="width: 45%;"><b>Nota de lengua.</b></th>
 		<th style="width: 45%;">
-			<label id="l-546">&nbsp;</label>
-			<?php echo $this->Form->hidden('546', array('id' => '546', 'label' => false, 'div' => false)); ?>
+			<label id="l-546"><?php echo $item['Item']['546']; ?></label>
+			<?php echo $this->Form->hidden('546', array('id' => '546', 'label' => false, 'div' => false, 'value' => $item['Item']['546'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nota de lengua.</td>
-		<td><?php echo $this->Form->input('546a', array('id' => '546a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td>
+			<?php
+			if (isset($c546['a'])) {
+				echo $this->Form->input('546a', array('id' => '546a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c546['a']));
+			} else {
+				echo $this->Form->input('546a', array('id' => '546a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
 		<td>Información sobre el código o alfabeto.</td>
-		<td><?php echo $this->Form->input('546c', array('id' => '546c', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td>
+			<?php
+			if (isset($c546['c'])) {
+				echo $this->Form->input('546c', array('id' => '546c', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c546['c']));
+			} else {
+				echo $this->Form->input('546c', array('id' => '546c', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c555 = marc21_decode($item['Item']['555']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>555</b></th>
 		<th style="width: 45%;"><b>Nota de índice acumulativo u otros instrumentos bibliográficos.</b></th>
 		<th style="width: 45%;">
-			<label id="l-555">&nbsp;</label>
-			<?php echo $this->Form->hidden('555', array('id' => '555', 'label' => false, 'div' => false)); ?>
+			<label id="l-555"><?php echo $item['Item']['555']; ?></label>
+			<?php echo $this->Form->hidden('555', array('id' => '555', 'label' => false, 'div' => false, 'value' => $item['Item']['555'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nota de índice acumulativo u otros instrumentos bibliográficos.</td>
-		<td><?php echo $this->Form->input('555a', array('id' => '555a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td>
+			<?php
+			if (isset($c555['a'])) {
+				echo $this->Form->input('555a', array('id' => '555a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c555['a']));
+			} else {
+				echo $this->Form->input('555a', array('id' => '555a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
 		<td>Fuente de la adquisición.</td>
-		<td><?php echo $this->Form->input('555b', array('id' => '555b', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td>
+			<?php
+			if (isset($c555['b'])) {
+				echo $this->Form->input('555b', array('id' => '555b', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c555['b']));
+			} else {
+				echo $this->Form->input('555b', array('id' => '555b', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$d</b></td>
 		<td>Referencia bibliográfica.</td>
-		<td><?php echo $this->Form->input('555d', array('id' => '555d', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td>
+			<?php
+			if (isset($c555['d'])) {
+				echo $this->Form->input('555d', array('id' => '555d', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c555['d']));
+			} else {
+				echo $this->Form->input('555d', array('id' => '555d', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$u</b></td>
 		<td>Dirección electrónica.</td>
-		<td><?php echo $this->Form->input('555u', array('id' => '555u', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td>
+			<?php
+			if (isset($c555['u'])) {
+				echo $this->Form->input('555u', array('id' => '555u', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c555['u']));
+			} else {
+				echo $this->Form->input('555u', array('id' => '555u', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c588 = marc21_decode($item['Item']['588']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>588</b></th>
 		<th style="width: 45%;"><b>Nota de fuente de la descripción.</b></th>
 		<th style="width: 45%;">
-			<label id="l-588">&nbsp;</label>
-			<?php echo $this->Form->hidden('588', array('id' => '588', 'label' => false, 'div' => false)); ?>
+			<label id="l-588"><?php echo $item['Item']['588']; ?></label>
+			<?php echo $this->Form->hidden('588', array('id' => '588', 'label' => false, 'div' => false, 'value' => $item['Item']['588'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nota de fuente de la descripción.</td>
-		<td><?php echo $this->Form->input('588a', array('id' => '588a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td>
+			<?php
+			if (isset($c588['a'])) {
+				echo $this->Form->input('588a', array('id' => '588a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c588['a']));
+			} else {
+				echo $this->Form->input('588a', array('id' => '588a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 </div>
 
 <div id="6xx" class="tabs" style="display: none;">
+<?php $c600 = marc21_decode($item['Item']['600']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>600</b></th>
 		<th style="width: 45%;"><b>Punto de acceso adicional de materia - Nombre de persona.</b></th>
 		<th style="width: 45%;">
-			<label id="l-600">&nbsp;</label>
-			<?php echo $this->Form->hidden('600', array('id' => '600', 'label' => false, 'div' => false)); ?>
+			<label id="l-600"><?php echo $item['Item']['600']; ?></label>
+			<?php echo $this->Form->hidden('600', array('id' => '600', 'label' => false, 'div' => false, 'value' => $item['Item']['600'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -2314,7 +3224,7 @@ th {
 				'0' => '0 – Nombre',
 				'1' => '1 - Apellido(s)',
 				'3' => '3 - Nombre de familia'
-			), 'selected' => '#'
+			), 'selected' => substr($c600['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -2330,58 +3240,123 @@ th {
 				'5' => '5 - Encabezamientos de Materia de Canadá',
 				'6' => '6 - Répertoire de vedettes-matière',
 				'7' => '7 - Fuente especificada en el subcampo $2'
-			)
+			), 'selected' => substr($c600['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nombre de persona.</td>
-		<td><?php echo $this->Form->input('600a', array('id' => '600a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c600['a'])) {
+				echo $this->Form->input('600a', array('id' => '600a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c600['a']));
+			} else {
+				echo $this->Form->input('600a', array('id' => '600a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$d</b></td>
 		<td>Fechas asociadas al nombre.</td>
-		<td><?php echo $this->Form->input('600d', array('id' => '600d', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c600['d'])) {
+				echo $this->Form->input('600d', array('id' => '600d', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c600['d']));
+			} else {
+				echo $this->Form->input('600d', array('id' => '600d', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
 		<td>Títulos y otros términos asociados al nombre.</td>
-		<td><?php echo $this->Form->input('600c', array('id' => '600c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c600['c'])) {
+				echo $this->Form->input('600c', array('id' => '600c', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c600['c']));
+			} else {
+				echo $this->Form->input('600c', array('id' => '600c', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$e</b></td>
 		<td>Término indicativo de función.</td>
-		<td><?php echo $this->Form->input('600e', array('id' => '600e', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c600['e'])) {
+				echo $this->Form->input('600e', array('id' => '600e', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c600['e']));
+			} else {
+				echo $this->Form->input('600e', array('id' => '600e', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$v</b></td>
 		<td>Subdivisión de forma.</td>
-		<td><?php echo $this->Form->input('600v', array('id' => '600v', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c600['v'])) {
+				echo $this->Form->input('600v', array('id' => '600v', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c600['v']));
+			} else {
+				echo $this->Form->input('600v', array('id' => '600v', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$x</b></td>
 		<td>Subdivisión de materia general.</td>
-		<td><?php echo $this->Form->input('600x', array('id' => '600x', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c600['x'])) {
+				echo $this->Form->input('600x', array('id' => '600x', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c600['x']));
+			} else {
+				echo $this->Form->input('600x', array('id' => '600x', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$y</b></td>
 		<td>Subdivisión cronológica.</td>
-		<td><?php echo $this->Form->input('600y', array('id' => '600y', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c600['y'])) {
+				echo $this->Form->input('600y', array('id' => '600y', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c600['y']));
+			} else {
+				echo $this->Form->input('600y', array('id' => '600y', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$z</b></td>
 		<td>Subdivisión geográfica.</td>
-		<td><?php echo $this->Form->input('600z', array('id' => '600z', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c600['z'])) {
+				echo $this->Form->input('600z', array('id' => '600z', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c600['z']));
+			} else {
+				echo $this->Form->input('600z', array('id' => '600z', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c610 = marc21_decode($item['Item']['610']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>610</b></th>
 		<th style="width: 45%;"><b>Punto de acceso adicional de materia - Nombre de entidad corporativa.</b></th>
 		<th style="width: 45%;">
-			<label id="l-610">&nbsp;</label>
-			<?php echo $this->Form->hidden('610', array('id' => '610', 'label' => false, 'div' => false)); ?>
+			<label id="l-610"><?php echo $item['Item']['610']; ?></label>
+			<?php echo $this->Form->hidden('610', array('id' => '610', 'label' => false, 'div' => false, 'value' => $item['Item']['610'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -2392,7 +3367,7 @@ th {
 				'0' => '0 - Nombre en orden inverso',
 				'1' => '1 - Nombre de jurisdicción',
 				'2' => '2 - Nombre en orden directo'
-			), 'selected' => '2'
+			), 'selected' => substr($c610['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -2408,53 +3383,110 @@ th {
 				'5' => '5 - Encabezamientos de Materia de Canadá',
 				'6' => '6 - Répertoire de vedettes-matière',
 				'7' => '7 - Fuente especificada en el subcampo $2'
-			)
+			), 'selected' => substr($c610['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nombre de entidad corporativa.</td>
-		<td><?php echo $this->Form->input('610a', array('id' => '610a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c610['a'])) {
+				echo $this->Form->input('610a', array('id' => '610a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c610['a']));
+			} else {
+				echo $this->Form->input('610a', array('id' => '610a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
 		<td>Unidad subordinada.</td>
-		<td><?php echo $this->Form->input('610b', array('id' => '610b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c610['b'])) {
+				echo $this->Form->input('610b', array('id' => '610b', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c610['b']));
+			} else {
+				echo $this->Form->input('610b', array('id' => '610b', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$e</b></td>
 		<td>Término indicativo de función.</td>
-		<td><?php echo $this->Form->input('610e', array('id' => '610e', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c610['e'])) {
+				echo $this->Form->input('610e', array('id' => '610e', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c610['e']));
+			} else {
+				echo $this->Form->input('610e', array('id' => '610e', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$v</b></td>
 		<td>Subdivisión de forma.</td>
-		<td><?php echo $this->Form->input('610v', array('id' => '610v', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c610['v'])) {
+				echo $this->Form->input('610v', array('id' => '610v', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c610['v']));
+			} else {
+				echo $this->Form->input('610v', array('id' => '610v', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$x</b></td>
 		<td>Subdivisión de materia general.</td>
-		<td><?php echo $this->Form->input('610x', array('id' => '610x', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c610['x'])) {
+				echo $this->Form->input('610x', array('id' => '610x', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c610['x']));
+			} else {
+				echo $this->Form->input('610x', array('id' => '610x', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$y</b></td>
 		<td>Subdivisión cronológica.</td>
-		<td><?php echo $this->Form->input('610y', array('id' => '610y', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c610['y'])) {
+				echo $this->Form->input('610y', array('id' => '610y', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c610['y']));
+			} else {
+				echo $this->Form->input('610y', array('id' => '610y', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$z</b></td>
 		<td>Subdivisión geográfica.</td>
-		<td><?php echo $this->Form->input('610z', array('id' => '610z', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c610['z'])) {
+				echo $this->Form->input('610z', array('id' => '610z', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c610['z']));
+			} else {
+				echo $this->Form->input('610z', array('id' => '610z', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c650 = marc21_decode($item['Item']['650']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>650</b></th>
 		<th style="width: 45%;"><b>Punto de acceso adicional de materia – Término de materia.</b></th>
 		<th style="width: 45%;">
-			<label id="l-650">&nbsp;</label>
-			<?php echo $this->Form->hidden('650', array('id' => '650', 'label' => false, 'div' => false)); ?>
+			<label id="l-650"><?php echo $item['Item']['650']; ?></label>
+			<?php echo $this->Form->hidden('650', array('id' => '650', 'label' => false, 'div' => false, 'value' => $item['Item']['650'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -2466,7 +3498,7 @@ th {
 				'0' => '0 - No se especifica',
 				'1' => '1 - Principal',
 				'2' => '2 - Secundaria'
-			)
+			), 'selected' => substr($c650['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -2482,43 +3514,84 @@ th {
 				'5' => '5 - Encabezamientos de Materia de Canadá',
 				'6' => '6 - Répertoire de vedettes-matière',
 				'7' => '7 - Fuente especificada en el subcampo $2'
-			)
+			), 'selected' => substr($c650['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>Materia.</td>
-		<td><?php echo $this->Form->input('650a', array('id' => '650a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>Materia <font color="red">(Obligatorio).</td>
+		<td>
+			<?php
+			if (isset($c650['a'])) {
+				echo $this->Form->input('650a', array('id' => '650a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c650['a']));
+			} else {
+				echo $this->Form->input('650a', array('id' => '650a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$v</b></td>
 		<td>Subdivisión de forma.</td>
-		<td><?php echo $this->Form->input('650v', array('id' => '650v', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c650['v'])) {
+				echo $this->Form->input('650v', array('id' => '650v', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c650['v']));
+			} else {
+				echo $this->Form->input('650v', array('id' => '650v', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$x</b></td>
 		<td>Subdivisión de materia general.</td>
-		<td><?php echo $this->Form->input('650x', array('id' => '650x', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c650['x'])) {
+				echo $this->Form->input('650x', array('id' => '650x', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c650['x']));
+			} else {
+				echo $this->Form->input('650x', array('id' => '650x', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$y</b></td>
 		<td>Subdivisión cronológica.</td>
-		<td><?php echo $this->Form->input('650y', array('id' => '650y', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c650['y'])) {
+				echo $this->Form->input('650y', array('id' => '650y', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c650['y']));
+			} else {
+				echo $this->Form->input('650y', array('id' => '650y', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$z</b></td>
 		<td>Subdivisión geográfica.</td>
-		<td><?php echo $this->Form->input('650z', array('id' => '650z', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c650['z'])) {
+				echo $this->Form->input('650z', array('id' => '650z', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c650['z']));
+			} else {
+				echo $this->Form->input('650z', array('id' => '650z', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c651 = marc21_decode($item['Item']['651']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>651</b></th>
 		<th style="width: 45%;"><b>Punto de acceso adicional de materia - Nombre geográfico.</b></th>
 		<th style="width: 45%;">
-			<label id="l-651">&nbsp;</label>
-			<?php echo $this->Form->hidden('651', array('id' => '651', 'label' => false, 'div' => false)); ?>
+			<label id="l-651"><?php echo $item['Item']['651']; ?></label>
+			<?php echo $this->Form->hidden('651', array('id' => '651', 'label' => false, 'div' => false, 'value' => $item['Item']['651'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -2530,7 +3603,7 @@ th {
 				'0' => '0 - No se especifica',
 				'1' => '1 - Principal',
 				'2' => '2 - Secundaria'
-			)
+			), 'selected' => substr($c651['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -2546,43 +3619,84 @@ th {
 				'5' => '5 - Encabezamientos de Materia de Canadá',
 				'6' => '6 - Répertoire de vedettes-matière',
 				'7' => '7 - Fuente especificada en el subcampo $2'
-			)
+			), 'selected' => substr($c651['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Materia.</td>
-		<td><?php echo $this->Form->input('651a', array('id' => '651a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c651['a'])) {
+				echo $this->Form->input('651a', array('id' => '651a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c651['a']));
+			} else {
+				echo $this->Form->input('651a', array('id' => '651a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$v</b></td>
 		<td>Subdivisión de forma.</td>
-		<td><?php echo $this->Form->input('651v', array('id' => '651v', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c651['v'])) {
+				echo $this->Form->input('651v', array('id' => '651v', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c651['v']));
+			} else {
+				echo $this->Form->input('651v', array('id' => '651v', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$x</b></td>
 		<td>Subdivisión de materia general.</td>
-		<td><?php echo $this->Form->input('651x', array('id' => '651x', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c651['x'])) {
+				echo $this->Form->input('651x', array('id' => '651x', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c651['x']));
+			} else {
+				echo $this->Form->input('651x', array('id' => '651x', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$y</b></td>
 		<td>Subdivisión cronológica.</td>
-		<td><?php echo $this->Form->input('651y', array('id' => '651y', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c651['y'])) {
+				echo $this->Form->input('651y', array('id' => '651y', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c651['y']));
+			} else {
+				echo $this->Form->input('651y', array('id' => '651y', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$z</b></td>
 		<td>Subdivisión geográfica.</td>
-		<td><?php echo $this->Form->input('651z', array('id' => '651z', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c651['z'])) {
+				echo $this->Form->input('651z', array('id' => '651z', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c651['z']));
+			} else {
+				echo $this->Form->input('651z', array('id' => '651z', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c653 = marc21_decode($item['Item']['653']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>653</b></th>
 		<th style="width: 45%;"><b>Término de indización – No controlado.</b></th>
 		<th style="width: 45%;">
-			<label id="l-653">&nbsp;</label>
-			<?php echo $this->Form->hidden('653', array('id' => '653', 'label' => false, 'div' => false)); ?>
+			<label id="l-653"><?php echo $item['Item']['653']; ?></label>
+			<?php echo $this->Form->hidden('653', array('id' => '653', 'label' => false, 'div' => false, 'value' => $item['Item']['653'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -2594,7 +3708,7 @@ th {
 				'0' => '0 - No se especifica',
 				'1' => '1 - Principal',
 				'2' => '2 - Secundaria'
-			)
+			), 'selected' => substr($c653['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -2610,41 +3724,51 @@ th {
 				'4' => '4 - Término cronológico',
 				'5' => '5 - Nombre geográfico',
 				'6' => '6 - Término de género/forma'
-			)
+			), 'selected' => substr($c653['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Palabra clave <font color="red">(Obligatorio)</font>.</td>
-		<td><?php echo $this->Form->input('653a', array('id' => '653a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c653['a'])) {
+				echo $this->Form->input('653a', array('id' => '653a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c653['a']));
+			} else {
+				echo $this->Form->input('653a', array('id' => '653a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c690 = marc21_decode($item['Item']['690']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>690</b></th>
 		<th style="width: 45%;"><b>Siglo.</b></th>
 		<th style="width: 45%;">
-			<label id="l-690">&nbsp;</label>
-			<?php echo $this->Form->hidden('690', array('id' => '690', 'label' => false, 'div' => false)); ?>
+			<label id="l-690"><?php echo $item['Item']['690']; ?></label>
+			<?php echo $this->Form->hidden('690', array('id' => '690', 'label' => false, 'div' => false, 'value' => $item['Item']['690'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>Siglo <font color="red">(Obligatorio)</font>.</td>
-		<td><?php echo $this->Form->input('690a', array('id' => '690a', 'label' => false, 'div' => false, 'class' => 'form-control', 'empty' => 'Seleccione', 'options' => array('XVII' => 'XVII', 'XVIII' => 'XVIII', 'XIX' => 'XIX', 'XX' => 'XX'))); ?></td>
+		<td>Siglo.</td>
+		<td><?php echo $this->Form->input('690a', array('id' => '690a', 'label' => false, 'div' => false, 'class' => 'form-control', 'selected' => $c690['a'], 'options' => array('XVII' => 'XVII', 'XVIII' => 'XVIII', 'XIX' => 'XIX', 'XX' => 'XX'))); ?></td>
 	</tr>
 </table>
 </div>
 
 <div id="7xx" class="tabs" style="display: none;">
+<?php $c700 = marc21_decode($item['Item']['700']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>700</b></th>
 		<th style="width: 45%;"><b>Punto de acceso adicional - Nombre personal.</b></th>
 		<th style="width: 45%;">
-			<label id="l-700">&nbsp;</label>
-			<?php echo $this->Form->hidden('700', array('id' => '700', 'label' => false, 'div' => false)); ?>
+			<label id="l-700"><?php echo $item['Item']['700']; ?></label>
+			<?php echo $this->Form->hidden('700', array('id' => '700', 'label' => false, 'div' => false, 'value' => $item['Item']['700'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -2655,7 +3779,7 @@ th {
 				'0' => '0 - Nombre',
 				'1' => '1 - Apellido(s)',
 				'3' => '3 - Nombre de familia'
-			), 'selected' => '1'
+			), 'selected' => substr($c700['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -2665,58 +3789,123 @@ th {
 			'options' => array(
 				'#' => '# - No se proporciona información',
 				'2' => '2 - Entrada analítica'
-			)
+			), 'selected' => substr($c700['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nombre de persona.</td>
-		<td><?php echo $this->Form->input('700a', array('id' => '700a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c700['a'])) {
+				echo $this->Form->input('700a', array('id' => '700a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c700['a']));
+			} else {
+				echo $this->Form->input('700a', array('id' => '700a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
 		<td>Numeración.</td>
-		<td><?php echo $this->Form->input('700b', array('id' => '700b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c700['b'])) {
+				echo $this->Form->input('700b', array('id' => '700b', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c700['b']));
+			} else {
+				echo $this->Form->input('700b', array('id' => '700b', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
 		<td>Títulos y otros términos asociados al nombre.</td>
-		<td><?php echo $this->Form->input('700c', array('id' => '700c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c700['c'])) {
+				echo $this->Form->input('700c', array('id' => '700c', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c700['c']));
+			} else {
+				echo $this->Form->input('700c', array('id' => '700c', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$d</b></td>
 		<td>Fechas asociadas al nombre.</td>
-		<td><?php echo $this->Form->input('700d', array('id' => '700d', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c700['d'])) {
+				echo $this->Form->input('700d', array('id' => '700d', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c700['d']));
+			} else {
+				echo $this->Form->input('700d', array('id' => '700d', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$e</b></td>
 		<td>Término indicativo de función.</td>
-		<td><?php echo $this->Form->input('700e', array('id' => '700e', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c700['e'])) {
+				echo $this->Form->input('700e', array('id' => '700e', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c700['e']));
+			} else {
+				echo $this->Form->input('700e', array('id' => '700e', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$q</b></td>
 		<td>Forma desarrollada del nombre.</td>
-		<td><?php echo $this->Form->input('700q', array('id' => '700q', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c700['q'])) {
+				echo $this->Form->input('700q', array('id' => '700q', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c700['q']));
+			} else {
+				echo $this->Form->input('700q', array('id' => '700q', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$t</b></td>
 		<td>Título de la obra.</td>
-		<td><?php echo $this->Form->input('700t', array('id' => '700t', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c700['t'])) {
+				echo $this->Form->input('700t', array('id' => '700t', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c700['t']));
+			} else {
+				echo $this->Form->input('700t', array('id' => '700t', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$4</b></td>
 		<td>Código de función.</td>
-		<td><?php echo $this->Form->input('7004', array('id' => '7004', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c700['4'])) {
+				echo $this->Form->input('7004', array('id' => '7004', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c700['4']));
+			} else {
+				echo $this->Form->input('7004', array('id' => '7004', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c710 = marc21_decode($item['Item']['710']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>710</b></th>
 		<th style="width: 45%;"><b>Punto de acceso adicional - Nombre corporativo.</b></th>
 		<th style="width: 45%;">
-			<label id="l-710">&nbsp;</label>
-			<?php echo $this->Form->hidden('710', array('id' => '710', 'label' => false, 'div' => false)); ?>
+			<label id="l-710"><?php echo $item['Item']['710']; ?></label>
+			<?php echo $this->Form->hidden('710', array('id' => '710', 'label' => false, 'div' => false, 'value' => $item['Item']['710'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -2727,7 +3916,7 @@ th {
 				'0' => '0 - Nombre en orden inverso',
 				'1' => '1 – Nombre de jurisdicción',
 				'3' => '3 - Nombre en orden directo'
-			)
+			), 'selected' => substr($c710['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -2737,43 +3926,84 @@ th {
 			'options' => array(
 				'#' => '# - No se proporciona información',
 				'2' => '2 - Entrada analítica'
-			)
+			), 'selected' => substr($c710['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nombre de persona.</td>
-		<td><?php echo $this->Form->input('710a', array('id' => '710a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c710['a'])) {
+				echo $this->Form->input('710a', array('id' => '710a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c710['a']));
+			} else {
+				echo $this->Form->input('710a', array('id' => '710a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
 		<td>Numeración.</td>
-		<td><?php echo $this->Form->input('710b', array('id' => '710b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c710['b'])) {
+				echo $this->Form->input('710b', array('id' => '710b', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c710['b']));
+			} else {
+				echo $this->Form->input('710b', array('id' => '710b', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$e</b></td>
 		<td>Forma desarrollada del nombre.</td>
-		<td><?php echo $this->Form->input('710e', array('id' => '710e', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c710['e'])) {
+				echo $this->Form->input('710e', array('id' => '710e', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c710['e']));
+			} else {
+				echo $this->Form->input('710e', array('id' => '710e', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$t</b></td>
 		<td>Título de la obra.</td>
-		<td><?php echo $this->Form->input('710t', array('id' => '710t', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c710['t'])) {
+				echo $this->Form->input('710t', array('id' => '710t', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c710['t']));
+			} else {
+				echo $this->Form->input('710t', array('id' => '710t', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$4</b></td>
 		<td>Código de función.</td>
-		<td><?php echo $this->Form->input('7104', array('id' => '7104', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c710['4'])) {
+				echo $this->Form->input('7104', array('id' => '7104', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c710['4']));
+			} else {
+				echo $this->Form->input('7104', array('id' => '7104', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c740 = marc21_decode($item['Item']['740']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>740</b></th>
 		<th style="width: 45%;"><b>Punto de acceso adicional - Título relacionado o analítico no controlado.</b></th>
 		<th style="width: 45%;">
-			<label id="l-740">&nbsp;</label>
-			<?php echo $this->Form->hidden('740', array('id' => '740', 'label' => false, 'div' => false)); ?>
+			<label id="l-740"><?php echo $item['Item']['740']; ?></label>
+			<?php echo $this->Form->hidden('740', array('id' => '740', 'label' => false, 'div' => false, 'value' => $item['Item']['740'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -2791,7 +4021,7 @@ th {
 				'7' => '7',
 				'8' => '8',
 				'9' => '9',		
-			), 'selected' => '0'
+			), 'selected' => substr($c740['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -2801,33 +4031,58 @@ th {
 			'options' => array(
 				'0' => '0 - No hay punto de acceso adicional',
 				'1' => '1 - Hay punto de acceso adicional'
-			), 'selected' => '1'
+			), 'selected' => substr($c740['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Título relacionado o analítico no controlado.</td>
-		<td><?php echo $this->Form->input('740a', array('id' => '740a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c740['a'])) {
+				echo $this->Form->input('740a', array('id' => '740a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c740['a']));
+			} else {
+				echo $this->Form->input('740a', array('id' => '740a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$n</b></td>
 		<td>Número de la parte o sección de una obra.</td>
-		<td><?php echo $this->Form->input('740n', array('id' => '740n', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c740['n'])) {
+				echo $this->Form->input('740n', array('id' => '740n', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c740['n']));
+			} else {
+				echo $this->Form->input('740n', array('id' => '740n', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$p</b></td>
 		<td>Nombre de la parte/sección de una obra.</td>
-		<td><?php echo $this->Form->input('740p', array('id' => '740p', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c740['p'])) {
+				echo $this->Form->input('740p', array('id' => '740p', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c740['p']));
+			} else {
+				echo $this->Form->input('740p', array('id' => '740p', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c773 = marc21_decode($item['Item']['773']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>773</b></th>
 		<th style="width: 45%;"><b>Enlace al documento fuente.</b></th>
 		<th style="width: 45%;">
-			<label id="l-773">&nbsp;</label>
-			<?php echo $this->Form->hidden('773', array('id' => '773', 'label' => false, 'div' => false)); ?>
+			<label id="l-773"><?php echo $item['Item']['773']; ?></label>
+			<?php echo $this->Form->hidden('773', array('id' => '773', 'label' => false, 'div' => false, 'value' => $item['Item']['773'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -2837,7 +4092,7 @@ th {
 			'options' => array(
 				'0' => '0 - Genera nota',
 				'1' => '1 - No genera nota'
-			), 'selected' => '1'
+			), 'selected' => substr($c773['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -2847,86 +4102,176 @@ th {
 			'options' => array(
 				'#' => '# - En',
 				'8' => '8 - No genera visualización asociada'
-			)
+			), 'selected' => substr($c773['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Autor.</td>
-		<td><?php echo $this->Form->input('773a', array('id' => '773a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c773['a'])) {
+				echo $this->Form->input('773a', array('id' => '773a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c773['a']));
+			} else {
+				echo $this->Form->input('773a', array('id' => '773a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
 		<td>Edición.</td>
-		<td><?php echo $this->Form->input('773b', array('id' => '773b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c773['b'])) {
+				echo $this->Form->input('773b', array('id' => '773b', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c773['b']));
+			} else {
+				echo $this->Form->input('773b', array('id' => '773b', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$d</b></td>
 		<td>Lugar, editor y fecha de publicación.</td>
-		<td><?php echo $this->Form->input('773d', array('id' => '773d', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c773['d'])) {
+				echo $this->Form->input('773d', array('id' => '773d', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c773['d']));
+			} else {
+				echo $this->Form->input('773d', array('id' => '773d', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$g</b></td>
 		<td>Parte(s) relacionada(s).</td>
-		<td><?php echo $this->Form->input('773g', array('id' => '773g', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c773['g'])) {
+				echo $this->Form->input('773g', array('id' => '773g', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c773['g']));
+			} else {
+				echo $this->Form->input('773g', array('id' => '773g', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$h</b></td>
 		<td>Descripción física.</td>
-		<td><?php echo $this->Form->input('773h', array('id' => '773h', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c773['h'])) {
+				echo $this->Form->input('773h', array('id' => '773h', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c773['h']));
+			} else {
+				echo $this->Form->input('773h', array('id' => '773h', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$k</b></td>
 		<td>Datos de la serie del documento relacionado.</td>
-		<td><?php echo $this->Form->input('773k', array('id' => '773k', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c773['k'])) {
+				echo $this->Form->input('773k', array('id' => '773k', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c773['k']));
+			} else {
+				echo $this->Form->input('773k', array('id' => '773k', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$n</b></td>
 		<td>Nota.</td>
-		<td><?php echo $this->Form->input('773n', array('id' => '773n', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c773['n'])) {
+				echo $this->Form->input('773n', array('id' => '773n', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c773['n']));
+			} else {
+				echo $this->Form->input('773n', array('id' => '773n', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$q</b></td>
 		<td>Numeración y primera página.</td>
-		<td><?php echo $this->Form->input('773q', array('id' => '773q', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c773['q'])) {
+				echo $this->Form->input('773q', array('id' => '773q', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c773['q']));
+			} else {
+				echo $this->Form->input('773q', array('id' => '773q', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$t</b></td>
 		<td>Título.</td>
-		<td><?php echo $this->Form->input('773t', array('id' => '773t', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c773['t'])) {
+				echo $this->Form->input('773t', array('id' => '773t', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c773['t']));
+			} else {
+				echo $this->Form->input('773t', array('id' => '773t', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$z</b></td>
 		<td>Número Internacional Normalizado para Libros (ISBN).</td>
-		<td><?php echo $this->Form->input('773z', array('id' => '773z', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c773['z'])) {
+				echo $this->Form->input('773z', array('id' => '773z', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c773['z']));
+			} else {
+				echo $this->Form->input('773z', array('id' => '773z', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 </div>
 
 <div id="8xx" class="tabs" style="display: none;">
+<?php $c850 = marc21_decode($item['Item']['850']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>850</b></th>
 		<th style="width: 45%;"><b>Institución que posee los fondos.</b></th>
 		<th style="width: 45%;">
-			<label id="l-850">&nbsp;</label>
-			<?php echo $this->Form->hidden('850', array('id' => '850', 'label' => false, 'div' => false)); ?>
+			<label id="l-850"><?php echo $item['Item']['850']; ?></label>
+			<?php echo $this->Form->hidden('850', array('id' => '850', 'label' => false, 'div' => false, 'value' => $item['Item']['850'])); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nombre de la institución que posee los fondos.</td>
-		<td><?php echo $this->Form->input('850a', array('id' => '850a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c850['a'])) {
+				echo $this->Form->input('850a', array('id' => '850a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c850['a']));
+			} else {
+				echo $this->Form->input('850a', array('id' => '850a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c852 = marc21_decode($item['Item']['852']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>852</b></th>
 		<th style="width: 45%;"><b>Localización.</b></th>
 		<th style="width: 45%;">
-			<label id="l-852">&nbsp;</label>
-			<?php echo $this->Form->hidden('852', array('id' => '852', 'label' => false, 'div' => false)); ?>
+			<label id="l-852"><?php echo $item['Item']['852']; ?></label>
+			<?php echo $this->Form->hidden('852', array('id' => '852', 'label' => false, 'div' => false, 'value' => $item['Item']['852'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -2944,7 +4289,7 @@ th {
 				'6' => '6 - Colocación dispersa',
 				'7' => '7 - Fuente especificada en el subcampo $2',
 				'8' => '8 - Otro sistema'
-			)
+			), 'selected' => substr($c852['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -2956,58 +4301,123 @@ th {
 				'0' => '0 - Sin numeración',
 				'1' => '1 - Por numeración principal',
 				'2' => '2 - Por numeración alternativa'
-			)
+			), 'selected' => substr($c852['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Localización.</td>
-		<td><?php echo $this->Form->input('852a', array('id' => '852a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c852['a'])) {
+				echo $this->Form->input('852a', array('id' => '852a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c852['a']));
+			} else {
+				echo $this->Form->input('852a', array('id' => '852a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
 		<td>Sublocalización o colección.</td>
-		<td><?php echo $this->Form->input('852b', array('id' => '852b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c852['b'])) {
+				echo $this->Form->input('852b', array('id' => '852b', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c852['b']));
+			} else {
+				echo $this->Form->input('852b', array('id' => '852b', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
 		<td>Ubicación en estantería.</td>
-		<td><?php echo $this->Form->input('852c', array('id' => '852c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c852['c'])) {
+				echo $this->Form->input('852c', array('id' => '852c', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c852['c']));
+			} else {
+				echo $this->Form->input('852c', array('id' => '852c', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$h</b></td>
 		<td>Parte de la signatura que corresponde a la clasificación.</td>
-		<td><?php echo $this->Form->input('852h', array('id' => '852h', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c852['h'])) {
+				echo $this->Form->input('852h', array('id' => '852h', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c852['h']));
+			} else {
+				echo $this->Form->input('852h', array('id' => '852h', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$i</b></td>
 		<td>Parte de la signatura que identifica al ejemplar.</td>
-		<td><?php echo $this->Form->input('852i', array('id' => '852i', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c852['i'])) {
+				echo $this->Form->input('852i', array('id' => '852i', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c852['i']));
+			} else {
+				echo $this->Form->input('852i', array('id' => '852i', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$j</b></td>
 		<td>Número de control en estantería.</td>
-		<td><?php echo $this->Form->input('852j', array('id' => '852j', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c852['j'])) {
+				echo $this->Form->input('852j', array('id' => '852j', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c852['j']));
+			} else {
+				echo $this->Form->input('852j', array('id' => '852j', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$k</b></td>
 		<td>Prefijo de la signatura.</td>
-		<td><?php echo $this->Form->input('852k', array('id' => '852k', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c852['k'])) {
+				echo $this->Form->input('852k', array('id' => '852k', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c852['k']));
+			} else {
+				echo $this->Form->input('852k', array('id' => '852k', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$m</b></td>
 		<td>Sufijo de la signatura.</td>
-		<td><?php echo $this->Form->input('852m', array('id' => '852m', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c852['m'])) {
+				echo $this->Form->input('852m', array('id' => '852m', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c852['m']));
+			} else {
+				echo $this->Form->input('852m', array('id' => '852m', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
+<?php $c856 = marc21_decode($item['Item']['856']); ?>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>856</b></th>
 		<th style="width: 45%;"><b>Localización y acceso electrónicos.</b></th>
 		<th style="width: 45%;">
-			<label id="l-856">&nbsp;</label>
-			<?php echo $this->Form->hidden('856', array('id' => '856', 'label' => false, 'div' => false)); ?>
+			<label id="l-856"><?php echo $item['Item']['856']; ?></label>
+			<?php echo $this->Form->hidden('856', array('id' => '856', 'label' => false, 'div' => false, 'value' => $item['Item']['856'])); ?>
 		</th>
 	</tr>
 	<tr>
@@ -3022,7 +4432,7 @@ th {
 				'3' => '3 - Llamada telefónica',
 				'4' => '4 – HTTP',
 				'7' => '7 - Método especificado en el subcampo $2'
-			)
+			), 'selected' => substr($c856['indicators'], 0, 1)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -3035,23 +4445,47 @@ th {
 				'1' => '1 - Versión del recurso',
 				'2' => '2 - Recurso relacionado',
 				'8' => '8 - No hay visualización asociada'
-			)
+			), 'selected' => substr($c856['indicators'], 1, 1)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nombre del host.</td>
-		<td><?php echo $this->Form->input('856a', array('id' => '856a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c856['a'])) {
+				echo $this->Form->input('856a', array('id' => '856a', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c856['a']));
+			} else {
+				echo $this->Form->input('856a', array('id' => '856a', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$d</b></td>
 		<td>Ruta.</td>
-		<td><?php echo $this->Form->input('856d', array('id' => '856d', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c856['d'])) {
+				echo $this->Form->input('856d', array('id' => '856d', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c856['d']));
+			} else {
+				echo $this->Form->input('856d', array('id' => '856d', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 	<tr>
 		<td><b>$u</b></td>
 		<td>Dirección electrónica.</td>
-		<td><?php echo $this->Form->input('856u', array('id' => '856u', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>
+			<?php
+			if (isset($c856['u'])) {
+				echo $this->Form->input('856u', array('id' => '856u', 'label' => false, 'div' => false, 'class' => 'form-control', 'value' => $c856['u']));
+			} else {
+				echo $this->Form->input('856u', array('id' => '856u', 'label' => false, 'div' => false, 'class' => 'form-control'));
+			}
+			?>
+		</td>
 	</tr>
 </table>
 
@@ -3066,32 +4500,47 @@ th {
 		</tr>
 		<tr>
 			<td>
+				<div style="float: left; width: 20%;">
+				<?php
+				if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/webroot/covers/" . $item['Item']['cover_path']))){
+					echo $this->Html->image("/webroot/covers/" . $item['Item']['cover_path'], array('width' => '70px'));
+				} else {
+					echo $this->Html->image("/webroot/img/sin_portada.jpg", array('width' => '70px'));
+				}
+				?>
+				</div>
+				<div style="float: left; width: 80%;">
+				<br />
 				<?php echo $this->Form->input('cover', array('label' => false, 'type' => 'file', 'style' => 'width: 100%')); ?>
+				</div>
 			</td>
 			<td>
-				<?php
-					echo $this->Form->input('item', array('label' => false, 'type' => 'file', 'style' => 'width: 100%'));
-					echo "<b>Tamaño máximo permitido: " . ini_get('upload_max_filesize') . '.</b>';
-				?>
+				<br />
+				<?php echo $this->Form->input('item', array('label' => false, 'type' => 'file', 'style' => 'width: 100%')); ?>
 			</td>
 		</tr>
 	</table>
 	
-	<input type="checkbox" id="BookPublished" value="1" checked="checked" name="data[Book][published]" style="width: 30px;">Publicado
-
+	<input type="checkbox" id="IconographiePublished" value="1" checked="checked" name="data[Iconographie][published]" style="width: 30px;">Publicado
+	
 	<div style="text-align: right;"><a href="#top" class="btn btn-primary">Ir Arriba</a></div>
 	
 	<br />
 	
 	<div class="text-center">
-		<?php echo $this->Form->submit('Guardar', array('id' => 'guardar', 'class' => 'btn btn-primary')); ?>
+		<?php
+			echo $this->Form->submit('Guardar', array('id' => 'guardar', 'class' => 'btn btn-primary', 'div' => false));
+			echo "&nbsp;";
+			//echo $this->Form->link('Cancelar', array('id' => 'cancelar', 'class' => 'btn btn-primary', 'div' => false, 'style' => 'width: 200px;'));
+			echo $this->Html->link('Cancelar', 'view/'.$item['Item']['id'], array('class' => 'btn btn-primary', 'style' => 'width: 200px;'));
+		?>
 	</div>
 	
 <?php echo $this->Form->end();?>
 </div>
 </div>
 
-<div style="clear: both;"></div>
+<div style="clear: both;"><br /><br /></div>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -3101,7 +4550,7 @@ $(document).ready(function() {
 	$(".tab").click(function(event) {
 		var id = $(this).attr('id');
 
-		if (id.localeCompare("t4xx") && id.localeCompare("t9xx")) {
+		if  (id.localeCompare("t9xx")) {
 			$(".tabs").hide();
 			$('.active').removeClass('active');
 			$(this).parent().addClass('active');
@@ -3111,7 +4560,7 @@ $(document).ready(function() {
 		if (id == "t1xx"){ $('#1xx').show(); }
 		if (id == "t2xx"){ $('#2xx').show(); }
 		if (id == "t3xx"){ $('#3xx').show(); }
-		//if (id == "t4xx"){ $('#4xx').show(); }
+		if (id == "t4xx"){ $('#4xx').show(); }
 		if (id == "t5xx"){ $('#5xx').show(); }
 		if (id == "t6xx"){ $('#6xx').show(); }
 		if (id == "t7xx"){ $('#7xx').show(); }
@@ -3123,10 +4572,77 @@ $(document).ready(function() {
 	
 	//-------------- Validaciones ---------------
 	
+	/*
+	$("#tipo").change(function(event) {
+		var valor = $(this).val();
+
+		$("#BookH-005 option[value=n]").attr("selected", true);
+		$("#BookH-017 option[value=7]").attr("selected", true);
+		$("#BookH-018 option[value=a]").attr("selected", true);
+		
+		switch (valor){
+			case '1': 	$("#BookH-006 option[value=a]").attr("selected", true);
+						$("#BookH-007 option[value=m]").attr("selected", true);
+						break;
+						
+			case '2': 	$("#BookH-006 option[value=a]").attr("selected", true);
+						$("#BookH-007 option[value=s]").attr("selected", true);
+						break;
+						
+			case '3': 	$("#BookH-006 option[value=a]").attr("selected", true);
+						$("#BookH-007 option[value=a]").attr("selected", true);
+						break;
+						
+			case '4': 	$("#BookH-006 option[value=a]").attr("selected", true);
+						$("#BookH-007 option[value=b]").attr("selected", true);
+						break;
+						
+			case '5': 	$("#BookH-006 option[value=c]").attr("selected", true);
+						$("#BookH-007 option[value=m]").attr("selected", true);
+						break;
+						
+			case '6': 	$("#BookH-006 option[value=d]").attr("selected", true);
+						$("#BookH-007 option[value=m]").attr("selected", true);
+						break;
+						
+			case '7': 	$("#BookH-006 option[value=c]").attr("selected", true);
+						$("#BookH-007 option[value=a]").attr("selected", true);
+						break;
+						
+			case '8': 	$("#BookH-006 option[value=d]").attr("selected", true);
+						$("#BookH-007 option[value=a]").attr("selected", true);
+						break;
+						
+			case '9': 	$("#BookH-006 option[value=c]").attr("selected", true);
+						$("#BookH-007 option[value=b]").attr("selected", true);
+						break;
+			
+			case '10': 	$("#BookH-006 option[value=c]").attr("selected", true);
+						$("#BookH-007 option[value=c]").attr("selected", true);
+						break;
+			
+			case '11': 	$("#BookH-006 option[value=d]").attr("selected", true);
+						$("#BookH-007 option[value=c]").attr("selected", true);
+						break;
+						
+			case '12': 	$("#BookH-006 option[value=k]").attr("selected", true);
+						$("#BookH-007 option[value=m]").attr("selected", true);
+						break;
+						
+			case '13': 	$("#BookH-006 option[value=k]").attr("selected", true);
+						$("#BookH-007 option[value=a]").attr("selected", true);
+						break;
+						
+			case '14': 	$("#BookH-006 option[value=k]").attr("selected", true);
+						$("#BookH-007 option[value=b]").attr("selected", true);
+						break;
+		}
+	});*/
+		
 	$("#008-07-10").change(function(event) {
 		if($("#008-07-10 option:selected").val() != 'pf'){
 			$("#fecha008-07-10").prop('disabled', true);
-			$("#fecha008-07-10").val('yymmdd');
+			$("#fecha008-07-10").val('aammdd');
 		} else {
 			$("#fecha008-07-10").prop('disabled', false);
 		}
@@ -3135,14 +4651,14 @@ $(document).ready(function() {
 	$("#008-11-14").change(function(event) {
 		if($("#008-11-14 option:selected").val() != 'sf'){
 			$("#fecha008-11-14").prop('disabled', true);
-			$("#fecha008-11-14").val('yymmdd');
+			$("#fecha008-11-14").val('aammdd');
 		} else {
 			$("#fecha008-11-14").prop('disabled', false);
 		}
 	});
 
 	// El campo 008 al cargar la pagina.
-	var tmp_008 = "";
+	/*var tmp_008 = "";
 
 	if ($('#008-06').val().length > 0) {
 		tmp_008 = tmp_008 + $('#008-06').val();
@@ -3189,12 +4705,12 @@ $(document).ready(function() {
 	}
 	
 	if (tmp_008.length > 0) {
-		$("#008").val('<?php echo date('ymd', time()); ?>' + tmp_008);
-		$("#l-008").html('<?php echo date('ymd', time()); ?>' + tmp_008);
+		$("#008").val('<?php //echo date('ymd', time()); ?>' + tmp_008);
+		$("#l-008").html('<?php //echo date('ymd', time()); ?>' + tmp_008);
 	} else {
 		$("#008").val('');
 		$("#l-008").html('&nbsp;');
-	}
+	}*/
 	
 	$("#008-06").change(function(event) {
 		var tmp_008 = "";
@@ -9572,7 +11088,7 @@ $(document).ready(function() {
 	//-------------- Validaciones ---------------
 	
 	// Campos obligatorios vacíos.
-	$('#BookAddForm').submit(function(event) {
+	$('#IconographieAddForm').submit(function(event) {
 		if ($('#100a').val() == ""){
 			alert("EL campo 'Nombre de persona' no puede estar vacío.");
 			$(".tabs").hide();
@@ -9622,6 +11138,15 @@ $(document).ready(function() {
 			$('#260c').focus();
 			return false;
 		}
+		if ($('#650a').val() == ""){
+			alert("EL campo 'Materia.' No puede estar vacío.");
+			$(".tabs").hide();
+			$('.active').removeClass('active');
+			$('#t6xx').parent().addClass('active');
+			$('#6xx').show();
+			$('#650a').focus();
+			return false;
+		}
 
 		if ($('#653a').val() == ""){
 			alert("EL campo 'Término de indización – No controlado' no puede estar vacío.");
@@ -9630,6 +11155,15 @@ $(document).ready(function() {
 			$('#t6xx').parent().addClass('active');
 			$('#6xx').show();
 			$('#653a').focus();
+			return false;
+		}
+		if ($('#773t').val() == ""){
+			alert("EL campo 'Autor.' No puede estar vacío.");
+			$(".tabs").hide();
+			$('.active').removeClass('active');
+			$('#t7xx').parent().addClass('active');
+			$('#7xx').show();
+			$('#773t').focus();
 			return false;
 		}
 
@@ -9643,13 +11177,13 @@ $(document).ready(function() {
 			return false;
 		}
 
-		if ($('#BookCover').val() == ""){
+		if ($('#IconographieCover').val() == ""){
 			alert("Debe seleccionar una portada para la obra.");
 			$('#ItemItem').focus();
 			return false;
 		}
 
-		if ($('#BookItem').val() == ""){
+		if ($('#IconographieItem').val() == ""){
 			alert("Debe seleccionar el archivo o documento de la obra.");
 			$('#ItemItem').focus();
 			return false;

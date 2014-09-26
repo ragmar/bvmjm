@@ -74,8 +74,8 @@ th {
 		<?php
 		echo $this->Form->input('h-007', array('label' => false, 'class' => 'form-control',
 			'options' => array(
-				/*'a' => 'a - Parte componente monográfica.',
-				'b' => 'b - Parte componente seriada.',
+				/*'a' => 'a - Parte componente monográfica.',*/
+				'b' => 'b - Parte componente seriada.',/*
 				'c' => 'c - Colección.',
 				'd' => 'd - Subunidad.',
 				'i' => 'i - Recurso integrable.',
@@ -1225,7 +1225,7 @@ th {
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>ISBN.</td>
+		<td>ISBN <font color="red">(Obligatorio)</font>.</td>
 		<td><?php echo $this->Form->input('020a', array('id' => '020a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
@@ -2000,7 +2000,7 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nota general.</td>
-		<td><?php echo $this->Form->input('500a', array('id' => '500a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('500a', array('id' => '500a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
 	</tr>
 </table>
 
@@ -2016,7 +2016,7 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Con.</td>
-		<td><?php echo $this->Form->input('501a', array('id' => '501a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('501a', array('id' => '501a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
 	</tr>
 </table>
 
@@ -2054,7 +2054,7 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nota de contenido con formato.</td>
-		<td><?php echo $this->Form->input('505a', array('id' => '505a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('505a', array('id' => '505a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
 	</tr>
 </table>
 
@@ -2092,12 +2092,12 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nombre de la fuente.</td>
-		<td><?php echo $this->Form->input('510a', array('id' => '510a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('510a', array('id' => '510a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
 		<td>Localización dentro de la fuente.</td>
-		<td><?php echo $this->Form->input('510c', array('id' => '510c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('510c', array('id' => '510c', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
 	</tr>
 </table>
 
@@ -2113,7 +2113,7 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nota de peculiaridades de la numeración.</td>
-		<td><?php echo $this->Form->input('515a', array('id' => '515a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('515a', array('id' => '515a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
 	</tr>
 </table>
 
@@ -2153,7 +2153,7 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Sumario, etc.</td>
-		<td><?php echo $this->Form->input('520a', array('id' => '520a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('520a', array('id' => '520a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
 	</tr>
 </table>
 
@@ -2169,17 +2169,17 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nota de formato físico adicional disponible.</td>
-		<td><?php echo $this->Form->input('530a', array('id' => '530a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('530a', array('id' => '530a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
 		<td>Condiciones de adquisición.</td>
-		<td><?php echo $this->Form->input('530c', array('id' => '530c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('530c', array('id' => '530c', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$u</b></td>
 		<td>Dirección electrónica.</td>
-		<td><?php echo $this->Form->input('530u', array('id' => '530u', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('530u', array('id' => '530u', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
 	</tr>
 </table>
 
@@ -2195,22 +2195,22 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Autor.</td>
-		<td><?php echo $this->Form->input('534a', array('id' => '534a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('534a', array('id' => '534a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
 		<td>Publicación, distribución, etc. del original.</td>
-		<td><?php echo $this->Form->input('534c', array('id' => '534c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('534c', array('id' => '534c', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$l</b></td>
 		<td>Localización del original.</td>
-		<td><?php echo $this->Form->input('534l', array('id' => '534l', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('534l', array('id' => '534l', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$p</b></td>
 		<td>Frase introductoria.</td>
-		<td><?php echo $this->Form->input('534p', array('id' => '534p', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('534p', array('id' => '534p', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
 	</tr>
 </table>
 
@@ -2226,12 +2226,12 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nota de lengua.</td>
-		<td><?php echo $this->Form->input('546a', array('id' => '546a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('546a', array('id' => '546a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
 		<td>Información sobre el código o alfabeto.</td>
-		<td><?php echo $this->Form->input('546c', array('id' => '546c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('546c', array('id' => '546c', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
 	</tr>
 </table>
 
@@ -2247,22 +2247,22 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nota de índice acumulativo u otros instrumentos bibliográficos.</td>
-		<td><?php echo $this->Form->input('555a', array('id' => '555a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('555a', array('id' => '555a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
 		<td>Fuente de la adquisición.</td>
-		<td><?php echo $this->Form->input('555b', array('id' => '555b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('555b', array('id' => '555b', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$d</b></td>
 		<td>Referencia bibliográfica.</td>
-		<td><?php echo $this->Form->input('555d', array('id' => '555d', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('555d', array('id' => '555d', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$u</b></td>
 		<td>Dirección electrónica.</td>
-		<td><?php echo $this->Form->input('555u', array('id' => '555u', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('555u', array('id' => '555u', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
 	</tr>
 </table>
 
@@ -2278,7 +2278,7 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nota de fuente de la descripción.</td>
-		<td><?php echo $this->Form->input('588a', array('id' => '588a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('588a', array('id' => '588a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
 	</tr>
 </table>
 </div>
@@ -2603,7 +2603,7 @@ th {
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>Palabra clave <font color="red">(Obligatorio)</font>.</td>
+		<td>Palabra clave.</td>
 		<td><?php echo $this->Form->input('653a', array('id' => '653a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
@@ -9561,6 +9561,16 @@ $(document).ready(function() {
 	
 	// Campos obligatorios vacíos.
 	$('#MagazineAddForm').submit(function(event) {
+		if (($('#020a').val() == "") && ($('#MagazineH-007 option:selected').val() == 's')){
+			alert("EL campo 'ISBN' no puede estar vacío.");
+			$(".tabs").hide();
+			$('.active').removeClass('active');
+			$('#t0xx').parent().addClass('active');
+			$('#0xx').show();
+			$('#020a').focus();
+			return false;
+		}
+
 		if ($('#100a').val() == ""){
 			alert("EL campo 'Nombre de persona' no puede estar vacío.");
 			$(".tabs").hide();
@@ -9611,7 +9621,7 @@ $(document).ready(function() {
 			return false;
 		}
 
-		if ($('#653a').val() == ""){
+		/*if ($('#653a').val() == ""){
 			alert("EL campo 'Término de indización – No controlado' no puede estar vacío.");
 			$(".tabs").hide();
 			$('.active').removeClass('active');
@@ -9619,7 +9629,7 @@ $(document).ready(function() {
 			$('#6xx').show();
 			$('#653a').focus();
 			return false;
-		}
+		}*/
 
 		if ($('#690a option:selected').val() == ""){
 			alert("EL campo 'Siglo' no puede estar vacío.");
@@ -9631,6 +9641,106 @@ $(document).ready(function() {
 			return false;
 		}
 
+		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773a').val() == "")){
+			alert("EL campo 'Autor' no puede estar vacío.");
+			$(".tabs").hide();
+			$('.active').removeClass('active');
+			$('#t7xx').parent().addClass('active');
+			$('#7xx').show();
+			$('#773a').focus();
+			return false;
+		}
+
+		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773b').val() == "")){
+			alert("EL campo 'Edición' no puede estar vacío.");
+			$(".tabs").hide();
+			$('.active').removeClass('active');
+			$('#t7xx').parent().addClass('active');
+			$('#7xx').show();
+			$('#773b').focus();
+			return false;
+		}
+
+		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773d').val() == "")){
+			alert("EL campo 'Lugar, editor y fecha de publicación' no puede estar vacío.");
+			$(".tabs").hide();
+			$('.active').removeClass('active');
+			$('#t7xx').parent().addClass('active');
+			$('#7xx').show();
+			$('#773d').focus();
+			return false;
+		}
+
+		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773g').val() == "")){
+			alert("EL campo 'Parte(s) relacionada(s)' no puede estar vacío.");
+			$(".tabs").hide();
+			$('.active').removeClass('active');
+			$('#t7xx').parent().addClass('active');
+			$('#7xx').show();
+			$('#773g').focus();
+			return false;
+		}
+
+		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773h').val() == "")){
+			alert("EL campo 'Descripción física' no puede estar vacío.");
+			$(".tabs").hide();
+			$('.active').removeClass('active');
+			$('#t7xx').parent().addClass('active');
+			$('#7xx').show();
+			$('#773h').focus();
+			return false;
+		}
+
+		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773k').val() == "")){
+			alert("EL campo 'Datos de la serie del documento relacionado' no puede estar vacío.");
+			$(".tabs").hide();
+			$('.active').removeClass('active');
+			$('#t7xx').parent().addClass('active');
+			$('#7xx').show();
+			$('#773k').focus();
+			return false;
+		}
+
+		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773n').val() == "")){
+			alert("EL campo 'Nota' no puede estar vacío.");
+			$(".tabs").hide();
+			$('.active').removeClass('active');
+			$('#t7xx').parent().addClass('active');
+			$('#7xx').show();
+			$('#773n').focus();
+			return false;
+		}
+
+		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773q').val() == "")){
+			alert("EL campo 'Numeración y primera página' no puede estar vacío.");
+			$(".tabs").hide();
+			$('.active').removeClass('active');
+			$('#t7xx').parent().addClass('active');
+			$('#7xx').show();
+			$('#773q').focus();
+			return false;
+		}
+
+		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773t').val() == "")){
+			alert("EL campo 'Título' no puede estar vacío.");
+			$(".tabs").hide();
+			$('.active').removeClass('active');
+			$('#t7xx').parent().addClass('active');
+			$('#7xx').show();
+			$('#773t').focus();
+			return false;
+		}
+
+		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773z').val() == "")){
+			alert("EL campo 'Número Internacional Normalizado para Libros (ISBN)' no puede estar vacío.");
+			$(".tabs").hide();
+			$('.active').removeClass('active');
+			$('#t7xx').parent().addClass('active');
+			$('#7xx').show();
+			$('#773z').focus();
+			return false;
+		}
+		
 		if ($('#MagazineCover').val() == ""){
 			alert("Debe seleccionar una portada para la obra.");
 			$('#ItemItem').focus();

@@ -12,15 +12,15 @@ th {
 </style>
 <ul class="breadcrumb" style="margin: 0">
   <li><a href="<?php echo $this->base; ?>">Inicio</a></li>
-  <li><a href="<?php echo $this->base; ?>/books">Libros</a></li>
-  <li>Agregar Libro</li>
+  <li><a href="<?php echo $this->base; ?>/iconographies">Iconografía Musical Venezolana</a></li>
+  <li>Agregar Iconografía</li>
 </ul>
 
 <div class="items">
 <div class="col-md-12 column">
-<h2>Agregar Libro</h2>
+<h2>Agregar Iconografía</h2>
 
-<?php echo $this->Form->create('Book', array('enctype' => 'multipart/form-data')); ?>
+<?php echo $this->Form->create('Iconographie', array('enctype' => 'multipart/form-data')); ?>
 
 <h5>Datos de Cabecera o Líder</h5>
 
@@ -78,22 +78,22 @@ th {
 		<?php
 		echo $this->Form->input('h-006', array('label' => false, 'class' => 'form-control',
 			'options' => array(
-				'a' => 'a - Material textual.'/*,
+				/*'a' => 'a - Material textual.',
 				'c' => 'c - Música notada impresa.',
 				'd' => 'd - Música notada manuscrita.',
 				'e' => 'e - Material cartográfico.',
 				'f' => 'f - Material cartográfico manuscrito.',
 				'g' => 'g - Material gráfico proyectable.',
 				'i' => 'i - Grabación sonora no musical.',
-				'j' => 'j - Grabación sonora musical.',
+				'j' => 'j - Grabación sonora musical.',*/
 				'k' => 'k - Material gráfico bidimensional, no proyectable.',
-				'm' => 'm - Archivo de ordenador.',
+				/*'m' => 'm - Archivo de ordenador.',
 				'o' => 'o - Kit.',
 				'p' => 'p - Material mixto.',
 				'r' => 'r - Objeto tridimensional artificial o natural.',
 				't' => 't - Material textual manuscrito.'*/
 				),
-			'selected' => 'a'/*,
+			'selected' => 'k'/*,
 			'empty' => 'Seleccione'*/
 		)); ?>
 		</td>
@@ -105,12 +105,12 @@ th {
 		echo $this->Form->input('h-007', array('label' => false, 'class' => 'form-control',
 			'options' => array(
 				'a' => 'a - Parte componente monográfica.',
-				/*'b' => 'b - Parte componente seriada.',
-				'c' => 'c - Colección.',
+				'b' => 'b - Parte componente seriada.',
+				/*'c' => 'c - Colección.',
 				'd' => 'd - Subunidad.',
 				'i' => 'i - Recurso integrable.',*/
-				'm' => 'm - Monografía.'/*,
-				's' => 's - Publicación seriada.'*/
+				'm' => 'm - Monografía.',
+				/*'s' => 's - Publicación seriada.'*/
 			),
 			'selected' => 'm'/*,
 			'empty' => 'Seleccione'*/
@@ -159,6 +159,8 @@ th {
 	</tr>
 </table>
 
+
+
 <a name="top" href=""></a>
 
 <ul class="nav nav-tabs">
@@ -166,7 +168,7 @@ th {
 	<li><a class="tab" href="" id="t1xx">1XX</a></li>
 	<li><a class="tab" href="" id="t2xx">2XX</a></li>
 	<li><a class="tab" href="" id="t3xx">3XX</a></li>
-	<li class="disabled"><a class="tab" href="" id="t4xx">4XX</a></li>
+	<li><a class="tab" href="" id="t4xx">4XX</a></li>
 	<li><a class="tab" href="" id="t5xx">5XX</a></li>
 	<li><a class="tab" href="" id="t6xx">6XX</a></li>
 	<li><a class="tab" href="" id="t7xx">7XX</a></li>
@@ -1280,6 +1282,48 @@ th {
 
 <table class="table">
 	<tr>
+		<th style="width: 10%;"><b>024</b></th>
+		<th style="width: 45%;"><b>Otros identificadores normalizados (ISMN).</b></th>
+		<th style="width: 45%;">
+			<label id="l-024">&nbsp;</label>
+			<?php echo $this->Form->hidden('024', array('id' => '024', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>I1</b></td>
+		<td>Cobertura/localización dentro de la fuente.</td>
+		<td><?php echo $this->Form->input('024i1', array('id' => '024i1', 'label' => false, 'div' => false, 'class' => 'form-control',
+			'options' => array(
+				'0' => '0 - Cobertura desconocida',
+				'1' => '1 - Cobertura completa',
+				'2' => '2 - Cobertura selectiva',
+				'3' => '3 - No se indica la localización dentro de la fuente',
+				'4' => '4 - Se indica la localización dentro de la fuente'
+			), 'selected' => '2'
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>I2</b></td>
+		<td>No definido.</td>
+		<td><?php echo $this->Form->input('024i2', array('id' => '024i2', 'label' => false, 'div' => false, 'class' => 'form-control',
+			'options' => array(
+					'#' => '# - No definido'
+			)
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>ISMN.</td>
+		<td><?php echo $this->Form->input('024a', array('id' => '024a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$y</b></td>
+		<td>ISMN incorrecto.</td>
+		<td><?php echo $this->Form->input('024y', array('id' => '024y', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+</table>
+<table class="table">
+	<tr>
 		<th style="width: 10%;"><b>028</b></th>
 		<th style="width: 45%;"><b>Número de plancha.</b></th>
 		<th style="width: 45%;">
@@ -1298,6 +1342,7 @@ th {
 		<td><?php echo $this->Form->input('028b', array('id' => '028b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
+
 
 <table class="table">
 	<tr>
@@ -1380,6 +1425,105 @@ th {
 
 <table class="table">
 	<tr>
+		<th style="width: 10%;"><b>047</b></th>
+		<th style="width: 45%;"><b>Código de forma de composición .</b></th>
+		<th style="width: 45%;">
+			<label id="l-047">&nbsp;</label>
+			<?php echo $this->Form->hidden('047', array('id' => '047', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>I1</b></td>
+		<td>Punto de acceso adicional.</td>
+		<td><?php echo $this->Form->input('047i1', array('id' => '047i1', 'label' => false, 'div' => false,'class' => 'form-control', 
+			'options' => array(
+				'0' => '0 - No hay punto de acceso adicional',
+				'1' => '1 - Hay punto de acceso adicional',
+			), 'selected' => '1'
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>I2</b></td>
+		<td>Control de nota.</td>
+		<td><?php echo $this->Form->input('047i2', array('id' => '047i2', 'label' => false, 'div' => false, 'class' => 'form-control',
+			'options' => array(
+				'0' => '0 - Se genera nota',
+				'1' => '1 - No se genera nota',
+			)
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Código de la forma de composición.</font>.</td>
+		<td><?php echo $this->Form->input('047a', array('id' => '047a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+</table>
+
+<table class="table">
+	<tr>
+		<th style="width: 10%;"><b>048</b></th>
+		<th style="width: 45%;"><b>Número de instrumentos y voces.</b></th>
+		<th style="width: 45%;">
+			<label id="l-048">&nbsp;</label>
+			<?php echo $this->Form->hidden('048', array('id' => '048', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>I1</b></td>
+		<td>No definido.</td>
+		<td><?php echo $this->Form->input('048i1', array('id' => '048i1', 'label' => false, 'div' => false,  'class' => 'form-control',
+			'options' => array(
+				'#' => '# - No definido',
+			), 'selected' => '#'
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>I2</b></td>
+		<td>Fuente del código.</td>
+		<td><?php echo $this->Form->input('048i2', array('id' => '048i2', 'label' => false, 'div' => false, 'class' => 'form-control',
+			'options' => array(
+				'#' => '# - Código MARC',
+				'7'	=>	'7 - Fuente especificada en el subcampo $2',
+				), 'selected' => '#'
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Código de ejecutante o conjunto.</font>.</td>
+		<td><?php echo $this->Form->input('048a', array('id' => '048a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$b</b></td>
+		<td>Código del solista.</font>.</td>
+		<td><?php echo $this->Form->input('048b', array('id' => '048b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+</table>
+
+<table class="table">
+	<tr>
+		<th style="width: 10%;"><b>049</b></th>
+		<th style="width: 45%;"><b>Autor o material venezolano.</b></th>
+		<th style="width: 45%;">
+			<label id="l-049">&nbsp;</label>
+			<?php echo $this->Form->hidden('049', array('id' => '049', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Autor venezolano.</td>
+		<td><?php echo $this->Form->input('049a', array('id' => '049a', 'label' => false, 'div' => false)); ?></td>
+	</tr>
+		<tr>
+		<td><b>$b</b></td>
+		<td>Material venezolano.</td>
+		<td><?php echo $this->Form->input('049b', array('id' => '049b', 'label' => false, 'div' => false)); ?></td>
+	</tr>
+</table>
+
+
+
+<table class="table">
+	<tr>
 		<th style="width: 10%;"><b>082</b></th>
 		<th style="width: 45%;"><b>Número de la Clasificación Decimal Dewey.</b></th>
 		<th style="width: 45%;">
@@ -1443,6 +1587,26 @@ th {
 		<td><b>$c</b></td>
 		<td>A disposición del centro catalogador.</td>
 		<td><?php echo $this->Form->input('092c', array('id' => '092c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+</table>
+<table class="table">
+	<tr>
+		<th style="width: 10%;"><b>099</b></th>
+		<th style="width: 45%;"><b>Número de clasificación textual libre local.</b></td>
+		<th style="width: 45%;">
+			<label id="l-099">&nbsp;</label>
+			<?php echo $this->Form->hidden('099', array('id' => '099', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Siglas de la colección.</td>
+		<td><?php echo $this->Form->input('099a', array('id' => '099a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$b</b></td>
+		<td>Siglas de manuscritos.</td>
+		<td><?php echo $this->Form->input('099b', array('id' => '099b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
 </div>
@@ -1864,6 +2028,26 @@ th {
 		<td><?php echo $this->Form->input('250b', array('id' => '250b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
+<table class="table">
+	<tr>
+		<th style="width: 10%;"><b>254</b></th>
+		<th style="width: 45%;"><b>Mención de edición.</b></th>
+		<th style="width: 45%;">
+			<label id="l-254">&nbsp;</label>
+			<?php echo $this->Form->hidden('254', array('id' => '254', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Mención de edición o presentación musical.</td>
+		<td><?php echo $this->Form->input('254a', array('id' => '254a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$b</b></td>
+		<td>Resto de la mención de edición o presentación musical.</td>
+		<td><?php echo $this->Form->input('254b', array('id' => '254b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+</table>
 
 <table class="table">
 	<tr>
@@ -1926,6 +2110,27 @@ th {
 
 <table class="table">
 	<tr>
+		<th style="width: 10%;"><b>306</b></th>
+		<th style="width: 45%;"><b>Duración.</b></th>
+		<th style="width: 45%;">
+			<label id="l-306">&nbsp;</label>
+			<?php echo $this->Form->hidden('306', array('id' => '306', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Duración.</td>
+		<td><?php echo $this->Form->input('306a', array('id' => '306a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$b</b></td>
+		<td>Fecha de comienzo de la periodicidad actual.</td>
+		<td><?php echo $this->Form->input('306b', array('id' => '306b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+</table>
+
+<table class="table">
+	<tr>
 		<th style="width: 10%;"><b>310</b></th>
 		<th style="width: 45%;"><b>Periodicidad actual.</b></th>
 		<th style="width: 45%;">
@@ -1968,6 +2173,85 @@ th {
 
 <table class="table">
 	<tr>
+		<th style="width: 5%;"><b>336</b></th>
+		<th style="width: 60%;"><b>Tipo de contenido.</b></th>
+		<th style="width: 35%;">
+			<label id="l-336">&nbsp;</label>
+			<?php echo $this->Form->hidden('336', array('id' => '336', 'label' => false, 'div' => false, 'class' => 'form-control')); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Término del tipo de contenido.</font></td>
+		<td><?php echo $this->Form->input('336a', array('id' => '336a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$b</b></td>
+		<td>Código de tipo de contenido.</td>
+		<td><?php echo $this->Form->input('336b', array('id' => '336b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+</table>
+
+<table class="table">
+	<tr>
+		<th style="width: 5%;"><b>337</b></th>
+		<th style="width: 60%;"><b>Tipo de medio.</b></th>
+		<th style="width: 35%;">
+			<label id="l-337">&nbsp;</label>
+			<?php echo $this->Form->hidden('337', array('id' => '337', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Nombre del tipo de medio.</td>
+		<td><?php echo $this->Form->input('337a', array('id' => '337a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$b</b></td>
+		<td>Código de tipo de medio.</td>
+		<td><?php echo $this->Form->input('337b', array('id' => '337b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+</table>
+
+<table class="table">
+	<tr>
+		<th style="width: 10%;"><b>340</b></th>
+		<th style="width: 45%;"><b>Medio físico/Tipo de Soporte.</b></td>
+		<th style="width: 45%;">
+			<label id="l-340">&nbsp;</label>
+			<?php echo $this->Form->hidden('340', array('id' => '340', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Base y configuración del material.</td>
+		<td><?php echo $this->Form->input('340a', array('id' => '340a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$b</b></td>
+		<td>Dimensiones.</td>
+		<td><?php echo $this->Form->input('340b', array('id' => '340b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$c</b></td>
+		<td>Materiales aplicados a la superficie.</td>
+		<td><?php echo $this->Form->input('340c', array('id' => '340c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$d</b></td>
+		<td>Técnica en la que se registra la información.</td>
+		<td><?php echo $this->Form->input('340d', array('id' => '340d', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$e</b></td>
+		<td>Soporte.</td>
+		<td><?php echo $this->Form->input('340e', array('id' => '340e', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+</table>
+
+
+<table class="table">
+	<tr>
 		<th style="width: 10%;"><b>362</b></th>
 		<th style="width: 45%;"><b>Fechas de publicación y/o designación secuencial.</b></th>
 		<th style="width: 45%;">
@@ -1997,6 +2281,99 @@ th {
 		<td><?php echo $this->Form->input('380a', array('id' => '380a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
+<table class="table">
+	<tr>
+		<th style="width: 10%;"><b>381</b></th>
+		<th style="width: 45%;"><b>Otras características distintivas de obra (Compás).</b></th>
+		<th style="width: 45%;">
+			<label id="l-381">&nbsp;</label>
+			<?php echo $this->Form->hidden('381', array('id' => '381', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Nomenclatura de compás.</td>
+		<td><?php echo $this->Form->input('381a', array('id' => '381a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+</table>
+</div>
+
+<div id="4xx" class="tabs" style="display: none;">
+
+<table class="table">
+	<tr>
+		<th style="width: 10%;"><b>440</b></th>
+		<th style="width: 45%;"><b>Mencion de serie/Asiento secundario-titulo.</b></th>
+		<th style="width: 45%;">
+			<label id="l-440">&nbsp;</label>
+			<?php echo $this->Form->hidden('440', array('id' => '440', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Título de la serie.</td>
+		<td><?php echo $this->Form->input('440a', array('id' => '440a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$n</b></td>
+		<td>Número de parte o seccion de la obra.</td>
+		<td><?php echo $this->Form->input('440n', array('id' => '440n', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$p</b></td>
+		<td>Nombre de parte o seccion de la obra.</td>
+		<td><?php echo $this->Form->input('440p', array('id' => '440p', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$x</b></td>
+		<td>Número normalizado de la serie.</td>
+		<td><?php echo $this->Form->input('440x', array('id' => '440x', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$v</b></td>
+		<td>Volúmen.</td>
+		<td><?php echo $this->Form->input('440v', array('id' => '440v', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+</table>
+<table class="table">
+	<tr>
+		<th style="width: 1o%;"><b>490</b></th>
+		<th style="width: 45%;"><b> Mención de la serie.</b></th>
+		<th style="width: 45%;">
+			<label id="l-490">&nbsp;</label>
+			<?php echo $this->Form->hidden('490', array('id' => '490', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>I1</b></td>
+		<td>Política de recuperación de series.</td>
+		<td><?php echo $this->Form->input('490i1', array('id' => '490i1', 'label' => false, 'div' => false,  'class' => 'form-control',
+			'options' => array(
+					'0' => '0 - Serie sin recuperación',
+					'1' => '1 - Serie con recuperación'
+			), 'selected' => '0'
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>I2</b></td>
+		<td>No definido.</td>
+		<td><?php echo $this->Form->input('490i2', array('id' => '490i2', 'label' => false, 'div' => false, 'class' => 'form-control',
+			'options' => array(
+					'#' => '# - No definido'
+			), 'selected' => '#'
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Nombre de la fuente.</td>
+		<td><?php echo $this->Form->input('490a', array('id' => '490a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$v</b></td>
+		<td>Localización dentro de la fuente.</td>
+		<td><?php echo $this->Form->input('490v', array('id' => '490v', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+</table>
 </div>
 
 <div id="5xx" class="tabs" style="display: none;">
@@ -2012,7 +2389,7 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nota general.</td>
-		<td><?php echo $this->Form->input('500a', array('id' => '500a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td><?php echo $this->Form->input('500a', array('id' => '500a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
 
@@ -2028,7 +2405,7 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Con.</td>
-		<td><?php echo $this->Form->input('501a', array('id' => '501a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td><?php echo $this->Form->input('501a', array('id' => '501a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
 
@@ -2066,9 +2443,24 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nota de contenido con formato.</td>
-		<td><?php echo $this->Form->input('505a', array('id' => '505a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td><?php echo $this->Form->input('505a', array('id' => '505a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
+
+<table class="table">
+	<tr>
+		<th style="width: 10%;"><b>508</b></th>
+		<th style="width: 45%;"><b>Nota de “Con”.</b></th>
+		<th style="width: 45%;">
+			<label id="l-508">&nbsp;</label>
+			<?php echo $this->Form->hidden('508', array('id' => '508', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Con.</td>
+		<td><?php echo $this->Form->input('508a', array('id' => '508a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
 
 <table class="table">
 	<tr>
@@ -2104,14 +2496,50 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nombre de la fuente.</td>
-		<td><?php echo $this->Form->input('510a', array('id' => '510a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td><?php echo $this->Form->input('510a', array('id' => '510a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
 		<td>Localización dentro de la fuente.</td>
-		<td><?php echo $this->Form->input('510c', array('id' => '510c', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td><?php echo $this->Form->input('510c', array('id' => '510c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
+
+<table class="table">
+	<tr>
+		<th style="width: 10%;"><b>511</b></th>
+		<th style="width: 45%;"><b>Nota de participantes o intérpretes.</b></th>
+		<th style="width: 45%;">
+			<label id="l-511">&nbsp;</label>
+			<?php echo $this->Form->hidden('511', array('id' => '511', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>I1</b></td>
+		<td>Control de visualización asociada.</td>
+		<td><?php echo $this->Form->input('511i1', array('id' => '511i1', 'label' => false, 'div' => false, 'class' => 'form-control', 
+			'options' => array(
+				'0' => '0 - No genera visualización asociada',
+				'1' => '1 - Intérpretes'
+			), 'selected' => '1'
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>I2</b></td>
+		<td>No definido.</td>
+		<td><?php echo $this->Form->input('511i2', array('id' => '511i2', 'label' => false, 'div' => false, 'class' => 'form-control',
+			'options' => array(
+					'#' => '# - No definido'
+			)
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Nota de participantes o intérpretes.</font></td>
+		<td><?php echo $this->Form->input('511a', array('id' => '511a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+</table>
+
 
 <table class="table">
 	<tr>
@@ -2125,7 +2553,7 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nota de peculiaridades de la numeración.</td>
-		<td><?php echo $this->Form->input('515a', array('id' => '515a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td><?php echo $this->Form->input('515a', array('id' => '515a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
 
@@ -2165,7 +2593,46 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Sumario, etc.</td>
-		<td><?php echo $this->Form->input('520a', array('id' => '520a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td><?php echo $this->Form->input('520a', array('id' => '520a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+</table>
+<table class="table">
+	<tr>
+		<th style="width: 10%;"><b>521</b></th>
+		<th style="width: 45%;"><b>Nota de audiencia.</b></th>
+		<th style="width: 45%;">
+			<label id="l-521">&nbsp;</label>
+			<?php echo $this->Form->hidden('521', array('id' => '521', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>I1</b></td>
+		<td>Control de visualización asociada.</td>
+		<td><?php echo $this->Form->input('521i1', array('id' => '521i1', 'label' => false, 'div' => false, 'class' => 'form-control', 
+			'options' => array(
+				'#' => '# - Sumario',
+				'0' => '0 - Materia',
+				'1' => '1 - Reseña',
+				'2' => '2 - Alcance y contenido',
+				'3' => '3 - Resumen',
+				'4' => '4 - Aviso sobre el contenido',
+				'8' => '8 - No genera visualización asociada'
+			), 'selected' => '#'
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>I2</b></td>
+		<td>No definido.</td>
+		<td><?php echo $this->Form->input('521i2', array('id' => '521i2', 'label' => false, 'div' => false, 'class' => 'form-control',
+			'options' => array(
+					'#' => '# - No definido'
+			)
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Nota de audiencia.</td>
+		<td><?php echo $this->Form->input('521a', array('id' => '521a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
 
@@ -2181,17 +2648,17 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nota de formato físico adicional disponible.</td>
-		<td><?php echo $this->Form->input('530a', array('id' => '530a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td><?php echo $this->Form->input('530a', array('id' => '530a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
 		<td>Condiciones de adquisición.</td>
-		<td><?php echo $this->Form->input('530c', array('id' => '530c', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td><?php echo $this->Form->input('530c', array('id' => '530c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$u</b></td>
 		<td>Dirección electrónica.</td>
-		<td><?php echo $this->Form->input('530u', array('id' => '530u', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td><?php echo $this->Form->input('530u', array('id' => '530u', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
 
@@ -2207,22 +2674,22 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Autor.</td>
-		<td><?php echo $this->Form->input('534a', array('id' => '534a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td><?php echo $this->Form->input('534a', array('id' => '534a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
 		<td>Publicación, distribución, etc. del original.</td>
-		<td><?php echo $this->Form->input('534c', array('id' => '534c', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td><?php echo $this->Form->input('534c', array('id' => '534c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$l</b></td>
 		<td>Localización del original.</td>
-		<td><?php echo $this->Form->input('534l', array('id' => '534l', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td><?php echo $this->Form->input('534l', array('id' => '534l', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$p</b></td>
 		<td>Frase introductoria.</td>
-		<td><?php echo $this->Form->input('534p', array('id' => '534p', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td><?php echo $this->Form->input('534p', array('id' => '534p', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
 
@@ -2238,12 +2705,12 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nota de lengua.</td>
-		<td><?php echo $this->Form->input('546a', array('id' => '546a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td><?php echo $this->Form->input('546a', array('id' => '546a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
 		<td>Información sobre el código o alfabeto.</td>
-		<td><?php echo $this->Form->input('546c', array('id' => '546c', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td><?php echo $this->Form->input('546c', array('id' => '546c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
 
@@ -2259,22 +2726,22 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nota de índice acumulativo u otros instrumentos bibliográficos.</td>
-		<td><?php echo $this->Form->input('555a', array('id' => '555a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td><?php echo $this->Form->input('555a', array('id' => '555a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
 		<td>Fuente de la adquisición.</td>
-		<td><?php echo $this->Form->input('555b', array('id' => '555b', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td><?php echo $this->Form->input('555b', array('id' => '555b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$d</b></td>
 		<td>Referencia bibliográfica.</td>
-		<td><?php echo $this->Form->input('555d', array('id' => '555d', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td><?php echo $this->Form->input('555d', array('id' => '555d', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$u</b></td>
 		<td>Dirección electrónica.</td>
-		<td><?php echo $this->Form->input('555u', array('id' => '555u', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td><?php echo $this->Form->input('555u', array('id' => '555u', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
 
@@ -2290,9 +2757,25 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Nota de fuente de la descripción.</td>
-		<td><?php echo $this->Form->input('588a', array('id' => '588a', 'label' => false, 'div' => false, 'class' => 'form-control', 'type' => 'textarea', 'rows' => '3')); ?></td>
+		<td><?php echo $this->Form->input('588a', array('id' => '588a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
+<table class="table">
+	<tr>
+		<th style="width: 5%;"><b>590</b></th>
+		<th style="width: 60%;"><b>Nota local.</b></th>
+		<th style="width: 35%;">
+			<label id="l-590">&nbsp;</label>
+			<?php echo $this->Form->hidden('590', array('id' => '590', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Nota local.</td>
+		<td><?php echo $this->Form->input('590a', array('id' => '590a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+</table>
+
 </div>
 
 <div id="6xx" class="tabs" style="display: none;">
@@ -2487,7 +2970,7 @@ th {
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>Materia.</td>
+		<td>Materia <font color="red">(Obligatorio).</td>
 		<td><?php echo $this->Form->input('650a', array('id' => '650a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
@@ -2620,21 +3103,7 @@ th {
 	</tr>
 </table>
 
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>690</b></th>
-		<th style="width: 45%;"><b>Siglo.</b></th>
-		<th style="width: 45%;">
-			<label id="l-690">&nbsp;</label>
-			<?php echo $this->Form->hidden('690', array('id' => '690', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Siglo <font color="red">(Obligatorio)</font>.</td>
-		<td><?php echo $this->Form->input('690a', array('id' => '690a', 'label' => false, 'div' => false, 'class' => 'form-control', 'empty' => 'Seleccione', 'options' => array('XVII' => 'XVII', 'XVIII' => 'XVIII', 'XIX' => 'XIX', 'XX' => 'XX'))); ?></td>
-	</tr>
-</table>
+
 </div>
 
 <div id="7xx" class="tabs" style="display: none;">
@@ -3065,19 +3534,12 @@ th {
 			<th style="width: 50%;">Archivo o Documento (preferiblemente pdf o doc). (Obligatorio).</th>
 		</tr>
 		<tr>
-			<td>
-				<?php echo $this->Form->input('cover', array('label' => false, 'type' => 'file', 'style' => 'width: 100%')); ?>
-			</td>
-			<td>
-				<?php
-					echo $this->Form->input('item', array('label' => false, 'type' => 'file', 'style' => 'width: 100%'));
-					echo "<b>Tamaño máximo permitido: " . ini_get('upload_max_filesize') . '.</b>';
-				?>
-			</td>
+			<td><?php echo $this->Form->input('cover', array('label' => false, 'type' => 'file', 'style' => 'width: 100%')); ?></td>
+			<td><?php echo $this->Form->input('item', array('label' => false, 'type' => 'file', 'style' => 'width: 100%')); ?></td>
 		</tr>
 	</table>
 	
-	<input type="checkbox" id="BookPublished" value="1" checked="checked" name="data[Book][published]" style="width: 30px;">Publicado
+	<input type="checkbox" id="IconographiePublished" value="1" checked="checked" name="data[Iconographie][published]" style="width: 30px;">Publicado
 
 	<div style="text-align: right;"><a href="#top" class="btn btn-primary">Ir Arriba</a></div>
 	
@@ -3091,7 +3553,7 @@ th {
 </div>
 </div>
 
-<div style="clear: both;"></div>
+<div style="clear: both;"><br /><br /></div>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -3101,7 +3563,7 @@ $(document).ready(function() {
 	$(".tab").click(function(event) {
 		var id = $(this).attr('id');
 
-		if (id.localeCompare("t4xx") && id.localeCompare("t9xx")) {
+		if (id.localeCompare("t9xx")) {
 			$(".tabs").hide();
 			$('.active').removeClass('active');
 			$(this).parent().addClass('active');
@@ -3111,7 +3573,7 @@ $(document).ready(function() {
 		if (id == "t1xx"){ $('#1xx').show(); }
 		if (id == "t2xx"){ $('#2xx').show(); }
 		if (id == "t3xx"){ $('#3xx').show(); }
-		//if (id == "t4xx"){ $('#4xx').show(); }
+		if (id == "t4xx"){ $('#4xx').show(); }
 		if (id == "t5xx"){ $('#5xx').show(); }
 		if (id == "t6xx"){ $('#6xx').show(); }
 		if (id == "t7xx"){ $('#7xx').show(); }
@@ -3123,6 +3585,73 @@ $(document).ready(function() {
 	
 	//-------------- Validaciones ---------------
 	
+	/*
+	$("#tipo").change(function(event) {
+		var valor = $(this).val();
+
+		$("#BookH-005 option[value=n]").attr("selected", true);
+		$("#BookH-017 option[value=7]").attr("selected", true);
+		$("#BookH-018 option[value=a]").attr("selected", true);
+		
+		switch (valor){
+			case '1': 	$("#BookH-006 option[value=a]").attr("selected", true);
+						$("#BookH-007 option[value=m]").attr("selected", true);
+						break;
+						
+			case '2': 	$("#BookH-006 option[value=a]").attr("selected", true);
+						$("#BookH-007 option[value=s]").attr("selected", true);
+						break;
+						
+			case '3': 	$("#BookH-006 option[value=a]").attr("selected", true);
+						$("#BookH-007 option[value=a]").attr("selected", true);
+						break;
+						
+			case '4': 	$("#BookH-006 option[value=a]").attr("selected", true);
+						$("#BookH-007 option[value=b]").attr("selected", true);
+						break;
+						
+			case '5': 	$("#BookH-006 option[value=c]").attr("selected", true);
+						$("#BookH-007 option[value=m]").attr("selected", true);
+						break;
+						
+			case '6': 	$("#BookH-006 option[value=d]").attr("selected", true);
+						$("#BookH-007 option[value=m]").attr("selected", true);
+						break;
+						
+			case '7': 	$("#BookH-006 option[value=c]").attr("selected", true);
+						$("#BookH-007 option[value=a]").attr("selected", true);
+						break;
+						
+			case '8': 	$("#BookH-006 option[value=d]").attr("selected", true);
+						$("#BookH-007 option[value=a]").attr("selected", true);
+						break;
+						
+			case '9': 	$("#BookH-006 option[value=c]").attr("selected", true);
+						$("#BookH-007 option[value=b]").attr("selected", true);
+						break;
+			
+			case '10': 	$("#BookH-006 option[value=c]").attr("selected", true);
+						$("#BookH-007 option[value=c]").attr("selected", true);
+						break;
+			
+			case '11': 	$("#BookH-006 option[value=d]").attr("selected", true);
+						$("#BookH-007 option[value=c]").attr("selected", true);
+						break;
+						
+			case '12': 	$("#BookH-006 option[value=k]").attr("selected", true);
+						$("#BookH-007 option[value=m]").attr("selected", true);
+						break;
+						
+			case '13': 	$("#BookH-006 option[value=k]").attr("selected", true);
+						$("#BookH-007 option[value=a]").attr("selected", true);
+						break;
+						
+			case '14': 	$("#BookH-006 option[value=k]").attr("selected", true);
+						$("#BookH-007 option[value=b]").attr("selected", true);
+						break;
+		}
+	});*/
+		
 	$("#008-07-10").change(function(event) {
 		if($("#008-07-10 option:selected").val() != 'pf'){
 			$("#fecha008-07-10").prop('disabled', true);
@@ -9572,7 +10101,7 @@ $(document).ready(function() {
 	//-------------- Validaciones ---------------
 	
 	// Campos obligatorios vacíos.
-	$('#BookAddForm').submit(function(event) {
+	$('#IconographieAddForm').submit(function(event) {
 		if ($('#100a').val() == ""){
 			alert("EL campo 'Nombre de persona' no puede estar vacío.");
 			$(".tabs").hide();
@@ -9622,6 +10151,16 @@ $(document).ready(function() {
 			$('#260c').focus();
 			return false;
 		}
+		
+		if ($('#650a').val() == ""){
+			alert("EL campo 'Materia.' No puede estar vacío.");
+			$(".tabs").hide();
+			$('.active').removeClass('active');
+			$('#t6xx').parent().addClass('active');
+			$('#6xx').show();
+			$('#650a').focus();
+			return false;
+		}
 
 		if ($('#653a').val() == ""){
 			alert("EL campo 'Término de indización – No controlado' no puede estar vacío.");
@@ -9631,25 +10170,24 @@ $(document).ready(function() {
 			$('#6xx').show();
 			$('#653a').focus();
 			return false;
-		}
 
-		if ($('#690a option:selected').val() == ""){
-			alert("EL campo 'Siglo' no puede estar vacío.");
+		}if ($('#773t').val() == ""){
+			alert("EL campo 'Autor.' No puede estar vacío.");
 			$(".tabs").hide();
 			$('.active').removeClass('active');
-			$('#t6xx').parent().addClass('active');
-			$('#6xx').show();
-			$('#690a').focus();
+			$('#t7xx').parent().addClass('active');
+			$('#7xx').show();
+			$('#773t').focus();
 			return false;
 		}
 
-		if ($('#BookCover').val() == ""){
+		if ($('#IconographieCover').val() == ""){
 			alert("Debe seleccionar una portada para la obra.");
 			$('#ItemItem').focus();
 			return false;
 		}
 
-		if ($('#BookItem').val() == ""){
+		if ($('#IconographieItem').val() == ""){
 			alert("Debe seleccionar el archivo o documento de la obra.");
 			$('#ItemItem').focus();
 			return false;
