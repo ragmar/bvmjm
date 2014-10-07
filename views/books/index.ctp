@@ -58,9 +58,12 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 			<td style="background-color: <?php echo $color; ?>; text-align: center; width: 80px;">
 			<?php
 				if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/webroot/covers/" . $item['Item']['cover_path']))){
+				//if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/html/app/webroot/covers/" . $item['Item']['cover_path']))){
 					echo $this->Html->image("/webroot/covers/" . $item['Item']['cover_path'], array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'books', 'action' => 'view', $item['Item']['id'])));
+					//echo $this->Html->image("/app/webroot/covers/" . $item['Item']['cover_path'], array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'books', 'action' => 'view', $item['Item']['id'])));
 				} else {
 					echo $this->Html->image("/webroot/img/sin_portada.jpg", array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'books', 'action' => 'view', $item['Item']['id'])));
+					//echo $this->Html->image("/app/webroot/img/sin_portada.jpg", array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'books', 'action' => 'view', $item['Item']['id'])));
 				}
 			?>
 			</td>
@@ -106,19 +109,17 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 							}
 						?>
 					</dd>
-					<?php if (!empty($item['Item']['653'])) { ?>
-					<dt style="width: 120px"><?php __('Materia:');?></dt>
+					<dt style="width: 120px"><?php __('Publicación:');?></dt>
 					<dd style="margin-left: 130px">
-					<?php
-						$matter = marc21_decode($item['Item']['653']);
-						if (!empty($this->data['books']['Materia'])) {
-							echo '<b>' . $matter['a'] . '.</b>';
-						} else {
-							echo $matter['a'] . '.';
-						}
-					?>
+						<?php
+							if (!empty($item['Item']['260'])) {
+								$publication = marc21_decode($item['Item']['260']);
+								echo $publication['a'] . '.';
+								if (isset($publication['b'])) {echo ' : ' . $publication['b']. ', ';}
+								if (isset($publication['c'])) {echo ' ' . $publication['c']. '.';}
+							}
+						?>
 					</dd>
-					<?php } ?>
 					<?php if (!empty($item['Item']['690'])) { ?>
 					<dt style="width: 120px"><?php __('Siglo:');?></dt>
 					<dd style="margin-left: 130px">
@@ -132,22 +133,24 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 					?>
 					</dd>
 					<?php } ?>
-					<dt style="width: 120px"><?php __('Publicación:');?></dt>
-					<dd style="margin-left: 130px">
-						<?php
-							if (!empty($item['Item']['260'])) {
-								$publication = marc21_decode($item['Item']['260']);
-								echo $publication['a'] . '.';
-								if (isset($publication['b'])) {echo ' ' . $publication['b']. '.';}
-								if (isset($publication['c'])) {echo ' ' . $publication['c']. '.';}
-							}
-						?>
-					</dd>
 					<dt style="width: 120px">
 					<?php if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') != '3'))) { ?>
 						<?php //echo $this->Html->link(__('Delete', true), array('action' => 'delete', $item['Item']['id']), null, sprintf(__("¿Desea eliminar '%s'?", true), $item['Item']['title'])); ?>
 					<?php } ?>
 					</dt>
+					<?php if (!empty($item['Item']['653'])) { ?>
+					<dt style="width: 120px"><?php __('Materia:');?></dt>
+					<dd style="margin-left: 130px">
+					<?php
+						$matter = marc21_decode($item['Item']['653']);
+						if (!empty($this->data['books']['Materia'])) {
+							echo '<b>' . $matter['a'] . '.</b>';
+						} else {
+							echo $matter['a'] . '.';
+						}
+					?>
+					</dd>
+					<?php } ?>
 					<dd style="margin-left: 130px"></dd>
 				</dl>
 			</td>
@@ -266,6 +269,23 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 			}
 		</script>
 		
+		<div style="clear: both;">
+			<label>Siglo:</label><br />
+			<?php echo $this->Form->hidden('Siglo', array('class' => 'form-control', 'label' => 'Siglo')); ?>
+			<?php echo $this->Html->link('XVII', array('action' => '/XVII'), array('id' => 'siglo-XVII', 'class' => 'btn-primary', 'style' => 'width: 44px;', 'onclick' => '$("#booksSiglo").val("XVII"); $("#booksIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('XVIII', array('action' => '/XVIII'), array('id' => 'siglo-XVIII', 'class' => 'btn-primary', 'style' => 'width: 44px;', 'onclick' => '$("#booksSiglo").val("XVIII"); $("#booksIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('XIX', array('action' => '/XIX'), array('id' => 'siglo-XIX', 'class' => 'btn-primary', 'style' => 'width: 44px;', 'onclick' => '$("#booksSiglo").val("XIX"); $("#booksIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('XX', array('action' => '/XX'), array('id' => 'siglo-XX', 'class' => 'btn-primary', 'style' => 'width: 44px;', 'onclick' => '$("#booksSiglo").val("XX"); $("#booksIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Todos', array('action' => '/'), array('id' => 'siglo-todos', 'class' => 'btn-primary', 'style' => 'width: 69px;', 'onclick' => '$("#booksSiglo").val(""); $("#booksIndexForm").submit(); return false;')); ?>
+		</div>
+		<script type="text/javascript">
+			if ("<?php echo $this->data['books']['Siglo']; ?>" != "") {
+				$("#<?php echo "siglo-".$this->data['books']['Siglo']; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 44px;');
+			} else {
+				$("#<?php echo "siglo-todos"; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 66px;');
+			}
+		</script>
+		
 		<div style="clear: both;">		
 			<label>Materia:</label><br />
 			<?php echo $this->Form->hidden('Materia', array('class' => 'form-control', 'label' => 'Materia')); ?>
@@ -305,23 +325,6 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 			}
 		</script>
 		
-		<div style="clear: both;">
-			<label>Siglo:</label><br />
-			<?php echo $this->Form->hidden('Siglo', array('class' => 'form-control', 'label' => 'Siglo')); ?>
-			<?php echo $this->Html->link('XVII', array('action' => '/XVII'), array('id' => 'siglo-XVII', 'class' => 'btn-primary', 'style' => 'width: 44px;', 'onclick' => '$("#booksSiglo").val("XVII"); $("#booksIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('XVIII', array('action' => '/XVIII'), array('id' => 'siglo-XVIII', 'class' => 'btn-primary', 'style' => 'width: 44px;', 'onclick' => '$("#booksSiglo").val("XVIII"); $("#booksIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('XIX', array('action' => '/XIX'), array('id' => 'siglo-XIX', 'class' => 'btn-primary', 'style' => 'width: 44px;', 'onclick' => '$("#booksSiglo").val("XIX"); $("#booksIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('XX', array('action' => '/XX'), array('id' => 'siglo-XX', 'class' => 'btn-primary', 'style' => 'width: 44px;', 'onclick' => '$("#booksSiglo").val("XX"); $("#booksIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Todos', array('action' => '/'), array('id' => 'siglo-todos', 'class' => 'btn-primary', 'style' => 'width: 69px;', 'onclick' => '$("#booksSiglo").val(""); $("#booksIndexForm").submit(); return false;')); ?>
-		</div>
-		<script type="text/javascript">
-			if ("<?php echo $this->data['books']['Siglo']; ?>" != "") {
-				$("#<?php echo "siglo-".$this->data['books']['Siglo']; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 44px;');
-			} else {
-				$("#<?php echo "siglo-todos"; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 66px;');
-			}
-		</script>
-
 		<br />
 		<?php //echo $this->Form->submit('Buscar', array('class' => 'btn btn-primary', 'div' => false)); ?>
 		<?php echo $this->Form->end(); ?>

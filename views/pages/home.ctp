@@ -174,29 +174,29 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="thumbnail">
-				<?php echo $this->Html->image('nuevo/1.jpg'); ?>
+				<?php echo $this->Html->image('nuevo/1.jpg', array('url' => '/books', 'class' => 'img-responsive', 'title' => 'Entrar al Módulo de Libros.')); ?>
 				<div class="caption">
 					<h3>Libros</h3>
 					<p>En el Módulo Libros se exponen todos aquellos tratados o ensayos musicales 
 					que se difundieron o se produjeron en Venezuela durante los siglos XVII, 
 					XVIII, XIX y XX.</p>
 					<p class="text-center">
-						<?php echo $this->Html->link('Información', '/books/intro', array('class' => 'btn btn-primary')); ?>
-						<?php echo $this->Html->link('Entrar', '/books', array('class' => 'btn btn-primary')); ?>
+						<?php echo $this->Html->link('Más Información', '/books/intro', array('class' => 'btn btn-primary')); ?>
+						<?php //echo $this->Html->link('Entrar', '/books', array('class' => 'btn btn-primary')); ?>
 					</p>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-6">
 			<div class="thumbnail">
-				<?php echo $this->Html->image('nuevo/2.jpg'); ?>
+				<?php echo $this->Html->image('nuevo/2.jpg', array('url' => '/magazines', 'class' => 'img-responsive', 'title' => 'Entrar al Módulo de Hemerografías.')); ?>
 				<div class="caption">
 					<h3>Hemerografías</h3>
 					<p>El módulo Hemerografía Musical, contiene las principales publicaciones 
 					seriadas venezolanas vinculadas de alguna manera con la música.</p>
 					<p class="text-center">
-						<?php echo $this->Html->link('Información', '/magazines/intro', array('class' => 'btn btn-primary')); ?>
-						<?php echo $this->Html->link('Entrar', '/magazines', array('class' => 'btn btn-primary')); ?>
+						<?php echo $this->Html->link('Más Información', '/magazines/intro', array('class' => 'btn btn-primary')); ?>
+						<?php //echo $this->Html->link('Entrar', '/magazines', array('class' => 'btn btn-primary')); ?>
 					</p>
 				</div>
 			</div>
@@ -205,28 +205,28 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="thumbnail">
-				<?php echo $this->Html->image('nuevo/3.jpg'); ?>
+				<?php echo $this->Html->image('nuevo/3.jpg', array('url' => '/', 'class' => 'img-responsive', 'title' => 'Entrar al Módulo de Música Manuscrita.')); ?>
 				<div class="caption">
 					<h3>Música Manuscrita</h3>
 					<p>El módulo partituras manuscritas de la BVMJM contiene música inédita que posee un superlativo interés para los estudios musicológicos en Venezuela; 
 					esto es: música de autores venezolanos o, incluso, música de compositores extranjeros transcrita por venezolanos.</p>
 					<p class="text-center">
-						<?php echo $this->Html->link('Información', '/', array('class' => 'btn btn-primary', 'onclick' => 'alert("Módulo en construcción."); return false;')); ?>
-						<?php echo $this->Html->link('Entrar', '/', array('class' => 'btn btn-primary', 'onclick' => 'alert("Módulo en construcción."); return false;')); ?>
+						<?php echo $this->Html->link('Más Información', '/', array('class' => 'btn btn-primary', 'onclick' => 'alert("Módulo en construcción."); return false;')); ?>
+						<?php //echo $this->Html->link('Entrar', '/', array('class' => 'btn btn-primary', 'onclick' => 'alert("Módulo en construcción."); return false;')); ?>
 					</p>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-6">
 			<div class="thumbnail">
-				<?php echo $this->Html->image('nuevo/4.jpg'); ?>
+				<?php echo $this->Html->image('nuevo/4.jpg', array('url' => '/', 'class' => 'img-responsive', 'title' => 'Entrar al Módulo de Música Impresa.')); ?>
 				<div class="caption">
 					<h3>Música Impresa</h3>
 					<p>El módulo partituras impresas de la BVMJM contiene música editada que posee un marcado interés para los estudios musicológicos en Venezuela; 
 					esto es: música de autores venezolanos y extranjeros impresa en Venezuela y música de venezolanos impresa en el exterior.</p>
 					<p class="text-center">
-						<?php echo $this->Html->link('Información', '/', array('class' => 'btn btn-primary', 'onclick' => 'alert("Módulo en construcción."); return false;')); ?>
-						<?php echo $this->Html->link('Entrar', '/', array('class' => 'btn btn-primary', 'onclick' => 'alert("Módulo en construcción."); return false;')); ?>
+						<?php echo $this->Html->link('Más Información', '/', array('class' => 'btn btn-primary', 'onclick' => 'alert("Módulo en construcción."); return false;')); ?>
+						<?php //echo $this->Html->link('Entrar', '/', array('class' => 'btn btn-primary', 'onclick' => 'alert("Módulo en construcción."); return false;')); ?>
 					</p>
 				</div>
 			</div>
@@ -235,29 +235,29 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="thumbnail">
-				<?php echo $this->Html->image('nuevo/5.jpg'); ?>
+				<?php echo $this->Html->image('nuevo/5.jpg', array('url' => '/iconographies', 'class' => 'img-responsive', 'title' => 'Entrar al Módulo de Iconografías.')); ?>
 				<div class="caption">
 					<h3>Iconografías</h3>
 					<p>La iconografía musical es considerada como una ciencia y método de investigación auxiliar de la musicología, que consiste en la interpretación de 
 					documentos gráficos u objetos tridimensionales que estén provistos de escenas, temáticas, 
 					simbologías e instrumentos vinculados con la música.</p>
 					<p class="text-center">
-						<?php echo $this->Html->link('Información', '/iconographies/intro', array('class' => 'btn btn-primary')); ?>
-						<?php echo $this->Html->link('Entrar', '/iconographies', array('class' => 'btn btn-primary')); ?>
+						<?php echo $this->Html->link('Más Información', '/iconographies/intro', array('class' => 'btn btn-primary')); ?>
+						<?php //echo $this->Html->link('Entrar', '/iconographies', array('class' => 'btn btn-primary')); ?>
 					</p>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-6">
 			<div class="thumbnail">
-				<?php echo $this->Html->image('nuevo/7.jpg'); ?>
+				<?php echo $this->Html->image('nuevo/7.jpg', array('url' => '/documents', 'class' => 'img-responsive', 'title' => 'Entrar al Módulo de Documentos.')); ?>
 				<div class="caption">
 					<h3>Documentos</h3>
 					<p>El Módulo Documentos contiene una selección de importantes documentos digitalizados vinculados con la música en Venezuela: partidas de bautismo, 
 					matrimonio y/o defunción de músicos, Actas del Cabildo, Recibos de Pago, Contrataciones, etc.<br /><br /></p>
 					<p class="text-center">
-						<?php echo $this->Html->link('Información', '/', array('class' => 'btn btn-primary', 'onclick' => 'alert("Módulo en construcción."); return false;')); ?>
-						<?php echo $this->Html->link('Entrar', '/', array('class' => 'btn btn-primary', 'onclick' => 'alert("Módulo en construcción."); return false;')); ?>
+						<?php echo $this->Html->link('Más Información', '/', array('class' => 'btn btn-primary', 'onclick' => 'alert("Módulo en construcción."); return false;')); ?>
+						<?php //echo $this->Html->link('Entrar', '/', array('class' => 'btn btn-primary', 'onclick' => 'alert("Módulo en construcción."); return false;')); ?>
 					</p>
 				</div>
 			</div>
@@ -266,14 +266,14 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="thumbnail">
-				<?php echo $this->Html->image('nuevo/6.jpg'); ?>
+				<?php echo $this->Html->image('nuevo/6.jpg', array('class' => 'img-responsive', 'title' => 'Entrar al Módulo de Trabajos Académicos.')); ?>
 				<div class="caption">
 					<h3>Trabajos Académicos</h3>
 					<p style="text-align: justify;">Este módulo almacenará los trabajos especiales de grado, trabajos de ascenso y tesis de Maestría y Doctorado del Departamento de música de la 
 					Escuela de Artes, así como artículos académicos de estudiantes y profesores de la UCV y otras casas de estudio con carreras musicales en Venezuela.</p>
 					<p class="text-center">
-						<?php echo $this->Html->link('Información', '/', array('class' => 'btn btn-primary', 'onclick' => 'alert("Módulo en construcción."); return false;')); ?>
-						<?php echo $this->Html->link('Entrar', '/', array('class' => 'btn btn-primary', 'onclick' => 'alert("Módulo en construcción."); return false;')); ?>
+						<?php echo $this->Html->link('Más Información', '/', array('class' => 'btn btn-primary', 'onclick' => 'alert("Módulo en construcción."); return false;')); ?>
+						<?php //echo $this->Html->link('Entrar', '/', array('class' => 'btn btn-primary', 'onclick' => 'alert("Módulo en construcción."); return false;')); ?>
 					</p>
 				</div>
 			</div>
