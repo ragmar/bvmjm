@@ -1876,17 +1876,17 @@ th {
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>Lugar de publicación, distribución, etc <font color="red">(Obligatorio)</font>.</td>
+		<td>Lugar de publicación, distribución, etc.</td>
 		<td><?php echo $this->Form->input('260a', array('id' => '260a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
-		<td>Nombre del editor, distribuidor, etc <font color="red">(Obligatorio)</font>.</td>
+		<td>Nombre del editor, distribuidor, etc.</td>
 		<td><?php echo $this->Form->input('260b', array('id' => '260b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
-		<td>Fecha de publicación, distribución, etc <font color="red">(Obligatorio)</font>.</td>
+		<td>Fecha de publicación, distribución, etc.</td>
 		<td><?php echo $this->Form->input('260c', array('id' => '260c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
@@ -9593,6 +9593,7 @@ $(document).ready(function() {
 			return false;
 		}
 
+		/*
 		if ($('#260a').val() == ""){
 			alert("EL campo 'Lugar de publicación, distribución, etc.' no puede estar vacío.");
 			$(".tabs").hide();
@@ -9642,6 +9643,7 @@ $(document).ready(function() {
 			$('#690a').focus();
 			return false;
 		}
+		*/
 
 		if ($('#BookCover').val() == ""){
 			alert("Debe seleccionar una portada para la obra.");

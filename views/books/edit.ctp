@@ -2421,7 +2421,7 @@ th {
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>Lugar de publicación, distribución, etc <font color="red">(Obligatorio)</font>.</td>
+		<td>Lugar de publicación, distribución, etc.</td>
 		<td>
 			<?php
 			if (isset($c260['a'])) {
@@ -2434,7 +2434,7 @@ th {
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
-		<td>Nombre del editor, distribuidor, etc <font color="red">(Obligatorio)</font>.</td>
+		<td>Nombre del editor, distribuidor, etc.</td>
 		<td>
 			<?php
 			if (isset($c260['b'])) {
@@ -2447,7 +2447,7 @@ th {
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
-		<td>Fecha de publicación, distribución, etc <font color="red">(Obligatorio)</font>.</td>
+		<td>Fecha de publicación, distribución, etc.</td>
 		<td>
 			<?php
 			if (isset($c260['c'])) {
@@ -10969,6 +10969,7 @@ $(document).ready(function() {
 			return false;
 		}
 
+		/*
 		if ($('#260a').val() == ""){
 			alert("EL campo 'Lugar de publicación, distribución, etc.' no puede estar vacío.");
 			$(".tabs").hide();
@@ -11018,6 +11019,7 @@ $(document).ready(function() {
 			$('#690a').focus();
 			return false;
 		}
+		*/
 
 		if ($('#BookCover').val() == ""){
 			alert("Debe seleccionar una portada para la obra.");

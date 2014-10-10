@@ -9561,7 +9561,7 @@ $(document).ready(function() {
 	
 	// Campos obligatorios vacíos.
 	$('#MagazineAddForm').submit(function(event) {
-		if (($('#020a').val() == "") && ($('#MagazineH-007 option:selected').val() == 's')){
+		/*if (($('#020a').val() == "") && ($('#MagazineH-007 option:selected').val() == 's')){
 			alert("EL campo 'ISBN' no puede estar vacío.");
 			$(".tabs").hide();
 			$('.active').removeClass('active');
@@ -9569,7 +9569,7 @@ $(document).ready(function() {
 			$('#0xx').show();
 			$('#020a').focus();
 			return false;
-		}
+		}*/
 
 		if ($('#100a').val() == ""){
 			alert("EL campo 'Nombre de persona' no puede estar vacío.");
@@ -9591,6 +9591,7 @@ $(document).ready(function() {
 			return false;
 		}
 
+		/*
 		if ($('#260a').val() == ""){
 			alert("EL campo 'Lugar de publicación, distribución, etc.' no puede estar vacío.");
 			$(".tabs").hide();
@@ -9621,7 +9622,7 @@ $(document).ready(function() {
 			return false;
 		}
 
-		/*if ($('#653a').val() == ""){
+		if ($('#653a').val() == ""){
 			alert("EL campo 'Término de indización – No controlado' no puede estar vacío.");
 			$(".tabs").hide();
 			$('.active').removeClass('active');
@@ -9629,7 +9630,7 @@ $(document).ready(function() {
 			$('#6xx').show();
 			$('#653a').focus();
 			return false;
-		}*/
+		}
 
 		if ($('#690a option:selected').val() == ""){
 			alert("EL campo 'Siglo' no puede estar vacío.");
@@ -9640,6 +9641,7 @@ $(document).ready(function() {
 			$('#690a').focus();
 			return false;
 		}
+		*/
 
 		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773a').val() == "")){
 			alert("EL campo 'Autor' no puede estar vacío.");
