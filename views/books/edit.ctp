@@ -4426,11 +4426,19 @@ th {
 			<td>
 				<div style="float: left; width: 20%;">
 				<?php
-				if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/webroot/covers/" . $item['Item']['cover_path']))){
-					echo $this->Html->image("/webroot/covers/" . $item['Item']['cover_path'], array('width' => '70px'));
-				} else {
-					echo $this->Html->image("/webroot/img/sin_portada.jpg", array('width' => '70px'));
-				}
+					if ($_SERVER['HTTP_HOST'] != "orpheus.human.ucv.ve"){
+						if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/webroot/covers/" . $item['Item']['cover_path']))){
+							echo $this->Html->image("/webroot/covers/" . $item['Item']['cover_path'], array('width' => '70px'));
+						} else {
+							echo $this->Html->image("/webroot/img/sin_portada.jpg", array('width' => '70px'));
+						}
+					} else {
+						if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/html/app/webroot/covers/" . $item['Item']['cover_path']))){
+							echo $this->Html->image("/app/webroot/covers/" . $item['Item']['cover_path'], array('width' => '70px'));
+						} else {
+							echo $this->Html->image("/app/webroot/img/sin_portada.jpg", array('width' => '70px'));
+						}
+					}
 				?>
 				</div>
 				<div style="float: left; width: 80%;">

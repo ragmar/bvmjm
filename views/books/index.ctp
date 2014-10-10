@@ -57,13 +57,18 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 		<tr>
 			<td style="background-color: <?php echo $color; ?>; text-align: center; width: 80px;">
 			<?php
-				if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/webroot/covers/" . $item['Item']['cover_path']))){
-				//if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/html/app/webroot/covers/" . $item['Item']['cover_path']))){
-					echo $this->Html->image("/webroot/covers/" . $item['Item']['cover_path'], array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'books', 'action' => 'view', $item['Item']['id'])));
-					//echo $this->Html->image("/app/webroot/covers/" . $item['Item']['cover_path'], array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'books', 'action' => 'view', $item['Item']['id'])));
+				if ($_SERVER['HTTP_HOST'] != "orpheus.human.ucv.ve"){
+					if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/webroot/covers/" . $item['Item']['cover_path']))){
+						echo $this->Html->image("/webroot/covers/" . $item['Item']['cover_path'], array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'books', 'action' => 'view', $item['Item']['id'])));
+					} else {
+						echo $this->Html->image("/webroot/img/sin_portada.jpg", array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'books', 'action' => 'view', $item['Item']['id'])));
+					}
 				} else {
-					echo $this->Html->image("/webroot/img/sin_portada.jpg", array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'books', 'action' => 'view', $item['Item']['id'])));
-					//echo $this->Html->image("/app/webroot/img/sin_portada.jpg", array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'books', 'action' => 'view', $item['Item']['id'])));
+					if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/html/app/webroot/covers/" . $item['Item']['cover_path']))){
+						echo $this->Html->image("/app/webroot/covers/" . $item['Item']['cover_path'], array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'books', 'action' => 'view', $item['Item']['id'])));
+					} else {
+						echo $this->Html->image("/app/webroot/img/sin_portada.jpg", array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'books', 'action' => 'view', $item['Item']['id'])));
+					}
 				}
 			?>
 			</td>
