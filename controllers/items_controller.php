@@ -205,10 +205,10 @@ class ItemsController extends AppController {
 			$this->render('index');
 		}
 		
-		$topics = $this->Item->Topic->find('list');
-		$types = $this->Item->Type->find('list');
-		$authors = $this->Item->Author->find('list', array('fields' => array('id', 'fullname'), 'order' => 'fullname'));
-		$this->set(compact('topics', 'types', 'authors'));
+		//$topics = $this->Item->Topic->find('list');
+		//$types = $this->Item->Type->find('list');
+		//$authors = $this->Item->Author->find('list', array('fields' => array('id', 'fullname'), 'order' => 'fullname'));
+		//$this->set(compact('topics', 'types', 'authors'));
 	}
 	
 	function view($id = null) {

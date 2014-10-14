@@ -47,11 +47,6 @@ function marc21_decode($camp = null) {
 		text-decoration: none;
 	}
 </style>
-<ul class="breadcrumb" style="margin: 0">
-  <li><a href="<?php echo $this->base; ?>/books">Libros</a></li>
-  <li>Buscar</li>
-  <li><?php echo $search; ?></li>
-</ul>
 
 <div class='items view'>
 
@@ -94,23 +89,32 @@ function marc21_decode($camp = null) {
 		}
 		
 		// Iconografía musical.
-		if (($t1 == 'k') && ($t2 == 'm')) {
+		if (($t1 == 'k') && ($t2 == 'b')) {
 			$color = "#ba938e";
-			$controller = "";
+			$controller = "iconographies";
 		}
 		
 		// Trabajos académicos.
 		if (($t1 == 'a') && ($t2 == 'a')) {
 			$color = "#d1c7be";
+			$controller = "";
 		}
 	?>
 	<tr>
-		<td style="background-color: <?php echo $color; ?>; text-align: center; width: 80px;">
-					<?php
-				if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/webroot/covers/" . $item['Item']['cover_path']))){
-					echo $this->Html->image("/webroot/covers/" . $item['Item']['cover_path'], array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'books', 'action' => 'view', $item['Item']['id'])));
+		<td style="background-color: <?php echo $color; ?>; text-align: center; width: 100px;">
+			<?php
+				if ($_SERVER['HTTP_HOST'] != "orpheus.human.ucv.ve"){
+					if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/webroot/covers/" . $item['Item']['cover_path']))){
+						echo "<a href='".$this->base.'/'.$controller.'/view/'.$item['Item']['id']."'>".$this->Html->image("/webroot/covers/" . $item['Item']['cover_path'], array('width' => '90%', 'title' => $item['Item']['cover_name']))."</a>";
+					} else {
+						echo $this->Html->image("/webroot/img/sin_portada.jpg", array('width' => '90%'));
+					}
 				} else {
-					echo $this->Html->image("/webroot/img/sin_portada.jpg", array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'books', 'action' => 'view', $item['Item']['id'])));
+					if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/html/app/webroot/covers/" . $item['Item']['cover_path']))){
+						echo "<a href='".$this->base.'/'.$controller.'/view/'.$item['Item']['id']."'>".$this->Html->image("/app/webroot/covers/" . $item['Item']['cover_path'], array('width' => '90%', 'title' => $item['Item']['cover_name']))."</a>";
+					} else {
+						echo $this->Html->image("/app/webroot/img/sin_portada.jpg", array('width' => '90%'));
+					}
 				}
 			?>
 		</td>
@@ -124,11 +128,10 @@ function marc21_decode($camp = null) {
 						if (!empty($item['Item']['245'])) {
 							$title = marc21_decode($item['Item']['245']);
 							if ($title) {
-								echo $title['a'] . '.';
-
-								if (isset($title['b'])) {echo ' <i>' . $title['b'] . '.</i>';}
-								if (isset($title['c'])) {echo ' ' . $title['c']. '.';}
-								if (isset($title['h'])) {echo ' ' . $title['h']. '.';}
+								echo $title['a'];
+								//if (isset($title['b'])) {echo ' <i>' . $title['b'] . '.</i>';}
+								//if (isset($title['c'])) {echo ' ' . $title['c']. '.';}
+								//if (isset($title['h'])) {echo ' ' . $title['h']. '.';}
 							}
 						}
 					?>
@@ -145,24 +148,6 @@ function marc21_decode($camp = null) {
 						}
 					?>
 				</dd>
-				<?php if (!empty($item['Item']['653'])) { ?>
-				<dt style="width: 120px"><?php __('Materia:');?></dt>
-				<dd style="margin-left: 130px">
-				<?php
-					$matter = marc21_decode($item['Item']['653']);
-					echo $matter['a'] . '.';
-				?>
-				</dd>
-				<?php } ?>
-				<?php if (!empty($item['Item']['690'])) { ?>
-				<dt style="width: 120px"><?php __('Siglo:');?></dt>
-				<dd style="margin-left: 130px">
-				<?php
-					$century = marc21_decode($item['Item']['690']);
-					echo $century['a'] . '.';
-				?>
-				</dd>
-				<?php } ?>
 				<dt style="width: 120px"><?php __('Publicación:');?></dt>
 				<dd style="margin-left: 130px">
 					<?php
@@ -175,6 +160,24 @@ function marc21_decode($camp = null) {
 					
 					?>
 				</dd>
+				<?php if (!empty($item['Item']['690'])) { ?>
+				<dt style="width: 120px"><?php __('Siglo:');?></dt>
+				<dd style="margin-left: 130px">
+				<?php
+					$century = marc21_decode($item['Item']['690']);
+					echo $century['a'] . '.';
+				?>
+				</dd>
+				<?php } ?>
+				<?php if (!empty($item['Item']['653'])) { ?>
+				<dt style="width: 120px"><?php __('Materia:');?></dt>
+				<dd style="margin-left: 130px">
+				<?php
+					$matter = marc21_decode($item['Item']['653']);
+					echo $matter['a'] . '.';
+				?>
+				</dd>
+				<?php } ?>
 				<dt style="width: 120px"><?php __('Tipo:');?></dt>
 				<dd style="margin-left: 130px">
 				<?php
@@ -200,6 +203,11 @@ function marc21_decode($camp = null) {
 					if (($t1 == 'd') && ($t2 == 'm')) {
 						echo "Música Manuscrita";
 					}
+					
+					// Iconógrafía Musical.
+					if (($t1 == 'k') && ($t2 == 'b')) {
+						echo "Iconografía Musical";
+					}
 				?>
 				</dd>
 			</dl>
@@ -221,12 +229,34 @@ function marc21_decode($camp = null) {
 <?php if (($this->Session->check('Auth.User')) && ($this->Session->read('Auth.User.group_id') != 3)) { ?>
 <div class="col-md-3 column">
 	<?php if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') != '3'))) { ?>
-			<br />
-			<label><?php __('Acciones:'); ?></label>
-			<br />
-			<?php echo $this->Html->link(__('Agregar Libro', true), array('action' => 'add'), array('class' => 'btn btn-primary')); ?>
-			<br /><br />
-		<?php } ?>
+		<br />
+		<label><?php __('Acciones:'); ?></label>
+		<?php //echo $this->Html->link(__('Agregar Libro', true), array('action' => 'add'), array('class' => 'btn btn-primary')); ?>
+		<br />
+	<?php } ?>
+	<?php //echo $this->Html->link(__('Búsqueda Avanzada', true), array('action' => 'advanced_search'), array('class' => 'btn btn-primary')); ?>
 </div>
 <?php } ?>
 </div>
+<style type="text/css">
+	.search {
+		font-style: oblique;
+		text-decoration: underline;
+		color: red;
+	}
+</style>
+<script type="text/javascript">
+$(document).ready(function() {
+	// Sobreescribo el selector para que no discrimine entre mayúsculas y minúsculas.
+	jQuery.expr[':'].contains = function(a, i, m) {
+	  return jQuery(a).text().toUpperCase()
+	      .indexOf(m[3].toUpperCase()) >= 0;
+	};
+	
+	$(".dl-horizontal dd:contains('<?php echo $search; ?>')").addClass('search');
+
+	if ('<?php echo isset($search); ?>') {
+		$("input").val('<?php echo $search; ?>');
+	}
+});
+</script>

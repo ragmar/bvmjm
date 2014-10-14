@@ -94,7 +94,6 @@ function marc21_decode($camp = null) {
 		<div class="col-md-2 column">
 		<br />
 			<div style="width: 100%; text-align: center;">
-				
 				<?php
 					if ($_SERVER['HTTP_HOST'] != "orpheus.human.ucv.ve"){
 						if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/webroot/covers/" . $item['Item']['cover_path']))){
@@ -830,7 +829,6 @@ function marc21_decode($camp = null) {
 			</tr>
 			<?php } ?>
 		</table>
-		<br />
 	</div>
 	
 	<div class="row">

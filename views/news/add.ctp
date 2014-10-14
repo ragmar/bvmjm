@@ -1,3 +1,11 @@
+<?php echo $this->Html->script('tiny_mce/tiny_mce'); ?>
+<script type="text/javascript">
+tinyMCE.init({
+        mode : "textareas",
+        theme : "advanced",
+        language : "es"
+});
+</script>
 <div class="news form">
 <?php echo $this->Form->create('News');?>
 	<legend><?php __('Agregar Noticia'); ?></legend>
