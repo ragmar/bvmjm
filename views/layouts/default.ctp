@@ -92,7 +92,7 @@
 					<!-- <form class="navbar-form navbar-left" role="search" action=""> -->
 					<?php echo $this->Form->create('Item', array('action' => 'search', 'class' => 'navbar-form navbar-left')); ?>
 						<div class="form-group">
-							<input type="text" class="form-control" name="data[Item][search]">
+							<input id="search" type="text" class="form-control" name="data[Item][search]" title="Realice la búsqueda de obras en la biblioteca por Título, Autor, Publicación o Materia.">
 						</div>
 						<button type="submit" class="btn btn-default">Buscar</button>
 					</form>

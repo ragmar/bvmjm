@@ -293,16 +293,17 @@
 	<div style="width: 270px; overflow: auto; padding-right: 10px;">
 		<p class="noticias_txt" style="text-align: justify;"><br />
 			<?php foreach ($news as $new) { ?>
-				<strong><span class="noticias_tit"><?php echo $new['News']['title']; ?></span></strong><br />
+				<p><strong><span class="noticias_tit"><?php echo $new['News']['title']; ?></span></strong></p>
 				<?php echo $new['News']['content']; ?>
+				<p><i>Publicado el <?php echo $time->format('d-m-Y', $new['News']['created']); ?>.</i></p>
 				<br />
-				<i>Publicado el <?php echo $time->format('d-m-Y', $new['News']['created']); ?>.</i>
-				<br /><br />
 			<?php } ?>
 		</p>
+		<!--
 		<p>
 			<a class="btn btn-primary" href="#">Leer Más</a>
 		</p>
+		-->
 	</div>
 </div>
 
