@@ -214,15 +214,13 @@ function marc21_decode($camp = null) {
 		</div>
 	</div>
 	
-	<br />
-	
 	<?php $masdetalles = 0; ?>
 	<div class="row">
-		<table id="more" class="table" style="display: none;">
+		<table id="more" style="display: none; width: 100%;">
 			<?php if (!empty($item['Item']['017'])) { ?>
 			<tr>
-				<th><?php __('Número de copyright o de depósito legal'); ?>:</th>
-				<td>
+				<td style="text-align: right; width: 50%;"><b><?php __('Número de copyright o de depósito legal'); ?>:</b></td>
+				<td style="padding-left: 1%; width: 50%;">
 					<?php
 						$copyright = marc21_decode($item['Item']['017']);
 						if (isset($copyright['a'])) {echo $copyright['a']; $masdetalles++;}
@@ -233,8 +231,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['020'])) { ?>
 			<tr>
-				<th><?php __('Número Internacional Normalizado para Libros (ISBN)'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Número Internacional Normalizado para Libros (ISBN)'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$isbn = marc21_decode($item['Item']['020']);
 						if (isset($isbn['a'])) {echo $isbn['a']; $masdetalles++;}
@@ -247,8 +245,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['022'])) { ?>
 			<tr>
-				<th><?php __('Número Internacional Normalizado para Publicaciones Seriadas (ISSN)'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Número Internacional Normalizado para Publicaciones Seriadas (ISSN)'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$issn = marc21_decode($item['Item']['022']);
 						if (isset($issn['a'])) {echo $issn['a']; $masdetalles++;}
@@ -261,8 +259,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['028'])) { ?>
 			<tr>
-				<th><?php __('Número de plancha'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Número de plancha'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$plancha = marc21_decode($item['Item']['028']);
 						if (isset($plancha['a'])) {echo $plancha['a']; $masdetalles++;}
@@ -274,8 +272,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['040'])) { ?>
 			<tr>
-				<th><?php __('Fuente de la catalogación'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Fuente de la catalogación'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$fuente = marc21_decode($item['Item']['040']);
 						if (isset($fuente['a'])) {echo $fuente['a']; $masdetalles++;}
@@ -286,8 +284,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['041'])) { ?>
 			<tr>
-				<th><?php __('Código de lengua'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Código de lengua'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$lengua = marc21_decode($item['Item']['041']);
 						if (isset($lengua['a'])) {echo $lengua['a']; $masdetalles++;}
@@ -300,8 +298,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['044'])) { ?>
 			<tr>
-				<th><?php __('Código del país de la entidad editora/productora'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Código del país de la entidad editora/productora'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$paisep = marc21_decode($item['Item']['044']);
 						if (isset($paisep['a'])) {echo $paisep['a']; $masdetalles++;}
@@ -312,8 +310,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['082'])) { ?>
 			<tr>
-				<th><?php __('Número de la Clasificación Decimal Dewey'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Número de la Clasificación Decimal Dewey'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$dewey = marc21_decode($item['Item']['082']);
 						if (isset($dewey['a'])) {echo $dewey['a']; $masdetalles++;}
@@ -325,8 +323,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['092'])) { ?>
 			<tr>
-				<th><?php __('Clasificación local (COTA)'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Clasificación local (COTA)'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$cota = marc21_decode($item['Item']['092']);
 						if (isset($cota['a'])) {echo $cota['a']; $masdetalles++;}
@@ -339,8 +337,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['110'])) { ?>
 			<tr>
-				<th><?php __('Autor corporativo'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Autor corporativo'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$autorc = marc21_decode($item['Item']['110']);
 						if (isset($autorc['a'])) {echo $autorc['a']; $masdetalles++;}
@@ -352,8 +350,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['130'])) { ?>
 			<tr>
-				<th><?php __('Título uniforme (Punto de acceso)'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Título uniforme (Punto de acceso)'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$titulou = marc21_decode($item['Item']['130']);
 						if (isset($titulou['a'])) {echo $titulou['a']; $masdetalles++;}
@@ -366,8 +364,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['222'])) { ?>
 			<tr>
-				<th><?php __('Título clave'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Título clave'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$tituloc = marc21_decode($item['Item']['222']);
 						if (isset($tituloc['a'])) {echo $tituloc['a']; $masdetalles++;}
@@ -379,8 +377,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['240'])) { ?>
 			<tr>
-				<th><?php __('Título uniforme'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Título uniforme'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$titulou = marc21_decode($item['Item']['240']);
 						if (isset($titulou['a'])) {echo $titulou['a']; $masdetalles++;}
@@ -393,8 +391,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['246'])) { ?>
 			<tr>
-				<th><?php __('Variante de título'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Variante de título'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$titulov = marc21_decode($item['Item']['246']);
 						if (isset($titulov['a'])) {echo $titulov['a']; $masdetalles++;}
@@ -407,8 +405,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['247'])) { ?>
 			<tr>
-				<th><?php __('Título anterior'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Título anterior'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$tituloa = marc21_decode($item['Item']['247']);
 						if (isset($tituloa['a'])) {echo $tituloa['a']; $masdetalles++;}
@@ -424,8 +422,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['250'])) { ?>
 			<tr>
-				<th><?php __('Mención de edición'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Mención de edición'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$titulom = marc21_decode($item['Item']['250']);
 						if (isset($titulom['a'])) {echo $titulom['a']; $masdetalles++;}
@@ -437,8 +435,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['300'])) { ?>
 			<tr>
-				<th><?php __('Descripción física'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Descripción física'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$descripcionf = marc21_decode($item['Item']['300']);
 						if (isset($descripcionf['a'])) {echo $descripcionf['a']; $masdetalles++;}
@@ -452,8 +450,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['310'])) { ?>
 			<tr>
-				<th><?php __('Periodicidad actual'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Periodicidad actual'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$periodicidadac = marc21_decode($item['Item']['310']);
 						if (isset($periodicidadac['a'])) {echo $periodicidadac['a']; $masdetalles++;}
@@ -465,8 +463,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['321'])) { ?>
 			<tr>
-				<th><?php __('Periodicidad anterior'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Periodicidad anterior'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$periodicidadan = marc21_decode($item['Item']['321']);
 						if (isset($periodicidadan['a'])) {echo $periodicidadan['a']; $masdetalles++;}
@@ -478,8 +476,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['362'])) { ?>
 			<tr>
-				<th><?php __('Fechas de publicación y/o designación secuencial'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Fechas de publicación y/o designación secuencial'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$publicacionds = marc21_decode($item['Item']['362']);
 						if (isset($publicacionds['a'])) {echo $publicacionds['a']; $masdetalles++;}
@@ -490,8 +488,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['380'])) { ?>
 			<tr>
-				<th><?php __('Forma de la obra'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Forma de la obra'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$forma = marc21_decode($item['Item']['380']);
 						if (isset($forma['a'])) {echo $forma['a']; $masdetalles++;}
@@ -502,8 +500,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['500'])) { ?>
 			<tr>
-				<th><?php __('Nota general'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Nota general'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$notag = marc21_decode($item['Item']['500']);
 						if (isset($notag['a'])) {echo $notag['a']; $masdetalles++;}
@@ -514,8 +512,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['501'])) { ?>
 			<tr>
-				<th><?php __('Nota de “Con”'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Nota de “Con”'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$notac = marc21_decode($item['Item']['501']);
 						if (isset($notac['a'])) {echo $notac['a'];}
@@ -526,8 +524,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['505'])) { ?>
 			<tr>
-				<th><?php __('Nota de contenido con formato'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Nota de contenido con formato'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$notacf = marc21_decode($item['Item']['505']);
 						if (isset($notacf['a'])) {echo $notacf['a']; $masdetalles++;}
@@ -538,8 +536,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['510'])) { ?>
 			<tr>
-				<th><?php __('Nota de citas o referencias bibliográficas'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Nota de citas o referencias bibliográficas'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$notacrb = marc21_decode($item['Item']['510']);
 						if (isset($notacrb['a'])) {echo $notacrb['a']; $masdetalles++;}
@@ -551,8 +549,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['515'])) { ?>
 			<tr>
-				<th><?php __('Nota de peculiaridades de la numeración'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Nota de peculiaridades de la numeración'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$notacrb = marc21_decode($item['Item']['515']);
 						if (isset($notacrb['a'])) {echo $notacrb['a']; $masdetalles++;}
@@ -563,8 +561,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['520'])) { ?>
 			<tr>
-				<th><?php __('Nota de sumario, etc'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Nota de sumario, etc'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$notasum = marc21_decode($item['Item']['520']);
 						if (isset($notasum['a'])) {echo $notasum['a']; $masdetalles++;}
@@ -575,8 +573,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['530'])) { ?>
 			<tr>
-				<th><?php __('Nota de formato físico adicional disponible'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Nota de formato físico adicional disponible'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$notaffad = marc21_decode($item['Item']['530']);
 						if (isset($notaffad['a'])) {echo $notaffad['a']; $masdetalles++;}
@@ -589,8 +587,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['534'])) { ?>
 			<tr>
-				<th><?php __('Nota sobre la versión original'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Nota sobre la versión original'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$notavo = marc21_decode($item['Item']['534']);
 						if (isset($notavo['a'])) {echo $notavo['a']; $masdetalles++;}
@@ -604,8 +602,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['546'])) { ?>
 			<tr>
-				<th><?php __('Nota de lengua'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Nota de lengua'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$notal = marc21_decode($item['Item']['546']);
 						if (isset($notal['a'])) {echo $notal['a']; $masdetalles++;}
@@ -617,8 +615,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['555'])) { ?>
 			<tr>
-				<th><?php __('Nota de índice acumulativo u otros instrumentos bibliográficos'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Nota de índice acumulativo u otros instrumentos bibliográficos'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$notaiaoib = marc21_decode($item['Item']['555']);
 						if (isset($notaiaoib['a'])) {echo $notaiaoib['a']; $masdetalles++;}
@@ -632,8 +630,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['588'])) { ?>
 			<tr>
-				<th><?php __('Nota de fuente de la descripción'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Nota de fuente de la descripción'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$notafd = marc21_decode($item['Item']['588']);
 						if (isset($notafd['a'])) {echo $notafd['a']; $masdetalles++;}
@@ -647,8 +645,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['600'])) { ?>
 			<tr>
-				<th><?php __('Punto de acceso adicional de materia - Nombre de persona'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Punto de acceso adicional de materia - Nombre de persona'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$puntoaccesoamnp = marc21_decode($item['Item']['600']);
 						if (isset($puntoaccesoamnp['a'])) {echo $puntoaccesoamnp['a']; $masdetalles++;}
@@ -666,8 +664,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['610'])) { ?>
 			<tr>
-				<th><?php __('Punto de acceso adicional de materia - Nombre de entidad corporativa'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Punto de acceso adicional de materia - Nombre de entidad corporativa'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$puntoaccesoamnec = marc21_decode($item['Item']['610']);
 						if (isset($puntoaccesoamnec['a'])) {echo $puntoaccesoamnec['a']; $masdetalles++;}
@@ -684,8 +682,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['650'])) { ?>
 			<tr>
-				<th><?php __('Punto de acceso adicional de materia - Término de materia'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Punto de acceso adicional de materia - Término de materia'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$puntoaccesoamtm = marc21_decode($item['Item']['650']);
 						if (isset($puntoaccesoamtm['a'])) {echo $puntoaccesoamtm['a']; $masdetalles++;}
@@ -700,8 +698,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['651'])) { ?>
 			<tr>
-				<th><?php __('Punto de acceso adicional de materia - Nombre geográfico'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Punto de acceso adicional de materia - Nombre geográfico'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$puntoaccesoamng = marc21_decode($item['Item']['651']);
 						if (isset($puntoaccesoamng['a'])) {echo $puntoaccesoamng['a']; $masdetalles++;}
@@ -716,8 +714,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['700'])) { ?>
 			<tr>
-				<th><?php __('Punto de acceso adicional - Nombre personal'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Punto de acceso adicional - Nombre personal'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$puntoaccesoanp = marc21_decode($item['Item']['700']);
 						if (isset($puntoaccesoanp['a'])) {echo $puntoaccesoanp['a']; $masdetalles++;}
@@ -735,8 +733,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['710'])) { ?>
 			<tr>
-				<th><?php __('Punto de acceso adicional - Nombre corporativo'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Punto de acceso adicional - Nombre corporativo'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$puntoaccesoanc = marc21_decode($item['Item']['710']);
 						if (isset($puntoaccesoanc['a'])) {echo $puntoaccesoanc['a']; $masdetalles++;}
@@ -751,8 +749,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['740'])) { ?>
 			<tr>
-				<th><?php __('Punto de acceso adicional - Título relacionado o analítico no controlado'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Punto de acceso adicional - Título relacionado o analítico no controlado'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$puntoaccesoatranc = marc21_decode($item['Item']['740']);
 						if (isset($puntoaccesoatranc['a'])) {echo $puntoaccesoatranc['a']; $masdetalles++;}
@@ -765,8 +763,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['773'])) { ?>
 			<tr>
-				<th><?php __('Enlace al documento fuente'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Enlace al documento fuente'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$enlacedf = marc21_decode($item['Item']['773']);
 						if (isset($enlacedf['a'])) {echo $enlacedf['a']; $masdetalles++;}
@@ -786,8 +784,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['850'])) { ?>
 			<tr>
-				<th><?php __('Institución que posee los fondos'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Institución que posee los fondos'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$fondos = marc21_decode($item['Item']['850']);
 						if (isset($fondos['a'])) {echo $fondos['a']; $masdetalles++;}
@@ -798,8 +796,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['852'])) { ?>
 			<tr>
-				<th><?php __('Localización'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Localización'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$localizacion = marc21_decode($item['Item']['852']);
 						if (isset($localizacion['a'])) {echo $localizacion['a']; $masdetalles++;}
@@ -817,8 +815,8 @@ function marc21_decode($camp = null) {
 			
 			<?php if (!empty($item['Item']['856'])) { ?>
 			<tr>
-				<th><?php __('Localización y acceso electrónicos'); ?>:</th>
-				<td>
+				<td style="text-align: right;"><b><?php __('Localización y acceso electrónicos'); ?>:</b></td>
+				<td style="padding-left: 1%;">
 					<?php
 						$localizacionae = marc21_decode($item['Item']['856']);
 						if (isset($localizacionae['a'])) {echo $localizacionae['a']; $masdetalles++;}
@@ -830,6 +828,8 @@ function marc21_decode($camp = null) {
 			<?php } ?>
 		</table>
 	</div>
+	
+	<br />
 	
 	<div class="row">
 	<?php if ($item['Item']['item_content_type'] == "application/pdf") { ?>
