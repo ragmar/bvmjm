@@ -576,6 +576,18 @@ class BooksController extends AppController {
 				$conditions['Item.773 LIKE'] = '%' . $this->data['Book']['773'] . '%';
 			}
 			
+			if (!empty($this->data['Book']['850'])) { // Institución que posee los fondos.
+				$conditions['Item.850 LIKE'] = '%' . $this->data['Book']['850'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['852'])) { // Localización.
+				$conditions['Item.852 LIKE'] = '%' . $this->data['Book']['852'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['856'])) { // Localización y acceso electrónicos.
+				$conditions['Item.856 LIKE'] = '%' . $this->data['Book']['856'] . '%';
+			}
+			
 			//debug($conditions); die;
 			
 			//$items = $this->Item->find('all', array('conditions' => $conditions));
