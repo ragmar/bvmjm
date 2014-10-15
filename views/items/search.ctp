@@ -226,17 +226,20 @@ function marc21_decode($camp = null) {
 	</div><br />
 	<?php } ?>
 </div>
-<?php if (($this->Session->check('Auth.User')) && ($this->Session->read('Auth.User.group_id') != 3)) { ?>
 <div class="col-md-3 column">
-	<?php if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') != '3'))) { ?>
 		<br />
-		<label><?php __('Acciones:'); ?></label>
+		<label><?php __('Búsqueda Avanzada en:'); ?></label>
 		<?php //echo $this->Html->link(__('Agregar Libro', true), array('action' => 'add'), array('class' => 'btn btn-primary')); ?>
+		<?php echo $this->Html->link(__('Libros', true),'/books/advanced_search', array('class' => 'btn btn-primary')); ?>
+		<?php echo $this->Html->link(__('Hemerografías', true),'/magazines/advanced_search', array('class' => 'btn btn-primary')); ?>
+		<?php echo $this->Html->link(__('Música Manuscrita', true),'/manuscripts/advanced_search', array('class' => 'btn btn-primary')); ?>
+		<?php echo $this->Html->link(__('Música Impresa', true),'/printeds/advanced_search', array('class' => 'btn btn-primary')); ?>
+		<?php echo $this->Html->link(__('Iconografías', true),'/iconographies/advanced_search', array('class' => 'btn btn-primary')); ?>
+		<?php echo $this->Html->link(__('Documentos', true),'/documents/advanced_search', array('class' => 'btn btn-primary')); ?>
+		<?php echo $this->Html->link(__('Trabajos Académicos', true),'/works/advanced_search', array('class' => 'btn btn-primary')); ?>
 		<br />
-	<?php } ?>
 	<?php //echo $this->Html->link(__('Búsqueda Avanzada', true), array('action' => 'advanced_search'), array('class' => 'btn btn-primary')); ?>
 </div>
-<?php } ?>
 </div>
 <style type="text/css">
 	.search {

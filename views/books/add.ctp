@@ -16,7 +16,7 @@ th {
   <li>Agregar Libro</li>
 </ul>
 
-<div class="items">
+<div class="books">
 <div class="col-md-12 column">
 <h2>Agregar Libro</h2>
 

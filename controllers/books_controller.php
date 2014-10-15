@@ -396,24 +396,184 @@ class BooksController extends AppController {
 			$this->Item->recursive = -1;
 			$conditions = array('Item.h-006' => 'a', 'Item.h-007' => 'm', 'Item.published' => '1');	
 			
-			if (!empty($this->data['Book']['245'])) { // Titulo
-				$conditions['Item.245 LIKE'] = '%' . $this->data['Book']['245'] . '%'; 
+			if (!empty($this->data['Book']['017'])) { // Número de copyright o de depósito legal.
+				$conditions['Item.017 LIKE'] = '%' . $this->data['Book']['017'] . '%'; 
 			}
 			
-			if (!empty($this->data['Book']['100'])) { // Autor
+			if (!empty($this->data['Book']['020'])) { // Número Internacional Normalizado para Libros (ISBN).
+				$conditions['Item.020 LIKE'] = '%' . $this->data['Book']['020'] . '%';
+			}
+
+			if (!empty($this->data['Book']['022'])) { // Número Internacional Normalizado para Publicaciones Seriadas (ISSN).
+				$conditions['Item.022 LIKE'] = '%' . $this->data['Book']['022'] . '%';
+			}
+
+			if (!empty($this->data['Book']['028'])) { // Número de plancha.
+				$conditions['Item.028 LIKE'] = '%' . $this->data['Book']['028'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['040'])) { // Fuente de la catalogación.
+				$conditions['Item.040 LIKE'] = '%' . $this->data['Book']['040'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['041'])) { // Código de lengua.
+				$conditions['Item.041 LIKE'] = '%' . $this->data['Book']['041'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['044'])) { // Código del país de la entidad editora/productora.
+				$conditions['Item.044 LIKE'] = '%' . $this->data['Book']['044'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['082'])) { // Número de la Clasificación Decimal Dewey.
+				$conditions['Item.082 LIKE'] = '%' . $this->data['Book']['082'] . '%';
+			}
+				
+			if (!empty($this->data['Book']['092'])) { // Clasificación local (COTA).
+				$conditions['Item.092 LIKE'] = '%' . $this->data['Book']['092'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['100'])) { // Punto de acceso principal - Nombre de persona.
 				$conditions['Item.100 LIKE'] = '%' . $this->data['Book']['100'] . '%';
 			}
-
-			if (!empty($this->data['Book']['653'])) { // Materia
-				$conditions['Item.653 LIKE'] = '%' . $this->data['Book']['653'] . '%';
+				
+			if (!empty($this->data['Book']['110'])) { // Autor corporativo.
+				$conditions['Item.110 LIKE'] = '%' . $this->data['Book']['110'] . '%';
 			}
-
-			if (!empty($this->data['Book']['260'])) { // Lugar, editor o fecha
+			
+			if (!empty($this->data['Book']['130'])) { // Título uniforme (Punto de acceso).
+				$conditions['Item.130 LIKE'] = '%' . $this->data['Book']['130'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['222'])) { // Título clave.
+				$conditions['Item.222 LIKE'] = '%' . $this->data['Book']['222'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['240'])) { // Título uniforme.
+				$conditions['Item.240 LIKE'] = '%' . $this->data['Book']['240'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['245'])) { // Mención de título.
+				$conditions['Item.245 LIKE'] = '%' . $this->data['Book']['245'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['246'])) { // Variante de título.
+				$conditions['Item.246 LIKE'] = '%' . $this->data['Book']['246'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['247'])) { // Título anterior.
+				$conditions['Item.247 LIKE'] = '%' . $this->data['Book']['247'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['250'])) { // Mención de edición.
+				$conditions['Item.250 LIKE'] = '%' . $this->data['Book']['250'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['260'])) { // Publicación, distribución, etc. (pie de imprenta).
 				$conditions['Item.260 LIKE'] = '%' . $this->data['Book']['260'] . '%';
 			}
 			
-			if (!empty($this->data['Book']['690'])) { // Siglo
+			if (!empty($this->data['Book']['300'])) { // Descripción física.
+				$conditions['Item.300 LIKE'] = '%' . $this->data['Book']['300'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['310'])) { // Periodicidad actual.
+				$conditions['Item.310 LIKE'] = '%' . $this->data['Book']['310'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['321'])) { // Periodicidad anterior.
+				$conditions['Item.321 LIKE'] = '%' . $this->data['Book']['321'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['362'])) { // Fechas de publicación y/o designación secuencial.
+				$conditions['Item.362 LIKE'] = '%' . $this->data['Book']['362'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['380'])) { // Forma de la obra.
+				$conditions['Item.380 LIKE'] = '%' . $this->data['Book']['380'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['500'])) { // Nota general.
+				$conditions['Item.500 LIKE'] = '%' . $this->data['Book']['500'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['501'])) { // Nota de “Con”.
+				$conditions['Item.501 LIKE'] = '%' . $this->data['Book']['501'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['505'])) { // Nota de contenido con formato.
+				$conditions['Item.505 LIKE'] = '%' . $this->data['Book']['505'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['510'])) { // Nota de citas o referencias bibliográficas.
+				$conditions['Item.510 LIKE'] = '%' . $this->data['Book']['510'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['515'])) { // Nota de peculiaridades de la numeración.
+				$conditions['Item.515 LIKE'] = '%' . $this->data['Book']['515'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['520'])) { // Nota de sumario, etc.
+				$conditions['Item.520 LIKE'] = '%' . $this->data['Book']['520'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['530'])) { // Nota de formato físico adicional disponible.
+				$conditions['Item.530 LIKE'] = '%' . $this->data['Book']['530'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['534'])) { // Nota sobre la versión original.
+				$conditions['Item.534 LIKE'] = '%' . $this->data['Book']['534'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['546'])) { // Nota de lengua.
+				$conditions['Item.546 LIKE'] = '%' . $this->data['Book']['546'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['555'])) { // Nota de índice acumulativo u otros instrumentos bibliográficos.
+				$conditions['Item.555 LIKE'] = '%' . $this->data['Book']['555'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['588'])) { // Nota de fuente de la descripción.
+				$conditions['Item.588 LIKE'] = '%' . $this->data['Book']['588'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['600'])) { // Punto de acceso adicional de materia - Nombre de persona.
+				$conditions['Item.600 LIKE'] = '%' . $this->data['Book']['600'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['610'])) { // Punto de acceso adicional de materia - Nombre de entidad corporativa.
+				$conditions['Item.610 LIKE'] = '%' . $this->data['Book']['610'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['650'])) { // Punto de acceso adicional de materia – Término de materia.
+				$conditions['Item.650 LIKE'] = '%' . $this->data['Book']['650'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['651'])) { // Punto de acceso adicional de materia - Nombre geográfico.
+				$conditions['Item.651 LIKE'] = '%' . $this->data['Book']['651'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['653'])) { // Término de indización – No controlado.
+				$conditions['Item.653 LIKE'] = '%' . $this->data['Book']['653'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['690'])) { // Siglo.
 				$conditions['Item.690 LIKE'] = '%' . $this->data['Book']['690'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['700'])) { // Punto de acceso adicional - Nombre personal.
+				$conditions['Item.700 LIKE'] = '%' . $this->data['Book']['700'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['710'])) { // Punto de acceso adicional - Nombre corporativo.
+				$conditions['Item.710 LIKE'] = '%' . $this->data['Book']['710'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['740'])) { // Punto de acceso adicional - Título relacionado o analítico no controlado.
+				$conditions['Item.740 LIKE'] = '%' . $this->data['Book']['740'] . '%';
+			}
+			
+			if (!empty($this->data['Book']['773'])) { // Enlace al documento fuente.
+				$conditions['Item.773 LIKE'] = '%' . $this->data['Book']['773'] . '%';
 			}
 			
 			//debug($conditions); die;
