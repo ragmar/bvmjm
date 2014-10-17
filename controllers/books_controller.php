@@ -692,7 +692,7 @@ class BooksController extends AppController {
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($authors as $a => $v){
 				$v = $this->marc21_decode($v);
-				$list[$a] = $v['a'];
+				if (isset($v['a'])) {$list[$a] = $v['a'];}
 			}
 			
 			$list = array_unique($list);
@@ -701,7 +701,11 @@ class BooksController extends AppController {
 			// Recorre para darle el formato deseado.
 			$l = "";
 			foreach ($list as $a => $v){
-				$l = $l . "{ value: '" . $v . "', data: '" . $v . "' }, ";
+				if ($l == "") {
+					$l = '{ value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				} else {
+					$l = $l . ', { value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				}
 			}
 			
 			$authors = "[" . $l . "]";
@@ -719,7 +723,7 @@ class BooksController extends AppController {
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($titles as $a => $v){
 				$v = $this->marc21_decode($v);
-				$list[$a] = $v['a'];
+				if (isset($v['a'])) {$list[$a] = $v['a'];}
 			}
 			
 			$list = array_unique($list);
@@ -728,7 +732,11 @@ class BooksController extends AppController {
 			// Recorre para darle el formato deseado.
 			$l = "";
 			foreach ($list as $a => $v){
-				$l = $l . "{ value: '" . $v . "', data: '" . $v . "' }, ";
+				if ($l == "") {
+					$l = '{ value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				} else {
+					$l = $l . ', { value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				}
 			}
 			
 			$titles = "[" . $l . "]";
@@ -746,7 +754,7 @@ class BooksController extends AppController {
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($places as $a => $v){
 				$v = $this->marc21_decode($v);
-				$list[$a] = $v['a'];
+				if (isset($v['a'])) {$list[$a] = $v['a'];}
 			}
 	
 			$list = array_unique($list); // Elimina repetidos.
@@ -755,7 +763,11 @@ class BooksController extends AppController {
 			// Recorre para darle el formato deseado.
 			$l = "";
 			foreach ($list as $a => $v){
-				$l = $l . "{ value: '" . $v . "', data: '" . $v . "' }, ";
+				if ($l == "") {
+					$l = '{ value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				} else {
+					$l = $l . ', { value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				}
 			}
 			
 			$places = "[" . $l . "]";
@@ -773,7 +785,7 @@ class BooksController extends AppController {
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($editors as $a => $v){
 				$v = $this->marc21_decode($v);
-				$list[$a] = $v['b'];
+				if (isset($v['b'])) {$list[$a] = $v['b'];}
 			}
 			
 			$list = array_unique($list); // Elimina repetidos.
@@ -782,7 +794,11 @@ class BooksController extends AppController {
 			// Recorre para darle el formato deseado.
 			$l = "";
 			foreach ($list as $a => $v){
-				$l = $l . "{ value: '" . $v . "', data: '" . $v . "' }, ";
+				if ($l == "") {
+					$l = '{ value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				} else {
+					$l = $l . ', { value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				}
 			}
 			
 			$editors = "[" . $l . "]";
@@ -800,7 +816,7 @@ class BooksController extends AppController {
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($years as $a => $v){
 				$v = $this->marc21_decode($v);
-				$list[$a] = $v['c'];
+				if (isset($v['c'])) {$list[$a] = $v['c'];}
 			}
 			
 			$list = array_unique($list); // Elimina repetidos.
@@ -809,7 +825,11 @@ class BooksController extends AppController {
 			// Recorre para darle el formato deseado.
 			$l = "";
 			foreach ($list as $a => $v){
-				$l = $l . "{ value: '" . $v . "', data: '" . $v . "' }, ";
+				if ($l == "") {
+					$l = '{ value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				} else {
+					$l = $l . ', { value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				}
 			}
 			
 			$years = "[" . $l . "]";
@@ -827,7 +847,7 @@ class BooksController extends AppController {
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($publications as $a => $v){
 				$v = $this->marc21_decode($v);
-				$list[$a] = $v['a'];
+				if (isset($v['a'])) {$list[$a] = $v['a'];}
 			}
 			
 			$list = array_unique($list); // Elimina repetidos.
@@ -836,7 +856,11 @@ class BooksController extends AppController {
 			// Recorre para darle el formato deseado.
 			$l = "";
 			foreach ($list as $a => $v){
-				$l = $l . "{ value: '" . $v . "', data: '" . $v . "' }, ";
+				if ($l == "") {
+					$l = '{ value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				} else {
+					$l = $l . ', { value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				}
 			}
 			
 			$publications = "[" . $l . "]";
@@ -854,7 +878,7 @@ class BooksController extends AppController {
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($matters as $a => $v){
 				$v = $this->marc21_decode($v);
-				$list[$a] = $v['a'];
+				if (isset($v['a'])) {$list[$a] = $v['a'];}
 			}
 			
 			$list = array_unique($list); // Elimina repetidos.
@@ -863,7 +887,11 @@ class BooksController extends AppController {
 			// Recorre para darle el formato deseado.
 			$l = "";
 			foreach ($list as $a => $v){
-				$l = $l . "{ value: '" . $v . "', data: '" . $v . "' }, ";
+				if ($l == "") {
+					$l = '{ value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				} else {
+					$l = $l . ', { value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				}
 			}
 			
 			$matters = "[" . $l . "]";
@@ -945,7 +973,7 @@ class BooksController extends AppController {
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($authors as $a => $v){
 				$v = $this->marc21_decode($v);
-				$list[$a] = $v['a'];
+				if (isset($v['a'])) {$list[$a] = $v['a'];}
 			}
 			
 			$list = array_unique($list);
@@ -954,7 +982,11 @@ class BooksController extends AppController {
 			// Recorre para darle el formato deseado.
 			$l = "";
 			foreach ($list as $a => $v){
-				$l = $l . "{ value: '" . $v . "', data: '" . $v . "' }, ";
+				if ($l == "") {
+					$l = '{ value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				} else {
+					$l = $l . ', { value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				}
 			}
 			
 			$authors = "[" . $l . "]";
@@ -972,7 +1004,7 @@ class BooksController extends AppController {
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($titles as $a => $v){
 				$v = $this->marc21_decode($v);
-				$list[$a] = $v['a'];
+				if (isset($v['a'])) {$list[$a] = $v['a'];}
 			}
 			
 			$list = array_unique($list);
@@ -981,7 +1013,11 @@ class BooksController extends AppController {
 			// Recorre para darle el formato deseado.
 			$l = "";
 			foreach ($list as $a => $v){
-				$l = $l . "{ value: '" . $v . "', data: '" . $v . "' }, ";
+				if ($l == "") {
+					$l = '{ value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				} else {
+					$l = $l . ', { value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				}
 			}
 			
 			$titles = "[" . $l . "]";
@@ -999,7 +1035,7 @@ class BooksController extends AppController {
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($places as $a => $v){
 				$v = $this->marc21_decode($v);
-				$list[$a] = $v['a'];
+				if (isset($v['a'])) {$list[$a] = $v['a'];}
 			}
 	
 			$list = array_unique($list); // Elimina repetidos.
@@ -1008,7 +1044,11 @@ class BooksController extends AppController {
 			// Recorre para darle el formato deseado.
 			$l = "";
 			foreach ($list as $a => $v){
-				$l = $l . "{ value: '" . $v . "', data: '" . $v . "' }, ";
+				if ($l == "") {
+					$l = '{ value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				} else {
+					$l = $l . ', { value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				}
 			}
 			
 			$places = "[" . $l . "]";
@@ -1026,7 +1066,7 @@ class BooksController extends AppController {
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($editors as $a => $v){
 				$v = $this->marc21_decode($v);
-				$list[$a] = $v['b'];
+				if (isset($v['b'])) {$list[$a] = $v['b'];}
 			}
 			
 			$list = array_unique($list); // Elimina repetidos.
@@ -1035,7 +1075,11 @@ class BooksController extends AppController {
 			// Recorre para darle el formato deseado.
 			$l = "";
 			foreach ($list as $a => $v){
-				$l = $l . "{ value: '" . $v . "', data: '" . $v . "' }, ";
+				if ($l == "") {
+					$l = '{ value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				} else {
+					$l = $l . ', { value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				}
 			}
 			
 			$editors = "[" . $l . "]";
@@ -1053,7 +1097,7 @@ class BooksController extends AppController {
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($years as $a => $v){
 				$v = $this->marc21_decode($v);
-				$list[$a] = $v['c'];
+				if (isset($v['c'])) {$list[$a] = $v['c'];}
 			}
 			
 			$list = array_unique($list); // Elimina repetidos.
@@ -1062,7 +1106,11 @@ class BooksController extends AppController {
 			// Recorre para darle el formato deseado.
 			$l = "";
 			foreach ($list as $a => $v){
-				$l = $l . "{ value: '" . $v . "', data: '" . $v . "' }, ";
+				if ($l == "") {
+					$l = '{ value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				} else {
+					$l = $l . ', { value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				}
 			}
 			
 			$years = "[" . $l . "]";
@@ -1080,7 +1128,7 @@ class BooksController extends AppController {
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($publications as $a => $v){
 				$v = $this->marc21_decode($v);
-				$list[$a] = $v['a'];
+				if (isset($v['a'])) {$list[$a] = $v['a'];}
 			}
 			
 			$list = array_unique($list); // Elimina repetidos.
@@ -1089,7 +1137,11 @@ class BooksController extends AppController {
 			// Recorre para darle el formato deseado.
 			$l = "";
 			foreach ($list as $a => $v){
-				$l = $l . "{ value: '" . $v . "', data: '" . $v . "' }, ";
+				if ($l == "") {
+					$l = '{ value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				} else {
+					$l = $l . ', { value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				}
 			}
 			
 			$publications = "[" . $l . "]";
@@ -1107,7 +1159,7 @@ class BooksController extends AppController {
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($matters as $a => $v){
 				$v = $this->marc21_decode($v);
-				$list[$a] = $v['a'];
+				if (isset($v['a'])) {$list[$a] = $v['a'];}
 			}
 			
 			$list = array_unique($list); // Elimina repetidos.
@@ -1116,7 +1168,11 @@ class BooksController extends AppController {
 			// Recorre para darle el formato deseado.
 			$l = "";
 			foreach ($list as $a => $v){
-				$l = $l . "{ value: '" . $v . "', data: '" . $v . "' }, ";
+				if ($l == "") {
+					$l = '{ value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				} else {
+					$l = $l . ', { value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				}
 			}
 			
 			$matters = "[" . $l . "]";

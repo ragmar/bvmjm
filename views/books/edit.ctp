@@ -2572,7 +2572,7 @@ th {
 		<th style="width: 45%;">
 			<label id="l-321"><?php echo $item['Item']['321']; ?></label>
 			<?php echo $this->Form->hidden('321', array('id' => '321', 'label' => false, 'div' => false, 'value' => $item['Item']['321'])); ?>
-		</t>
+		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>

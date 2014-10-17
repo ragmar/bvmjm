@@ -627,7 +627,15 @@ th {
 				'-yu' => 'Serbia and Montenegro',
 				'-za' => 'Zambia'
 			), 'default' => 'xxx'
-		)); ?></td>
+		)); ?>
+		<script type="text/javascript">
+			// Se ordena la lista.
+			$("#008-15-17").append($("#008-15-17 option").remove().sort(function(a, b) {
+			    var at = $(a).text(), bt = $(b).text();
+			    return (at > bt)?1:((at < bt)?-1:0);
+			}));
+		</script>
+		</td>
 	</tr>
 	<tr>
 		<td><b>008 [18]</b></td>
@@ -1206,7 +1214,15 @@ th {
 				'zxx' => 'No linguistic content',
 				'zza' => 'Zaza'
 			), 'default' => 'und'
-		)); ?></td>
+		)); ?>
+		<script type="text/javascript">
+			// Se ordena la lista.
+			$("#008-35-37").append($("#008-35-37 option").remove().sort(function(a, b) {
+			    var at = $(a).text(), bt = $(b).text();
+			    return (at > bt)?1:((at < bt)?-1:0);
+			}));
+		</script>
+		</td>
 	</tr>
 </table>
 
@@ -1952,7 +1968,7 @@ th {
 		<th style="width: 45%;">
 			<label id="l-321">&nbsp;</label>
 			<?php echo $this->Form->hidden('321', array('id' => '321', 'label' => false, 'div' => false)); ?>
-		</t>
+		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
@@ -9660,12 +9676,12 @@ $(document).ready(function() {
 		return true;
 	});
 
-	$('#245a').change(function() {
-		$.post("<?php echo $this->base; ?>/items/publications/" + $(this).val(), function(data) {
+	//$('#245a').change(function() {
+		//$.post("<?php //echo $this->base; ?>/items/publications/" + $(this).val(), function(data) {
 			//publications = data;
 			//Actualizar object DOM publications.
-		});
-	});
+		//});
+	//});
 });
 
 var authors = <?php echo $authors; ?>;
