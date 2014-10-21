@@ -196,6 +196,7 @@ function marc21_decode($camp = null) {
 					if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') != '3'))) {
 						echo $this->Html->link('Agregar Libro', array('action' => '/add'), array('class' => 'btn-primary', 'title' => 'Agregar Libro'));
 						echo $this->Html->link('Modificar Libro', array('action' => '/edit/'.$item['Item']['id']), array('class' => 'btn-primary', 'title' => 'Modificar Libro'));
+						echo $this->Html->link('Eliminar Libro', array('action' => 'delete', $item['Item']['id']), array('class' => 'btn-primary', 'title' => 'Eliminar Libro'), sprintf(__('¿Realmente desea eliminar el libro "%s"?', true), $title['a']));
 					}
 				?>
 				<?php

@@ -3,7 +3,7 @@ class BooksController extends AppController {
 
 	var $name = 'Books';
 	var $components = array('Attachment');
-	var $uses = array('Item', 'Search');
+	var $uses = array('Item', 'Search', 'UserItem');
 
 	function beforeFilter(){
 		parent::beforeFilter();
@@ -176,14 +176,23 @@ class BooksController extends AppController {
 		}*/
 	
 		$this->Item->recursive = 1;
-	
 		$this->paginate = array(
 				//'limit' => '1',
 				'conditions' => $conditions,
 				//'order' => 'ASC'
 		);
-		//debug($conditions); die;
 		$this->set('items', $this->paginate('Item'));
+		
+		$this->UserItem->recursive = 0;
+		$favorites = $this->UserItem->find('all', array('conditions' => array('User.id' => $this->Session->read('Auth.User.id'), 'Item.h-006' => 'a', 'Item.h-007' => 'm', 'Item.published' => '1')));
+
+		$i = 0;
+		$temp = null;
+		foreach ($favorites as $f) {
+			$temp[$i] = $f['UserItem']['item_id'];
+			$i++; 
+		}
+		$this->set('favorites', $temp);
 	}
 	
 	function century($century = null) {
@@ -1184,14 +1193,20 @@ class BooksController extends AppController {
 
 	function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Id invalido para el item.', true));
+			$this->Session->setFlash(__('Id inválido para el item.', true));
 			$this->redirect(array('action'=>'index'));
 		}
 		
 		$item = $this->Item->find('first', array('conditions' => array('Item.id' => $id)));
 		if ($this->Item->delete($id)) {
 			$this->Session->setFlash(__('Item eliminado', true));
-			$this->Attachment->delete_files($item['Item']['item_file_path']);
+			
+			//$this->Attachment->delete_files($item['Item']['item_file_path']);
+			$uploaddir = "..".DS."webroot".DS."covers".DS;
+			unlink($uploaddir.$item['Item']['cover_path']);
+			$uploaddir = "..".DS."webroot".DS."files".DS;
+			unlink($uploaddir.$item['Item']['item_file_path']);
+			
 			if (!isset($this->passedArgs[1])) {
 				$this->redirect(array('action'=>'index'));
 			} else {

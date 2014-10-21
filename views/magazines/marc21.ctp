@@ -20,9 +20,9 @@ function marc21_decode($camp = null) {
 ?>
 <ul class="breadcrumb" style="margin: 0">
   <li><a href="<?php echo $this->base; ?>">Inicio</a></li>
-  <li><a href="<?php echo $this->base; ?>/books">Libros</a></li>
+  <li><a href="<?php echo $this->base; ?>/magazines">Hemerografías</a></li>
   <li>
-  <a href="<?php echo $this->base; ?>/books/view/<?php echo $item['Item']['id']; ?>">
+  <a href="<?php echo $this->base; ?>/magazines/view/<?php echo $item['Item']['id']; ?>">
   	<?php
 		if (!empty($item['Item']['245'])) {
 			$title = marc21_decode($item['Item']['245']);

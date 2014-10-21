@@ -45,6 +45,36 @@ th {
 
 <h5>Datos de Cabecera o Líder</h5>
 
+<!--
+<div style="text-align: center;">
+	<select id="tipo" class="form-control">
+			<option value="0">Seleccione el tipo de registro</option>
+		<optgroup label="MATERIAL TEXTUAL">
+			<option value="1">Libro</option>
+			<option value="2">Revista</option>
+			<option value="3">Parte de Libro</option>
+			<option value="4">Parte de Revista</option>
+		</optgroup>
+		<optgroup label="MÚSICA ESCRITA">
+			<option value="5">Música Impresa</option>
+			<option value="6">Música Manuscrita</option>
+			<option value="7">Música Impresa (parte componente)</option>
+			<option value="8">Música Manuscrita (parte componente)</option>
+			<option value="9">Música Impresa (parte de revista)</option>
+			<option value="10">Música Impresa (colección)</option>
+			<option value="11">Música Manuscrita (colección facticia)</option>
+		</optgroup>
+		<optgroup label="MATERIAL GRÁFICO">
+			<option value="12">Imágenes fijas bidimensionales</option>
+			<option value="13">Imágenes fijas bidimensionales (parte de libro)</option>
+			<option value="14">Imágenes fijas bidimensionales (parte de revista)</option>
+		</optgroup>
+	</select>
+</div>
+
+<br />
+-->
+
 <table class="table">
 	<tr>
 		<th><label>Estado del Registro.</label></th>
@@ -1375,7 +1405,7 @@ th {
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>ISBN <font color="red">(Obligatorio)</font>.</td>
+		<td>ISBN.</td>
 		<td>
 			<?php
 			if (isset($c020['a'])) {
@@ -2391,7 +2421,7 @@ th {
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>Lugar de publicación, distribución, etc <font color="red">(Obligatorio)</font>.</td>
+		<td>Lugar de publicación, distribución, etc.</td>
 		<td>
 			<?php
 			if (isset($c260['a'])) {
@@ -2404,7 +2434,7 @@ th {
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
-		<td>Nombre del editor, distribuidor, etc <font color="red">(Obligatorio)</font>.</td>
+		<td>Nombre del editor, distribuidor, etc.</td>
 		<td>
 			<?php
 			if (isset($c260['b'])) {
@@ -2417,7 +2447,7 @@ th {
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
-		<td>Fecha de publicación, distribución, etc <font color="red">(Obligatorio)</font>.</td>
+		<td>Fecha de publicación, distribución, etc.</td>
 		<td>
 			<?php
 			if (isset($c260['c'])) {
@@ -2542,7 +2572,7 @@ th {
 		<th style="width: 45%;">
 			<label id="l-321"><?php echo $item['Item']['321']; ?></label>
 			<?php echo $this->Form->hidden('321', array('id' => '321', 'label' => false, 'div' => false, 'value' => $item['Item']['321'])); ?>
-		</t>
+		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
@@ -3623,7 +3653,7 @@ th {
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>Palabra clave.</td>
+		<td>Palabra clave <font color="red">(Obligatorio)</font>.</td>
 		<td>
 			<?php
 			if (isset($c653['a'])) {
@@ -4396,11 +4426,19 @@ th {
 			<td>
 				<div style="float: left; width: 20%;">
 				<?php
-				if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/webroot/covers/" . $item['Item']['cover_path']))){
-					echo $this->Html->image("/webroot/covers/" . $item['Item']['cover_path'], array('width' => '70px'));
-				} else {
-					echo $this->Html->image("/webroot/img/sin_portada.jpg", array('width' => '70px'));
-				}
+					if ($_SERVER['HTTP_HOST'] != "orpheus.human.ucv.ve"){
+						if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/webroot/covers/" . $item['Item']['cover_path']))){
+							echo $this->Html->image("/webroot/covers/" . $item['Item']['cover_path'], array('width' => '70px'));
+						} else {
+							echo $this->Html->image("/webroot/img/sin_portada.jpg", array('width' => '70px'));
+						}
+					} else {
+						if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/html/app/webroot/covers/" . $item['Item']['cover_path']))){
+							echo $this->Html->image("/app/webroot/covers/" . $item['Item']['cover_path'], array('width' => '70px'));
+						} else {
+							echo $this->Html->image("/app/webroot/img/sin_portada.jpg", array('width' => '70px'));
+						}
+					}
 				?>
 				</div>
 				<div style="float: left; width: 80%;">
@@ -10919,16 +10957,6 @@ $(document).ready(function() {
 	
 	// Campos obligatorios vacíos.
 	$('#MagazineAddForm').submit(function(event) {
-		/*if (($('#020a').val() == "") && ($('#MagazineH-007 option:selected').val() == 's')){
-			alert("EL campo 'ISBN' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t0xx').parent().addClass('active');
-			$('#0xx').show();
-			$('#020a').focus();
-			return false;
-		}*/
-
 		if ($('#100a').val() == ""){
 			alert("EL campo 'Nombre de persona' no puede estar vacío.");
 			$(".tabs").hide();
@@ -10950,7 +10978,7 @@ $(document).ready(function() {
 		}
 
 		/*
-		if (($('#260a').val() == "") && ($('#MagazineH-007 option:selected').val() == 's')){
+		if ($('#260a').val() == ""){
 			alert("EL campo 'Lugar de publicación, distribución, etc.' no puede estar vacío.");
 			$(".tabs").hide();
 			$('.active').removeClass('active');
@@ -10960,7 +10988,7 @@ $(document).ready(function() {
 			return false;
 		}
 
-		if (($('#260b').val() == "") && ($('#MagazineH-007 option:selected').val() == 's')){
+		if ($('#260b').val() == ""){
 			alert("EL campo 'Nombre del editor, distribuidor, etc.' no puede estar vacío.");
 			$(".tabs").hide();
 			$('.active').removeClass('active');
@@ -10970,7 +10998,7 @@ $(document).ready(function() {
 			return false;
 		}
 
-		if (($('#260c').val() == "") && ($('#MagazineH-007 option:selected').val() == 's')){
+		if ($('#260c').val() == ""){
 			alert("EL campo 'Fecha de publicación, distribución, etc.' no puede estar vacío.");
 			$(".tabs").hide();
 			$('.active').removeClass('active');
@@ -11001,106 +11029,6 @@ $(document).ready(function() {
 		}
 		*/
 
-		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773a').val() == "")){
-			alert("EL campo 'Autor' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t7xx').parent().addClass('active');
-			$('#7xx').show();
-			$('#773a').focus();
-			return false;
-		}
-
-		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773b').val() == "")){
-			alert("EL campo 'Edición' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t7xx').parent().addClass('active');
-			$('#7xx').show();
-			$('#773b').focus();
-			return false;
-		}
-
-		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773d').val() == "")){
-			alert("EL campo 'Lugar, editor y fecha de publicación' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t7xx').parent().addClass('active');
-			$('#7xx').show();
-			$('#773d').focus();
-			return false;
-		}
-
-		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773g').val() == "")){
-			alert("EL campo 'Parte(s) relacionada(s)' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t7xx').parent().addClass('active');
-			$('#7xx').show();
-			$('#773g').focus();
-			return false;
-		}
-
-		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773h').val() == "")){
-			alert("EL campo 'Descripción física' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t7xx').parent().addClass('active');
-			$('#7xx').show();
-			$('#773h').focus();
-			return false;
-		}
-
-		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773k').val() == "")){
-			alert("EL campo 'Datos de la serie del documento relacionado' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t7xx').parent().addClass('active');
-			$('#7xx').show();
-			$('#773k').focus();
-			return false;
-		}
-
-		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773n').val() == "")){
-			alert("EL campo 'Nota' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t7xx').parent().addClass('active');
-			$('#7xx').show();
-			$('#773n').focus();
-			return false;
-		}
-
-		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773q').val() == "")){
-			alert("EL campo 'Numeración y primera página' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t7xx').parent().addClass('active');
-			$('#7xx').show();
-			$('#773q').focus();
-			return false;
-		}
-
-		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773t').val() == "")){
-			alert("EL campo 'Título' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t7xx').parent().addClass('active');
-			$('#7xx').show();
-			$('#773t').focus();
-			return false;
-		}
-
-		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773z').val() == "")){
-			alert("EL campo 'Número Internacional Normalizado para Libros (ISBN)' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t7xx').parent().addClass('active');
-			$('#7xx').show();
-			$('#773z').focus();
-			return false;
-		}
-		
 		if ($('#MagazineCover').val() == ""){
 			alert("Debe seleccionar una portada para la obra.");
 			$('#ItemItem').focus();

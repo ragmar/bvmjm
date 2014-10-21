@@ -16,13 +16,43 @@ th {
   <li>Agregar Hemerografía</li>
 </ul>
 
-<div class="items">
+<div class="magazines">
 <div class="col-md-12 column">
 <h2>Agregar Hemerografía</h2>
 
 <?php echo $this->Form->create('Magazine', array('enctype' => 'multipart/form-data')); ?>
 
 <h5>Datos de Cabecera o Líder</h5>
+
+<!--
+<div style="text-align: center;">
+	<select id="tipo" class="form-control">
+			<option value="0">Seleccione el tipo de registro</option>
+		<optgroup label="MATERIAL TEXTUAL">
+			<option value="1">Libro</option>
+			<option value="2">Revista</option>
+			<option value="3">Parte de Libro</option>
+			<option value="4">Parte de Revista</option>
+		</optgroup>
+		<optgroup label="MÚSICA ESCRITA">
+			<option value="5">Música Impresa</option>
+			<option value="6">Música Manuscrita</option>
+			<option value="7">Música Impresa (parte componente)</option>
+			<option value="8">Música Manuscrita (parte componente)</option>
+			<option value="9">Música Impresa (parte de revista)</option>
+			<option value="10">Música Impresa (colección)</option>
+			<option value="11">Música Manuscrita (colección facticia)</option>
+		</optgroup>
+		<optgroup label="MATERIAL GRÁFICO">
+			<option value="12">Imágenes fijas bidimensionales</option>
+			<option value="13">Imágenes fijas bidimensionales (parte de libro)</option>
+			<option value="14">Imágenes fijas bidimensionales (parte de revista)</option>
+		</optgroup>
+	</select>
+</div>
+
+<br />
+-->
 
 <table class="table">
 	<tr>
@@ -596,7 +626,7 @@ th {
 				'-ys' => 'Yemen (People’s Democratic Republic)',
 				'-yu' => 'Serbia and Montenegro',
 				'-za' => 'Zambia'
-			), 'selected' => 'xxx'
+			), 'default' => 'xxx'
 		)); ?>
 		<script type="text/javascript">
 			// Se ordena la lista.
@@ -604,7 +634,6 @@ th {
 			    var at = $(a).text(), bt = $(b).text();
 			    return (at > bt)?1:((at < bt)?-1:0);
 			}));
-			$('#008-15-17').val('xxx');
 		</script>
 		</td>
 	</tr>
@@ -670,7 +699,7 @@ th {
 				'p' => 'p - Revista',
 				'w' => 'w - Sitio web actualizable',
 				'|' => '| - No se utiliza'
-			), 'selected' => 'p'
+			)
 		)); ?></td>
 	</tr>
 	<tr>
@@ -1184,7 +1213,7 @@ th {
 				'zun' => 'Zuni',
 				'zxx' => 'No linguistic content',
 				'zza' => 'Zaza'
-			), 'selected' => 'und'
+			), 'default' => 'und'
 		)); ?>
 		<script type="text/javascript">
 			// Se ordena la lista.
@@ -1192,7 +1221,6 @@ th {
 			    var at = $(a).text(), bt = $(b).text();
 			    return (at > bt)?1:((at < bt)?-1:0);
 			}));
-			$('#008-35-37').val('und');
 		</script>
 		</td>
 	</tr>
@@ -1225,7 +1253,7 @@ th {
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>ISBN <font color="red">(Obligatorio)</font>.</td>
+		<td>ISBN.</td>
 		<td><?php echo $this->Form->input('020a', array('id' => '020a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
@@ -1864,17 +1892,17 @@ th {
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>Lugar de publicación, distribución, etc <font color="red">(Obligatorio)</font>.</td>
+		<td>Lugar de publicación, distribución, etc.</td>
 		<td><?php echo $this->Form->input('260a', array('id' => '260a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
-		<td>Nombre del editor, distribuidor, etc <font color="red">(Obligatorio)</font>.</td>
+		<td>Nombre del editor, distribuidor, etc.</td>
 		<td><?php echo $this->Form->input('260b', array('id' => '260b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
-		<td>Fecha de publicación, distribución, etc <font color="red">(Obligatorio)</font>.</td>
+		<td>Fecha de publicación, distribución, etc.</td>
 		<td><?php echo $this->Form->input('260c', array('id' => '260c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
@@ -1940,7 +1968,7 @@ th {
 		<th style="width: 45%;">
 			<label id="l-321">&nbsp;</label>
 			<?php echo $this->Form->hidden('321', array('id' => '321', 'label' => false, 'div' => false)); ?>
-		</t>
+		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
@@ -2603,7 +2631,7 @@ th {
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>Palabra clave.</td>
+		<td>Palabra clave <font color="red">(Obligatorio)</font>.</td>
 		<td><?php echo $this->Form->input('653a', array('id' => '653a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
@@ -9561,16 +9589,6 @@ $(document).ready(function() {
 	
 	// Campos obligatorios vacíos.
 	$('#MagazineAddForm').submit(function(event) {
-		/*if (($('#020a').val() == "") && ($('#MagazineH-007 option:selected').val() == 's')){
-			alert("EL campo 'ISBN' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t0xx').parent().addClass('active');
-			$('#0xx').show();
-			$('#020a').focus();
-			return false;
-		}*/
-
 		if ($('#100a').val() == ""){
 			alert("EL campo 'Nombre de persona' no puede estar vacío.");
 			$(".tabs").hide();
@@ -9643,106 +9661,6 @@ $(document).ready(function() {
 		}
 		*/
 
-		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773a').val() == "")){
-			alert("EL campo 'Autor' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t7xx').parent().addClass('active');
-			$('#7xx').show();
-			$('#773a').focus();
-			return false;
-		}
-
-		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773b').val() == "")){
-			alert("EL campo 'Edición' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t7xx').parent().addClass('active');
-			$('#7xx').show();
-			$('#773b').focus();
-			return false;
-		}
-
-		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773d').val() == "")){
-			alert("EL campo 'Lugar, editor y fecha de publicación' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t7xx').parent().addClass('active');
-			$('#7xx').show();
-			$('#773d').focus();
-			return false;
-		}
-
-		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773g').val() == "")){
-			alert("EL campo 'Parte(s) relacionada(s)' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t7xx').parent().addClass('active');
-			$('#7xx').show();
-			$('#773g').focus();
-			return false;
-		}
-
-		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773h').val() == "")){
-			alert("EL campo 'Descripción física' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t7xx').parent().addClass('active');
-			$('#7xx').show();
-			$('#773h').focus();
-			return false;
-		}
-
-		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773k').val() == "")){
-			alert("EL campo 'Datos de la serie del documento relacionado' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t7xx').parent().addClass('active');
-			$('#7xx').show();
-			$('#773k').focus();
-			return false;
-		}
-
-		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773n').val() == "")){
-			alert("EL campo 'Nota' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t7xx').parent().addClass('active');
-			$('#7xx').show();
-			$('#773n').focus();
-			return false;
-		}
-
-		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773q').val() == "")){
-			alert("EL campo 'Numeración y primera página' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t7xx').parent().addClass('active');
-			$('#7xx').show();
-			$('#773q').focus();
-			return false;
-		}
-
-		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773t').val() == "")){
-			alert("EL campo 'Título' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t7xx').parent().addClass('active');
-			$('#7xx').show();
-			$('#773t').focus();
-			return false;
-		}
-
-		if (($('#MagazineH-007 option:selected').val() == 'b') && ($('#773z').val() == "")){
-			alert("EL campo 'Número Internacional Normalizado para Libros (ISBN)' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t7xx').parent().addClass('active');
-			$('#7xx').show();
-			$('#773z').focus();
-			return false;
-		}
-		
 		if ($('#MagazineCover').val() == ""){
 			alert("Debe seleccionar una portada para la obra.");
 			$('#ItemItem').focus();
@@ -9758,12 +9676,12 @@ $(document).ready(function() {
 		return true;
 	});
 
-	$('#245a').change(function() {
-		$.post("<?php echo $this->base; ?>/items/publications/" + $(this).val(), function(data) {
+	//$('#245a').change(function() {
+		//$.post("<?php //echo $this->base; ?>/items/publications/" + $(this).val(), function(data) {
 			//publications = data;
 			//Actualizar object DOM publications.
-		});
-	});
+		//});
+	//});
 });
 
 var authors = <?php echo $authors; ?>;

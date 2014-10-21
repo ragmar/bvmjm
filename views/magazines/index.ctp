@@ -42,7 +42,7 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
   <li>Hemerografías</li>
 </ul>
 
-<div class='century view'>
+<div class='magazine view'>
 	<div class="col-md-9 column">
 	<h2>Módulo de Hemerografías</h2>
 		<?php if (count($items) > 0) { ?>
@@ -57,13 +57,18 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 		<tr>
 			<td style="background-color: <?php echo $color; ?>; text-align: center; width: 80px;">
 			<?php
-				if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/webroot/covers/" . $item['Item']['cover_path']))){
-				//if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/html/app/webroot/covers/" . $item['Item']['cover_path']))){
-					echo $this->Html->image("/webroot/covers/" . $item['Item']['cover_path'], array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'magazines', 'action' => 'view', $item['Item']['id'])));
-					//echo $this->Html->image("/app/webroot/covers/" . $item['Item']['cover_path'], array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'magazines', 'action' => 'view', $item['Item']['id'])));
+				if ($_SERVER['HTTP_HOST'] != "orpheus.human.ucv.ve"){
+					if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/webroot/covers/" . $item['Item']['cover_path']))){
+						echo $this->Html->image("/webroot/covers/" . $item['Item']['cover_path'], array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'magazines', 'action' => 'view', $item['Item']['id'])));
+					} else {
+						echo $this->Html->image("/webroot/img/sin_portada.jpg", array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'magazines', 'action' => 'view', $item['Item']['id'])));
+					}
 				} else {
-					echo $this->Html->image("/webroot/img/sin_portada.jpg", array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'magazines', 'action' => 'view', $item['Item']['id'])));
-					//echo $this->Html->image("/app/webroot/img/sin_portada.jpg", array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'magazines', 'action' => 'view', $item['Item']['id'])));
+					if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/html/app/webroot/covers/" . $item['Item']['cover_path']))){
+						echo $this->Html->image("/app/webroot/covers/" . $item['Item']['cover_path'], array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'magazines', 'action' => 'view', $item['Item']['id'])));
+					} else {
+						echo $this->Html->image("/app/webroot/img/sin_portada.jpg", array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'magazines', 'action' => 'view', $item['Item']['id'])));
+					}
 				}
 			?>
 			</td>
@@ -75,12 +80,10 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 							if (!empty($item['Item']['245'])) {
 								$title = marc21_decode($item['Item']['245']);
 								if ($title) {
-									foreach ($item['UserItems'] as $ui):
-										if($ui['user_id'] == $this->Session->read('Auth.User.id') && ($ui['item_id'] == $item['Item']['id'])) {
-											echo $html->image('/img/ts/bookmark.png', array('alt' => 'Mi Biblioteca', 'title' => 'Obra agregada a la biblioteca.', 'style' => 'width: 20px;'));
-											echo "&nbsp;";
-										}
-									endforeach;
+									if ((!empty($favorites)) && (in_array($item['Item']['id'], $favorites))){
+										echo $html->image('/img/ts/bookmark.png', array('alt' => 'Mi Biblioteca', 'title' => 'Obra agregada a la biblioteca.', 'style' => 'width: 20px;'));
+										echo "&nbsp;";
+									}
 									
 									if (!empty($this->data['magazines']['Titulo'])) {
 										echo '<b>' . $title['a'] . '.</b>';
@@ -109,6 +112,7 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 							}
 						?>
 					</dd>
+					<?php if (!empty($item['Item']['260'])) { ?>
 					<dt style="width: 120px"><?php __('Publicación:');?></dt>
 					<dd style="margin-left: 130px">
 						<?php
@@ -120,6 +124,7 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 							}
 						?>
 					</dd>
+					<?php } ?>
 					<?php if (!empty($item['Item']['690'])) { ?>
 					<dt style="width: 120px"><?php __('Siglo:');?></dt>
 					<dd style="margin-left: 130px">
@@ -133,6 +138,11 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 					?>
 					</dd>
 					<?php } ?>
+					<dt style="width: 120px">
+					<?php if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') != '3'))) { ?>
+						<?php //echo $this->Html->link(__('Delete', true), array('action' => 'delete', $item['Item']['id']), null, sprintf(__("¿Desea eliminar '%s'?", true), $item['Item']['title'])); ?>
+					<?php } ?>
+					</dt>
 					<?php if (!empty($item['Item']['653'])) { ?>
 					<dt style="width: 120px"><?php __('Materia:');?></dt>
 					<dd style="margin-left: 130px">
@@ -146,11 +156,6 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 					?>
 					</dd>
 					<?php } ?>
-					<dt style="width: 120px">
-					<?php if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') != '3'))) { ?>
-						<?php //echo $this->Html->link(__('Delete', true), array('action' => 'delete', $item['Item']['id']), null, sprintf(__("¿Desea eliminar '%s'?", true), $item['Item']['title'])); ?>
-					<?php } ?>
-					</dt>
 					<dd style="margin-left: 130px"></dd>
 				</dl>
 			</td>

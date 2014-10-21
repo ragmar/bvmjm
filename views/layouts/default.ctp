@@ -63,7 +63,7 @@
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<li class="dropdown">
-							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Módulos <strong class="caret"></strong></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Módulos <strong class="caret"></strong></a>
 							<ul class="dropdown-menu">
 								<li>
 									<?php echo $this->Html->link('Libros', '/books'); ?>
@@ -89,13 +89,30 @@
 							</ul>
 						</li>
 					</ul>
-					<!-- <form class="navbar-form navbar-left" role="search" action=""> -->
+					
 					<?php echo $this->Form->create('Item', array('action' => 'search', 'class' => 'navbar-form navbar-left')); ?>
-						<div class="form-group">
+						<div class="input-group">
 							<input id="search" type="text" class="form-control" name="data[Item][search]" title="Realice la búsqueda de obras en la biblioteca por Título, Autor, Publicación o Materia.">
+							<div class="input-group-btn">
+								<button type="submit" class="btn btn-default">Buscar</button>
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+									Búsqueda Avanzada
+									<span class="caret"></span>
+			  						<span class="sr-only">Toggle Dropdown</span>
+								</button>
+								<ul class="dropdown-menu dropdown-menu-right" role="menu">
+								  <li><a href="<?php echo $this->base; ?>/books/advanced_search">Libros</a></li>
+								  <li><a href="<?php echo $this->base; ?>/magazines/advanced_search">Hemerografías</a></li>
+								  <li><a href="#">Música Manuscrita</a></li>
+								  <li><a href="#">Música Impresa</a></li>
+								  <li><a href="#">Iconógrafías</a></li>
+								  <li><a href="#">Documentos</a></li>
+								  <li><a href="#">Trabajos Académicos</a></li>
+								</ul>
+							</div>
 						</div>
-						<button type="submit" class="btn btn-default">Buscar</button>
-					</form>
+					<?php echo $this->Form->end(); ?>
+					
 					<ul class="nav navbar-nav navbar-right">
 						<li>
 							<?php echo $this->Html->link('Mi Biblioteca', '/user_items'); ?>

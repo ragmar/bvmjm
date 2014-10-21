@@ -1,4 +1,4 @@
-<?php
+<?php //debug($favorites);
 function marc21_decode($camp = null) {
 	if (!empty($camp)) {
 		$c = explode('^', $camp);
@@ -80,12 +80,10 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 							if (!empty($item['Item']['245'])) {
 								$title = marc21_decode($item['Item']['245']);
 								if ($title) {
-									foreach ($item['UserItems'] as $ui):
-										if($ui['user_id'] == $this->Session->read('Auth.User.id') && ($ui['item_id'] == $item['Item']['id'])) {
-											echo $html->image('/img/ts/bookmark.png', array('alt' => 'Mi Biblioteca', 'title' => 'Obra agregada a la biblioteca.', 'style' => 'width: 20px;'));
-											echo "&nbsp;";
-										}
-									endforeach;
+									if ((!empty($favorites)) && (in_array($item['Item']['id'], $favorites))){
+										echo $html->image('/img/ts/bookmark.png', array('alt' => 'Mi Biblioteca', 'title' => 'Obra agregada a la biblioteca.', 'style' => 'width: 20px;'));
+										echo "&nbsp;";
+									}
 									
 									if (!empty($this->data['books']['Titulo'])) {
 										echo '<b>' . $title['a'] . '.</b>';
@@ -114,6 +112,7 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 							}
 						?>
 					</dd>
+					<?php if (!empty($item['Item']['260'])) { ?>
 					<dt style="width: 120px"><?php __('Publicación:');?></dt>
 					<dd style="margin-left: 130px">
 						<?php
@@ -125,6 +124,7 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 							}
 						?>
 					</dd>
+					<?php } ?>
 					<?php if (!empty($item['Item']['690'])) { ?>
 					<dt style="width: 120px"><?php __('Siglo:');?></dt>
 					<dd style="margin-left: 130px">

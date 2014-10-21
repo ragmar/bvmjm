@@ -148,6 +148,7 @@ function marc21_decode($camp = null) {
 						}
 					?>
 				</dd>
+				<?php if (!empty($item['Item']['260'])) { ?>
 				<dt style="width: 120px"><?php __('Publicación:');?></dt>
 				<dd style="margin-left: 130px">
 					<?php
@@ -160,6 +161,7 @@ function marc21_decode($camp = null) {
 					
 					?>
 				</dd>
+				<?php } ?>
 				<?php if (!empty($item['Item']['690'])) { ?>
 				<dt style="width: 120px"><?php __('Siglo:');?></dt>
 				<dd style="margin-left: 130px">
