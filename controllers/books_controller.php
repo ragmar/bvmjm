@@ -1199,7 +1199,7 @@ class BooksController extends AppController {
 		
 		$item = $this->Item->find('first', array('conditions' => array('Item.id' => $id)));
 		if ($this->Item->delete($id)) {
-			$this->Session->setFlash(__('Item eliminado', true));
+			$this->Session->setFlash(__('Libro eliminado.', true));
 			
 			//$this->Attachment->delete_files($item['Item']['item_file_path']);
 			$uploaddir = "..".DS."webroot".DS."covers".DS;
