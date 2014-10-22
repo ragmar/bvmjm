@@ -2631,7 +2631,7 @@ th {
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>Palabra clave <font color="red">(Obligatorio)</font>.</td>
+		<td>Palabra clave.</td>
 		<td><?php echo $this->Form->input('653a', array('id' => '653a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
@@ -2647,7 +2647,7 @@ th {
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>Siglo <font color="red">(Obligatorio)</font>.</td>
+		<td>Siglo.</td>
 		<td><?php echo $this->Form->input('690a', array('id' => '690a', 'label' => false, 'div' => false, 'class' => 'form-control', 'empty' => 'Seleccione', 'options' => array('XVII' => 'XVII', 'XVIII' => 'XVIII', 'XIX' => 'XIX', 'XX' => 'XX'))); ?></td>
 	</tr>
 </table>
