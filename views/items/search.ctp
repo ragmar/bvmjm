@@ -70,8 +70,20 @@ function marc21_decode($camp = null) {
 			$controller = "books";
 		}
 		
+		// Tipo parte de libro.
+		if (($t1 == 'a') && ($t2 == 'a')) {
+			$color = "#9dae8a";
+			$controller = "books";
+		}
+		
 		// Tipo revista.
 		if (($t1 == 'a') && ($t2 == 's')) {
+			$color = "#b3bbce";
+			$controller = "magazines";
+		}
+		
+		// Tipo parte de revista.
+		if (($t1 == 'a') && ($t2 == 'b')) {
 			$color = "#b3bbce";
 			$controller = "magazines";
 		}
@@ -101,19 +113,19 @@ function marc21_decode($camp = null) {
 		}
 	?>
 	<tr>
-		<td style="background-color: <?php echo $color; ?>; text-align: center; width: 100px;">
+		<td style="background-color: <?php echo $color; ?>; text-align: center; width: 80px;">
 			<?php
 				if ($_SERVER['HTTP_HOST'] != "orpheus.human.ucv.ve"){
 					if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/webroot/covers/" . $item['Item']['cover_path']))){
 						echo "<a href='".$this->base.'/'.$controller.'/view/'.$item['Item']['id']."'>".$this->Html->image("/webroot/covers/" . $item['Item']['cover_path'], array('width' => '90%', 'title' => $item['Item']['cover_name']))."</a>";
 					} else {
-						echo $this->Html->image("/webroot/img/sin_portada.jpg", array('width' => '90%'));
+						echo $this->Html->image("/webroot/img/sin_portada.jpg", array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'magazines', 'action' => 'view', $item['Item']['id'])));
 					}
 				} else {
 					if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/html/app/webroot/covers/" . $item['Item']['cover_path']))){
 						echo "<a href='".$this->base.'/'.$controller.'/view/'.$item['Item']['id']."'>".$this->Html->image("/app/webroot/covers/" . $item['Item']['cover_path'], array('width' => '90%', 'title' => $item['Item']['cover_name']))."</a>";
 					} else {
-						echo $this->Html->image("/app/webroot/img/sin_portada.jpg", array('width' => '90%'));
+						echo $this->Html->image("/app/webroot/img/sin_portada.jpg", array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'magazines', 'action' => 'view', $item['Item']['id'])));
 					}
 				}
 			?>
@@ -128,7 +140,7 @@ function marc21_decode($camp = null) {
 						if (!empty($item['Item']['245'])) {
 							$title = marc21_decode($item['Item']['245']);
 							if ($title) {
-								echo $title['a'];
+								echo $title['a'] . '. ';
 								//if (isset($title['b'])) {echo ' <i>' . $title['b'] . '.</i>';}
 								//if (isset($title['c'])) {echo ' ' . $title['c']. '.';}
 								//if (isset($title['h'])) {echo ' ' . $title['h']. '.';}
@@ -143,7 +155,7 @@ function marc21_decode($camp = null) {
 					<?php
 						if (!empty($item['Item']['100'])) {
 							$author = marc21_decode($item['Item']['100']);
-							echo $author['a']. '.';
+							echo $author['a'] . '.';
 							if (isset($author['d'])) {echo ' ' . $author['d']. '.';}
 						}
 					?>
@@ -188,27 +200,37 @@ function marc21_decode($camp = null) {
 					
 					// Tipo libro.
 					if (($t1 == 'a') && ($t2 == 'm')) {
-						echo "Libro";
+						echo "Libro.";
+					}
+					
+					// Tipo parte de libro.
+					if (($t1 == 'a') && ($t2 == 'a')) {
+						echo "Segmento de un Libro.";
 					}
 					
 					// Tipo revista.
 					if (($t1 == 'a') && ($t2 == 's')) {
-						echo "Revista";
+						echo "Hemerografía.";
+					}
+					
+					// Tipo parte de revista.
+					if (($t1 == 'a') && ($t2 == 'b')) {
+						echo "Segmento de una Hemerografía.";
 					}
 
 					// Música impresa.
 					if (($t1 == 'c') && ($t2 == 'm')) {
-						echo "Música Impresa";
+						echo "Música Impresa.";
 					}
 					
 					// Música manuscrita.
 					if (($t1 == 'd') && ($t2 == 'm')) {
-						echo "Música Manuscrita";
+						echo "Música Manuscrita.";
 					}
 					
 					// Iconógrafía Musical.
 					if (($t1 == 'k') && ($t2 == 'b')) {
-						echo "Iconografía Musical";
+						echo "Iconografía Musical.";
 					}
 				?>
 				</dd>

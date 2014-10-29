@@ -39,7 +39,10 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 	}
 </style>
 <ul class="breadcrumb" style="margin: 0">
-  <li>Hemerografías</li>
+	<li>
+    	<?php echo $this->Html->link(__('Inicio', true), array('controller' => 'pages')); ?>
+    </li>
+	<li>Hemerografías</li>
 </ul>
 
 <div class='magazine view'>

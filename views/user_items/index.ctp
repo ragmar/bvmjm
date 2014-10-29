@@ -63,8 +63,18 @@ function marc21_decode($camp = null) {
 							$type = 1;
 						}
 						
+						// Tipo parte de libro.
+						if (($t1 == 'a') && ($t2 == 'a')) {
+							$type = 1;
+						}
+						
 						// Tipo revista.
 						if (($t1 == 'a') && ($t2 == 's')) {
+							$type = 2;
+						}
+						
+						// Tipo parte de revista.
+						if (($t1 == 'a') && ($t2 == 'b')) {
 							$type = 2;
 						}
 	
@@ -109,22 +119,32 @@ function marc21_decode($camp = null) {
 					
 					// Tipo libro.
 					if (($t1 == 'a') && ($t2 == 'm')) {
-						echo "Libro";
+						echo "Libro.";
+					}
+					
+					// Tipo parte de libro.
+					if (($t1 == 'a') && ($t2 == 'a')) {
+						echo "Segmento de un Libro.";
 					}
 					
 					// Tipo revista.
 					if (($t1 == 'a') && ($t2 == 's')) {
-						echo "Revista";
+						echo "Hemerografía.";
+					}
+					
+					// Tipo parte de revista.
+					if (($t1 == 'a') && ($t2 == 'b')) {
+						echo "Segmento de una Hemerografía.";
 					}
 
 					// Música impresa.
 					if (($t1 == 'c') && ($t2 == 'm')) {
-						echo "Música Impresa";
+						echo "Música Impresa.";
 					}
 					
 					// Música manuscrita.
 					if (($t1 == 'd') && ($t2 == 'm')) {
-						echo "Música Manuscrita";
+						echo "Música Manuscrita.";
 					}
 				?>
 				</td>
@@ -135,7 +155,7 @@ function marc21_decode($camp = null) {
 					<?php //echo $this->Html->link(__('Edit', true), array('action' => 'edit', $userItem['UserItem']['id'])); ?>
 					<?php
 						if (isset($title['a'])) {
-							echo $this->Html->link(__('Delete', true), array('action' => 'delete', $userItem['UserItem']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $title['a']));
+							echo $this->Html->link(__('Delete', true), array('action' => 'delete', $userItem['UserItem']['id']), array('class' => 'btn btn-primary'), sprintf(__('Seguro desea eliminar "%s"?', true), $title['a']));
 						}
 					?>
 				</td>

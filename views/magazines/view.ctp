@@ -108,6 +108,12 @@ function marc21_decode($camp = null) {
 							echo $this->Html->image("/app/webroot/img/sin_portada.jpg", array('width' => '90%'));
 						}
 					}
+					
+					if ($item['Item']['item_file_size']) {
+						echo "<br />" . $item['Item']['item_file_size'] . " Bytes.";
+					} else {
+						echo "<br />0 Bytes.";
+					}
 				?>
 			</div>
 		</div>
@@ -136,7 +142,7 @@ function marc21_decode($camp = null) {
 						<?php
 							if (!empty($item['Item']['100'])) {
 								$author = marc21_decode($item['Item']['100']);
-								echo $author['a'];
+								echo $author['a'] . '. ';
 								if (isset($author['d'])) {echo ' ' . $author['d']. '.';}
 							}
 						?>
@@ -160,7 +166,7 @@ function marc21_decode($camp = null) {
 					<dd>
 						<?php
 							$century = marc21_decode($item['Item']['690']);
-							echo $century['a'];
+							echo $century['a'] . '. ';
 						?>
 					</dd>
 					<?php } ?>
@@ -170,7 +176,7 @@ function marc21_decode($camp = null) {
 						<?php
 							if (!empty($item['Item']['653'])) {
 								$materia = marc21_decode($item['Item']['653']);
-								echo $materia['a'];
+								echo $materia['a'] . '. ';
 							}
 						?>
 					</dd>

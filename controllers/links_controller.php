@@ -7,7 +7,7 @@ class LinksController extends AppController {
 		parent::beforeFilter();
 		// Acciones permitidas sin loguearse.
 		$this->Auth->allow(
-				'link'
+				'links'
 		);
 		
 		if (($this->Session->read('Auth.User.group_id') == '3') && ($this->action != 'link')){
@@ -72,7 +72,7 @@ class LinksController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 	
-	function link() {
+	function links() {
 		// Lista los enlaces a los usuarios finales.
 		$this->Link->recursive = 0;
 		$links = $this->Link->find('all');

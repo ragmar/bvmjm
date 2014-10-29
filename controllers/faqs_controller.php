@@ -5,14 +5,23 @@ class FaqsController extends AppController {
 
 	function beforeFilter(){
 		parent::beforeFilter();
-	
-		if ($this->Session->read('Auth.User.group_id') != '1'){
+		// Acciones permitidas sin loguearse.
+		$this->Auth->allow(
+				'faqs'
+		);
+		
+		/*if ($this->Session->read('Auth.User.group_id') != '1'){
 			$this->Session->setFlash(__('Acceso Restringido.', true));
 			$this->redirect(array('controller' => 'pages', 'action' => 'home'));
-		}
+		}*/
 	}
 	
 	function index() {
+		$this->Faq->recursive = 0;
+		$this->set('faqs', $this->paginate());
+	}
+	
+	function faqs() {
 		$this->Faq->recursive = 0;
 		$this->set('faqs', $this->paginate());
 	}
@@ -29,10 +38,10 @@ class FaqsController extends AppController {
 		if (!empty($this->data)) {
 			$this->Faq->create();
 			if ($this->Faq->save($this->data)) {
-				$this->Session->setFlash(__('The faq has been saved', true));
+				$this->Session->setFlash(__('La pregunta ha sido guardada.', true));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The faq could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('La pregunta no ha sido guardada. Por favor, inténtelo nuevamente.', true));
 			}
 		}
 	}
@@ -44,10 +53,10 @@ class FaqsController extends AppController {
 		}
 		if (!empty($this->data)) {
 			if ($this->Faq->save($this->data)) {
-				$this->Session->setFlash(__('The faq has been saved', true));
+				$this->Session->setFlash(__('La pregunta ha sido guardada.', true));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The faq could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('La pregunta no ha sido guardada. Por favor, inténtelo nuevamente.', true));
 			}
 		}
 		if (empty($this->data)) {
@@ -61,10 +70,10 @@ class FaqsController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->Faq->delete($id)) {
-			$this->Session->setFlash(__('Faq deleted', true));
+			$this->Session->setFlash(__('Pregunta eliminada.', true));
 			$this->redirect(array('action'=>'index'));
 		}
-		$this->Session->setFlash(__('Faq was not deleted', true));
+		$this->Session->setFlash(__('La pregunta no fue eliminada.', true));
 		$this->redirect(array('action' => 'index'));
 	}
 }

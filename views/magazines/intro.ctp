@@ -16,31 +16,32 @@
 	<li>
     	<?php echo $this->Html->link(__('Inicio', true), array('controller' => 'pages')); ?>
     </li>
-	<li>Libros</li>
+	<li>Hemerografías</li>
 </ul>
 
 <div class="books index" style="text-align: justify; float: ">
 	<div class="col-md-12 column">
-		<h2>Módulo de Libros</h2>
+		<h2>Módulo de Hemerografía Musical</h2>
 		<hr style="border-color: black; margin: 10px;">
 		
-		<p style="text-align: justify;">En el Módulo Libros se exponen todos aquellos tratados o ensayos musicales que se difundieron o se produjeron en Venezuela durante los siglos XVII, XVIII, XIX y XX. Se incluyen aquí libros o capítulos de libros que atienden áreas temáticas como teoría, estética, didáctica e historiografía musical. Además se incluyen métodos de instrumento, himnarios litúrgicos y cancioneros populares, ceremoniales y rituales de los oficios y misas cantadas, diccionarios musicales, etc.</p><br />
+		<p style="text-align: justify;">El m&oacute;dulo Hemerograf&iacute;a Musical, contiene las principales publicaciones seriadas venezolanas vinculadas de alguna manera con la m&uacute;sica.
+		Se han digitalizado peri&oacute;dicos y revistas que pueden ser consultados por el usuario, siempre y cuando disponga de conexi&oacute;n a la red, a trav&eacute;s de motores de b&uacute;squeda especializados y herramientas musicol&oacute;gicas de alt&iacute;sima calidad, en un portal amigable de f&aacute;cil navegaci&oacute;n.</p><br />
 		
-		<p style="text-align: justify;">El módulo se nutre de varios repositorios a saber:</p><br />
+		<p style="text-align: justify;">Esta hemerograf&iacute;a vinculada con la m&uacute;sica, de formato y periodicidad diversa, puede clasificarse en tres grandes renglones:</p><br />
 		
-		<ul style="color: #6c3f30;">
-			<li>La colección fundacional de la Biblioteca Nacional de Venezuela, nutrida por los textos que pertenecían a la Biblioteca de la Universidad de Caracas y a otras instituciones y personajes de la Provincia de Venezuela, tales como la Congregación de San Felipe Neri, el Convento de las Monjas Concepciones, la Librería (biblioteca diríamos hoy) de San Francisco de Caracas y otras particulares como los doctores Ramón Ignacio Méndez y Nepomuceno Quintana.</li>
-			<li>La colección Pedro Manuel Arcaya que, por su enorme volumen y universalidad, no deja de tener algunos textos de interés artístico y musical. Se conformó en la primera mitad del siglo XX.</li>
-			<li>La colección del eminente musicólogo y americanista Francisco Kurt Lange, adquirida por la Biblioteca Nacional de Venezuela a finales del siglo XX.</li>
-			<li>La colección de libros y folletos de la Biblioteca Nacional de Venezuela, contentiva, entre otras muchas cosas, de textos de interés musical de los siglos XIX y XX.</li>
-			<li>La colección de libros antiguos y raros de la Biblioteca de la Universidad Central de Venezuela.</li>
-			<li>El archivo de la Escuela de Música José Ángel Lamas.</li>
-			<li>El archivo de la Fundación Vicente Emilio Sojo.</li>
-			<li>Otros archivos particulares. </li>
-		</ul>
+		<ol style="color: #6c3f30;">
+		<li>Aquella de tipo informativo general que, entre otros temas, ofrece comentarios sobre distintos aspectos de la vida musical.</li>
+		<li>Aquella de corte cultural donde la m&uacute;sica, las artes pl&aacute;sticas, la literatura, el cine y el teatro son los t&oacute;picos centrales.</li>
+		<li>Y aquella especializada en la m&uacute;sica propiamente.</li>
+		</ol>
+		
+		<br />
+		
+		<p style="text-align: justify;">Estas publicaciones contienen centenares de datos sobre compositores y su entorno, obras, int&eacute;rpretes, eventos, conciertos, rese&ntilde;as cr&iacute;ticas, noticias de la visita de artistas extranjeros al pa&iacute;s, noticias del quehacer de los nacionales fuera de las fronteras, comentarios sobre la actuaci&oacute;n de las bandas, informaci&oacute;n sobre la educación musical, acotaciones sobre est&eacute;tica, datos sobre folclor, y un largo etc&eacute;tera. En algunos casos, adem&aacute;s de las noticias, cr&oacute;nicas y/o rese&ntilde;as, se publicaban partituras, bien como encartados externos (&aacute;lbumes o separatas), o bien dentro del formato propio del peri&oacute;dico o revista. Este conjunto de partituras constituye, tanto por su cantidad como por su calidad, una de las colecciones de m&uacute;sica m&aacute;s importantes decimon&oacute;nicas.</p><br />
+		<p style="text-align: justify;">A pesar de sus limitaciones e inexactitudes, las publicaciones seriadas son el testimonio directo y cotidiano del acontecer de una &eacute;poca. De all&iacute; la importancia de su estudio para la reconstrucci&oacute;n de la vida cultural del pa&iacute;s.</p>
 		
 		<div style="text-align: center;">
-			<?php echo $this->Html->link('Ver Libros', '/books', array('class' => 'btn btn-primary', 'style' => 'float: none')); ?>
+			<?php echo $this->Html->link('Ver Hemerografías', '/magazines', array('class' => 'btn btn-primary', 'style' => 'float: none')); ?>
 		</div>
 
 	</div>

@@ -216,20 +216,21 @@
 		<div class="col-md-12 column text-center">
 		<?php if (isset($pages)){ ?>
 			<ul class="breadcrumb">
-			
-			<?php
-				foreach($pages as $page):
-				echo "<li>" . $this->Html->link($page['Pagetext']['title'], array('controller' => 'pagetexts', 'action' => 'page', $page['Pagetext']['id'])) . '</li>';
-				endforeach;
-			?>
-			<li>
-				<a href="#"></a>
-			</li>
-			<?php if (isset($visitors)) { ?>
-				Visitas: <?php echo $visitors; ?>
-			<?php } ?>
-			
-			</ul>
+				<?php
+					foreach($pages as $page):
+					echo "<li>" . $this->Html->link($page['Pagetext']['title'], array('controller' => 'pagetexts', 'action' => 'page', $page['Pagetext']['id'])) . '</li>';
+					endforeach;
+				?>
+				<li>
+					<a href="<?php echo $this->base; ?>/links/links">Enlaces</a>
+				</li>
+				<li>
+					<a href="<?php echo $this->base; ?>/faqs/faqs">Preguntas Frecuentes</a>
+				</li>
+				<?php //if (isset($visitors)) { ?>
+					<li>Visitas: <?php echo $visitors; ?></li>
+				<?php //} ?>
+				</ul>
 		<?php } ?>
 		</div>
 	</div>

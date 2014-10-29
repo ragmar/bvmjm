@@ -643,7 +643,6 @@ class BooksController extends AppController {
 		}
 
 		if (!empty($this->data)) {
-
 			$data = $this->data;
 			$time = time();
 
@@ -669,27 +668,23 @@ class BooksController extends AppController {
 				$data['Book']['cover_type'] = $this->data['Book']['cover']['type'];
 				$data['Book']['cover_size'] = $this->data['Book']['cover']['size'];
 				$data['Book']['cover_name'] = $this->data['Book']['cover']['name'];
-				
-				unset($data['Book']['cover']);
-				unset($data['Book']['item']);
-				$data['Item'] = $data['Book'];
-				unset($data['Book']);
-				
-				$this->Item->create();
-				if ($this->Item->save($data)) {
-					$item = $this->Item->getLastInsertID();
-					$this->Session->setFlash(__('El archivo ha sido guardado.', true));
-					$this->redirect(array('action' => 'view/' . $item));
-				} else {
-					$this->Session->setFlash(__('El archivo no pudo ser guardado. Por favor, intentélo nuevamente.', true));
-				}
-				
+			}
+			
+			unset($data['Book']['cover']);
+			unset($data['Book']['item']);
+			$data['Item'] = $data['Book'];
+			unset($data['Book']);
+			
+			$this->Item->create();
+			if ($this->Item->save($data)) {
+				$item = $this->Item->getLastInsertID();
+				$this->Session->setFlash(__('El libro ha sido guardado.', true));
+				$this->redirect(array('action' => 'view/' . $item));
 			} else {
-				$this->Session->setFlash('No se subió ningun archivo de la obra. Debe cargar alguno.');
+				$this->Session->setFlash(__('El libro no pudo ser guardado. Por favor, intentélo nuevamente.', true));
 				$this->redirect(array('action' => 'add'));
 			}
 			
-			$this->redirect(array('action' => 'add'));
 		}
 		
 		// ------------------------- Sub-Campo 100a ------------------------- //
@@ -697,7 +692,7 @@ class BooksController extends AppController {
 		$authors = $this->Item->find('list', array('fields' => array('100')));
 		
 		if ($authors) {
-			$list = "";
+			$list = array();
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($authors as $a => $v){
 				$v = $this->marc21_decode($v);
@@ -728,7 +723,7 @@ class BooksController extends AppController {
 		$titles = $this->Item->find('list', array('fields' => array('245')));
 		
 		if ($titles) {
-			$list = "";
+			$list = array();
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($titles as $a => $v){
 				$v = $this->marc21_decode($v);
@@ -759,7 +754,7 @@ class BooksController extends AppController {
 		$places = $this->Item->find('list', array('fields' => array('260')));
 		
 		if ($places) {
-			$list = "";
+			$list = array();
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($places as $a => $v){
 				$v = $this->marc21_decode($v);
@@ -790,7 +785,7 @@ class BooksController extends AppController {
 		$editors = $this->Item->find('list', array('fields' => array('260')));
 		
 		if ($editors) {
-			$list = "";
+			$list = array();
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($editors as $a => $v){
 				$v = $this->marc21_decode($v);
@@ -821,7 +816,7 @@ class BooksController extends AppController {
 		$years = $this->Item->find('list', array('fields' => array('260')));
 		
 		if ($years) {
-			$list = "";
+			$list = array();
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($years as $a => $v){
 				$v = $this->marc21_decode($v);
@@ -852,7 +847,7 @@ class BooksController extends AppController {
 		$publications = $this->Item->find('list', array('fields' => array('362')));
 		
 		if ($publications) {
-			$list = "";
+			$list = array();
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($publications as $a => $v){
 				$v = $this->marc21_decode($v);
@@ -883,7 +878,7 @@ class BooksController extends AppController {
 		$matters = $this->Item->find('list', array('fields' => array('653')));
 		
 		if ($matters) {
-			$list = "";
+			$list = array();
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($matters as $a => $v){
 				$v = $this->marc21_decode($v);
@@ -937,8 +932,6 @@ class BooksController extends AppController {
 				unlink($uploaddir.$item['Item']['item_file_path']);
 			}
 			
-			//if ($_FILES['data']['error']['Book']['item'] == 0){
-			
 			if ($_FILES['data']['error']['Book']['item'] == 0){
 				$data['Book']['item_file_path'] = $time.'_'.$data['Book']['item']['name'];
 				$data['Book']['item_content_type'] = $data['Book']['item']['type'];
@@ -959,16 +952,12 @@ class BooksController extends AppController {
 			unset($data['Book']);
 			
 			if ($this->Item->save($data)) {
-				$this->Session->setFlash(__('El archivo ha sido guardado.', true));
+				$this->Session->setFlash(__('El libro ha sido guardado.', true));
 				$this->redirect(array('action' => 'view', $data['Item']['id']));
 			} else {
-				$this->Session->setFlash(__('El archivo no pudo ser guardado. Por favor, intentélo nuevamente.', true));
+				$this->Session->setFlash(__('El libro no pudo ser guardado. Por favor, intentélo nuevamente.', true));
+				$this->redirect(array('action' => 'edit', $data['Item']['id']));
 			}
-			
-			//} else {
-			//	$this->Session->setFlash('No se subió ningun archivo de la obra. Debe cargar alguno.');
-			//	$this->redirect(array('action' => 'add'));
-			//}
 			
 			$this->redirect(array('action' => 'index'));
 		}
@@ -978,7 +967,7 @@ class BooksController extends AppController {
 		$authors = $this->Item->find('list', array('fields' => array('100')));
 		
 		if ($authors) {
-			$list = "";
+			$list = array();
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($authors as $a => $v){
 				$v = $this->marc21_decode($v);
@@ -1009,7 +998,7 @@ class BooksController extends AppController {
 		$titles = $this->Item->find('list', array('fields' => array('245')));
 		
 		if ($titles) {
-			$list = "";
+			$list = array();
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($titles as $a => $v){
 				$v = $this->marc21_decode($v);
@@ -1040,7 +1029,7 @@ class BooksController extends AppController {
 		$places = $this->Item->find('list', array('fields' => array('260')));
 		
 		if ($places) {
-			$list = "";
+			$list = array();
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($places as $a => $v){
 				$v = $this->marc21_decode($v);
@@ -1071,7 +1060,7 @@ class BooksController extends AppController {
 		$editors = $this->Item->find('list', array('fields' => array('260')));
 		
 		if ($editors) {
-			$list = "";
+			$list = array();
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($editors as $a => $v){
 				$v = $this->marc21_decode($v);
@@ -1102,7 +1091,7 @@ class BooksController extends AppController {
 		$years = $this->Item->find('list', array('fields' => array('260')));
 		
 		if ($years) {
-			$list = "";
+			$list = array();
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($years as $a => $v){
 				$v = $this->marc21_decode($v);
@@ -1133,7 +1122,7 @@ class BooksController extends AppController {
 		$publications = $this->Item->find('list', array('fields' => array('362')));
 		
 		if ($publications) {
-			$list = "";
+			$list = array();
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($publications as $a => $v){
 				$v = $this->marc21_decode($v);
@@ -1164,7 +1153,7 @@ class BooksController extends AppController {
 		$matters = $this->Item->find('list', array('fields' => array('653')));
 		
 		if ($matters) {
-			$list = "";
+			$list = array();
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($matters as $a => $v){
 				$v = $this->marc21_decode($v);
@@ -1213,7 +1202,7 @@ class BooksController extends AppController {
 				$this->redirect(array('action' => 'view', $this->passedArgs[1]));
 			}
 		}
-		$this->Session->setFlash(__('El item no fue eliminado.', true));
+		$this->Session->setFlash(__('El libro no fue eliminado.', true));
 		if (!isset($this->passedArgs[1])) {
 			$this->redirect(array('action'=>'index'));
 		} else {

@@ -25,8 +25,8 @@ class AttachmentComponent extends Object {
 		'images_size' => array(
 			/* You may define as many options as you like */
 			'big'   => array(800, 600, 'resize'),
-			'med'   => array(150, 150, 'resizeCrop'),
-			'small' => array( 40,  40, 'resizeCrop')
+			'med'   => array(150, 150, 'resize'),
+			'small' => array( 40,  40, 'resize')
 		)
 	);
 

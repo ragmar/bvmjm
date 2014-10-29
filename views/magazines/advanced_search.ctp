@@ -402,7 +402,7 @@ function marc21_decode($camp = null) {
 
 <?php if (isset($this->data)) { ?>
 	
-	<a name="resultado" id="resultado"><h3>Resultado</h3></a>
+	<a name="resultado" id="resultado"><h3>Resultados de la Búsqueda:</h3></a>
 	
 	<?php if (!empty($items)) { ?>
 	<table class="table">
@@ -422,8 +422,18 @@ function marc21_decode($camp = null) {
 				$color = "#9dae8a";
 			}
 			
+			// Tipo libro.
+			if (($t1 == 'a') && ($t2 == 'a')) {
+				$color = "#9dae8a";
+			}
+			
 			// Tipo revista.
 			if (($t1 == 'a') && ($t2 == 's')) {
+				$color = "#b3bbce";
+			}
+			
+			// Tipo revista.
+			if (($t1 == 'a') && ($t2 == 'b')) {
 				$color = "#b3bbce";
 			}
 	
@@ -476,7 +486,8 @@ function marc21_decode($camp = null) {
 							if (!empty($item['Item']['245'])) {
 								$title = marc21_decode($item['Item']['245']);
 								if ($title) {
-									echo $this->Html->link($title['a'], 'view/'.$item['Item']['id'], array('title' => 'Haga click para ver los detalles.'));
+									//echo $this->Html->link($title['a'], 'view/'.$item['Item']['id'], array('title' => 'Haga click para ver los detalles.'));
+									echo $title['a'] . ' ';
 									if (isset($title['b'])) {echo ' ' . $title['b'];}
 									if (isset($title['c'])) {echo ' ' . $title['c'];}
 									if (isset($title['h'])) {echo ' ' . $title['h'];}
@@ -497,17 +508,17 @@ function marc21_decode($camp = null) {
 							}
 						?>
 					</dd>
+					<?php if (!empty($item['Item']['260'])) { ?>
 					<dt style="width: 120px"><?php __('Publicación:');?></dt>
 					<dd style="margin-left: 130px">
 						<?php
-							if (!empty($item['Item']['260'])) {
-								$publication = marc21_decode($item['Item']['260']);
-								echo $publication['a'];
-								if (isset($publication['b'])) {echo ' ' . $publication['b'];}
-								if (isset($publication['c'])) {echo ' ' . $publication['c'];}
-							}
+							$publication = marc21_decode($item['Item']['260']);
+							echo $publication['a'];
+							if (isset($publication['b'])) {echo ' ' . $publication['b'];}
+							if (isset($publication['c'])) {echo ' ' . $publication['c'];}
 						?>
 					</dd>
+					<?php } ?>
 					<dt style="width: 120px"><?php __('Tipo:');?></dt>
 					<dd style="margin-left: 130px">
 					<?php
@@ -519,11 +530,21 @@ function marc21_decode($camp = null) {
 							echo "Libro";
 						}
 						
+						// Tipo parte de libro.
+						if (($t1 == 'a') && ($t2 == 'a')) {
+							echo "Segmento de un Libro.";
+						}
+						
 						// Tipo revista.
 						if (($t1 == 'a') && ($t2 == 's')) {
 							echo "Revista";
 						}
-	
+						
+						// Tipo parte de revista.
+						if (($t1 == 'a') && ($t2 == 'b')) {
+							echo "Segmento de una Hemerografía.";
+						}
+
 						// Música impresa.
 						if (($t1 == 'c') && ($t2 == 'm')) {
 							echo "Música Impresa";
