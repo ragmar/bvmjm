@@ -52,7 +52,7 @@
 	if (!defined('CAKE_CORE_INCLUDE_PATH')) {
 		//define('CAKE_CORE_INCLUDE_PATH', 'C:' . DS . 'Program Files' . DS . 'xampp' . DS . 'htdocs' . DS . 'cakephp-1.3.20');
 		//define('CAKE_CORE_INCLUDE_PATH', '..' . DS . '..' . DS . 'cakephp-1.3.20');
-		define('CAKE_CORE_INCLUDE_PATH', 'C:' . DS . 'Program Files (x86)' . DS . 'Apache Software Foundation' . DS . 'Apache2.2' . DS . 'htdocs' . DS . 'cake_1.3.20');
+		define('CAKE_CORE_INCLUDE_PATH', 'C:' . DS . 'wamp' . DS . 'www' . DS . 'cakephp-1.3.20');
 	}
 
 /**
