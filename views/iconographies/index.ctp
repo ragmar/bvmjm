@@ -33,20 +33,53 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 		text-align: center;
 		float: left;
 	}
+	.btn-primary1{
+		color: #fff;
+		width: 100px;
+		height: 35px;
+		margin: 2px 2px 0px 0px;
+		padding: 8px 0px 0px 0px;
+		text-align: center;
+		float: left;
+		border-radius: 0px;
+	background: #6C3F30;
+	border-color: #6C3F30;
+	}
 	
 	.btn-primary:hover {
 		text-decoration: none;
 	}
+	.btn-primary1:hover {
+		text-decoration: none;
+	}
 </style>
-<ul class="breadcrumb" style="margin: 0">
-  <li>Iconografía Musical</li>
+<?php if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') == '2'))) { ?>
+<ul class="breadcrumb" style="margin: 0">	
+<li><font size="1.5" color="gray">Ir a</font></li>
+<li><a href="<?php echo $this->base; ?>/configurations">Inicio</a></li>
+<li>Iconografía Musical en Venezuela</li>
 </ul>
+<?php } else if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') == '1'))) { ?>
+<ul class="breadcrumb" style="margin: 0">	
+<li><font size="1.5" color="gray">Ir a</font></li>
+<li><a href="<?php echo $this->base; ?>/configurations">Inicio</a></li>
+<li>Iconografía Musical en Venezuela</li>
+</ul>
+<?php } else { ?>
+<ul class="breadcrumb" style="margin: 0">	
+<li><font size="1.5" color="gray">Ir a</font></li>
+<li><a href="<?php echo $this->base; ?>/pages">Inicio</a></li>
+<li>Iconografía Musical en Venezuela</li>
+</ul>
+<?php } ?>
+
 
 <div class='century view'>
 	<div class="col-md-9 column">
-	<h2>Módulo de Iconografía Musical</h2>
+	<h2>Módulo Iconografía Musical en Venezuela</h2>
 		<?php if (count($items) > 0) { ?>
 		<table class="table">
+			<a name="top" href=""></a>
 		<tr>
 			<th><?php __('Cover');?></th>
 			<th><?php __('Detalles de la Obra');?></th>
@@ -57,10 +90,12 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 		<tr>
 			<td style="background-color: <?php echo $color; ?>; text-align: center; width: 80px;">
 			<?php
-				if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/webroot/covers/" . $item['Item']['cover_path']))){
-					echo $this->Html->image("/webroot/covers/" . $item['Item']['cover_path'], array('title' => 'Haga click para ver los detalles.', 'width' => '70px','height'=>'99px', 'url' => array('controller' => 'iconographies', 'action' => 'view', $item['Item']['id'])));
+				if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/html/app/webroot/covers/" . $item['Item']['cover_path']))){
+					echo $this->Html->image("/app/webroot/covers/" . $item['Item']['cover_path'], array('title' => 'Haga click para ver los detalles.', 'width' => '70px','height'=>'99px', 'url' => array('controller' => 'iconographies', 'action' => 'view', $item['Item']['id'])));
+					echo $this->Html->link(__('[Más info..]',true), array('controller' => 'iconographies', 'action' => 'view', $item['Item']['id']));
 				} else {
-					echo $this->Html->image("/webroot/img/sin_portada.jpg", array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'iconographies', 'action' => 'view', $item['Item']['id'])));
+					echo $this->Html->image("/app/webroot/img/sin_portada.jpg", array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'iconographies', 'action' => 'view', $item['Item']['id'])));
+					echo $this->Html->link(__('[Más info..]',true), array('controller' => 'iconographies', 'action' => 'view', $item['Item']['id']));
 				}
 			?>
 			</td>
@@ -120,16 +155,33 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 					</dd>
 					<?php } ?>
 					<dt style="width: 120px"><?php __('Publicación:');?></dt>
-					<dd style="margin-left: 130px">
+					<dd style="margin-left: 130px; text-align: justify; width: 70%">
 						<?php
 							if (!empty($item['Item']['260'])) {
 								$publication = marc21_decode($item['Item']['260']);
 								echo $publication['a'] . '.';
-								if (isset($publication['b'])) {echo ' ' . $publication['b']. '.';}
-								if (isset($publication['c'])) {echo ' ' . $publication['c']. '.';}
+							if (isset($publication['b'])) {echo ' : ' . $publication['b']. ', ';}
+							if (isset($publication['c'])) {echo '.' . $publication['c']. '.';}
 							}
 						?>
 					</dd>
+				
+					<?php if (!empty($item['Item']['650'])) { ?>
+					<dt style="width: 120px"><?php __('Temas:');?></dt>
+					<dd style="margin-left: 130px">
+					<?php
+						$mattername = marc21_decode($item['Item']['650']);
+						if (!empty($this->data['iconographies']['Temas'])) {
+							echo '<b>' . $mattername['a'] . '.</b>';
+						} else {
+							echo $mattername['a'] . '.';
+						}
+						if (isset($mattername['x'])) {echo ' ' . $mattername['x']. '.';}
+					?>
+					</dd>
+					<?php } ?>
+				
+					
 					<?php if (!empty($item['Item']['773'])) { ?>
 					<dt style="width: 120px"><?php __('Fuente:');?></dt>
 					<dd style="margin-left: 130px">
@@ -143,20 +195,7 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 					?>
 					</dd>
 					<?php } ?>
-					
-					<?php if (!empty($item['Item']['650'])) { ?>
-					<dt style="width: 120px"><?php __('Temas:');?></dt>
-					<dd style="margin-left: 130px">
-					<?php
-						$mattername = marc21_decode($item['Item']['650']);
-						if (!empty($this->data['iconographies']['Temas'])) {
-							echo '<b>' . $mattername['a'] . '.</b>';
-						} else {
-							echo $mattername['a'] . '.';
-						}
-					?>
-					</dd>
-					<?php } ?>
+								
 					
 					<dt style="width: 120px">
 					<?php if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') != '3'))) { ?>
@@ -319,46 +358,7 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 				$("#<?php echo "materia-todos"; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 66px;');
 			}
 		</script>
-		
-			<div style="clear: both;">
-			<label>Fuente:</label><br />
-			<?php echo $this->Form->hidden('Fuente', array('class' => 'form-control', 'label' => 'Fuente')); ?>
-			<?php echo $this->Html->link('A', array('action' => '/A'), array('id' => 'fuente-A', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("A"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('B', array('action' => '/B'), array('id' => 'fuente-B', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("B"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('C', array('action' => '/C'), array('id' => 'fuente-C', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("C"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('D', array('action' => '/D'), array('id' => 'fuente-D', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("D"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('E', array('action' => '/E'), array('id' => 'fuente-E', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("E"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('F', array('action' => '/F'), array('id' => 'fuente-F', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("F"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('G', array('action' => '/G'), array('id' => 'fuente-G', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("G"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('H', array('action' => '/H'), array('id' => 'fuente-H', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("H"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('I', array('action' => '/I'), array('id' => 'fuente-I', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("I"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('J', array('action' => '/J'), array('id' => 'fuente-J', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("J"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('K', array('action' => '/K'), array('id' => 'fuente-K', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("K"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('L', array('action' => '/L'), array('id' => 'fuente-L', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("L"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('M', array('action' => '/M'), array('id' => 'fuente-M', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("M"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('N', array('action' => '/N'), array('id' => 'fuente-N', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("N"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('O', array('action' => '/O'), array('id' => 'fuente-O', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("O"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('P', array('action' => '/P'), array('id' => 'fuente-P', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("P"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Q', array('action' => '/Q'), array('id' => 'fuente-Q', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("Q"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('R', array('action' => '/R'), array('id' => 'fuente-R', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("R"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('S', array('action' => '/S'), array('id' => 'fuente-S', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("S"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('T', array('action' => '/T'), array('id' => 'fuente-T', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("T"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('U', array('action' => '/U'), array('id' => 'fuente-U', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("U"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('V', array('action' => '/V'), array('id' => 'fuente-V', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("V"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('W', array('action' => '/W'), array('id' => 'fuente-W', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("W"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('X', array('action' => '/X'), array('id' => 'fuente-X', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("X"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Y', array('action' => '/Y'), array('id' => 'fuente-Y', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("Y"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Z', array('action' => '/Z'), array('id' => 'fuente-Z', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("Z"); $("#iconographiesIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Todos', array('action' => '/'), array('id' => 'fuente-todos', 'class' => 'btn-primary', 'style' => 'width: 66px;', 'onclick' => '$("#iconographiesFuente").val(""); $("#iconographiesIndexForm").submit(); return false;')); ?>
-		</div>
-		<script type="text/javascript">
-			if ("<?php echo $this->data['iconographies']['Fuente']; ?>" != "") {
-				$("#<?php echo "fuente-".$this->data['iconographies']['Fuente']; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 15px;');
-			} else {
-				$("#<?php echo "fuente-todos"; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 66px;');
-			}
-		</script>
-		
+				
 		<div style="clear: both;">		
 			<label>Temas:</label><br />
 			<?php echo $this->Form->hidden('Temas', array('class' => 'form-control', 'label' => 'Temas')); ?>
@@ -398,22 +398,52 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 			}
 		</script>
 
-		<div style="clear: both;">		
-			<label>Año:</label><br />
-			<?php echo $this->Form->hidden('Año', array('class' => 'form-control', 'label' => 'Año')); ?>
-
-		<?php echo $this->Html->link(__('Ver Lista de Años', true), array('action' => 'year/'), array('class' => 'btn-primary', 'style' => 'width: 125px;'));?>
+	
+			<div style="clear: both;">
+			<label>Fuente:</label><br />
+			<?php echo $this->Form->hidden('Fuente', array('class' => 'form-control', 'label' => 'Fuente')); ?>
+			<?php echo $this->Html->link('A', array('action' => '/A'), array('id' => 'fuente-A', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("A"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('B', array('action' => '/B'), array('id' => 'fuente-B', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("B"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('C', array('action' => '/C'), array('id' => 'fuente-C', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("C"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('D', array('action' => '/D'), array('id' => 'fuente-D', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("D"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('E', array('action' => '/E'), array('id' => 'fuente-E', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("E"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('F', array('action' => '/F'), array('id' => 'fuente-F', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("F"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('G', array('action' => '/G'), array('id' => 'fuente-G', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("G"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('H', array('action' => '/H'), array('id' => 'fuente-H', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("H"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('I', array('action' => '/I'), array('id' => 'fuente-I', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("I"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('J', array('action' => '/J'), array('id' => 'fuente-J', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("J"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('K', array('action' => '/K'), array('id' => 'fuente-K', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("K"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('L', array('action' => '/L'), array('id' => 'fuente-L', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("L"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('M', array('action' => '/M'), array('id' => 'fuente-M', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("M"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('N', array('action' => '/N'), array('id' => 'fuente-N', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("N"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('O', array('action' => '/O'), array('id' => 'fuente-O', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("O"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('P', array('action' => '/P'), array('id' => 'fuente-P', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("P"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Q', array('action' => '/Q'), array('id' => 'fuente-Q', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("Q"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('R', array('action' => '/R'), array('id' => 'fuente-R', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("R"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('S', array('action' => '/S'), array('id' => 'fuente-S', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("S"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('T', array('action' => '/T'), array('id' => 'fuente-T', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("T"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('U', array('action' => '/U'), array('id' => 'fuente-U', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("U"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('V', array('action' => '/V'), array('id' => 'fuente-V', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("V"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('W', array('action' => '/W'), array('id' => 'fuente-W', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("W"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('X', array('action' => '/X'), array('id' => 'fuente-X', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("X"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Y', array('action' => '/Y'), array('id' => 'fuente-Y', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("Y"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Z', array('action' => '/Z'), array('id' => 'fuente-Z', 'class' => 'btn-primary', 'onclick' => '$("#iconographiesFuente").val("Z"); $("#iconographiesIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Todos', array('action' => '/'), array('id' => 'fuente-todos', 'class' => 'btn-primary', 'style' => 'width: 66px;', 'onclick' => '$("#iconographiesFuente").val(""); $("#iconographiesIndexForm").submit(); return false;')); ?>
 		</div>
 		<script type="text/javascript">
-			if ("<?php echo $this->data['iconographies']['Temas']; ?>" != "") {
-				$("#<?php echo "temas-".$this->data['iconographies']['Temas']; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 15px;');
+			if ("<?php echo $this->data['iconographies']['Fuente']; ?>" != "") {
+				$("#<?php echo "fuente-".$this->data['iconographies']['Fuente']; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 15px;');
 			} else {
-				$("#<?php echo "temas-todos"; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 66px;');
+				$("#<?php echo "fuente-todos"; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 66px;');
 			}
 		</script>
 		<br />
+		
+	<!--<div style="text-align: right;"><a href="#top" class="btn btn-primary" style="margin-top: 180px; width: 70px">Ir Arriba</a></div> -->
 		<?php //echo $this->Form->submit('Buscar', array('class' => 'btn btn-primary', 'div' => false)); ?>
 		<?php echo $this->Form->end(); ?>
+		
+		
 		
 		<!--
 		<label><?php __('Buscar por:'); ?></label>

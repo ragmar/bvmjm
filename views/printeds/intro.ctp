@@ -1,6 +1,3 @@
-<link rel="stylesheet" type="text/css" href="engine1/style.css" />
-	<script type="text/javascript" src="engine1/jquery.js"></script>
-<?php echo $this->Html->script('engine1/wowslider.js'); ?>
 <style>
 	.btn-primary {
 		width: 200px;
@@ -46,18 +43,35 @@
  */
 
 </style>
-<ul class="breadcrumb" style="margin: 0">
-	<li>
-    	<?php echo $this->Html->link(__('Inicio', true), array('controller' => 'pages')); ?>
-    </li>
-	<li>Música Impresa</li>
+<?php if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') == '2'))) { ?>
+<ul class="breadcrumb" style="margin: 0">	
+<li><font size="1.5" color="gray">Ir a</font></li>
+<li><a href="<?php echo $this->base; ?>/configurations">Inicio</a></li>
+<li>Música Impresa</li>
 </ul>
+<?php } else if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') == '1'))) { ?>
+<ul class="breadcrumb" style="margin: 0">	
+<li><font size="1.5" color="gray">Ir a</font></li>
+<li><a href="<?php echo $this->base; ?>/configurations">Inicio</a></li>
+<li>Música Impresa</li>
+</ul>
+<?php } else { ?>
+<ul class="breadcrumb" style="margin: 0">	
+<li><font size="1.5" color="gray">Ir a</font></li>
+<li><a href="<?php echo $this->base; ?>/pages">Inicio</a></li>
+<li>Música Impresa</li>
+</ul>
+<?php } ?>
 
 <div class="books index" style="text-align: justify; float: ">
 	<div class="col-md-12 column">
-		<h2>Módulo de Música Impresa</h2>
+		<h2>&nbsp;&nbsp;Módulo Música Impresa</h2>
+		<div style="text-align: center; margin-left: 580px; margin-top: -45px; padding-bottom:10px">
+			<?php echo $this->Html->link('Ver Obras', '/printeds', array('class' => 'btn btn-primary', 'style' => 'float: none')); ?>
+		</div>
+
 		<hr style="border-color: black; margin: 10px;">
-		
+		<div style="float:left; width: 50%;margin-left:20px">
 		<p style="text-align: justify;">El módulo partituras impresas de la BVMJM contiene música editada que posee un marcado interés para los estudios musicológicos en Venezuela; esto es: música de autores venezolanos y extranjeros impresa en Venezuela y música de venezolanos impresa en el exterior. Incluso, es perfectamente posible que se pueda conseguir en este módulo, alguna música de compositor foráneo impresa fuera del país, si esta tiene un especial significado para el conocimiento de la historia musical de Venezuela.</p>
 		
 		<p style="text-align: justify;"Como se trata de un catálogo de libre acceso, se excluye de él cualquier publicación que quebrante los derechos de autor. Por eso, el reservorio se especializa en materiales anteriores a la primera mitad del siglo XX, cuyos derechos son ya de dominio público.</p><br />
@@ -66,17 +80,17 @@
 
 		<p style="text-align: justify">Todas las condiciones antes expuestas, hacen que del material de esta colección, resalten la empresas editoriales que funcionaron en Caracas durante el siglo XIX y principios del XX, tales como la Alfred Rothe, la S. N. Llamozas y Cía. y el Almacén de Cesáreo Suárez, además de un diverso número de imprentas y tipografías como las de Félix Rasco, la H. Neun, la de Aramburu, la Linares Hermanos, la de Juan Larrazábal, etc. Se trata, en su gran mayoría, de música para piano o voz y piano, además de algunas otras piezas para voz, guitarra y piano, violín y piano o violoncello y piano, las cuales, tanto por su excepcionalidad como por su belleza, se constituyen hoy en verdaderas joyas de un pasado que se extingue, pero que debemos preservar, estudiar y difundir para conocimiento de 
 nuestra historia musical.</p>
-		
+		</div>
+		<div style="float:right;margin-right:50px ">
+		<?php echo $this->Html->image('ts/musicaimpresa.jpg', array('width'=>'410px', 'height'=>'550px'))?>
+		</div>
 
    
     </br></br>
     
  
 </div>
-		<div style="text-align: center;">
-			<?php echo $this->Html->link('Ver Obras', '/printeds', array('class' => 'btn btn-primary', 'style' => 'float: none')); ?>
-		</div>
-
+		
 	</div
 	
 	

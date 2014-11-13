@@ -1,12 +1,54 @@
-<ul class="breadcrumb" style="margin: 0">
-	<li><a href="<?php echo $this->base; ?>/magazines">Revistas</a> <span class="divider">/</span></li>
-	<li>B&uacute;squeda Avanzada<span class="divider">/</span></li>
-</ul>
+<script type="text/javascript">
+function validate() {
+var txt = document.getElementById("Manuscript245");
+if(txt.value== "" || txt.value== null) {
+alert("Por favor, ingrese al menos el título");
+txt.style.border = "2px solid red";
+return false;
+} else {
+txt.style.border = "";
+}
+}
+</script>
+<style>
+input{
+	width: 200px;
+}	
+		
+</style>
 
-<div align="center" style="padding-top: 5px; color: #828793; font-size: 18px; background: -webkit-linear-gradient(#d0d6e2, #ffffff); background: -moz-linear-gradient(#d0d6e2, #ffffff); background: -o-linear-gradient(#d0d6e2, #ffffff);"><strong>B&uacute;squeda Avanzada</strong></div>
+
+<?php if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') == '2'))) { ?>
+<ul class="breadcrumb" style="margin: 0">	
+<li><font size="1.5" color="gray">Ir a</font></li>
+<li><a href="<?php echo $this->base; ?>/configurations">Inicio</a></li>
+<li><a href="<?php echo $this->base; ?>/manuscripts">Música Manuscrita</a></span></li>
+	<li>B&uacute;squeda Avanzada</span></li>
+</ul>
+<?php } else if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') == '1'))) { ?>
+<ul class="breadcrumb" style="margin: 0">	
+<li><font size="1.5" color="gray">Ir a</font></li>
+<li><a href="<?php echo $this->base; ?>/configurations">Inicio</a></li>
+<li><a href="<?php echo $this->base; ?>/manuscripts">Música Manuscrita</a></span></li>
+	<li>B&uacute;squeda Avanzada</span></li>
+</ul>
+<?php } else { ?>
+<ul class="breadcrumb" style="margin: 0">	
+<li><font size="1.5" color="gray">Ir a</font></li>
+<li><a href="<?php echo $this->base; ?>/pages">Inicio</a></li>
+<li><a href="<?php echo $this->base; ?>/manuscripts">Música Manuscrita</a></span></li>
+	<li>B&uacute;squeda Avanzada</span></li>
+</ul>
+<?php } ?>
+
+
+
+
+
+<h2 style="text-align:center">Búsqueda Avanzada</h2>
 
 <div class="items" style="text-align: center;">
-<?php echo $this->Form->create('Magazine'); ?>
+<?php echo $this->Form->create('Manuscript', array('onsubmit' => 'return validate();')); ?>
 <fieldset>
 
 <br />
@@ -18,7 +60,7 @@
 		</div>
 		<div style="float: left; width: 50%; text-align: left;">
 			&nbsp;
-			<?php echo $this->Form->input('130', array('div' => false, 'label' => false, 'placeholder' => 'Autor')); ?>
+			<?php echo $this->Form->input('100', array('div' => false, 'label' => false, 'placeholder' => 'Autor')); ?>
 		</div>
 		
 		<br /><br />
@@ -36,34 +78,16 @@
 		
 		<div style="float: left; width: 100%; text-align: center;">
 			&nbsp;
-			<?php echo $this->Form->input('690', array('div' => false, 'label' => false, 'placeholder' => 'Siglo')); ?>
+			<?php echo $this->Form->input('648', array('div' => false, 'label' => false, 'placeholder' => 'Siglo')); ?>
 		</div>
 	</div>
 	
 	</fieldset>
-<?php echo $this->Form->end(__('Search', true));?>
+	</br>
+	<?php echo $this->Form->submit(__('Search', true), array('class'=>'btn btn-primary'));?>
+
 </div>
 
-<!--
-<div class="actions">
-	<h3><?php __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('List Items', true), array('action' => 'index'));?></li>
-		<li><?php echo $this->Html->link(__('List Users', true), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New User', true), array('controller' => 'users', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Topics', true), array('controller' => 'topics', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Types', true), array('controller' => 'types', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Authors', true), array('controller' => 'authors', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Author', true), array('controller' => 'authors', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Type', true), array('controller' => 'types', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Topic', true), array('controller' => 'topics', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Values', true), array('controller' => 'values', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Value', true), array('controller' => 'values', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Indicators', true), array('controller' => 'indicators', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Indicator', true), array('controller' => 'indicators', 'action' => 'add')); ?> </li>
-	</ul>
-</div>
--->
 
 <?php
 function marc21_decode($camp = null) {
@@ -86,20 +110,24 @@ function marc21_decode($camp = null) {
 }
 ?>
 
-<div style="padding-left: 50px; padding-right: 50px;">
+<div class='items view'>
+	</br>
 
-<div <?php if (($this->Session->check('Auth.User')) && ($this->Session->read('Auth.User.group_id') != 3)) {echo "class='items view'";} ?> style="text-align: center;">
-
-	<table>
+<div class="col-md-9 column">
+	<?php
+	 if (count($items) > 0) { ?>
+	<?php	foreach($items as $index =>$item):?>
+		<?php if($index ==0):?>
+	<h2><?php __('Resultados de la Búsqueda');?></h2>
+	<table class="table">
 	<tr>
 		<th><?php __('Portada');?></th>
 		<th><?php __('Detalles de la Obra');?></th>
 	</tr>
-	<?php
-	if (isset($items)) {
-	foreach ($items as $item):
+	<?php endif;?>
+		 
 	
-		$t1 = $item['Item']['h-006'];
+	<?php	$t1 = $item['Item']['h-006'];
 		$t2 = $item['Item']['h-007'];
 		
 		// Tipo libro.
@@ -132,15 +160,28 @@ function marc21_decode($camp = null) {
 			$color = "#d1c7be";
 		}
 	?>
-	<tr>
-		<td style="background-color: <?php echo $color; ?>; text-align: center; width: 80px;">
-		<?php
-			if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/tesis/webroot/covers/" . $item['Item']['cover_path']))){
-				echo $this->Html->image("/webroot/covers/" . $item['Item']['cover_path'], array('width' => '70px'));
-			} else {
-				echo $this->Html->image("/webroot/img/sin_portada.jpg", array('width' => '70px'));
-			}
-		?>
+	
+	
+<tr>
+		<td style=" text-align: center; width: 80px;">
+			<?php
+				if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/html/app/webroot/covers/" . $item['Item']['cover_path']))){
+				if($t1=='k' && $t2=='b'){
+					echo $this->Html->image("/app/webroot/covers/" . $item['Item']['cover_path'], array('title' => 'Haga click para ver los detalles.', 'width' => '70px','height'=>'99px', 'url' => array('controller' => 'manuscripts', 'action' => 'view', $item['Item']['id'])));
+				}else if ($t1=='a' && $t2=='m'){
+					echo $this->Html->image("/app/webroot/covers/" . $item['Item']['cover_path'], array('title' => 'Haga click para ver los detalles.', 'width' => '70px','height'=>'99px', 'url' => array('controller' => 'books', 'action' => 'view', $item['Item']['id'])));
+				}else if ($t1=='a' && $t2=='s'){
+					echo $this->Html->image("/app/webroot/covers/" . $item['Item']['cover_path'], array('title' => 'Haga click para ver los detalles.', 'width' => '70px','height'=>'99px', 'url' => array('controller' => 'magazines', 'action' => 'view', $item['Item']['id'])));
+				}else if ($t1=='d' && $t2=='m'){
+					echo $this->Html->image("/app/webroot/covers/" . $item['Item']['cover_path'], array('title' => 'Haga click para ver los detalles.', 'width' => '70px','height'=>'99px', 'url' => array('controller' => 'manuscripts', 'action' => 'view', $item['Item']['id'])));
+				}else if ($t1=='c' && $t2=='m'){
+					echo $this->Html->image("/app/webroot/covers/" . $item['Item']['cover_path'], array('title' => 'Haga click para ver los detalles.', 'width' => '70px','height'=>'99px', 'url' => array('controller' => 'printeds', 'action' => 'view', $item['Item']['id'])));
+				
+				}else {
+					echo $this->Html->image("/app/webroot/img/sin_portada.jpg", array('title' => 'Haga click para ver los detalles.', 'width' => '70px','height'=>'99px', 'url' => array('controller' => 'books', 'action' => 'view', $item['Item']['id'])));
+				}
+				}
+			?>
 		</td>
 		<td>
 			<dl class="dl-horizontal">
@@ -152,10 +193,11 @@ function marc21_decode($camp = null) {
 						if (!empty($item['Item']['245'])) {
 							$title = marc21_decode($item['Item']['245']);
 							if ($title) {
-								echo $this->Html->link($title['a'], 'view/'.$item['Item']['id'], array('title' => 'Haga click para ver los detalles.'));
-								if (isset($title['b'])) {echo ' ' . $title['b'];}
-								if (isset($title['c'])) {echo ' ' . $title['c'];}
-								if (isset($title['h'])) {echo ' ' . $title['h'];}
+								echo $title['a'] . '.';
+
+								if (isset($title['b'])) {echo ' <i>' . $title['b'] . '.</i>';}
+								if (isset($title['c'])) {echo ' ' . $title['c']. '.';}
+								if (isset($title['h'])) {echo ' ' . $title['h']. '.';}
 							}
 						}
 					?>
@@ -167,24 +209,42 @@ function marc21_decode($camp = null) {
 					<?php
 						if (!empty($item['Item']['100'])) {
 							$author = marc21_decode($item['Item']['100']);
-							echo $author['a'];
-							if (isset($author['n'])) {echo ' ' . $author['n'];}
-							if (isset($author['p'])) {echo ' ' . $author['p'];}
+							echo $author['a']. '.';
+							if (isset($author['d'])) {echo ' ' . $author['d']. '.';}
 						}
 					?>
 				</dd>
+				
+				<?php if (!empty($item['Item']['690'])) { ?>
+				<dt style="width: 120px"><?php __('Siglo:');?></dt>
+				<dd style="margin-left: 130px">
+				<?php
+					$century = marc21_decode($item['Item']['690']);
+					echo $century['a'] . '.';
+				?>
+				</dd>
+				<?php } ?>
 				<dt style="width: 120px"><?php __('Publicación:');?></dt>
 				<dd style="margin-left: 130px">
 					<?php
 						if (!empty($item['Item']['260'])) {
 							$publication = marc21_decode($item['Item']['260']);
-							echo $publication['a'];
-							if (isset($publication['b'])) {echo ' ' . $publication['b'];}
-							if (isset($publication['c'])) {echo ' ' . $publication['c'];}
+							echo $publication['a'] . '.';
+							if (isset($publication['b'])) {echo ' ' . $publication['b']. '.';}
+							if (isset($publication['c'])) {echo ' ' . $publication['c']. '.';}
 						}
 					
 					?>
 				</dd>
+			<?php if (!empty($item['Item']['653'])) { ?>
+				<dt style="width: 120px"><?php __('Materia:');?></dt>
+				<dd style="margin-left: 130px">
+				<?php
+					$matter = marc21_decode($item['Item']['653']);
+					echo $matter['a'] . '.';
+				?>
+				</dd>
+				<?php } ?>
 				<dt style="width: 120px"><?php __('Tipo:');?></dt>
 				<dd style="margin-left: 130px">
 				<?php
@@ -205,39 +265,78 @@ function marc21_decode($camp = null) {
 					if (($t1 == 'c') && ($t2 == 'm')) {
 						echo "Música Impresa";
 					}
+						// Música impresa.
+					if (($t1 == 'c') && ($t2 == 'c')) {
+						echo "Música Impresa";
+					}
+						// Música impresa.
+					if (($t1 == 'c') && ($t2 == 'a')) {
+						echo "Música Impresa";
+					}
+						// Música impresa.
+					if (($t1 == 'c') && ($t2 == 'b')) {
+						echo "Música Impresa";
+					}
+					// Música manuscrita.
+					if (($t1 == 'd') && ($t2 == 'c')) {
+						echo "Música Manuscrita";
+					}
 					
 					// Música manuscrita.
 					if (($t1 == 'd') && ($t2 == 'm')) {
 						echo "Música Manuscrita";
 					}
+					// Música manuscrita.
+					if (($t1 == 'd') && ($t2 == 'a')) {
+						echo "Música Manuscrita";
+					}
+					// Música manuscrita.
+					if (($t1 == 'd') && ($t2 == 'c')) {
+						echo "Música Manuscrita";
+					}
+					//iconografía.
+					if (($t1 == 'k') && ($t2 == 'b')) {
+						echo "Iconografía Musical en Venezuela";
+					}
+					//iconografía.
+					if (($t1 == 'k') && ($t2 == 'm')) {
+						echo "Iconografía Musical en Venezuela";
+					}
+					//iconografía.
+					if (($t1 == 'k') && ($t2 == 'a')) {
+						echo "Iconografía Musical en Venezuela";
+					}
 				?>
 				</dd>
-				<?php if (!empty($item['Item']['690'])) { ?>
-				<dt style="width: 120px"><?php __('Siglo:');?></dt>
-				<dd style="margin-left: 130px">
-				<?php
-					$century = marc21_decode($item['Item']['690']);
-					echo $century['a'];
-				?>
-				</dd>
-				<?php } ?>
-				<?php if (!empty($item['Item']['653'])) { ?>
-				<dt style="width: 120px"><?php __('Materia:');?></dt>
-				<dd style="margin-left: 130px">
-				<?php
-					$century = marc21_decode($item['Item']['653']);
-					echo $century['a'];
-				?>
-				</dd>
-				<?php } ?>
+					<?php if (!empty($item['Item']['650'])) { ?>
+					<dt style="width: 120px"><?php __('Temas:');?></dt>
+					<dd style="margin-left: 130px">
+					<?php
+						$mattername = marc21_decode($item['Item']['650']);
+						if (!empty($this->data['manuscripts']['Temas'])) {
+							echo '<b>' . $mattername['a'] . '.</b>';
+						} else {
+							echo $mattername['a'] . '.';
+						}
+						if (isset($mattername['x'])) {echo ' ' . $mattername['x']. '.';}
+					?>
+					</dd>
+					<?php } ?>
 			</dl>
 		</td>
 	</tr>
+	
 	<?php endforeach; ?>
-	<?php } ?>
 	</table>
-
-	<?php if ((isset($this->Paginator)) && ($this->Paginator->params['paging']['Item']['pageCount'] > 1)) { ?>
+		<?php } else { ?>
+			<br />
+			<?php if (isset($this->data)) { ?>
+				<h4>No hay obras que coincidan con esta búsqueda</h4>
+			<?php }
+		}?>
+	
+	
+	 <?php if ((isset($this->Paginator)) && ($this->Paginator->params['paging']['Item']['pageCount'] > 1)) { ?>
 	<div class="pagination" align="center">
 		<ul>
 			<?php echo $this->Paginator->prev('<< ' . __('previous', true), array('tag'=>'li', 'separator' => ''), null, array('class'=>'disabled', 'tag'=>'li', 'separator' => ''));?>
@@ -246,6 +345,7 @@ function marc21_decode($camp = null) {
 		</ul>
 	</div><br />
 	<?php } ?>
+	
 </div>
-<div style="clear: both;"><?php echo $this->Html->image('ts/pestana_revistas.jpg'); ?><br /><br /></div>
+
 </div>

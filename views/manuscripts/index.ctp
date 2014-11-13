@@ -24,6 +24,16 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 	$busqueda = 0;
 }
 ?>
+
+<?php if(isset($_POST['submit'])){ if(!empty($_POST['Item_id'])) {
+	 // Counting number of checked checkboxes.
+	 $checked_count = count($_POST['Item_id']); 
+	 echo "You have selected following ".$checked_count." option(s): <br/>";
+	 // Loop to store and display values of individual checked checkbox. 
+	 foreach($_POST['Item_id'] as $selected) { echo "<p>".$selected ."</p>"; }
+	 echo "<br/><b>Note :</b> <span>Similarily, You Can Also Perform CRUD Operations using These Selected Values.</span>"; }
+	 else{ echo "<b>Please Select Atleast One Option.</b>"; } } ?>
+
 <style>
 	.btn-primary {
 		width: 15px;
@@ -62,14 +72,83 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 	.btn-primaryt:hover {
 		text-decoration: none;
 	}
+	
+.botones {
+ font-family: Geneva, Arial, Helvetica, sans-serif;
+ font-size: 10px;
+ font-weight: bold;
+ color: #333333;
+ text-decoration: blink;
+ background-color: #FF6600;
+ border-top-color: #000000;
+ border-right-color: #000000;
+ border-bottom-color: #000000;
+ border-left-color: #000000;
+ border-color: #000000;
+ border-top-style: solid;
+ border-right-style: solid;
+ border-bottom-style: solid;
+ border-left-style: solid;
+ border-style: solid;
+}	
+.button
+  {
+
+  border: 1px solid #DBE1EB;
+  font-size: 18px;
+  font-family: Arial, Verdana;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -o-border-radius: 4px;
+  background: #4972B5;
+  background: linear-gradient(left, #4972B5, #618ACB);
+  background: -moz-linear-gradient(left, #4972B5, #618ACB);
+  background: -webkit-linear-gradient(left, #4972B5, #618ACB);
+  background: -o-linear-gradient(left, #4972B5, #618ACB);
+  color: #FFFFFF;
+
+  }
+
+  .button:hover
+  {
+  background: #365D9D;
+  background: linear-gradient(left, #365D9D, #436CAD);
+  background: -moz-linear-gradient(left, #365D9D, #436CAD);
+  background: -webkit-linear-gradient(left, #365D9D, #436CAD);
+  background: -o-linear-gradient(left, #365D9D, #436CAD);
+  color: #FFFFFF;
+  border-color: #FBFFAD;
+  }
+	
 </style>
-<ul class="breadcrumb" style="margin: 0">
-  <li>Música Manuscrita</li>
+<?php if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') == '2'))) { ?>
+<ul class="breadcrumb" style="margin: 0">	
+<li><font size="1.5" color="gray">Ir a</font></li>
+<li><a href="<?php echo $this->base; ?>/configurations">Inicio</a></li>
+<li>Música Manuscrita</li>
 </ul>
+<?php } else if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') == '1'))) { ?>
+<ul class="breadcrumb" style="margin: 0">	
+<li><font size="1.5" color="gray">Ir a</font></li>
+<li><a href="<?php echo $this->base; ?>/configurations">Inicio</a></li>
+<li>Música Manuscrita</li>
+</ul>
+<?php } else { ?>
+<ul class="breadcrumb" style="margin: 0">	
+<li><font size="1.5" color="gray">Ir a</font></li>
+<li><a href="<?php echo $this->base; ?>/pages">Inicio</a></li>
+<li>Música Manuscrita</li>
+</ul>
+<?php } ?>
 
 <div class='century view'>
 	<div class="col-md-9 column">
-	<h2>Módulo de Música Manuscrita</h2>
+	<h2>Módulo Música Manuscrita</h2>
 		<?php if (count($items) > 0) { ?>
 		<table class="table">
 		<tr>
@@ -82,13 +161,16 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 		<tr>
 			<td style="background-color: <?php echo $color; ?>; text-align: center; width: 80px;">
 			<?php
-				if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/webroot/covers/" . $item['Item']['cover_path']))){
-					echo $this->Html->image("/webroot/covers/" . $item['Item']['cover_path'], array('title' => 'Haga click para ver los detalles.', 'width' => '80px','height'=>'100px', 'url' => array('controller' => 'manuscripts', 'action' => 'view', $item['Item']['id'])));
+				if (($item['Item']['cover_name']) && (file_exists($_SERVER['DOCUMENT_ROOT'] . "/".$this->base."/html/app/webroot/covers/" . $item['Item']['cover_path']))){
+					echo $this->Html->image("/app/webroot/covers/" . $item['Item']['cover_path'], array('title' => 'Haga click para ver los detalles.', 'width' => '80px','height'=>'100px', 'url' => array('controller' => 'manuscripts', 'action' => 'view', $item['Item']['id'])));
+					echo $this->Html->link(__('[Más info..]',true), array('controller' => 'manuscripts', 'action' => 'view', $item['Item']['id']));
 				} else {
-					echo $this->Html->image("/webroot/img/sin_portada.jpg", array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'manuscripts', 'action' => 'view', $item['Item']['id'])));
+					echo $this->Html->image("/app/webroot/img/sin_portada.jpg", array('title' => 'Haga click para ver los detalles.', 'width' => '70px', 'url' => array('controller' => 'manuscripts', 'action' => 'view', $item['Item']['id'])));
+					echo $this->Html->link(__('[Más info..]',true), array('controller' => 'manuscripts', 'action' => 'view', $item['Item']['id']));
 				}
 			?>
 			</td>
+			
 			<td>
 				<dl class="dl-horizontal">
 					<dt style="width: 120px"><?php __('Título:');?></dt>
@@ -99,7 +181,7 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 								if ($title) {
 									foreach ($item['UserItems'] as $ui):
 										if($ui['user_id'] == $this->Session->read('Auth.User.id') && ($ui['item_id'] == $item['Item']['id'])) {
-											echo $html->image('/img/ts/bookmark.png', array('alt' => 'Mi Biblioteca', 'title' => 'Obra agregada a la biblioteca.', 'style' => 'width: 20px;'));
+											echo $html->image('/app/webroot/img/ts/bookmark.png', array('alt' => 'Mi Biblioteca', 'title' => 'Obra agregada a la biblioteca.', 'style' => 'width: 20px;'));
 											echo "&nbsp;";
 										}
 									endforeach;
@@ -117,6 +199,22 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 							}
 						?>
 					</dd>
+					
+					
+					
+					<?php if (!empty($item['Item']['031'])) { ?>
+						<dt style="width: 120px"><?php __('Tonalidad:');?></dt>
+						<dd style="margin-left: 130px">
+						<?php
+						$hue = marc21_decode($item['Item']['031']);
+						if (!empty($this->data['manuscripts']['Tonalidad'])) {
+							echo '<b>' . $hue['r'] . '.</b>';
+						} else {
+							echo $hue['r'] . '.';
+						}
+						?>
+					</dd>
+					<?php } ?>
 					<dt style="width: 120px"><?php __('Autor:');?></dt>
 					<dd style="margin-left: 130px">
 						<?php
@@ -131,6 +229,33 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 							}
 						?>
 					</dd>
+						<?php if (!empty($item['Item']['260'])) { ?>
+				<dt style="width: 120px"><?php __('Publicación:');?></dt>
+					<dd style="margin-left: 130px">
+						<?php
+							if (!empty($item['Item']['260'])) {
+								$publication = marc21_decode($item['Item']['260']);
+								echo $publication['a'] . '.';
+								if (isset($publication['b'])) {echo ' : ' . $publication['b']. ', ';}
+								if (isset($publication['c'])) {echo ' ' . $publication['c']. '.';}
+							}
+						?>
+					</dd>
+					<?php } ?>
+					<?php if (!empty($item['Item']['382'] )){ ?>
+					<dt style="width: 120px"><?php __('Instrumento:');?></dt>
+					<dd style="margin-left: 130px">
+					<?php
+						$sound = marc21_decode($item['Item']['382']);
+						if (!empty($this->data['manuscripts']['Instrumento'])) {
+							echo '<b>' . $sound ['a'] . '.</b>';
+						} else {
+							echo $sound['a'] . '.';
+						}
+						?>
+						</dd>
+					<?php } ?>
+					
 					<?php if (!empty($item['Item']['653'])) { ?>
 					<dt style="width: 120px"><?php __('Materia:');?></dt>
 					<dd style="margin-left: 130px">
@@ -144,17 +269,6 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 					?>
 					</dd>
 					<?php } ?>
-					<dt style="width: 120px"><?php __('Publicación:');?></dt>
-					<dd style="margin-left: 130px">
-						<?php
-							if (!empty($item['Item']['260'])) {
-								$publication = marc21_decode($item['Item']['260']);
-								echo $publication['a'] . '.';
-								if (isset($publication['b'])) {echo ' ' . $publication['b']. '.';}
-								if (isset($publication['c'])) {echo ' ' . $publication['c']. '.';}
-							}
-						?>
-					</dd>
 					
 					<?php if (!empty($item['Item']['650'])) { ?>
 					<dt style="width: 120px"><?php __('Temas:');?></dt>
@@ -170,62 +284,9 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 					</dd>
 					<?php } ?>
 					
-					<?php if (!empty($item['Item']['031'] )){ ?>
-					<dt style="width: 120px"><?php __('Íncipit Literario:');?></dt>
-					<dd style="margin-left: 130px">
-					<?php
-						$literary = marc21_decode($item['Item']['031']);
-						if (!empty($this->data['manuscripts']['IncipitLiterario'])) {
-							echo '<b>' . $literary['t'] . '.</b>';
-						} else {
-							echo $literary['t'] . '.';
-						}
-					?>
-					</dd>
-					<?php } ?>
 					
-					<?php if (!empty($item['Item']['5922'] )){ ?>
-					<dt style="width: 120px"><?php __('Medio Sonoro:');?></dt>
-					<dd style="margin-left: 130px">
-					<?php
-						$sound = marc21_decode($item['Item']['5922']);
-						if (!empty($this->data['manuscripts']['MedioSonoro'])) {
-							echo '<b>' . $sound ['b'] . '.</b>';
-						} else {
-							echo $sound['b'] . '.';
-						}
-						?>
-						</dd>
-					<?php } ?>
-					
-					<?php if (!empty($item['Item']['5922'] )){ ?>
-					<dt style="width: 120px"><?php __('Género:');?></dt>
-					<dd style="margin-left: 130px">
-					<?php
-						$gender = marc21_decode($item['Item']['5922']);
-						if (!empty($this->data['manuscripts']['Genero'])) {
-							echo '<b>' . $gender['c'] . '.</b>';
-						} else {
-							echo $gender['c'] . '.';
-						}
-						?>
-						</dd>
-					<?php } ?>
-					<?php if (!empty($item['Item']['5922'])) { ?>
-						<dt style="width: 120px"><?php __('Tonalidad:');?></dt>
-						<dd style="margin-left: 130px">
-						<?php
-						$hue = marc21_decode($item['Item']['5922']);
-						if (!empty($this->data['manuscripts']['Tonalidad'])) {
-							echo '<b>' . $hue['f'] . '.</b>';
-						} else {
-							echo $hue['f'] . '.';
-						}
-						?>
-					</dd>
-					<?php } ?>
 					<?php if (!empty($item['Item']['700'] )){ ?>
-					<dt style="width: 140px; margin-left: -20px;"><?php __('Mención </br> de Responsabilidad:');?></dt>
+					<dt style="width: 140px; margin-left: -20px;"><?php __('Mención </br>Responsabilidad:');?></dt>
 					<dd style="margin-left: 130px">
 					<?php
 						$responsability = marc21_decode($item['Item']['700']);
@@ -237,7 +298,7 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 						?>
 						</dd>
 					<?php } ?>
-					
+				
 					<dt style="width: 120px">
 					<?php if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') != '3'))) { ?>
 						<?php //echo $this->Html->link(__('Delete', true), array('action' => 'delete', $item['Item']['id']), null, sprintf(__("¿Desea eliminar '%s'?", true), $item['Item']['title'])); ?>
@@ -258,7 +319,6 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 			<?php } ?>
 			<br /><br /><br /><br /><br />
 		<?php } ?>
-		
 		<?php if ($this->Paginator->params['paging']['Item']['pageCount'] > 1) { ?>
 		<div class="pagination" align="center">
 			<ul>
@@ -319,6 +379,65 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 				$("#<?php echo "titulo-".$this->data['manuscripts']['Titulo']; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 15px;');
 			} else {
 				$("#<?php echo "titulo-todos"; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 66px;');
+			}
+		</script>
+		
+			<div style="clear: both;">		
+			<label>Instrumento:</label><br />
+			<?php echo $this->Form->hidden('Instrumento', array('class' => 'form-control', 'label' => 'Instrumento')); ?>
+			<?php echo $this->Html->link('A', array('action' => '/A'), array('id' => 'Instrumento-A', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("A"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('B', array('action' => '/B'), array('id' => 'Instrumento-B', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("B"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('C', array('action' => '/C'), array('id' => 'Instrumento-C', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("C"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('D', array('action' => '/D'), array('id' => 'Instrumento-D', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("D"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('E', array('action' => '/E'), array('id' => 'Instrumento-E', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("E"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('F', array('action' => '/F'), array('id' => 'Instrumento-F', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("F"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('G', array('action' => '/G'), array('id' => 'Instrumento-G', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("G"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('H', array('action' => '/H'), array('id' => 'Instrumento-H', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("H"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('I', array('action' => '/I'), array('id' => 'Instrumento-I', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("I"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('J', array('action' => '/J'), array('id' => 'Instrumento-J', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("J"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('K', array('action' => '/K'), array('id' => 'Instrumento-K', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("K"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('L', array('action' => '/L'), array('id' => 'Instrumento-L', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("L"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('M', array('action' => '/M'), array('id' => 'Instrumento-M', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("M"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('N', array('action' => '/N'), array('id' => 'Instrumento-N', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("N"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('O', array('action' => '/O'), array('id' => 'Instrumento-O', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("O"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('P', array('action' => '/P'), array('id' => 'Instrumento-P', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("P"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Q', array('action' => '/Q'), array('id' => 'Instrumento-Q', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("Q"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('R', array('action' => '/R'), array('id' => 'Instrumento-R', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("R"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('S', array('action' => '/S'), array('id' => 'Instrumento-S', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("S"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('T', array('action' => '/T'), array('id' => 'Instrumento-T', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("T"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('U', array('action' => '/U'), array('id' => 'Instrumento-U', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("U"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('V', array('action' => '/V'), array('id' => 'Instrumento-V', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("V"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('W', array('action' => '/W'), array('id' => 'Instrumento-W', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("W"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('X', array('action' => '/X'), array('id' => 'Instrumento-X', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("X"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Y', array('action' => '/Y'), array('id' => 'Instrumento-Y', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("Y"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Z', array('action' => '/Z'), array('id' => 'Instrumento-Z', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsInstrumento").val("Z"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Todos', array('action' => '/'), array('id' => 'Instrumento-todos', 'class' => 'btn-primary', 'style' => 'width: 66px;', 'onclick' => '$("#manuscriptsInstrumento").val(""); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+		</div>
+		<script type="text/javascript">
+			if ("<?php echo $this->data['manuscripts']['Instrumento']; ?>" != "") {
+				$("#<?php echo "Instrumento-".$this->data['manuscripts']['Instrumento']; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 15px;');
+			} else {
+				$("#<?php echo "Instrumento-todos"; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 66px;');
+			}
+		</script>
+		
+		<div style="clear: both;">		
+			<label>Tonalidad:</label><br />
+			<?php echo $this->Form->hidden('Tonalidad', array('class' => 'form-control', 'label' => 'Tonalidad')); ?>
+			<?php echo $this->Html->link('Do', array('action' => '/D'), array('id' => 'Tonalidad-D', 'class' => 'btn-primaryt', 'onclick' => '$("#manuscriptsTonalidad").val("D"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Re', array('action' => '/R'), array('id' => 'Tonalidad-R', 'class' => 'btn-primaryt', 'onclick' => '$("#manuscriptsTonalidad").val("R"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Mi', array('action' => '/M'), array('id' => 'Tonalidad-M', 'class' => 'btn-primaryt', 'onclick' => '$("#manuscriptsTonalidad").val("M"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Fa', array('action' => '/F'), array('id' => 'Tonalidad-F', 'class' => 'btn-primaryt', 'onclick' => '$("#manuscriptsTonalidad").val("F"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Sol', array('action' => '/SOL'), array('id' => 'Tonalidad-SOL', 'class' => 'btn-primaryt', 'onclick' => '$("#manuscriptsTonalidad").val("SOL"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('La', array('action' => '/L'), array('id' => 'Tonalidad-L', 'class' => 'btn-primaryt', 'onclick' => '$("#manuscriptsTonalidad").val("L"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Si', array('action' => '/SI'), array('id' => 'Tonalidad-SI', 'class' => 'btn-primaryt', 'onclick' => '$("#manuscriptsTonalidad").val("SI"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Todos', array('action' => '/'), array('id' => 'Tonalidad-todos', 'class' => 'btn-primary', 'style' => 'width: 66px;', 'onclick' => '$("#manuscriptsTonalidad").val(""); $("#manuscriptsIndexForm").submit(); return false;')); ?>
+		</div>
+		<script type="text/javascript">
+			if ("<?php echo $this->data['manuscriptsf']['Tonalidad']; ?>" != "") {
+				$("#<?php echo "Tonalidad-".$this->data['manuscripts']['Tonalidad']; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 23px;');
+			} else {
+				$("#<?php echo "Tonalidad-todos"; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 66px;');
 			}
 		</script>
 		
@@ -400,44 +519,7 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 			}
 		</script>
 		
-			<div style="clear: both;">
-			<label>Íncipit Literario:</label><br />
-			<?php echo $this->Form->hidden('IncipitLiterario', array('class' => 'form-control', 'label' => 'IncipitLiterario')); ?>
-			<?php echo $this->Html->link('A', array('action' => '/A'), array('id' => 'incipitliterario-A', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("A"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('B', array('action' => '/B'), array('id' => 'incipitliterario-B', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("B"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('C', array('action' => '/C'), array('id' => 'incipitliterario-C', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("C"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('D', array('action' => '/D'), array('id' => 'incipitliterario-D', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("D"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('E', array('action' => '/E'), array('id' => 'incipitliterario-E', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("E"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('F', array('action' => '/F'), array('id' => 'incipitliterario-F', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("F"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('G', array('action' => '/G'), array('id' => 'incipitliterario-G', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("G"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('H', array('action' => '/H'), array('id' => 'incipitliterario-H', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("H"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('I', array('action' => '/I'), array('id' => 'incipitliterario-I', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("I"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('J', array('action' => '/J'), array('id' => 'incipitliterario-J', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("J"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('K', array('action' => '/K'), array('id' => 'incipitliterario-K', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("K"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('L', array('action' => '/L'), array('id' => 'incipitliterario-L', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("L"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('M', array('action' => '/M'), array('id' => 'incipitliterario-M', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("M"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('N', array('action' => '/N'), array('id' => 'incipitliterario-N', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("N"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('O', array('action' => '/O'), array('id' => 'incipitliterario-O', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("O"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('P', array('action' => '/P'), array('id' => 'incipitliterario-P', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("P"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Q', array('action' => '/Q'), array('id' => 'incipitliterario-Q', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("Q"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('R', array('action' => '/R'), array('id' => 'incipitliterario-R', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("R"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('S', array('action' => '/S'), array('id' => 'incipitliterario-S', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("S"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('T', array('action' => '/T'), array('id' => 'incipitliterario-T', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("T"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('U', array('action' => '/U'), array('id' => 'incipitliterario-U', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("U"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('V', array('action' => '/V'), array('id' => 'incipitliterario-V', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("V"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('W', array('action' => '/W'), array('id' => 'incipitliterario-W', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("W"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('X', array('action' => '/X'), array('id' => 'incipitliterario-X', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("X"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Y', array('action' => '/Y'), array('id' => 'incipitliterario-Y', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("Y"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Z', array('action' => '/Z'), array('id' => 'incipitliterario-Z', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsIncipitLiterario").val("Z"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Todos', array('action' => '/'), array('id' => 'incipitliterario-todos', 'class' => 'btn-primary', 'style' => 'width: 66px;', 'onclick' => '$("#manuscriptsIncipitLiterario").val(""); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-		</div>
-		<script type="text/javascript">
-			if ("<?php echo $this->data['manuscripts']['IncipitLiterario']; ?>" != "") {
-				$("#<?php echo "incipitliterario-".$this->data['manuscripts']['IncipitLiterario']; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 15px;');
-			} else {
-				$("#<?php echo "incipitliterario-todos"; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 66px;');
-			}
-		</script>
+			
 		
 		<div style="clear: both;">		
 			<label>Temas:</label><br />
@@ -478,107 +560,11 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 			}
 		</script>
 
-		<div style="clear: both;">		
-			<label>Medio Sonoro:</label><br />
-			<?php echo $this->Form->hidden('MedioSonoro', array('class' => 'form-control', 'label' => 'MedioSonoro')); ?>
-			<?php echo $this->Html->link('A', array('action' => '/A'), array('id' => 'mediosonoro-A', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("A"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('B', array('action' => '/B'), array('id' => 'mediosonoro-B', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("B"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('C', array('action' => '/C'), array('id' => 'mediosonoro-C', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("C"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('D', array('action' => '/D'), array('id' => 'mediosonoro-D', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("D"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('E', array('action' => '/E'), array('id' => 'mediosonoro-E', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("E"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('F', array('action' => '/F'), array('id' => 'mediosonoro-F', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("F"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('G', array('action' => '/G'), array('id' => 'mediosonoro-G', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("G"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('H', array('action' => '/H'), array('id' => 'mediosonoro-H', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("H"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('I', array('action' => '/I'), array('id' => 'mediosonoro-I', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("I"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('J', array('action' => '/J'), array('id' => 'mediosonoro-J', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("J"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('K', array('action' => '/K'), array('id' => 'mediosonoro-K', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("K"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('L', array('action' => '/L'), array('id' => 'mediosonoro-L', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("L"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('M', array('action' => '/M'), array('id' => 'mediosonoro-M', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("M"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('N', array('action' => '/N'), array('id' => 'mediosonoro-N', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("N"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('O', array('action' => '/O'), array('id' => 'mediosonoro-O', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("O"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('P', array('action' => '/P'), array('id' => 'mediosonoro-P', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("P"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Q', array('action' => '/Q'), array('id' => 'mediosonoro-Q', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("Q"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('R', array('action' => '/R'), array('id' => 'mediosonoro-R', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("R"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('S', array('action' => '/S'), array('id' => 'mediosonoro-S', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("S"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('T', array('action' => '/T'), array('id' => 'mediosonoro-T', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("T"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('U', array('action' => '/U'), array('id' => 'mediosonoro-U', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("U"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('V', array('action' => '/V'), array('id' => 'mediosonoro-V', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("V"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('W', array('action' => '/W'), array('id' => 'mediosonoro-W', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsmediosonoro").val("W"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('X', array('action' => '/X'), array('id' => 'mediosonoro-X', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("X"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Y', array('action' => '/Y'), array('id' => 'mediosonoro-Y', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("Y"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Z', array('action' => '/Z'), array('id' => 'mediosonoro-Z', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsMedioSonoro").val("Z"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Todos', array('action' => '/'), array('id' => 'mediosonoro-todos', 'class' => 'btn-primary', 'style' => 'width: 66px;', 'onclick' => '$("#manuscriptsMedioSonoro").val(""); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-		</div>
-		<script type="text/javascript">
-			if ("<?php echo $this->data['manuscripts']['MedioSonoro']; ?>" != "") {
-				$("#<?php echo "mediosonoro-".$this->data['manuscripts']['MedioSonoro']; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 15px;');
-			} else {
-				$("#<?php echo "mediosonoro-todos"; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 66px;');
-			}
-		</script>
-		
-		<div style="clear: both;">		
-			<label>Género:</label><br />
-			<?php echo $this->Form->hidden('Genero', array('class' => 'form-control', 'label' => 'Genero')); ?>
-			<?php echo $this->Html->link('A', array('action' => '/A'), array('id' => 'Genero-A', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("A"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('B', array('action' => '/B'), array('id' => 'Genero-B', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("B"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('C', array('action' => '/C'), array('id' => 'Genero-C', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("C"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('D', array('action' => '/D'), array('id' => 'Genero-D', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("D"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('E', array('action' => '/E'), array('id' => 'Genero-E', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("E"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('F', array('action' => '/F'), array('id' => 'Genero-F', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("F"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('G', array('action' => '/G'), array('id' => 'Genero-G', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("G"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('H', array('action' => '/H'), array('id' => 'Genero-H', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("H"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('I', array('action' => '/I'), array('id' => 'Genero-I', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("I"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('J', array('action' => '/J'), array('id' => 'Genero-J', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("J"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('K', array('action' => '/K'), array('id' => 'Genero-K', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("K"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('L', array('action' => '/L'), array('id' => 'Genero-L', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("L"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('M', array('action' => '/M'), array('id' => 'Genero-M', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("M"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('N', array('action' => '/N'), array('id' => 'Genero-N', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("N"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('O', array('action' => '/O'), array('id' => 'Genero-O', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("O"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('P', array('action' => '/P'), array('id' => 'Genero-P', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("P"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Q', array('action' => '/Q'), array('id' => 'Genero-Q', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("Q"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('R', array('action' => '/R'), array('id' => 'Genero-R', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("R"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('S', array('action' => '/S'), array('id' => 'Genero-S', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("S"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('T', array('action' => '/T'), array('id' => 'Genero-T', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("T"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('U', array('action' => '/U'), array('id' => 'Genero-U', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("U"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('V', array('action' => '/V'), array('id' => 'Genero-V', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("V"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('W', array('action' => '/W'), array('id' => 'Genero-W', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("W"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('X', array('action' => '/X'), array('id' => 'Genero-X', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("X"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Y', array('action' => '/Y'), array('id' => 'Genero-Y', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("Y"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Z', array('action' => '/Z'), array('id' => 'Genero-Z', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsGenero").val("Z"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Todos', array('action' => '/'), array('id' => 'Genero-todos', 'class' => 'btn-primary', 'style' => 'width: 66px;', 'onclick' => '$("#manuscriptsGenero").val(""); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-		</div>
-		<script type="text/javascript">
-			if ("<?php echo $this->data['manuscripts']['Genero']; ?>" != "") {
-				$("#<?php echo "Genero-".$this->data['manuscripts']['Genero']; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 15px;');
-			} else {
-				$("#<?php echo "Genero-todos"; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 66px;');
-			}
-		</script>
-		
-		<div style="clear: both;">		
-			<label>Tonalidad:</label><br />
-			<?php echo $this->Form->hidden('Tonalidad', array('class' => 'form-control', 'label' => 'Tonalidad')); ?>
-			<?php echo $this->Html->link('Do', array('action' => '/D'), array('id' => 'Tonalidad-D', 'class' => 'btn-primaryt', 'onclick' => '$("#manuscriptsTonalidad").val("D"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Re', array('action' => '/R'), array('id' => 'Tonalidad-R', 'class' => 'btn-primaryt', 'onclick' => '$("#manuscriptsTonalidad").val("R"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Mi', array('action' => '/M'), array('id' => 'Tonalidad-M', 'class' => 'btn-primaryt', 'onclick' => '$("#manuscriptsTonalidad").val("M"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Fa', array('action' => '/F'), array('id' => 'Tonalidad-F', 'class' => 'btn-primaryt', 'onclick' => '$("#manuscriptsTonalidad").val("F"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Sol', array('action' => '/SOL'), array('id' => 'Tonalidad-SOL', 'class' => 'btn-primaryt', 'onclick' => '$("#manuscriptsTonalidad").val("SOL"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('La', array('action' => '/L'), array('id' => 'Tonalidad-L', 'class' => 'btn-primaryt', 'onclick' => '$("#manuscriptsTonalidad").val("L"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Si', array('action' => '/SI'), array('id' => 'Tonalidad-SI', 'class' => 'btn-primaryt', 'onclick' => '$("#manuscriptsTonalidad").val("SI"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Todos', array('action' => '/'), array('id' => 'Tonalidad-todos', 'class' => 'btn-primary', 'style' => 'width: 66px;', 'onclick' => '$("#manuscriptsTonalidad").val(""); $("#manuscriptsIndexForm").submit(); return false;')); ?>
-		</div>
-		<script type="text/javascript">
-			if ("<?php echo $this->data['manuscripts']['Tonalidad']; ?>" != "") {
-				$("#<?php echo "Tonalidad-".$this->data['manuscripts']['Tonalidad']; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 23px;');
-			} else {
-				$("#<?php echo "Tonalidad-todos"; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 66px;');
-			}
-		</script>
+	
 		
 		
 		<div style="clear: both;">		
-			<label>Meción de Responsabilidad:</label><br />
+			<label>Mención Responsabilidad:</label><br />
 			<?php echo $this->Form->hidden('Responsabilidad', array('class' => 'form-control', 'label' => 'Responsabilidad')); ?>
 			<?php echo $this->Html->link('A', array('action' => '/A'), array('id' => 'Responsabilidad-A', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsResponsabilidad").val("A"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
 			<?php echo $this->Html->link('B', array('action' => '/B'), array('id' => 'Responsabilidad-B', 'class' => 'btn-primary', 'onclick' => '$("#manuscriptsResponsabilidad").val("B"); $("#manuscriptsIndexForm").submit(); return false;')); ?>
@@ -616,22 +602,6 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 			}
 		</script>
 		
-		
-
-		<div style="clear: both;">		
-			<label>Año:</label><br />
-			<?php echo $this->Form->hidden('Año', array('class' => 'form-control', 'label' => 'Año')); ?>
-
-		<?php echo $this->Html->link(__('Ver Lista de Años', true), array('action' => 'year/'), array('class' => 'btn-primary', 'style' => 'width: 125px;'));?>
-		</div>
-		
-		<script type="text/javascript">
-			if ("<?php echo $this->data['manuscripts']['Año']; ?>" != "") {
-				$("#<?php echo "año-".$this->data['manuscripts']['Año']; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 15px;');
-			} else {
-				$("#<?php echo "año-todos"; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 66px;');
-			}
-		</script>
 		
 		<br />
 		<?php //echo $this->Form->submit('Buscar', array('class' => 'btn btn-primary', 'div' => false)); ?>

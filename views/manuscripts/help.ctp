@@ -43,29 +43,17 @@
  */
 
 </style>
-<?php if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') == '2'))) { ?>
-<ul class="breadcrumb" style="margin: 0">	
-<li><font size="1.5" color="gray">Ir a</font></li>
-<li><a href="<?php echo $this->base; ?>/configurations">Inicio</a></li>
-<li>Música Manuscrita</li>
+<ul class="breadcrumb" style="margin: 0">
+	<li><font size="1.5" color="gray">Ir a</font></li>
+	<li>
+    	<?php echo $this->Html->link(__('Inicio', true), array('controller' => 'pages')); ?>
+    </li>
+	<li>Música Manuscrita</li>
 </ul>
-<?php } else if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') == '1'))) { ?>
-<ul class="breadcrumb" style="margin: 0">	
-<li><font size="1.5" color="gray">Ir a</font></li>
-<li><a href="<?php echo $this->base; ?>/configurations">Inicio</a></li>
-<li>Música Manuscrita</li>
-</ul>
-<?php } else { ?>
-<ul class="breadcrumb" style="margin: 0">	
-<li><font size="1.5" color="gray">Ir a</font></li>
-<li><a href="<?php echo $this->base; ?>/pages">Inicio</a></li>
-<li>Música Manuscrita</li>
-</ul>
-<?php } ?>
 
 <div class="books index" style="text-align: justify; float: ">
 	<div class="col-md-12 column">
-		<h2>&nbsp;&nbsp;Módulo Música Manuscrita</h2>
+		<h2>&nbsp;&nbsp;Módulo de Música Manuscrita</h2>
 		 <div style="text-align: center; margin-left: 580px; margin-top: -45px; padding-bottom:10px">
 			<?php echo $this->Html->link('Ver Obras', '/manuscripts', array('class' => 'btn btn-primary', 'style' => 'float: none')); ?>
 		</div>

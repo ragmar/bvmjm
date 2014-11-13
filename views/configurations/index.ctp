@@ -16,11 +16,11 @@
 			<h5>Hemerografías</h5>
 		</div>
 		<div style="width: 12%; float: left;"><br />
-			<?php echo $this->Html->link($html->image('ts/ima_m_manus.jpg', array('alt' => 'Música Manuscrita', 'width' => '100px', 'class' => 'img-thumbnail')), '/', array('escape' => false)); ?>
+			<?php echo $this->Html->link($html->image('ts/ima_m_manus.jpg', array('alt' => 'Música Manuscrita', 'width' => '100px', 'class' => 'img-thumbnail')), '/manuscripts', array('escape' => false)); ?>
 			<h5>Música Manuscrita</h5>
 		</div>
 		<div style="width: 12%; float: left;"><br />
-			<?php echo $this->Html->link($html->image('ts/ima_m_impre.jpg', array('alt' => 'Música Impresa', 'width' => '100px', 'class' => 'img-thumbnail')), '/', array('escape' => false)); ?>
+			<?php echo $this->Html->link($html->image('ts/ima_m_impre.jpg', array('alt' => 'Música Impresa', 'width' => '100px', 'class' => 'img-thumbnail')), '/printeds', array('escape' => false)); ?>
 			<h5>Música Impresa</h5><br />
 		</div>
 		<div style="width: 12%; float: left;"><br />
@@ -37,6 +37,30 @@
 		</div>
 		<div style="width: 8%; float: left;">&nbsp;</div>
 	</div>
+	
+	
+	
+	
+	<?php if ($this->Session->read('Auth.User.group_id') == '2') { ?>
+	<hr />
+	<div class="row">
+		<h3>Ayuda</h3>
+			<div style="width: 5%; float: center;">&nbsp;</div>
+			<div style="width: 90px; height: 100px; float: center; margin-left: 545px; margin-top: -40px; ">
+				<br />
+				<?php echo $this->Html->link($html->image('ts/ayuda.png',  array('alt' => 'help', 'class' => 'img-thumbnail')), '/configurations/help', array('escape' => false)); ?>
+				<h5>Tutoriales</h5>
+			</div>
+	</div>
+	</br></br>
+		
+	<?php } ?>
+	
+	
+	
+	
+	
+	
 	
 	<?php if ($this->Session->read('Auth.User.group_id') == '1') { ?>
 	<hr />
@@ -112,6 +136,26 @@
 			<div style="width: 5%; float: left;">&nbsp;</div>
 		</div>
 	<?php } ?>
+	
+	
+	
+	
+	<?php if ($this->Session->read('Auth.User.group_id') == '1') { ?>
+	<hr />
+	<div class="row">
+		<h3>Ayuda</h3>
+			<div style="width: 5%; float: center;">&nbsp;</div>
+			<div style="width: 5%; float: center; margin-left: 555px; margin-top: -40px; ">
+				<br />
+				<?php echo $this->Html->link($html->image('ts/ayuda.png', array('alt' => 'help', 'class' => 'img-thumbnail')), '/configurations/help', array('escape' => false)); ?>
+				<h5>Tutoriales</h5>
+			</div>
+	</div>
+		
+	<?php } ?>
+	
+	
+	
 </div>
 <script type="text/javascript">
 	$(document).ready(function(){

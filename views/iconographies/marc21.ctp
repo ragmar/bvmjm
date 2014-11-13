@@ -18,9 +18,14 @@ function marc21_decode($camp = null) {
 	}
 }
 ?>
-<ul class="breadcrumb" style="margin: 0">
-  <li><a href="<?php echo $this->base; ?>">Inicio</a></li>
-  <li><a href="<?php echo $this->base; ?>/iconographies">Iconografía Musical Venezolana</a></li>
+
+
+
+<?php if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') == '2'))) { ?>
+<ul class="breadcrumb" style="margin: 0">	
+<li><font size="1.5" color="gray">Ir a</font></li>
+<li><a href="<?php echo $this->base; ?>/configurations">Inicio</a></li>
+ <li><a href="<?php echo $this->base; ?>/iconographies">Iconografía Musical Venezolana</a></li>
   <li>
   <a href="<?php echo $this->base; ?>/iconographies/view/<?php echo $item['Item']['id']; ?>">
   	<?php
@@ -38,6 +43,52 @@ function marc21_decode($camp = null) {
 	</li>
   	<li>Formato MARC21</li>
 </ul>
+<?php } else if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') == '1'))) { ?>
+<ul class="breadcrumb" style="margin: 0">	
+<li><font size="1.5" color="gray">Ir a</font></li>
+<li><a href="<?php echo $this->base; ?>/configurations">Inicio</a></li>
+ <li><a href="<?php echo $this->base; ?>/iconographies">Iconografía Musical Venezolana</a></li>
+  <li>
+  <a href="<?php echo $this->base; ?>/iconographies/view/<?php echo $item['Item']['id']; ?>">
+  	<?php
+		if (!empty($item['Item']['245'])) {
+			$title = marc21_decode($item['Item']['245']);
+			if ($title) {
+				echo $title['a'];
+				if (isset($title['b'])) {echo ' ' . $title['b'];}
+				if (isset($title['c'])) {echo ' ' . $title['c'];}
+				if (isset($title['h'])) {echo ' ' . $title['h'];}
+			}
+		}
+	?>
+	</a>
+	</li>
+  	<li>Formato MARC21</li>
+</ul>
+<?php } else { ?>
+<ul class="breadcrumb" style="margin: 0">	
+<li><font size="1.5" color="gray">Ir a</font></li>
+<li><a href="<?php echo $this->base; ?>/pages">Inicio</a></li>
+<li><a href="<?php echo $this->base; ?>/iconographies">Iconografía Musical Venezolana</a></li>
+  <li>
+  <a href="<?php echo $this->base; ?>/iconographies/view/<?php echo $item['Item']['id']; ?>">
+  	<?php
+		if (!empty($item['Item']['245'])) {
+			$title = marc21_decode($item['Item']['245']);
+			if ($title) {
+				echo $title['a'];
+				if (isset($title['b'])) {echo ' ' . $title['b'];}
+				if (isset($title['c'])) {echo ' ' . $title['c'];}
+				if (isset($title['h'])) {echo ' ' . $title['h'];}
+			}
+		}
+	?>
+	</a>
+	</li>
+  	<li>Formato MARC21</li>
+</ul>
+<?php } ?>
+
 
 <h2>Formato MARC21</h2>
 

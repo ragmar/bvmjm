@@ -52,7 +52,39 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 		text-decoration: none;
 	}
 </style>
-<ul class="breadcrumb" style="margin: 0">
+
+
+<?php if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') == '2'))) { ?>
+<ul class="breadcrumb" style="margin: 0">	
+<li><font size="1.5" color="gray">Ir a</font></li>
+<li><a href="<?php echo $this->base; ?>/configurations">Inicio</a></li>
+ <li><a href="<?php echo $this->base; ?>/iconographies">Iconografía Musical en Venezuela</a></li>
+   <li><a href="<?php echo $this->base; ?>/books">Libros</a></li>
+  <?php if (!isset($this->passedArgs[0])) { ?>
+  	<li>Materia</li>
+  <?php } else { ?>
+  	<li><a href="<?php echo $this->base; ?>/books/matter">Materia</a></li>
+  	<li class="active"><?php echo $this->passedArgs[0]; ?></li>
+  <?php } ?>
+</ul>
+<?php } else if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') == '1'))) { ?>
+<ul class="breadcrumb" style="margin: 0">	
+<li><font size="1.5" color="gray">Ir a</font></li>
+<li><a href="<?php echo $this->base; ?>/configurations">Inicio</a></li>
+ <li><a href="<?php echo $this->base; ?>/iconographies">Iconografía Musical en Venezuela</a></li>
+   <li><a href="<?php echo $this->base; ?>/books">Libros</a></li>
+  <?php if (!isset($this->passedArgs[0])) { ?>
+  	<li>Materia</li>
+  <?php } else { ?>
+  	<li><a href="<?php echo $this->base; ?>/books/matter">Materia</a></li>
+  	<li class="active"><?php echo $this->passedArgs[0]; ?></li>
+  <?php } ?>
+</ul>
+<?php } else { ?>
+<ul class="breadcrumb" style="margin: 0">	
+<li><font size="1.5" color="gray">Ir a</font></li>
+<li><a href="<?php echo $this->base; ?>/pages">Inicio</a></li>
+ <li><a href="<?php echo $this->base; ?>/iconographies">Iconografía Musical en Venezuela</a></li>
   <li><a href="<?php echo $this->base; ?>/books">Libros</a></li>
   <?php if (!isset($this->passedArgs[0])) { ?>
   	<li>Materia</li>
@@ -61,6 +93,8 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
   	<li class="active"><?php echo $this->passedArgs[0]; ?></li>
   <?php } ?>
 </ul>
+<?php } ?>
+
 
 <div class='matter view'>
 	<div class="col-md-9 column">

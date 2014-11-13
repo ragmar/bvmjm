@@ -203,7 +203,7 @@ class IconographiesController extends AppController {
 		//$this->set(compact('topics', 'types', 'authors'));
 	}
 	
-	function index() {
+	function index($year=null) {
 		if (!empty($this->data)) {
 			$conditions =  array('OR' => array(array('Item.h-006' => 'k', 'Item.h-007' => 'a', 'Item.published' => '1'), //||
 			array('Item.h-006' => 'k', 'Item.h-007' => 'b', 'Item.published' => '1'), 
@@ -236,6 +236,9 @@ class IconographiesController extends AppController {
 			if (!empty($this->data['iconographies']['Año'])) {
 				$conditions['Item.260 LIKE'] = '%^c' . $this->data['iconographies']['Año'] . '%';
 			}
+			if (!empty($this->data['iconographies']['Descripción'])) {
+				$conditions['Item.500 LIKE'] = '%^a' . $this->data['iconographies']['Descripción'] . '%';
+			}
 		
 			
 		} else {
@@ -243,33 +246,39 @@ class IconographiesController extends AppController {
 		$conditions = array('OR' => array(array('Item.h-006' => 'k', 'Item.h-007' => 'a', 'Item.published' => '1'), //||
 		array('Item.h-006' => 'k', 'Item.h-007' => 'b', 'Item.published' => '1'), array('Item.h-006' => 'k', 'Item.h-007' => 'm', 'Item.published' => '1')));
 		}
-
-		//debug($this->data);
-		//debug($conditions); die;
 		
-		/*
-			if (!empty($this->data)) { // Si llegan datos de una busqueda.
-		$this->data['Iconographie']['year'] = $this->data['Iconographie']['year']['year']; // Se arregla el campo year.
-		$this->Session->write('Search', $this->data); // Se guarda en sesion la busqueda.
-		$conditions = $this->buildConditions($this->data);
-		//debug($conditions); die;
-			
-		} else { // Si se viene del home o del paginador ...
-			
-		//$this->Session->delete('Search');
-		//if (isset($this->passedArgs[0]) && (substr($this->passedArgs[0], 0, 4) != "page")) {
-		if ($this->Session->check('Search')) {
-		$conditions = $this->buildConditions($this->Session->read('Search'));
+		if ($year != null){
+			$conditions['Item.260 LIKE '] = "%^c" . $year . "%";
 		}
-		//}
-		}*/
+		
+		$this->Item->recursive = 1;
+		
+		$this->paginate = array(
+				'limit' => '15',
+				'conditions' => $conditions,
+				//'order' => 'Item.title ASC'
+		);
+		$this->set('items', $this->paginate('Item'));
+		
+		$years = $this->Item->find('list', array('fields' => '260', 'conditions' => array('OR' => array(array('Item.h-006' => 'k', 'Item.h-007' => 'a', 'Item.published' => '1'), //||
+		array('Item.h-006' => 'k', 'Item.h-007' => 'b', 'Item.published' => '1'), array('Item.h-006' => 'k', 'Item.h-007' => 'm', 'Item.published' => '1')))));
+		
+		foreach ($years as $i => $v){
+			$years[$i] = $this->marc21_decode($v);
+			$years[$i] = $years[$i]['c'];
+		}
+		
+		asort($years); // Ordena de menor a mayor.
+		$years = array_unique($years); // Elimina duplicados.
+		
+		$this->set('years', $years);
 	
 		$this->Item->recursive = 1;
 	
 		$this->paginate = array(
 				//'limit' => '1',
 				'conditions' => $conditions,
-				//'order' => 'ASC'
+				'order' => 'Item.id DESC'
 		);
 		//debug($conditions); die;
 		$this->set('items', $this->paginate('Item'));
@@ -406,6 +415,42 @@ class IconographiesController extends AppController {
 		
 		if ($letter != null){
 			$conditions['Item.100 LIKE '] = "%^a" . $letter . "%";
+			//debug($conditions); die;
+		}
+	
+		/*if (!empty($this->data)) { // Si llegan datos de una busqueda.
+			$this->data['Book']['year'] = $this->data['Book']['year']['year']; // Se arregla el campo year.
+			$this->Session->write('Search', $this->data); // Se guarda en sesion la busqueda.
+			$conditions = $this->buildConditions($this->data);
+			//debug($conditions); die;
+	
+		} else { // Si se viene del home o del paginador ...
+	
+			//$this->Session->delete('Search');
+			//if (isset($this->passedArgs[0]) && (substr($this->passedArgs[0], 0, 4) != "page")) {
+			if ($this->Session->check('Search')) {
+				$conditions = $this->buildConditions($this->Session->read('Search'));
+			}
+			//}
+		}*/
+		
+		$this->Item->recursive = 1;
+		
+		$this->paginate = array(
+				//'limit' => '4',
+				'conditions' => $conditions,
+				//'order' => 'Author.lastname ASC'
+		);
+	
+		$this->set('items', $this->paginate('Item'));
+	}
+	
+	function descrption($letter = null) {
+	$conditions =array('OR' => array(array('Item.h-006' => 'k', 'Item.h-007' => 'a', 'Item.published' => '1'), //||
+		array('Item.h-006' => 'k', 'Item.h-007' => 'b', 'Item.published' => '1'), array('Item.h-006' => 'k', 'Item.h-007' => 'm', 'Item.published' => '1')));
+		
+		if ($letter != null){
+			$conditions['Item.500 LIKE '] = "%^a" . $letter . "%";
 			//debug($conditions); die;
 		}
 	
@@ -600,7 +645,7 @@ class IconographiesController extends AppController {
 		if (!empty($this->data)) {
 			$this->layout = 'default';
 			$this->Item->recursive = -1;
-			$conditions = array('Item.h-006' => 'k', 'Item.h-007' => 'a', 'Item.published' => '1');	
+			$conditions = array('Item.h-006' => 'k', 'Item.h-007' => 'b', 'Item.published' => '1');	
 			
 			if (!empty($this->data['Iconographie']['245'])) { // Titulo
 				$conditions['Item.245 LIKE'] = '%' . $this->data['Iconographie']['245'] . '%'; 
@@ -678,26 +723,15 @@ class IconographiesController extends AppController {
 				copy($_FILES['data']['tmp_name']['Iconographie']['cover'], $uploadfile);
 			}
 
-			if ($_FILES['data']['error']['Iconographie']['item'] == 0){
-				$uploaddir = "..".DS."webroot".DS."files".DS;
-				$uploadfile = $uploaddir . basename($time.'_'.$this->data['Iconographie']['item']['name']);
-				copy($_FILES['data']['tmp_name']['Iconographie']['item'], $uploadfile);
-			}
 			
-			if ($_FILES['data']['error']['Iconographie']['item'] == 0){
-				
-				$data['Iconographie']['item_file_path'] = $time.'_'.$data['Iconographie']['item']['name'];
-				$data['Iconographie']['item_content_type'] = $data['Iconographie']['item']['type'];
-				$data['Iconographie']['item_file_size'] = $data['Iconographie']['item']['size'];
-				$data['Iconographie']['item_file_name'] = $data['Iconographie']['item']['name'];
-				
+			if ($_FILES['data']['error']['Iconographie']['cover'] == 0){
+								
 				$data['Iconographie']['cover_path'] = $time.'_'.$data['Iconographie']['cover']['name'];
 				$data['Iconographie']['cover_type'] = $this->data['Iconographie']['cover']['type'];
 				$data['Iconographie']['cover_size'] = $this->data['Iconographie']['cover']['size'];
 				$data['Iconographie']['cover_name'] = $this->data['Iconographie']['cover']['name'];
 				
 				unset($data['Iconographie']['cover']);
-				unset($data['Iconographie']['item']);
 				$data['Item'] = $data['Iconographie'];
 				unset($data['Iconographie']);
 				
@@ -853,6 +887,33 @@ class IconographiesController extends AppController {
 			$this->set(compact('years', false));
 		}
 		
+		
+		//-----------------------SubCampo 500a------------------//
+		
+			$descriptions = $this->Item->find('list', array('fields' => array('500')));
+		
+		if ($descriptions) {
+			$list = "";
+			// Recorre para extraer el contenido del subcampo deseado.
+			foreach ($descriptions as $a => $v){
+				$v = $this->marc21_decode($v);
+				$list[$a] = $v['a'];
+			}
+			
+			$list = array_unique($list); // Elimina repetidos.
+			asort($list); // Ordena de A a la Z.
+			
+			// Recorre para darle el formato deseado.
+			$l = "";
+			foreach ($list as $a => $v){
+				$l = $l . "{ value: '" . $v . "', data: '" . $v . "' }, ";
+			}
+			
+			$descriptions = "[" . $l . "]";
+			$this->set(compact('descriptions', $descriptions));
+		} else {
+			$this->set(compact('descriptions', false));
+		}
 		// ------------------------- Sub-Campo 362a ------------------------- //
 		
 		$publications = $this->Item->find('list', array('fields' => array('362')));
@@ -1052,6 +1113,34 @@ class IconographiesController extends AppController {
 			$this->set(compact('places', false));
 		}
 		
+		
+		//-----------------------SubCampo 500a------------------//
+		
+			$descriptions = $this->Item->find('list', array('fields' => array('500')));
+		
+		if ($descriptions) {
+			$list = "";
+			// Recorre para extraer el contenido del subcampo deseado.
+			foreach ($descriptions as $a => $v){
+				$v = $this->marc21_decode($v);
+				$list[$a] = $v['a'];
+			}
+			
+			$list = array_unique($list); // Elimina repetidos.
+			asort($list); // Ordena de A a la Z.
+			
+			// Recorre para darle el formato deseado.
+			$l = "";
+			foreach ($list as $a => $v){
+				$l = $l . "{ value: '" . $v . "', data: '" . $v . "' }, ";
+			}
+			
+			$descriptions = "[" . $l . "]";
+			$this->set(compact('descriptions', $descriptions));
+		} else {
+			$this->set(compact('descriptions', false));
+		}
+		
 		// ------------------------- Sub-Campo 260b ------------------------- //
 		
 		$editors = $this->Item->find('list', array('fields' => array('260')));
@@ -1221,7 +1310,7 @@ class IconographiesController extends AppController {
 		
 		$item = $this->Item->find('first', array('conditions' => array('Item.id' => $id)));
 		if ($this->Item->delete($id)) {
-			$this->Session->setFlash(__('Item eliminado', true));
+			$this->Session->setFlash(__('Obra eliminada', true));
 			$this->Attachment->delete_files($item['Item']['item_file_path']);
 			if (!isset($this->passedArgs[1])) {
 				$this->redirect(array('action'=>'index'));

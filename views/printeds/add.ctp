@@ -10,15 +10,29 @@ th {
 	border: solid 1px #E8DED4;
 }
 </style>
-<ul class="breadcrumb" style="margin: 0">
-  <li><a href="<?php echo $this->base; ?>">Inicio</a></li>
-  <li><a href="<?php echo $this->base; ?>/printeds">Música Impresa</a></li>
-  <li>Agregar Obra </li>
+<?php if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') == '2'))) { ?>
+<ul class="breadcrumb" style="margin: 0">	
+<li><font size="1.5" color="gray">Ir a</font></li>
+<li><a href="<?php echo $this->base; ?>/configurations">Inicio</a></li>
+<li>Música Impresa</li>
 </ul>
-
+<?php } else if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') == '1'))) { ?>
+<ul class="breadcrumb" style="margin: 0">	
+<li><font size="1.5" color="gray">Ir a</font></li>
+<li><a href="<?php echo $this->base; ?>/configurations">Inicio</a></li>
+<li>Música Impresa</li>
+</ul>
+<?php } else { ?>
+<ul class="breadcrumb" style="margin: 0">	
+<li><font size="1.5" color="gray">Ir a</font></li>
+<li><a href="<?php echo $this->base; ?>/pages">Inicio</a></li>
+<li>Música Impresa</li>
+</ul>
+<?php } ?>
 <div class="items">
 <div class="col-md-12 column">
-<h2>Agregar Obra</h2>
+<h2>Agregar Partitura</h2>
+ <h2 style="margin-left: 480px; margin-top: -40px">Música Impresa</h2>
 
 <?php echo $this->Form->create('Printed', array('enctype' => 'multipart/form-data')); ?>
 
@@ -112,7 +126,7 @@ th {
 				'm' => 'm - Monografía.',
 				/*'s' => 's - Publicación seriada.'*/
 			),
-			'selected' => 'a'/*,
+			'selected' => 'm'/*,
 			'empty' => 'Seleccione'*/
 		));?>
 		</td>
@@ -267,431 +281,509 @@ th {
 		<td>Lugar de publicación, producción o ejecución.</td>
 		<td><?php echo $this->Form->input('008-15-17', array('id' => '008-15-17', 'label' => false, 'class' => 'form-control', 'div' => false,
 			'options' => array(
-				'-aa' => 'Albania',
-				'abc' => 'Alberta',
-				'-ac' => 'Ashmore and Cartier Islands',
-				'-ae' => 'Algeria',
-				'-af' => 'Afghanistan',
-				'-ag' => 'Argentina',
-				'-ai' => 'Anguilla',
-				'-ai' => 'Armenia (Republic)',
-				'air' => 'Armenian S.S.R.',
-				'-aj' => 'Azerbaijan',
-				'ajr' => 'Azerbaijan S.S.R.',
-				'aku' => 'Alaska',
-				'alu' => 'Alabama',
-				'-am' => 'Anguilla',
-				'-an' => 'Andorra',
-				'-ao' => 'Angola',
-				'-aq' => 'Antigua and Barbuda',
-				'aru' => 'Arkansas',
-				'-as' => 'American Samoa',
-				'-at' => 'Australia',
-				'-au' => 'Austria',
-				'-aw' => 'Aruba',
-				'-ay' => 'Antarctica',
-				'azu' => 'Arizona',
-				'-ba' => 'Bahrain',
-				'-bb' => 'Barbados',
-				'bcc' => 'British Columbia',
-				'-bd' => 'Burundi',
-				'-be' => 'Belgium',
-				'-bf' => 'Bahamas',
-				'-bg' => 'Bangladesh',
-				'-bh' => 'Belize',
-				'-bi' => 'British Indian Ocean Territory',
-				'-bl' => 'Brazil',
-				'-bm' => 'Bermuda Islands',
-				'-bn' => 'Bosnia and Hercegovina',
-				'-bo' => 'Bolivia',
-				'-bp' => 'Solomon Islands',
-				'-br' => 'Burma',
-				'-bs' => 'Botswana',
-				'-bt' => 'Bhutan',
-				'-bu' => 'Bulgaria',
-				'-bv' => 'Bouvet Island',
-				'-bw' => 'Belarus',
-				'bwr' => 'Byelorussian S.S.R.',
-				'-bx' => 'Brunei',
-				'cau' => 'California',
-				'-cb' => 'Cambodia',
-				'-cc' => 'China',
-				'-cd' => 'Chad',
-				'-ce' => 'Sri Lanka',
-				'-cf' => 'Congo (Brazzaville)',
-				'-cg' => 'Congo (Democratic Republic)',
-				'-ch' => 'China (Republic : 1949- )',
-				'-ci' => 'Croatia',
-				'-cj' => 'Cayman Islands',
-				'-ck' => 'Colombia',
-				'-cl' => 'Chile',
-				'-cm' => 'Cameroon',
-				'-cn' => 'Canada',
-				'cou' => 'Colorado',
-				'-cp' => 'Canton and Enderbury Islands',
-				'-cq' => 'Comoros',
-				'-cr' => 'Costa Rica',
-				'-cs' => 'Czechoslovakia',
-				'ctu' => 'Connecticut',
-				'-cu' => 'Cuba',
-				'-cv' => 'Cape Verde',
-				'-cw' => 'Cook Islands',
-				'-cx' => 'Central African Republic',
-				'-cy' => 'Cyprus',
-				'-cz' => 'Canal Zone',
-				'dcu' => 'District of Columbia',
-				'deu' => 'Delaware',
-				'-dk' => 'Denmark',
-				'-dm' => 'Benin',
-				'-dq' => 'Dominica',
-				'-dr' => 'Dominican Republic',
-				'-ea' => 'Eritrea',
-				'-ec' => 'Ecuador',
-				'-eg' => 'Equatorial Guinea',
-				'-em' => 'East Timor',
-				'enk' => 'England',
-				'-er' => 'Estonia',
+				'-aa' => '-aa Albania',
+				'abc' => 'abc - Alberta',
+				'-ac' => '-ac - Ashmore and Cartier Islands',
+				'-ae' => '-ae - Algeria',
+				'-af' => '-af - Afghanistan',
+				'-ag' => '-ag -Argentina',
+				'-ai' => '-ai - Anguilla',
+				'aip' => 'aip Armenia (Republic)',
+				'air' => 'air - Armenian S.S.R.',
+				'-aj' => '-aj - Azerbaijan',
+				'ajr' => 'ajr - Azerbaijan S.S.R.',
+				'aku' => 'aku - Alaska',
+				'alu' => 'alu - Alabama',
+				'-am' => '-am - Anguilla',
+				'-an' => '-an - Andorra',
+				'-ao' => '-ao - Angola',
+				'-aq' => '-aq - Antigua and Barbuda',
+				'aru' => 'aru - Arkansas',
+				'-as' => '-as - American Samoa',
+				'-at' => '-at - Australia',
+				'-au' => '-au - Austria',
+				'-aw' => '-aw - Aruba',
+				'-ay' => '-ay - Antarctica',
+				'azu' => 'azu - Arizona',
+				'-ba' => '-ba - Bahrain',
+				'-bb' => '-bb - Barbados',
+				'bcc' => 'bcc - British Columbia',
+				'-bd' => '-bd - Burundi',
+				'-be' => '-be - Belgium',
+				'-bf' => '-bf - Bahamas',
+				'-bg' => '-bg - Bangladesh',
+				'-bh' => '-bh - Belize',
+				'-bi' => '-bi - British Indian Ocean Territory',
+				'-bl' => '-bl - Brazil',
+				'-bm' => '-bm- Bermuda Islands',
+				'-bn' => '-bn - Bosnia and Hercegovina',
+				'-bo' => '-bo - Bolivia',
+				'-bp' => '-bp - Solomon Islands',
+				'-br' => '-br - Burma',
+				'-bs' => '-bs - Botswana',
+				'-bt' => '-bt - Bhutan',
+				'-bu' => '-bu -Bulgaria',
+				'-bv' => '-bv - Bouvet Island',
+				'-bw' => '-bw - Belarus',
+				'bwr' => 'bwr - Byelorussian S.S.R.',
+				'-bx' => '-bx - Brunei',
+				'cau' => 'cau - California',
+				'-cb' => '-cb - Cambodia',
+				'-cc' => '-cc -China',
+				'-cd' => '-cd - Chad',
+				'-ce' => '-ce - Sri Lanka',
+				'-cf' => '-cf - Congo (Brazzaville)',
+				'-cg' => '-cg - Congo (Democratic Republic)',
+				'-ch' => '-ch - China (Republic : 1949- )',
+				'-ci' => '-ci - Croatia',
+				'-cj' => '-cj - Cayman Islands',
+				'-ck' => '-ck - Colombia',
+				'-cl' => '-cl - Chile',
+				'-cm' => '-cm - Cameroon',
+				'-cn' => '-cn - Canada',
+				'cou' => 'cou - Colorado',
+				'-cp' => '-cp - Canton and Enderbury Islands',
+				'-cq' => '-cq - Comoros',
+				'-cr' => '-cr - Costa Rica',
+				'-cs' => '-cs - Czechoslovakia',
+				'ctu' => 'ctu - Connecticut',
+				'-cu' => '-cu - Cuba',
+				'-cv' => '-cv - Cape Verde',
+				'-cw' => '-cw - Cook Islands',
+				'-cx' => '-cx - Central African Republic',
+				'-cy' => '-cy - Cyprus',
+				'-cz' => '-cz - Canal Zone',
+				'dcu' => 'dcu - District of Columbia',
+				'deu' => 'deu - Delaware',
+				'-dk' => '-dk - Denmark',
+				'-dm' => '-dm - Benin',
+				'-dq' => '-dq - Dominica',
+				'-dr' => '-dr - Dominican Republic',
+				'-ea' => '-ea - Eritrea',
+				'-ec' => '-ec - Ecuador',
+				'-eg' => '-eg - Equatorial Guinea',
+				'-em' => '-em - East Timor',
+				'enk' => 'enk - England',
+				'-er' => '-er - Estonia',
 				/*'err' => 'Estonia',*/
-				'-es' => 'El Salvador',
-				'-et' => 'Ethiopia',
-				'-fa' => 'Faroe Islands',
-				'-fg' => 'French Guiana',
-				'-fi' => 'Finland',
-				'-fj' => 'Fiji',
-				'-fk' => 'Falkland Islands',
-				'flu' => 'Florida',
-				'-fm' => 'Micronesia (Federated States)',
-				'-fp' => 'French Polynesia',
-				'-fr' => 'France',
-				'-fs' => 'Terres australes et antarctiques françaises',
-				'-ft' => 'Djibouti',
-				'gau' => 'GeorgiaCode Sequence',
-				'-gb' => 'Kiribati',
-				'-gd' => 'Grenada',
-				'-ge' => 'Germany (East)',
-				'-gh' => 'Ghana',
-				'-gi' => 'Gibraltar',
-				'-gl' => 'Greenland',
-				'-gm' => 'Gambia',
-				'-gn' => 'Gilbert and Ellice Islands',
-				'-go' => 'Gabon',
-				'-gp' => 'Guadeloupe',
-				'-gr' => 'Greece',
-				'-gs' => 'Georgia (Republic)',
-				'gsr' => 'Georgian S.S.R.',
-				'-gt' => 'Guatemala',
-				'-gu' => 'Guam',
-				'-gv' => 'Guinea',
-				'-gw' => 'Germany',
-				'-gy' => 'Guyana',
-				'-gz' => 'Gaza Strip',
-				'hiu' => 'Hawaii',
-				'-hk' => 'Hong Kong',
-				'-hm' => 'Heard and McDonald Islands',
-				'-ho' => 'Honduras',
-				'-ht' => 'Haiti',
-				'-hu' => 'Hungary',
-				'iau' => 'Iowa',
-				'-ic' => 'Iceland',
-				'idu' => 'Idaho',
-				'-ie' => 'Ireland',
-				'-ii' => 'India',
-				'ilu' => 'Illinois',
-				'inu' => 'Indiana',
-				'-io' => 'Indonesia',
-				'-iq' => 'Iraq',
-				'-ir' => 'Iran',
-				'-is' => 'Israel',
-				'-it' => 'Italy',
-				'-iu' => 'Israel-Syria Demilitarized Zones',
-				'-iv' => "Côte d’Ivoire",
-				'-iw' => 'Israel-Jordan Demilitarized Zones',
-				'-iy' => 'Iraq-Saudi Arabia Neutral Zone',
-				'-ja' => 'Japan',
-				'-ji' => 'Johnston Atoll',
-				'-jm' => 'Jamaica',
-				'-jn' => 'Jan Mayen',
-				'-jo' => 'Jordan',
-				'-ke' => 'Kenya',
-				'-kg' => 'Kyrgyzstan',
-				'kgr' => 'Kirghiz S.S.R.',
-				'-kn' => 'Korea (North)',
-				'-ko' => 'Korea (South)',
-				'ksu' => 'Kansas',
-				'-ku' => 'Kuwait',
-				'kyu' => 'Kentucky',
-				'-kz' => 'Kazakhstan',
-				'kzr' => 'Kazakh S.S.R.',
-				'lau' => 'Louisiana',
+				'-es' => '-es - El Salvador',
+				'-et' => '-et - Ethiopia',
+				'-fa' => '-fa - Faroe Islands',
+				'-fg' => '-fg - French Guiana',
+				'-fi' => '-fi - Finland',
+				'-fj' => '-fj - Fiji',
+				'-fk' => '-fk - Falkland Islands',
+				'flu' => 'flu - Florida',
+				'-fm' => '-fm - Micronesia (Federated States)',
+				'-fp' => '-fp - French Polynesia',
+				'-fr' => '-fr - France',
+				'-fs' => '-fs - Terres australes et antarctiques françaises',
+				'-ft' => '-ft - Djibouti',
+				'gau' => 'gau - GeorgiaCode Sequence',
+				'-gb' => '-gb - Kiribati',
+				'-gd' => '-gd - Grenada',
+				'-ge' => '-ge - Germany (East)',
+				'-gh' => '-gh - Ghana',
+				'-gi' => '-gi - Gibraltar',
+				'-gl' => '-gl - Greenland',
+				'-gm' => '-gm - Gambia',
+				'-gn' => '-gn - Gilbert and Ellice Islands',
+				'-go' => '-go - Gabon',
+				'-gp' => '-gp - Guadeloupe',
+				'-gr' => '-gr - Greece',
+				'-gs' => '-gs - Georgia (Republic)',
+				'gsr' => 'gsr - Georgian S.S.R.',
+				'-gt' => '-gt - Guatemala',
+				'-gu' => '-gu - Guam',
+				'-gv' => '-gv - Guinea',
+				'-gw' => '-gw - Germany',
+				'-gy' => '-gy - Guyana',
+				'-gz' => '-gz - Gaza Strip',
+				'hiu' => 'hiu - Hawaii',
+				'-hk' => '-hk - Hong Kong',
+				'-hm' => '-hm - Heard and McDonald Islands',
+				'-ho' => '-ho - Honduras',
+				'-ht' => '-ht - Haiti',
+				'-hu' => '-hu - Hungary',
+				'iau' => 'iau - Iowa',
+				'-ic' => '-ic - Iceland',
+				'idu' => 'idu - Idaho',
+				'-ie' => '-ie - Ireland',
+				'-ii' => '-ii - India',
+				'ilu' => 'ilu - Illinois',
+				'inu' => 'inu - Indiana',
+				'-io' => '-io - Indonesia',
+				'-iq' => '-iq - Iraq',
+				'-ir' => '-ir - Iran',
+				'-is' => '-is - Israel',
+				'-it' => '-it - Italy',
+				'-iu' => '-iu - Israel-Syria Demilitarized Zones',
+				'-iv' => "-iv - Côte d’Ivoire",
+				'-iw' => '-iw - Israel-Jordan Demilitarized Zones',
+				'-iy' => '-iy - Iraq-Saudi Arabia Neutral Zone',
+				'-ja' => '-ja - Japan',
+				'-ji' => '-ji - Johnston Atoll',
+				'-jm' => '-jm - Jamaica',
+				'-jn' => '-jn - Jan Mayen',
+				'-jo' => '-jo - Jordan',
+				'-ke' => '-ke - Kenya',
+				'-kg' => '-kg - Kyrgyzstan',
+				'kgr' => 'kgr - Kirghiz S.S.R.',
+				'-kn' => '-kn - Korea (North)',
+				'-ko' => '-ko - Korea (South)',
+				'ksu' => 'ksu - Kansas',
+				'-ku' => '-ku - Kuwait',
+				'kyu' => 'kyu -Kentucky',
+				'-kz' => '-kz - Kazakhstan',
+				'kzr' => 'kzr - Kazakh S.S.R.',
+				'lau' => 'lau - Louisiana',
 				'-lb' => 'Liberia',
-				'-le' => 'Lebanon',
-				'-lh' => 'Liechtenstein',
-				'-li' => 'Lithuania',
+				'-le' => '-lb - Lebanon',
+				'-lh' => '-lh - Liechtenstein',
+				'-li' => '-li - Lithuania',
 				/*'lir' => 'Lithuania',*/
-				'-ln' => 'Central and Southern Line Islands',
-				'-lo' => 'Lesotho',
-				'-ls' => 'Laos',
-				'-lu' => 'Luxembourg',
-				'-lv' => 'Latvia',
+				'-ln' => '-ln - Central and Southern Line Islands',
+				'-lo' => '-lo - Lesotho',
+				'-ls' => '-ls - Laos',
+				'-lu' => '-lu - Luxembourg',
+				'-lv' => '-lv - Latvia',
 				/*'lvr' => 'Latvia',*/
-				'-ly' => 'Libya',
-				'mau' => 'Massachusetts',
-				'mbc' => 'Manitoba',
-				'-mc' => 'Monaco',
-				'mdu' => 'Maryland',
-				'meu' => 'Maine',
-				'-mf' => 'Mauritius',
-				'-mg' => 'Madagascar',
-				'-mh' => 'Macao',
-				'miu' => 'Michigan',
-				'-mj' => 'Montserrat',
-				'-mk' => 'Oman',
-				'-ml' => 'Mali',
-				'-mm' => 'Malta',
-				'mnu' => 'Minnesota',
-				'mou' => 'Missouri',
-				'-mp' => 'Mongolia',
-				'-mq' => 'Martinique',
-				'-mr' => 'Morocco',
-				'msu' => 'Mississippi',
-				'mtu' => 'Montana',
-				'-mu' => 'Mauritania',
-				'-mv' => 'Moldova',
-				'mvr' => 'Moldavian S.S.R.',
-				'-mw' => 'Malawi',
-				'-mx' => 'Mexico',
-				'-my' => 'Malaysia',
-				'-mz' => 'Mozambique',
-				'-na' => 'Netherlands Antilles',
-				'nbu' => 'Nebraska',
-				'ncu' => 'North Carolina',
-				'ndu' => 'North Dakota',
-				'-ne' => 'Netherlands',
-				'nfc' => 'Newfoundland and Labrador',
-				'-ng' => 'Niger',
-				'nhu' => 'New Hampshire',
-				'nik' => 'Northern Ireland',
-				'nju' => 'New Jersey',
-				'nkc' => 'New Brunswick',
-				'-nl' => 'New CaledoniaCode Sequence',
-				'-nm' => 'Northern Mariana Islands',
-				'nmu' => 'New Mexico',
-				'-nn' => 'Vanuatu',
-				'-no' => 'Norway',
-				'-np' => 'Nepal',
-				'-nq' => 'Nicaragua',
-				'-nr' => 'Nigeria',
-				'nsc' => 'Nova Scotia',
-				'ntc' => 'Northwest Territories',
-				'-nu' => 'Nauru',
-				'nuc' => 'Nunavut',
-				'nvu' => 'Nevada',
-				'-nx' => 'Norfolk Island',
-				'nyu' => 'New York (State)',
-				'-nz' => 'New Zealand',
-				'ohu' => 'Ohio',
-				'oku' => 'Oklahoma',
-				'onc' => 'Ontario',
-				'oru' => 'Oregon',
-				'-ot' => 'Mayotte',
-				'pau' => 'Pennsylvania',
-				'-pc' => 'Pitcairn Island',
-				'-pe' => 'Peru',
-				'-pf' => 'Paracel Islands',
-				'-pg' => 'Guinea-Bissau',
-				'-ph' => 'Philippines',
-				'pic' => 'Prince Edward Island',
-				'-pk' => 'Pakistan',
-				'-pl' => 'Poland',
-				'-pn' => 'Panama',
-				'-po' => 'Portugal',
-				'-pp' => 'Papua New Guinea',
-				'-pr' => 'Puerto Rico',
-				'-pt' => 'Portuguese Timor',
-				'-pw' => 'Palau',
-				'-py' => 'Paraguay',
-				'-qa' => 'Qatar',
-				'quc' => 'Québec (Province)',
-				'-re' => 'Réunion',
-				'-rh' => 'Zimbabwe',
-				'riu' => 'Rhode Island',
-				'-rm' => 'Romania',
-				'-ru' => 'Russia (Federation)',
-				'rur' => 'Russian S.F.S.R.',
-				'-rw' => 'Rwanda',
-				'-ry' => 'Ryukyu Islands, Southern',
-				'-sa' => 'South Africa',
-				'-sb' => 'Svalbard',
-				'scu' => 'South Carolina',
-				'sdu' => 'South Dakota',
-				'-se' => 'Seychelles',
-				'-sf' => 'Sao Tome and Principe',
-				'-sg' => 'Senegal',
-				'-sh' => 'Spanish North Africa',
-				'-si' => 'Singapore',
-				'-sj' => 'Sudan',
-				'-sk' => 'Sikkim',
-				'-sl' => 'Sierra Leone',
-				'-sm' => 'San Marino',
-				'snc' => 'Saskatchewan',
-				'-so' => 'Somalia',
-				'-sp' => 'Spain',
-				'-sq' => 'Swaziland',
-				'-sr' => 'Surinam',
-				'-ss' => 'Western Sahara',
-				'stk' => 'Scotland',
-				'-su' => 'Saudi Arabia',
-				'-sv' => 'Swan Islands',
-				'-sw' => 'Sweden',
-				'-sx' => 'Namibia',
-				'-sy' => 'Syria',
-				'-sz' => 'Switzerland',
-				'-ta' => 'Tajikistan',
-				'tar' => 'Tajik S.S.R.',
-				'-tc' => 'Turks and Caicos Islands',
-				'-tg' => 'Togo',
-				'-th' => 'Thailand',
-				'-ti' => 'Tunisia',
-				'-tk' => 'Turkmenistan',
-				'tkr' => 'Turkmen S.S.R.',
-				'-tl' => 'Tokelau',
-				'tnu' => 'Tennessee',
-				'-to' => 'Tonga',
-				'-tr' => 'Trinidad and Tobago',
-				'-ts' => 'United Arab Emirates',
-				'-tt' => 'Trust Territory of the Pacific Islands',
-				'-tu' => 'Turkey',
-				'-tv' => 'Tuvalu',
-				'txu' => 'Texas',
-				'-tz' => 'Tanzania',
-				'-ua' => 'Egypt',
-				'-uc' => 'United States Misc. Caribbean Islands',
-				'-ug' => 'Uganda',
-				'-ui' => 'United Kingdom Misc. Islands',
+				'-ly' => '-ly - Libya',
+				'mau' => 'mau - Massachusetts',
+				'mbc' => 'mbc - Manitoba',
+				'-mc' => '-mc - Monaco',
+				'mdu' => 'mdu - Maryland',
+				'meu' => 'meu - Maine',
+				'-mf' => '-mf - Mauritius',
+				'-mg' => '-mg - Madagascar',
+				'-mh' => '-mh - Macao',
+				'miu' => 'miu - Michigan',
+				'-mj' => '-mj - Montserrat',
+				'-mk' => '-mk - Oman',
+				'-ml' => '-ml - Mali',
+				'-mm' => '-mm - Malta',
+				'mnu' => 'mnu - Minnesota',
+				'mou' => 'mou - Missouri',
+				'-mp' => '-mp - Mongolia',
+				'-mq' => '-mq - Martinique',
+				'-mr' => '-mr - Morocco',
+				'msu' => 'msu - Mississippi',
+				'mtu' => 'mtu - Montana',
+				'-mu' => '-mu - Mauritania',
+				'-mv' => '-mv - Moldova',
+				'mvr' => 'mvr - Moldavian S.S.R.',
+				'-mw' => '-mw - Malawi',
+				'-mx' => '-mx - Mexico',
+				'-my' => '-my - Malaysia',
+				'-mz' => '-mz - Mozambique',
+				'-na' => '-na - Netherlands Antilles',
+				'nbu' => 'nbu - Nebraska',
+				'ncu' => 'ncu - North Carolina',
+				'ndu' => 'ndu - North Dakota',
+				'-ne' => '-ne - Netherlands',
+				'nfc' => 'nfc - Newfoundland and Labrador',
+				'-ng' => '-ng - Niger',
+				'nhu' => 'nhu - New Hampshire',
+				'nik' => 'nik - Northern Ireland',
+				'nju' => 'nju - New Jersey',
+				'nkc' => 'nkc - New Brunswick',
+				'-nl' => '-nl - New CaledoniaCode Sequence',
+				'-nm' => '-nm - Northern Mariana Islands',
+				'nmu' => 'nmu - New Mexico',
+				'-nn' => '-nn - Vanuatu',
+				'-no' => '-no - Norway',
+				'-np' => '-np - Nepal',
+				'-nq' => '-nq - Nicaragua',
+				'-nr' => '-nr - Nigeria',
+				'nsc' => 'nsc - Nova Scotia',
+				'ntc' => 'ntc - Northwest Territories',
+				'-nu' => '-nu - Nauru',
+				'nuc' => 'nuc - Nunavut',
+				'nvu' => 'nvu - Nevada',
+				'-nx' => '-nx - Norfolk Island',
+				'nyu' => 'nyu - New York (State)',
+				'-nz' => '-nz - New Zealand',
+				'ohu' => 'ohu - Ohio',
+				'oku' => 'oku - Oklahoma',
+				'onc' => 'onc - Ontario',
+				'oru' => 'oru - Oregon',
+				'-ot' => '-ot - Mayotte',
+				'pau' => 'pau - Pennsylvania',
+				'-pc' => '-pc - Pitcairn Island',
+				'-pe' => '-pe - Peru',
+				'-pf' => '-pf - Paracel Islands',
+				'-pg' => '-pg - Guinea-Bissau',
+				'-ph' => '-ph - Philippines',
+				'pic' => 'pic - Prince Edward Island',
+				'-pk' => '-pk - Pakistan',
+				'-pl' => '-pl - Poland',
+				'-pn' => '-pn - Panama',
+				'-po' => '-po - Portugal',
+				'-pp' => '-pp - Papua New Guinea',
+				'-pr' => '-pr - Puerto Rico',
+				'-pt' => '-pt - Portuguese Timor',
+				'-pw' => '-pw - Palau',
+				'-py' => '-py - Paraguay',
+				'-qa' => '-qa - Qatar',
+				'quc' => 'quc - Québec (Province)',
+				'-re' => '-re - Réunion',
+				'-rh' => '-rh - Zimbabwe',
+				'riu' => 'riu - Rhode Island',
+				'-rm' => '-rm - Romania',
+				'-ru' => '-ru - Russia (Federation)',
+				'rur' => 'rur - Russian S.F.S.R.',
+				'-rw' => '-rw - Rwanda',
+				'-ry' => '-ry - Ryukyu Islands, Southern',
+				'-sa' => '-sa - South Africa',
+				'-sb' => '-sb - Svalbard',
+				'scu' => 'scu - South Carolina',
+				'sdu' => 'sdu - South Dakota',
+				'-se' => '-se - Seychelles',
+				'-sf' => '-sf - Sao Tome and Principe',
+				'-sg' => '-sg - Senegal',
+				'-sh' => '-sh - Spanish North Africa',
+				'-si' => '-si - Singapore',
+				'-sj' => '-sj - Sudan',
+				'-sk' => '-sk - Sikkim',
+				'-sl' => '-sl - Sierra Leone',
+				'-sm' => '-sm - San Marino',
+				'snc' => 'snc - Saskatchewan',
+				'-so' => '-so - Somalia',
+				'-sp' => '-sp - Spain',
+				'-sq' => '-sq - Swaziland',
+				'-sr' => '-sr - Surinam',
+				'-ss' => '-ss - Western Sahara',
+				'stk' => 'stk - Scotland',
+				'-su' => '-su - Saudi Arabia',
+				'-sv' => '-sv - Swan Islands',
+				'-sw' => '-sw - Sweden',
+				'-sx' => '-sx - Namibia',
+				'-sy' => '-sy - Syria',
+				'-sz' => '-sz - Switzerland',
+				'-ta' => '-ta - Tajikistan',
+				'tar' => 'tar - Tajik S.S.R.',
+				'-tc' => '-tc - Turks and Caicos Islands',
+				'-tg' => '-tg - Togo',
+				'-th' => '-th - Thailand',
+				'-ti' => '-ti - Tunisia',
+				'-tk' => '-tk - Turkmenistan',
+				'tkr' => 'tkr - Turkmen S.S.R.',
+				'-tl' => '-tl - Tokelau',
+				'tnu' => 'tnu - Tennessee',
+				'-to' => '-to - Tonga',
+				'-tr' => '-tr - Trinidad and Tobago',
+				'-ts' => '-ts - United Arab Emirates',
+				'-tt' => '-tt - Trust Territory of the Pacific Islands',
+				'-tu' => '-tu - Turkey',
+				'-tv' => '-tv - Tuvalu',
+				'txu' => 'txu - Texas',
+				'-tz' => '-tz - Tanzania',
+				'-ua' => '-ua - Egypt',
+				'-uc' => '-uc - United States Misc. Caribbean Islands',
+				'-ug' => '-ug - Uganda',
+				'-ui' => '-ui - United Kingdom Misc. Islands',
 				/*'uik' => 'United Kingdom Misc. Islands',*/
-				'-uk' => 'United Kingdom',
-				'-un' => 'Ukraine',
+				'-uk' => '-uk - United Kingdom',
+				'-un' => '-un - Ukraine',
 				/*'unr' => 'Ukraine',*/
-				'-up' => 'United States Misc. Pacific Islands',
-				'-ur' => 'Soviet Union',
-				'-us' => 'United States',
-				'utu' => 'Utah',
-				'-uv' => 'Burkina Faso',
-				'-uy' => 'Uruguay',
-				'-uz' => 'Uzbekistan',
-				'uzr' => 'Uzbek S.S.R.Code Sequence',
-				'vau' => 'Virginia',
-				'-vb' => 'British Virgin Islands',
-				'-vc' => 'Vatican City',
-				'-ve' => 'Venezuela',
-				'-vi' => 'Virgin Islands of the United States',
-				'-vm' => 'Vietnam',
-				'-vn' => 'Vietnam, North',
-				'-vp' => 'Various places',
-				'-vs' => 'Vietnam, South',
-				'vtu' => 'Vermont',
-				'wau' => 'Washington (State)',
-				'-wb' => 'West Berlin',
-				'-wf' => 'Wallis and Futuna',
-				'wiu' => 'Wisconsin',
-				'-wj' => 'West Bank of the Jordan River',
-				'-wk' => 'Wake Island',
-				'wlk' => 'Wales',
-				'-ws' => 'Samoa',
-				'wvu' => 'West Virginia',
-				'wyu' => 'Wyoming',
-				'-xa' => 'Christmas Island (Indian Ocean)',
-				'-xb' => 'Cocos (Keeling)Islands',
-				'-xc' => 'Maldives',
-				'-xd' => 'Saint Kitts-Nevis',
-				'-xe' => 'Marshall Islands',
-				'-xf' => 'Midway Islands',
-				'-xh' => 'Niue',
-				'-xi' => 'Saint Kitts-Nevis-Anguilla',
-				'-xj' => 'Saint Helena',
-				'-xk' => 'Saint Lucia',
-				'-xl' => 'Saint Pierre and Miquelon',
-				'-xm' => 'Saint Vincent and the Grenadines',
-				'-xn' => 'Macedonia',
-				'-xo' => 'Slovakia',
-				'-xp' => 'Spratly Island',
-				'-xr' => 'Czech Republic',
-				'-xs' => 'South Georgia and the South Sandwich Islands',
-				'-xv' => 'Slovenia',
-				'xxx' => 'No place, unknown, or undetermined',
+				'-up' => '-up - United States Misc. Pacific Islands',
+				'-ur' => '-ur - Soviet Union',
+				'-us' => '-us - United States',
+				'utu' => 'utu - Utah',
+				'-uv' => '-uv - Burkina Faso',
+				'-uy' => '-uy - Uruguay',
+				'-uz' => '-uz - Uzbekistan',
+				'uzr' => 'uzr - Uzbek S.S.R.Code Sequence',
+				'vau' => 'vau - Virginia',
+				'-vb' => '-vb - British Virgin Islands',
+				'-vc' => '-vc - Vatican City',
+				'-ve' => '-ve - Venezuela',
+				'-vi' => '-vi - Virgin Islands of the United States',
+				'-vm' => '-vm - Vietnam',
+				'-vn' => '-vn - Vietnam, North',
+				'-vp' => '-vp - Various places',
+				'-vs' => '-vs - Vietnam, South',
+				'vtu' => 'vtu - Vermont',
+				'wau' => 'wau - Washington (State)',
+				'-wb' => '-wb - West Berlin',
+				'-wf' => '-wf - Wallis and Futuna',
+				'wiu' => 'wiu - Wisconsin',
+				'-wj' => '-wj - West Bank of the Jordan River',
+				'-wk' => '-wk - Wake Island',
+				'wlk' => 'wlk - Wales',
+				'-ws' => '-ws - Samoa',
+				'wvu' => 'wvu - West Virginia',
+				'wyu' => 'wyu - Wyoming',
+				'-xa' => '-xa - Christmas Island (Indian Ocean)',
+				'-xb' => '-xb - Cocos (Keeling)Islands',
+				'-xc' => '-xc - Maldives',
+				'-xd' => '-xd - Saint Kitts-Nevis',
+				'-xe' => '-xe - Marshall Islands',
+				'-xf' => '-xf - Midway Islands',
+				'-xh' => '-xh - Niue',
+				'-xi' => '-xi - Saint Kitts-Nevis-Anguilla',
+				'-xj' => '-xj - Saint Helena',
+				'-xk' => '-xk - Saint Lucia',
+				'-xl' => '-xl - Saint Pierre and Miquelon',
+				'-xm' => '-xm - Saint Vincent and the Grenadines',
+				'-xn' => '-xn - Macedonia',
+				'-xo' => '-xo - Slovakia',
+				'-xp' => '-xp - Spratly Island',
+				'-xr' => '-xr - Czech Republic',
+				'-xs' => '-xs - South Georgia and the South Sandwich Islands',
+				'-xv' => '-xv - lovenia',
+				'xxx' => 'xxx - No place, unknown, or undetermined',
 				/*'xxc' => 'Canada',
 				'xxk' => 'United Kingdom',*/
 				/*'xxr' => 'Soviet Union',*/
 				/*'xxu' => 'United States',*/
-				'-ye' => 'Yemen',
-				'ykc' => 'Yukon Territory',
-				'-ys' => 'Yemen (People’s Democratic Republic)',
-				'-yu' => 'Serbia and Montenegro',
-				'-za' => 'Zambia'
+				'-ye' => '-ye - Yemen',
+				'ykc' => 'Ykc - ukon Territory',
+				'-ys' => '-ys - Yemen (People’s Democratic Republic)',
+				'-yu' => '-yu - Serbia and Montenegro',
+				'-za' => '-za - Zambia'
 			), 'default' => 'xxx'
 		)); ?></td>
 	</tr>
 	<tr>
-		<td><b>008 [18]</b></td>
-		<td>Periodicidad.</td>
-		<td><?php echo $this->Form->input('008-18', array('id' => '008-18', 'label' => false, 'class' => 'form-control', 'div' => false, 
-			'options' => array(
-				'#' => '# - Periodicidad no determinada',
-				'a' => 'a - Anual',
-				'b' => 'b - Bimestral',
-				'c' => 'c - Bisemanal',
-				'd' => 'd - Diaria',
-				'e' => 'e - Bimensual',
-				'f' => 'f - Semestral',
-				'g' => 'g - Bienal',
-				'h' => 'h - Trienal',
-				'j' => 'j - Trimensual',
-				'k' => 'k - Actualizado de forma continuada',
-				'm' => 'm - Mensual',
-				'q' => 'q - Trimestral',
-				's' => 's - Quincenal',
-				't' => 't - Cuatrimestral',
-				'u' => 'u - Desconocido',
-				'w' => 'w - Semanal',
-				'z' => 'z - Otro',
-				'|' => '| - No se utiliza'
-			)
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>008 [19]</b></td>
-		<td>Regularidad.</td>
-		<td><?php echo $this->Form->input('008-19', array('id' => '008-19', 'label' => false, 'class' => 'form-control', 'div' => false,
-			'options' => array(
-				'n' => 'n - Irregular normalizada',
-				'r' => 'r - Regular',
-				'u' => 'u - Desconocida',
-				'x' => 'x - Completamente irregular',
-				'|' => '| - No se utiliza'
-			)
-		)); ?></td>
-	</tr>
+		<td nowrap="nowrap"><b>008 [18-19]</b></td>
+		<td>Forma de la composición.</td>
+		<td><?php echo $this->Form->input('008-18-19', array('id' => '008-18-19', 'label' => false, 'class' => 'form-control', 'div' => false,
+		'options' => array(
+				'an' => 'an - Antífonas',
+				'bd' => 'bd - Baladas',
+				'bg' => 'bg - Bluegrass',
+				'bl' => 'bl - Blues',
+				'bt' => 'bt - Ballets',
+				'ca' => 'ca - Chaconas',
+				'cb' => 'cb - Cantos, otras religiones',
+				'cc' => 'cc - Cantos cristianos',
+				'cg' => 'cg - Concerti grossi',
+				'ch' => 'ch - Corales',
+				'cl' => 'cl - Preludios corales',
+				'cn' => 'cn - Cánones',
+				'co' => 'co - Conciertos',
+				'cp' => 'cp - Polifonías',
+				'cr' => 'cr - Canciones de navidad',
+				'cs' => 'cs - Música aleatoria',
+				'ct' => 'ct - Cantatas',
+				'cy' => 'cy - Música country',
+				'cz' => 'cz - Canzonas',
+				'df' => 'df - Bailes',
+				'dv' => 'dv - Divertimentos, serenatas, casaciones o nocturnos',
+				'fg' => 'fg - Fugas',
+				'fl' => 'fl- Flamenco',
+				'fm' => 'fm - Música popular',
+				'ft' => 'ft - Fantasías',
+				'gm' => 'gm - Música gospel',
+				'hy' => 'hy - Himnos',
+				'jz' => 'jz - Jazz',
+				'mc' => 'mc - Revistas y comedias musicales',
+				'md' => 'md - Madrigales',
+				'mi' => 'mi - Minuetos',
+				'mo' => 'mo - Motetes',
+				'mp' => 'mp - Música para cine',
+				'mr' => 'mr - Marchas',
+				'ms' => 'ms - Misas',
+				'mu' => 'mu - Varias formas musicales',
+				'mz' => 'mz - Mazurcas',
+				'nc' => 'nc - Nocturnos',
+				'nn' => 'nn - No aplicable',
+				'op' => 'op - Óperas',
+				'or' => 'or - Oratorios',
+				'ov' => 'ov - Oberturas',
+				'pg' => 'pg - Música de programa',
+				'po' => 'po - Polonesas',
+				'pp' => 'pp - Música ligera',
+				'pr' => 'pr - Preludios',
+				'ps' => 'ps - Pasacalles',
+				'pt' => 'pt - Cantos polifónicos',
+				'pv' => 'pv - Pavanas',
+				'rc' => 'rc - Música rock',
+				'rd' => 'rd - Rondós',
+				'rg' => 'rg - Ragtime',
+				'ri' => 'ri - Ricercares',
+				'rp' => 'rp - Rapsodias',
+				'rq' => 'rq - Requiems',
+				'sd' => 'sd - Música de baile',
+				'sg' => 'sg - Canciones',
+				'sn' => 'sn - Sonatas',
+				'sp' => 'sp - Poemas sinfónicos',
+				'st' => 'st - Estudios y ejercicios',
+				'su' => 'su - Suites',
+				'sy' => 'sy - Sinfonías',
+				'tc' => 'tc - Tocatas',
+				'tl' => 'tl - Teatro lírico',
+				'ts' => 'ts - Trío-sonatas',
+				'uu' => 'uu - Desconocido',
+				'vi' => 'vi - Villancicos',
+				'vr' => 'vr - Variaciones',
+				'wz' => 'wz - Valses',
+				'za' => 'za - Zarzuelas',
+				'zz' => 'zz - Otro',
+				'||' => '|| - No se utiliza'
+				)
+			)); ?></td>
+	</tr>	
+		
 	<tr>
 		<td><b>008 [20]</b></td>
-		<td>No definida.</td>
+		<td>Formato de música.</td>
 		<td><?php echo $this->Form->input('008-20', array('id' => '008-20', 'label' => false, 'class' => 'form-control', 'div' => false,
 			'options' => array(
-				'#' => '# - No definida'
+				'a' => 'a - Partitura',
+					'b' => 'b - Partitura de estudio o miniatura',
+					'c' => 'c - Acompañamiento reducido para teclado',
+					'd' => 'd - Partitura vocal',
+					'e' => 'e - Guión o Partitura de piano director',
+					'g' => 'g - Partitura abreviada',
+					'h' => 'h - Partitura de coro',
+					'i' => 'i - Partitura condensada',
+					'j' => 'j - Parte para intérprete director',
+					'm' => 'm - Múltiples formatos',
+					'n' => 'n - No aplicable',
+					'u' => 'u - Desconocido',
+					'z' => 'z - Otro',
+					'|' => '| - No se utiliza'
 			)
 		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>008 [21]</b></td>
-		<td>Tipo de recurso continuado.</td>
+		<td>Partes musicales.</td>
 		<td><?php echo $this->Form->input('008-21', array('id' => '008-21', 'label' => false, 'class' => 'form-control', 'div' => false,
 			'options' => array(
-				'#' => '# - Ninguno de los siguientes',
-				'd' => 'd - Base de datos actualizable',
-				'l' => 'l - Hojas sueltas actualizables',
-				'm' => 'm - Serie monográfica',
-				'n' => 'n - Periódico',
-				'p' => 'p - Revista',
-				'w' => 'w - Sitio web actualizable',
+				'#' => '# - No se dispone de partes o no están
+especificadas',
+				'd' => 'd - Partes intrumentales y vocales',
+				'e' => 'e - Partes instrumentales',
+				'f' => 'f - Partes vocales',
+				'n' => 'n - No aplicable',
+				'u' => 'u - Desconocido',
+				'|' => '| - No se utiliza'
+			)
+		)); ?></td>
+	</tr>
+	
+		<tr>
+		<td><b>008 [24-29]</b></td>
+		<td>Material anejo.</td>
+		<td><?php echo $this->Form->input('008-24-29', array('id' => '008-24-29', 'label' => false, 'class' => 'form-control', 'div' => false,
+			'options' => array(
+				'#' => '# - No hay material anejo',
+				'a' => 'a - Discografía',
+				'b' => 'b - Bibliografía',
+				'c' => 'c - Índice temático',
+				'd' => 'd - Libreto o texto',
+				'e' => 'e - Biografía del compositor o autor',
+				'f' => 'f - Biografía del intérprete o historia del grupo musical o del conjunto orquestal',
+				'g' => 'g - Características técnicas y/o históricas sobre los instrumentos',
+				'h' => 'h - Características técnicas sobre la música',
+				'i' => 'i - Información histórica',
+				'k' => 'k - Información etnológica',
+				'r' => 'r - Material didáctico',
+				's' => 's - Música',
+				'z' => 'z - Otro',
 				'|' => '| - No se utiliza'
 			)
 		)); ?></td>
@@ -701,512 +793,512 @@ th {
 		<td>Lengua.</td>
 		<td><?php echo $this->Form->input('008-35-37', array('id' => '008-35-37', 'label' => false, 'class' => 'form-control', 'div' => false,
 			'options' => array(
-				'aar' => 'Afar',
-				'abk' => 'Abkhaz',
-				'ace' => 'Achinese',
-				'ach' => 'Acoli',
-				'ada' => 'Adangme',
-				'ady' => 'Adygei',
-				'afa' => 'Afroasiatic (Other)',
-				'afh' => 'Afrihili (Artificial language)',
-				'afr' => 'Afrikaans',
-				'ain' => 'Ainu',
-				'ajm' => 'Aljamía',
-				'aka' => 'Akan',
-				'akk' => 'Akkadian',
-				'alb' => 'Albanian',
-				'ale' => 'Aleut',
-				'alg' => 'Algonquian (Other)',
-				'alt' => 'Altai',
-				'amh' => 'Amharic',
-				'ang' => 'English, Old (ca. 450-1100)',
-				'anp' => 'Angika',
-				'apa' => 'Apache languages',
-				'ara' => 'Arabic',
-				'arc' => 'Aramaic',
-				'arg' => 'Aragonese Spanish',
-				'arm' => 'Armenian',
-				'arn' => 'Mapuche',
-				'arp' => 'Arapaho',
-				'art' => 'Artificial (Other)',
-				'arw' => 'Arawak',
-				'asm' => 'Assamese',
-				'ast' => 'Bable',
-				'ath' => 'Athapascan (Other)',
-				'aus' => 'Australian languages',
-				'ava' => 'Avaric',
-				'ave' => 'Avestan',
-				'awa' => 'Awadhi',
-				'aym' => 'Aymara',
-				'aze' => 'Azerbaijani',
-				'bad' => 'Banda languages',
-				'bai' => 'Bamileke languages',
-				'bak' => 'Bashkir',
-				'bal' => 'Baluchi',
-				'bam' => 'Bambara',
-				'ban' => 'Balinese',
-				'baq' => 'Basque',
-				'bas' => 'Basa',
-				'bat' => 'Baltic (Other)',
-				'bej' => 'Beja',
-				'bel' => 'Belarusian',
-				'bem' => 'Bemba',
-				'ben' => 'Bengali',
-				'ber' => 'Berber (Other)',
-				'bho' => 'Bhojpuri',
-				'bih' => 'Bihari',
-				'bik' => 'Bikol',
-				'bin' => 'Edo',
-				'bis' => 'Bislama',
-				'bla' => 'Siksika',
-				'bnt' => 'Bantu (Other)',
-				'bos' => 'Bosnian',
-				'bra' => 'Braj',
-				'bre' => 'Breton',
-				'btk' => 'Batak',
-				'bua' => 'Buriat',
-				'bug' => 'Bugis',
-				'bul' => 'Bulgarian',
-				'bur' => 'Burmese',
-				'byn' => 'Bilin',
-				'cad' => 'Caddo',
-				'cai' => 'Central American Indian (Other)',
-				'cam' => 'Khmer',
-				'car' => 'Carib',
-				'cat' => 'Catalan',
-				'cau' => 'Caucasian (Other)',
-				'ceb' => 'Cebuano',
-				'cel' => 'Celtic (Other)',
-				'cha' => 'Chamorro',
-				'chb' => 'Chibcha',
-				'che' => 'Chechen',
-				'chg' => 'Chagatai',
-				'chi' => 'Chinese',
-				'chk' => 'Chuukese',
-				'chm' => 'Mari',
-				'chn' => 'Chinook jargon',
-				'cho' => 'Choctaw',
-				'chp' => 'Chipewyan',
-				'chr' => 'Cherokee',
-				'chu' => 'Church Slavic',
-				'chv' => 'Chuvash',
-				'chy' => 'Cheyenne',
-				'cmc' => 'Chamic languages',
-				'cop' => 'Coptic',
-				'cor' => 'Cornish',
-				'cos' => 'Corsican',
-				'cpe' => 'Creoles and Pidgins, French-based (Other)',
-				'cpf' => 'Creoles and Pidgins, Portuguese-based (Other)',
-				'cre' => 'Cree',
-				'crh' => 'Crimean Tatar',
-				'crp' => 'Creoles and Pidgins (Other)',
-				'csb' => 'Kashubian',
-				'cus' => 'Cushitic (Other)',
-				'cze' => 'Czech',
-				'dak' => 'Dakota',
-				'dan' => 'Danish',
-				'dar' => 'Dargwa',
-				'day' => 'Dayak',
-				'del' => 'Delaware',
-				'den' => 'Slave',
-				'dgr' => 'Dogrib',
-				'din' => 'Dinka',
-				'div' => 'Divehi',
-				'doi' => 'Dogri',
-				'dra' => 'Dravidian (Other)',
-				'dsb' => 'Lower Sorbian',
-				'dua' => 'Duala',
-				'dum' => 'Dutch, Middle (ca. 1050-1350)',
-				'dut' => 'Dutch',
-				'dyu' => 'Dyula',
-				'dzo' => 'Dzongkha',
-				'efi' => 'Efik',
-				'egy' => 'Egyptian',
-				'eka' => 'Ekajuk',
-				'elx' => 'Elamite',
-				'eng' => 'English',
-				'enm' => 'English, Middle (1100-1500)',
-				'epo' => 'Esperanto',
-				'esk' => 'Eskimo languages',
-				'esp' => 'Esperanto',
-				'est' => 'Estonian',
-				'eth' => 'Ethiopic',
-				'ewe' => 'Ewe',
-				'ewo' => 'Ewondo',
-				'fan' => 'Fang',
-				'fao' => 'Faroese',
-				'far' => 'Faroese',
-				'fat' => 'Fanti',
-				'fij' => 'Fijian',
-				'fil' => 'Filipino',
-				'fin' => 'Finnish',
-				'fiu' => 'Finno-Ugrian (Other)',
-				'fon' => 'Fon',
-				'fre' => 'French',
-				'fri' => 'Frisian',
-				'frm' => 'French, Middle (ca. 1300-1600)',
-				'fro' => 'French, Old (ca. 842-1300)',
-				'frr' => 'North Frisian',
-				'frs' => 'East Frisian',
-				'fry' => 'Frisian',
-				'ful' => 'Fula',
-				'fur' => 'Friulian',
-				'gaa' => 'Gã',
-				'gae' => 'Scottish Gaelix',
-				'gag' => 'Galician',
-				'gal' => 'Oromo',
-				'gay' => 'Gayo',
-				'gba' => 'Gbaya',
-				'gem' => 'Germanic (Other)',
-				'geo' => 'Georgian',
-				'ger' => 'German',
-				'gez' => 'Ethiopic',
-				'gil' => 'Gilbertese',
-				'gla' => 'Scottish Gaelic',
-				'gle' => 'Irish',
-				'glg' => 'Galician',
-				'glv' => 'Manx',
-				'gmh' => 'German, Middle High (ca. 1050-1500)',
-				'goh' => 'German, Old High (ca. 750-1050)',
-				'gon' => 'Gondi',
-				'gor' => 'Gorontalo',
-				'got' => 'Gothic',
-				'grb' => 'Grebo',
-				'grc' => 'Greek, Ancient (to 1453)',
-				'gre' => 'Greek, Modern (1453- )',
-				'grn' => 'Guarani',
-				'gsw' => 'Swiss German',
-				'gua' => 'Guarani',
-				'guj' => 'Gujarati',
-				'gwi' => "Gwich'in",
-				'hai' => 'Haida',
-				'hat' => 'Haitian French Creole',
-				'hau' => 'Hausa',
-				'haw' => 'Hawaiian',
-				'heb' => 'Hebrew',
-				'her' => 'Herero',
-				'hil' => 'Hiligaynon',
-				'him' => 'Himachali',
-				'hin' => 'Hindi',
-				'hit' => 'Hittite',
-				'hmn' => 'Hmong',
-				'hmo' => 'Hiri Motu',
-				'hsb' => 'Upper Sorbian',
-				'hun' => 'Hungarian',
-				'iba' => 'Iban',
-				'ibo' => 'Igbo',
-				'ice' => 'Icelandic',
-				'ido' => 'Ido',
-				'iii' => 'Sichuan Yi',
-				'ijo' => 'Ijo',
-				'iku' => 'Inuktitut',
-				'ile' => 'Interlingue',
-				'ilo' => 'Iloko',
-				'inc' => 'Indic (Other)',
-				'ind' => 'Indonesian',
-				'ine' => 'Indo-European (Other)',
-				'inh' => 'Ingush',
-				'ipk' => 'Inupiaq',
-				'ira' => 'Iranian (Other)',
-				'iri' => 'Irish',
-				'iro' => 'Iroquoian (Other)',
-				'ita' => 'Italian',
-				'jav' => 'Javanese',
-				'jbo' => 'Lojban (Artificial language)',
-				'jpn' => 'Japanese',
-				'jpr' => 'Judeo-Persian',
-				'jrb' => 'Judeo-Arabic',
-				'kaa' => 'Kara-Kalpak',
-				'kab' => 'Kabyle',
-				'kac' => 'Kachin',
-				'kal' => 'Kalâtdlisut',
-				'kam' => 'Kamba',
-				'kan' => 'Kannada',
-				'kar' => 'Karen languages',
-				'kas' => 'Kashmiri',
-				'kau' => 'Kanuri',
-				'kaw' => 'Kawi',
-				'kaz' => 'Kazakh',
-				'kbd' => 'Kabardian',
-				'kha' => 'Khasi',
-				'khi' => 'Khoisan (Other)',
-				'khm' => 'Khmer',
-				'kho' => 'Khotanese',
-				'kik' => 'Kikuyu',
-				'kin' => 'Kinyarwanda',
-				'kir' => 'Kyrgyz',
-				'kmb' => 'Kimbundu',
-				'kok' => 'Konkani',
-				'kom' => 'Komi',
-				'kon' => 'Kongo',
-				'kor' => 'Korean',
-				'kos' => 'Kusaie',
-				'kpe' => 'Kpelle',
-				'krc' => 'Karachay-Balkar',
-				'krl' => 'Karelian',
-				'kro' => 'Kru (Other)',
-				'kru' => 'Kurukh',
-				'kua' => 'Kuanyama',
-				'kum' => 'Kumyk',
-				'kur' => 'Kurdish',
-				'kus' => 'Kusaie',
-				'kut' => 'Kootenai',
-				'lad' => 'Ladino',
-				'lah' => 'Lahndā',
-				'lam' => 'Lamba (Zambia and Congo)',
-				'lan' => 'Occitan (post 1500)',
-				'lao' => 'Lao',
-				'lap' => 'Sami',
-				'lat' => 'Latin',
-				'lav' => 'Latvian',
-				'lez' => 'Lezgian',
-				'lim' => 'Limburgish',
-				'lin' => 'Lingala',
-				'lit' => 'Lithuanian',
-				'lol' => 'Mongo-Nkundu',
-				'loz' => 'Lozi',
-				'ltz' => 'Luxembourgish',
-				'lua' => 'Luba-Lulua',
-				'lub' => 'Luba-Katanga',
-				'lug' => 'Ganda',
-				'lui' => 'Luiseño',
-				'lun' => 'Lunda',
-				'luo' => 'Luo (Kenya and Tanzania)',
-				'lus' => 'Lushai',
-				'mac' => 'Macedonian',
-				'mad' => 'Madurese',
-				'mag' => 'Magahi',
-				'mah' => 'Marshallese',
-				'mai' => 'Maithili',
-				'mak' => 'Makasar',
-				'mal' => 'Malayalam',
-				'man' => 'Mandingo',
-				'mao' => 'Maori',
-				'map' => 'Austronesian (Other)',
-				'mar' => 'Marathi',
-				'mas' => 'Masai',
-				'max' => 'Manx',
-				'may' => 'Malay',
-				'mdf' => 'Moksha',
-				'mdr' => 'Mandar',
-				'men' => 'Mende',
-				'mic' => 'Micmac',
-				'min' => 'Minangkabau',
-				'mis' => 'Miscellaneous languages',
-				'mkh' => 'Mon-Khmer (Other)',
-				'mla' => 'Malagasy',
-				'mlg' => 'Malagasy',
-				'mlt' => 'Maltese',
-				'mnc' => 'Manchu',
-				'mni' => 'Manipuri',
-				'mno' => 'Manobo languages',
-				'moh' => 'Mohawk',
-				'mol' => 'Moldavian',
-				'mon' => 'Mongolian',
-				'mos' => 'Mooré',
-				'mul' => 'Multiple languages',
-				'mun' => 'Munda (Other)',
-				'mus' => 'Creek',
-				'mwl' => 'Mirandese',
-				'mwr' => 'Marwari',
-				'myn' => 'Mayan languages',
-				'myv' => 'Erzya',
-				'nah' => 'Nahuatl',
-				'nai' => 'North American Indian (Other)',
-				'nap' => 'Neapolitan Italian',
-				'nau' => 'Nauru',
-				'nav' => 'Navajo',
-				'nbl' => 'Ndebele (South Africa)',
-				'nde' => 'Ndebele (Zimbabwe)',
-				'ndo' => 'Ndonga',
-				'nds' => 'Low German',
-				'nep' => 'Nepali',
-				'new' => 'Newari',
-				'nia' => 'Nias',
-				'nic' => 'Niger-Kordofanian (Other)',
-				'niu' => 'Niuean',
-				'nno' => 'Norwegian (Nynorsk)',
-				'nob' => 'Norwegian (Bokmål)',
-				'nog' => 'Nogai',
-				'non' => 'Old Norse',
-				'nor' => 'Norwegian',
-				'nqo' => "N'Ko",
-				'nso' => 'Northern Sotho',
-				'nub' => 'Nubian languages',
-				'nwc' => 'Newari, Old',
-				'nya' => 'Nyanja',
-				'nym' => 'Nyamwezi',
-				'nyn' => 'Nyankole',
-				'nyo' => 'Nyoro',
-				'nzi' => 'Nzima',
-				'oci' => 'Occitan (post 1500)',
-				'oji' => 'Ojibwa',
-				'ori' => 'Oriya',
-				'orm' => 'Oromo',
-				'osa' => 'Osage',
-				'oss' => 'Ossetic',
-				'ota' => 'Turkish, Ottoman',
-				'oto' => 'Otomian languages',
-				'paa' => 'Papuan (Other)',
-				'pag' => 'Pangasinan',
-				'pal' => 'Pahlavi',
-				'pam' => 'Pampanga',
-				'pan' => 'Panjabi',
-				'pap' => 'Papiamento',
-				'pau' => 'Palauan',
-				'peo' => 'Old Persian (ca. 600-400 B.C.)',
-				'per' => 'Persian',
-				'phi' => 'Philippine (Other)',
-				'phn' => 'Phoenician',
-				'pli' => 'Pali',
-				'pol' => 'Polish',
-				'pon' => 'Ponape',
-				'por' => 'Portuguese',
-				'pra' => 'Prakrit languages',
-				'pro' => 'Provençal (to 1500)',
-				'pus' => 'Pushto',
-				'que' => 'Quechua',
-				'raj' => 'Rajasthani',
-				'rap' => 'Rapanui',
-				'rar' => 'Rarotongan',
-				'roa' => 'Romance (Other)',
-				'roh' => 'Raeto-Romance',
-				'rom' => 'Romani',
-				'rum' => 'Romanian',
-				'run' => 'Rundi',
-				'rup' => 'Aromanian',
-				'rus' => 'Russian',
-				'sad' => 'Sandawe',
-				'sag' => 'Sango (Ubangi Creole)',
-				'sah' => 'Yakut',
-				'sai' => 'South American Indian (Other)',
-				'sal' => 'Salishan languages',
-				'sam' => 'Samaritan Aramaic',
-				'san' => 'Sanskrit',
-				'sao' => 'Samoan',
-				'sas' => 'Sasak',
-				'sat' => 'Santali',
-				'scc' => 'Serbian',
-				'scn' => 'Sicilian Italian',
-				'sco' => 'Scots',
-				'scr' => 'Croatian',
-				'sel' => 'Selkup',
-				'sga' => 'Irish, Old (to 1100)',
-				'sgn' => 'Sign languages',
-				'shn' => 'Shan',
-				'sho' => 'Shona',
-				'sid' => 'Sidamo',
-				'sin' => 'Sinhalese',
-				'sio' => 'Siouan (Other)',
-				'sit' => 'Sino-Tibetan (Other)',
-				'sla' => 'Slavic (Other)',
-				'slo' => 'Slovak',
-				'slv' => 'Slovenian',
-				'sma' => 'Southern Sami',
-				'sme' => 'Northern Sami',
-				'smi' => 'Sami',
-				'smj' => 'Lule Sami',
-				'smn' => 'Inari Sami',
-				'smo' => 'Samoan',
-				'sms' => 'Skolt Sami',
-				'sna' => 'Shona',
-				'snd' => 'Sindhi',
-				'snh' => 'Sinhalese',
-				'snk' => 'Soninke',
-				'sog' => 'Sogdian',
-				'som' => 'Somali',
-				'son' => 'Songhai',
-				'sot' => 'Sotho',
-				'spa' => 'Spanish',
-				'srd' => 'Sardinian',
-				'srn' => 'Sranan',
-				'srr' => 'Serer',
-				'ssa' => 'Nilo-Saharan (Other)',
-				'sso' => 'Sotho',
-				'ssw' => 'Swazi',
-				'suk' => 'Sukuma',
-				'sun' => 'Sundanese',
-				'sus' => 'Susu',
-				'sux' => 'Sumerian',
-				'swa' => 'Swahili',
-				'swe' => 'Swedish',
-				'swz' => 'Swazi',
-				'syc' => 'Syriac',
-				'syr' => 'Syriac, Modern',
-				'tag' => 'Tagalog',
-				'tah' => 'Tahitian',
-				'tai' => 'Tai (Other)',
-				'taj' => 'Tajik',
-				'tam' => 'Tamil',
-				'tar' => 'Tatar',
-				'tat' => 'Tatar',
-				'tel' => 'Telugu',
-				'tem' => 'Temne',
-				'ter' => 'Terena',
-				'tet' => 'Tetum',
-				'tgk' => 'Tajik',
-				'tgl' => 'Tagalog',
-				'tha' => 'Thai',
-				'tib' => 'Tibetan',
-				'tig' => 'Tigré',
-				'tir' => 'Tigrinya',
-				'tiv' => 'Tiv',
-				'tkl' => 'Tokelauan',
-				'tlh' => 'Klingon (Artificial language)',
-				'tli' => 'Tlingit',
-				'tmh' => 'Tamashek',
-				'tog' => 'Tonga (Nyasa)',
-				'ton' => 'Tongan',
-				'tpi' => 'Tok Pisin',
-				'tru' => 'Truk',
-				'tsi' => 'Tsimshian',
-				'tsn' => 'Tswana',
-				'tso' => 'Tsonga',
-				'tsw' => 'Tswana',
-				'tuk' => 'Turkmen',
-				'tum' => 'Tumbuka',
-				'tup' => 'Tupi languages',
-				'tur' => 'Turkish',
-				'tut' => 'Altaic (Other)',
-				'tvl' => 'Tuvaluan',
-				'twi' => 'Twi',
-				'tyv' => 'Tuvinian',
-				'udm' => 'Udmurt',
-				'uga' => 'Ugaritic',
-				'uig' => 'Uighur',
-				'ukr' => 'Ukrainian',
-				'umb' => 'Umbundu',
-				'und' => 'Undetermined',
-				'urd' => 'Urdu',
-				'uzb' => 'Uzbek',
-				'vai' => 'Vai',
-				'ven' => 'Venda',
-				'vie' => 'Vietnamese',
-				'vol' => 'Volapük',
-				'vot' => 'Votic',
-				'wak' => 'Wakashan languages',
-				'wal' => 'Wolayta',
-				'war' => 'Waray',
-				'was' => 'Washo',
-				'wel' => 'Welsh',
-				'wen' => 'Sorbian (Other)',
-				'wln' => 'Walloon',
-				'wol' => 'Wolof',
-				'xho' => 'Xhosa',
-				'yao' => 'Yao (Africa)',
-				'yap' => 'Yapese',
-				'yid' => 'Yiddish',
-				'yor' => 'Yoruba',
-				'ypk' => 'Yupik languages',
-				'zap' => 'Zapotec',
-				'zbl' => 'Blissymbolics',
-				'zen' => 'Zenaga',
-				'zha' => 'Zhuang',
-				'znd' => 'Zande languages',
-				'zul' => 'Zulu',
-				'zun' => 'Zuni',
-				'zxx' => 'No linguistic content',
-				'zza' => 'Zaza'
+				'aar' => 'aar - Afar',
+				'abk' => 'abk - Abkhaz',
+				'ace' => 'ace - Achinese',
+				'ach' => 'ach - Acoli',
+				'ada' => 'ada - Adangme',
+				'ady' => 'ady - Adygei',
+				'afa' => 'afa - Afroasiatic (Other)',
+				'afh' => 'afh - Afrihili (Artificial language)',
+				'afr' => 'afr - Afrikaans',
+				'ain' => 'ain - Ainu',
+				'ajm' => 'ajm - Aljamía',
+				'aka' => 'aka - Akan',
+				'akk' => 'akk - Akkadian',
+				'alb' => 'alb - Albanian',
+				'ale' => 'ale - Aleut',
+				'alg' => 'alg - Algonquian (Other)',
+				'alt' => 'alt - Altai',
+				'amh' => 'amh - Amharic',
+				'ang' => 'ang - English, Old (ca. 450-1100)',
+				'anp' => 'anp - Angika',
+				'apa' => 'apa - Apache languages',
+				'ara' => 'ara - Arabic',
+				'arc' => 'arc - Aramaic',
+				'arg' => 'arg - Aragonese Spanish',
+				'arm' => 'arm - Armenian',
+				'arn' => 'arn - Mapuche',
+				'arp' => 'arp - Arapaho',
+				'art' => 'art - Artificial (Other)',
+				'arw' => 'arw - Arawak',
+				'asm' => 'asm - Assamese',
+				'ast' => 'ast - Bable',
+				'ath' => 'ath - Athapascan (Other)',
+				'aus' => 'aus - Australian languages',
+				'ava' => 'ava - Avaric',
+				'ave' => 'ave - Avestan',
+				'awa' => 'awa - Awadhi',
+				'aym' => 'aym - Aymara',
+				'aze' => 'aze - Azerbaijani',
+				'bad' => 'bad - Banda languages',
+				'bai' => 'bai - Bamileke languages',
+				'bak' => 'bak - Bashkir',
+				'bal' => 'bal - Baluchi',
+				'bam' => 'bam - Bambara',
+				'ban' => 'ban - Balinese',
+				'baq' => 'baq - Basque',
+				'bas' => 'bas - Basa',
+				'bat' => 'bat - Baltic (Other)',
+				'bej' => 'bej - Beja',
+				'bel' => 'bel - Belarusian',
+				'bem' => 'bem - Bemba',
+				'ben' => 'ben - Bengali',
+				'ber' => 'ber - Berber (Other)',
+				'bho' => 'bho - Bhojpuri',
+				'bih' => 'bih - Bihari',
+				'bik' => 'bik - Bikol',
+				'bin' => 'bin - Edo',
+				'bis' => 'bis - Bislama',
+				'bla' => 'bla - Siksika',
+				'bnt' => 'bnt - Bantu (Other)',
+				'bos' => 'bos - Bosnian',
+				'bra' => 'bra - Braj',
+				'bre' => 'bre - Breton',
+				'btk' => 'btk - Batak',
+				'bua' => 'bua - Buriat',
+				'bug' => 'bug - Bugis',
+				'bul' => 'bul - Bulgarian',
+				'bur' => 'bur - Burmese',
+				'byn' => 'byn - Bilin',
+				'cad' => 'cad - Caddo',
+				'cai' => 'cai - Central American Indian (Other)',
+				'cam' => 'cam - Khmer',
+				'car' => 'car - Carib',
+				'cat' => 'cat - Catalan',
+				'cau' => 'cau - Caucasian (Other)',
+				'ceb' => 'ceb - Cebuano',
+				'cel' => 'cel - Celtic (Other)',
+				'cha' => 'cha - Chamorro',
+				'chb' => 'chb - Chibcha',
+				'che' => 'che - Chechen',
+				'chg' => 'chg - Chagatai',
+				'chi' => 'chi - Chinese',
+				'chk' => 'chk - Chuukese',
+				'chm' => 'chm - Mari',
+				'chn' => 'chn - Chinook jargon',
+				'cho' => 'cho - Choctaw',
+				'chp' => 'chp - Chipewyan',
+				'chr' => 'chr - Cherokee',
+				'chu' => 'chu - Church Slavic',
+				'chv' => 'chv - Chuvash',
+				'chy' => 'chy - Cheyenne',
+				'cmc' => 'cmc - Chamic languages',
+				'cop' => 'cop - Coptic',
+				'cor' => 'cor - Cornish',
+				'cos' => 'cos - Corsican',
+				'cpe' => 'cpe - Creoles and Pidgins, French-based (Other)',
+				'cpf' => 'cpf - Creoles and Pidgins, Portuguese-based (Other)',
+				'cre' => 'cre - Cree',
+				'crh' => 'crh - Crimean Tatar',
+				'crp' => 'crp - Creoles and Pidgins (Other)',
+				'csb' => 'csb - Kashubian',
+				'cus' => 'cus - Cushitic (Other)',
+				'cze' => 'cze - Czech',
+				'dak' => 'dak - Dakota',
+				'dan' => 'dan - Danish',
+				'dar' => 'dar - Dargwa',
+				'day' => 'day - Dayak',
+				'del' => 'del - Delaware',
+				'den' => 'den - Slave',
+				'dgr' => 'dgr - Dogrib',
+				'din' => 'din - Dinka',
+				'div' => 'div - Divehi',
+				'doi' => 'doi - Dogri',
+				'dra' => 'dra - Dravidian (Other)',
+				'dsb' => 'dsb - Lower Sorbian',
+				'dua' => 'dua - Duala',
+				'dum' => 'dum - Dutch, Middle (ca. 1050-1350)',
+				'dut' => 'dut - Dutch',
+				'dyu' => 'dyu - Dyula',
+				'dzo' => 'dzo - Dzongkha',
+				'efi' => 'efi - Efik',
+				'egy' => 'egy - Egyptian',
+				'eka' => 'eka - Ekajuk',
+				'elx' => 'elx - Elamite',
+				'eng' => 'eng - English',
+				'enm' => 'enm - English, Middle (1100-1500)',
+				'epo' => 'epo - Esperanto',
+				'esk' => 'esk - Eskimo languages',
+				'esp' => 'esp - Esperanto',
+				'est' => 'est - Estonian',
+				'eth' => 'eth - Ethiopic',
+				'ewe' => 'ewe - Ewe',
+				'ewo' => 'ewo - Ewondo',
+				'fan' => 'fan - Fang',
+				'fao' => 'fao - Faroese',
+				'far' => 'far - Faroese',
+				'fat' => 'fat - Fanti',
+				'fij' => 'fij - Fijian',
+				'fil' => 'fil - Filipino',
+				'fin' => 'fin - Finnish',
+				'fiu' => 'fiu - Finno-Ugrian (Other)',
+				'fon' => 'fon - Fon',
+				'fre' => 'fre - French',
+				'fri' => 'fri - Frisian',
+				'frm' => 'frm - French, Middle (ca. 1300-1600)',
+				'fro' => 'fro - French, Old (ca. 842-1300)',
+				'frr' => 'frr - North Frisian',
+				'frs' => 'frs - East Frisian',
+				'fry' => 'fry - Frisian',
+				'ful' => 'ful - Fula',
+				'fur' => 'fur - Friulian',
+				'gaa' => 'gaa - Gã',
+				'gae' => 'gae - Scottish Gaelix',
+				'gag' => 'gag - Galician',
+				'gal' => 'gal - Oromo',
+				'gay' => 'gay - Gayo',
+				'gba' => 'gba - Gbaya',
+				'gem' => 'gem - Germanic (Other)',
+				'geo' => 'geo - Georgian',
+				'ger' => 'ger - German',
+				'gez' => 'gez - Ethiopic',
+				'gil' => 'gil - Gilbertese',
+				'gla' => 'gla - Scottish Gaelic',
+				'gle' => 'gle - Irish',
+				'glg' => 'glg - Galician',
+				'glv' => 'glv - Manx',
+				'gmh' => 'gmh - German, Middle High (ca. 1050-1500)',
+				'goh' => 'goh - German, Old High (ca. 750-1050)',
+				'gon' => 'gon - Gondi',
+				'gor' => 'gor - Gorontalo',
+				'got' => 'got - Gothic',
+				'grb' => 'grb - Grebo',
+				'grc' => 'grc - Greek, Ancient (to 1453)',
+				'gre' => 'gre - Greek, Modern (1453- )',
+				'grn' => 'grn - Guarani',
+				'gsw' => 'gsw - Swiss German',
+				'gua' => 'gua - Guarani',
+				'guj' => 'guj - Gujarati',
+				'gwi' => 'gwi - Gwichin',
+				'hai' => 'hai - Haida',
+				'hat' => 'hat - Haitian French Creole',
+				'hau' => 'hau - Hausa',
+				'haw' => 'haw - Hawaiian',
+				'heb' => 'heb - Hebrew',
+				'her' => 'her - Herero',
+				'hil' => 'hil - Hiligaynon',
+				'him' => 'him - Himachali',
+				'hin' => 'hin - Hindi',
+				'hit' => 'hit - Hittite',
+				'hmn' => 'hmn - Hmong',
+				'hmo' => 'hmo - Hiri Motu',
+				'hsb' => 'hsb - Upper Sorbian',
+				'hun' => 'hun - Hungarian',
+				'iba' => 'iba - Iban',
+				'ibo' => 'ibo - Igbo',
+				'ice' => 'ice - Icelandic',
+				'ido' => 'ido - Ido',
+				'iii' => 'iii - Sichuan Yi',
+				'ijo' => 'ijo - Ijo',
+				'iku' => 'iku - Inuktitut',
+				'ile' => 'ile - Interlingue',
+				'ilo' => 'ilo - Iloko',
+				'inc' => 'inc - Indic (Other)',
+				'ind' => 'ind - Indonesian',
+				'ine' => 'ine - Indo-European (Other)',
+				'inh' => 'inh - Ingush',
+				'ipk' => 'ipk - Inupiaq',
+				'ira' => 'ira - Iranian (Other)',
+				'iri' => 'iri - Irish',
+				'iro' => 'iro - Iroquoian (Other)',
+				'ita' => 'ita - Italian',
+				'jav' => 'jav - Javanese',
+				'jbo' => 'jbo - Lojban (Artificial language)',
+				'jpn' => 'jpn - Japanese',
+				'jpr' => 'jpr - Judeo-Persian',
+				'jrb' => 'jrb - Judeo-Arabic',
+				'kaa' => 'kaa - Kara-Kalpak',
+				'kab' => 'kab - Kabyle',
+				'kac' => 'kac - Kachin',
+				'kal' => 'kal - Kalâtdlisut',
+				'kam' => 'kam - Kamba',
+				'kan' => 'kan - Kannada',
+				'kar' => 'kar - Karen languages',
+				'kas' => 'kas - Kashmiri',
+				'kau' => 'kau - Kanuri',
+				'kaw' => 'kaw - Kawi',
+				'kaz' => 'kaz - Kazakh',
+				'kbd' => 'kbd - Kabardian',
+				'kha' => 'kha - Khasi',
+				'khi' => 'khi - Khoisan (Other)',
+				'khm' => 'khm - Khmer',
+				'kho' => 'kho - Khotanese',
+				'kik' => 'kik - Kikuyu',
+				'kin' => 'kin - Kinyarwanda',
+				'kir' => 'kir - Kyrgyz',
+				'kmb' => 'kmb - Kimbundu',
+				'kok' => 'kok - Konkani',
+				'kom' => 'kom - Komi',
+				'kon' => 'kon - Kongo',
+				'kor' => 'kor - Korean',
+				'kos' => 'kos - Kusaie',
+				'kpe' => 'kpe - Kpelle',
+				'krc' => 'krc - Karachay-Balkar',
+				'krl' => 'krl - Karelian',
+				'kro' => 'kro - Kru (Other)',
+				'kru' => 'kru - Kurukh',
+				'kua' => 'kua - Kuanyama',
+				'kum' => 'kum - Kumyk',
+				'kur' => 'kur - Kurdish',
+				'kus' => 'kus - Kusaie',
+				'kut' => 'kut - Kootenai',
+				'lad' => 'lad - Ladino',
+				'lah' => 'lah - Lahndā',
+				'lam' => 'lam - Lamba (Zambia and Congo)',
+				'lan' => 'lan - Occitan (post 1500)',
+				'lao' => 'lao - Lao',
+				'lap' => 'lap - Sami',
+				'lat' => 'lat - Latin',
+				'lav' => 'lav - Latvian',
+				'lez' => 'lez - Lezgian',
+				'lim' => 'lim - Limburgish',
+				'lin' => 'lin - Lingala',
+				'lit' => 'lit - Lithuanian',
+				'lol' => 'lol - Mongo-Nkundu',
+				'loz' => 'loz - Lozi',
+				'ltz' => 'ltz - Luxembourgish',
+				'lua' => 'lua - Luba-Lulua',
+				'lub' => 'lub - Luba-Katanga',
+				'lug' => 'lug - Ganda',
+				'lui' => 'lui - Luiseño',
+				'lun' => 'lun - Lunda',
+				'luo' => 'Luo - Luo (Kenya and Tanzania)',
+				'lus' => 'lus - Lushai',
+				'mac' => 'mac - Macedonian',
+				'mad' => 'mad - Madurese',
+				'mag' => 'mag - Magahi',
+				'mah' => 'mah - Marshallese',
+				'mai' => 'mai - Maithili',
+				'mak' => 'mak - Makasar',
+				'mal' => 'mal - Malayalam',
+				'man' => 'man - Mandingo',
+				'mao' => 'mao - Maori',
+				'map' => 'map - map - Austronesian (Other)',
+				'mar' => 'mar - Marathi',
+				'mas' => 'mas - Masai',
+				'max' => 'max - Manx',
+				'may' => 'may - Malay',
+				'mdf' => 'mdf - Moksha',
+				'mdr' => 'mdr - Mandar',
+				'men' => 'men - Mende',
+				'mic' => 'mic - Micmac',
+				'min' => 'min - Minangkabau',
+				'mis' => 'mis - Miscellaneous languages',
+				'mkh' => 'mkh - Mon-Khmer (Other)',
+				'mla' => 'mla - Malagasy',
+				'mlg' => 'mlg - Malagasy',
+				'mlt' => 'mlt - Maltese',
+				'mnc' => 'mnc - Manchu',
+				'mni' => 'mni - Manipuri',
+				'mno' => 'mno - Manobo languages',
+				'moh' => 'moh - Mohawk',
+				'mol' => 'mol - Moldavian',
+				'mon' => 'mon - Mongolian',
+				'mos' => 'mos - Mooré',
+				'mul' => 'mul - Multiple languages',
+				'mun' => 'mun - Munda (Other)',
+				'mus' => 'mus - Creek',
+				'mwl' => 'mwl - Mirandese',
+				'mwr' => 'mwr - Marwari',
+				'myn' => 'myn - Mayan languages',
+				'myv' => 'myv - Erzya',
+				'nah' => 'nah - Nahuatl',
+				'nai' => 'nai - North American Indian (Other)',
+				'nap' => 'nap - Neapolitan Italian',
+				'nau' => 'nau - Nauru',
+				'nav' => 'nav - Navajo',
+				'nbl' => 'nbl - Ndebele (South Africa)',
+				'nde' => 'nde - Ndebele (Zimbabwe)',
+				'ndo' => 'ndo - Ndonga',
+				'nds' => 'nds - Low German',
+				'nep' => 'nep - Nepali',
+				'new' => 'new - Newari',
+				'nia' => 'nia - Nias',
+				'nic' => 'nic - Niger-Kordofanian (Other)',
+				'niu' => 'niu - Niuean',
+				'nno' => 'nno - Norwegian (Nynorsk)',
+				'nob' => 'nob - Norwegian (Bokmål)',
+				'nog' => 'nog - Nogai',
+				'non' => 'non - Old Norse',
+				'nor' => 'nor - Norwegian',
+				'nqo' => "nqo - N'Ko",
+				'nso' => 'nso - Northern Sotho',
+				'nub' => 'nub - Nubian languages',
+				'nwc' => 'nwc - Newari, Old',
+				'nya' => 'nya - Nyanja',
+				'nym' => 'nym - Nyamwezi',
+				'nyn' => 'nyn - Nyankole',
+				'nyo' => 'nyo - Nyoro',
+				'nzi' => 'nzi - Nzima',
+				'oci' => 'oci - Occitan (post 1500)',
+				'oji' => 'oji - Ojibwa',
+				'ori' => 'ori - Oriya',
+				'orm' => 'or, - Oromo',
+				'osa' => 'osa - Osage',
+				'oss' => 'oss - Ossetic',
+				'ota' => 'ota - Turkish, Ottoman',
+				'oto' => 'oto - Otomian languages',
+				'paa' => 'paa - Papuan (Other)',
+				'pag' => 'pag - Pangasinan',
+				'pal' => 'pal - Pahlavi',
+				'pam' => 'pam - Pampanga',
+				'pan' => 'pan - Panjabi',
+				'pap' => 'pap - Papiamento',
+				'pau' => 'peu - Palauan',
+				'peo' => 'peo - Old Persian (ca. 600-400 B.C.)',
+				'per' => 'per - Persian',
+				'phi' => 'phi -  Philippine (Other)',
+				'phn' => 'phn - Phoenician',
+				'pli' => 'pli - Pali',
+				'pol' => 'pol - Polish',
+				'pon' => 'pon - Ponape',
+				'por' => 'por - Portuguese',
+				'pra' => 'pra - Prakrit languages',
+				'pro' => 'pro - Provençal (to 1500)',
+				'pus' => 'pus - Pushto',
+				'que' => 'que - Quechua',
+				'raj' => 'raj - Rajasthani',
+				'rap' => 'rap - Rapanui',
+				'rar' => 'rar - Rarotongan',
+				'roa' => 'roa - Romance (Other)',
+				'roh' => 'roh - Raeto-Romance',
+				'rom' => 'rom - Romani',
+				'rum' => 'rum - Romanian',
+				'run' => 'run - Rundi',
+				'rup' => 'sup - Aromanian',
+				'rus' => 'rus - Russian',
+				'sad' => 'sad - Sandawe',
+				'sag' => 'sag - Sango (Ubangi Creole)',
+				'sah' => 'sah - Yakut',
+				'sai' => 'sai - South American Indian (Other)',
+				'sal' => 'sal - Salishan languages',
+				'sam' => 'sam - Samaritan Aramaic',
+				'san' => 'san - Sanskrit',
+				'sao' => 'sao - Samoan',
+				'sas' => 'sas - Sasak',
+				'sat' => 'sat - Santali',
+				'scc' => 'scc - Serbian',
+				'scn' => 'scn - Sicilian Italian',
+				'sco' => 'sco - Scots',
+				'scr' => 'scr - Croatian',
+				'sel' => 'sel - Selkup',
+				'sga' => 'sga - Irish, Old (to 1100)',
+				'sgn' => 'sgn - Sign languages',
+				'shn' => 'shn - Shan',
+				'sho' => 'sho - Shona',
+				'sid' => 'sid - Sidamo',
+				'sin' => 'sin - Sinhalese',
+				'sio' => 'sio - Siouan (Other)',
+				'sit' => 'sit - Sino-Tibetan (Other)',
+				'sla' => 'sla - Slavic (Other)',
+				'slo' => 'slo - Slovak',
+				'slv' => 'slv - Slovenian',
+				'sma' => 'sma - Southern Sami',
+				'sme' => 'sme - Northern Sami',
+				'smi' => 'smi - Sami',
+				'smj' => 'smj - Lule Sami',
+				'smn' => 'smn - Inari Sami',
+				'smo' => 'smo - Samoan',
+				'sms' => 'sms - Skolt Sami',
+				'sna' => 'sna - Shona',
+				'snd' => 'snd - Sindhi',
+				'snh' => 'snh - Sinhalese',
+				'snk' => 'snk - Soninke',
+				'sog' => 'sog - Sogdian',
+				'som' => 'som - Somali',
+				'son' => 'son - Songhai',
+				'sot' => 'sot - Sotho',
+				'spa' => 'spa - Spanish',
+				'srd' => 'srd - Sardinian',
+				'srn' => 'srn - Sranan',
+				'srr' => 'srr - Serer',
+				'ssa' => 'ssa - Nilo-Saharan (Other)',
+				'sso' => 'sso - Sotho',
+				'ssw' => 'ssw - Swazi',
+				'suk' => 'suk - Sukuma',
+				'sun' => 'sun - Sundanese',
+				'sus' => 'sus - Susu',
+				'sux' => 'sux - Sumerian',
+				'swa' => 'swa - Swahili',
+				'swe' => 'swe - Swedish',
+				'swz' => 'swz - Swazi',
+				'syc' => 'syc - Syriac',
+				'syr' => 'syr - Syriac, Modern',
+				'tag' => 'tag - Tagalog',
+				'tah' => 'tah - Tahitian',
+				'tai' => 'tai - Tai (Other)',
+				'taj' => 'taj - Tajik',
+				'tam' => 'tam - Tamil',
+				'tar' => 'tar - Tatar',
+				'tat' => 'tat - Tatar',
+				'tel' => 'tel - Telugu',
+				'tem' => 'tem - Temne',
+				'ter' => 'ter - Terena',
+				'tet' => 'tet - Tetum',
+				'tgk' => 'tgk - Tajik',
+				'tgl' => 'tgl - Tagalog',
+				'tha' => 'tha - Thai',
+				'tib' => 'tib - Tibetan',
+				'tig' => 'tig - Tigré',
+				'tir' => 'tir - Tigrinya',
+				'tiv' => 'tiv - Tiv',
+				'tkl' => 'tkl - Tokelauan',
+				'tlh' => 'tlh - Klingon (Artificial language)',
+				'tli' => 'tli - Tlingit',
+				'tmh' => 'tmh - Tamashek',
+				'tog' => 'tog - Tonga (Nyasa)',
+				'ton' => 'ton - Tongan',
+				'tpi' => 'tpi - Tok Pisin',
+				'tru' => 'tru - Truk',
+				'tsi' => 'tsi - Tsimshian',
+				'tsn' => 'tsn - Tswana',
+				'tso' => 'tso - Tsonga',
+				'tsw' => 'tsw - Tswana',
+				'tuk' => 'tuk - Turkmen',
+				'tum' => 'tum - Tumbuka',
+				'tup' => 'tup - Tupi languages',
+				'tur' => 'tur - Turkish',
+				'tut' => 'tut - Altaic (Other)',
+				'tvl' => 'tvl - Tuvaluan',
+				'twi' => 'twi - Twi',
+				'tyv' => 'tyv - Tuvinian',
+				'udm' => 'udm - Udmurt',
+				'uga' => 'uga - Ugaritic',
+				'uig' => 'iug - Uighur',
+				'ukr' => 'ukr - Ukrainian',
+				'umb' => 'umb - Umbundu',
+				'und' => 'und - Undetermined',
+				'urd' => 'urd - Urdu',
+				'uzb' => 'uzb - Uzbek',
+				'vai' => 'vai - Vai',
+				'ven' => 'ven - Venda',
+				'vie' => 'vie - Vietnamese',
+				'vol' => 'vol - Volapük',
+				'vot' => 'vot - Votic',
+				'wak' => 'wak - Wakashan languages',
+				'wal' => 'wal - Wolayta',
+				'war' => 'war - Waray',
+				'was' => 'was - Washo',
+				'wel' => 'wel - Welsh',
+				'wen' => 'wen - Sorbian (Other)',
+				'wln' => 'wln - Walloon',
+				'wol' => 'wol - Wolof',
+				'xho' => 'xho - Xhosa',
+				'yao' => 'yao - Yao (Africa)',
+				'yap' => 'yap - Yapese',
+				'yid' => 'yid - Yiddish',
+				'yor' => 'yor - Yoruba',
+				'ypk' => 'ypk - Yupik languages',
+				'zap' => 'zap - Zapotec',
+				'zbl' => 'zbl - Blissymbolics',
+				'zen' => 'zen - Zenaga',
+				'zha' => 'zha - Zhuang',
+				'znd' => 'znd - Zande languages',
+				'zul' => 'zul - Zulu',
+				'zun' => 'zun - Zuni',
+				'zxx' => 'zxx - No linguistic content',
+				'zza' => 'zza - Zaza'
 			), 'default' => 'und'
 		)); ?></td>
 	</tr>
@@ -1251,32 +1343,6 @@ th {
 		<td><b>$z</b></td>
 		<td>ISBN Inválido/Cancelado.</td>
 		<td><?php echo $this->Form->input('020z', array('id' => '020z', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>022</b></th>
-		<th style="width: 45%;"><b>Número Internacional Normalizado para Publicaciones Seriadas (ISSN).</b></th>
-		<th style="width: 45%;">
-			<label id="l-022">&nbsp;</label>
-			<?php echo $this->Form->hidden('022', array('id' => '022', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>ISSN.</td>
-		<td><?php echo $this->Form->input('022a', array('id' => '022a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$y</b></td>
-		<td>ISSN incorrecto.</td>
-		<td><?php echo $this->Form->input('022y', array('id' => '022y', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$z</b></td>
-		<td>ISSN cancelado.</td>
-		<td><?php echo $this->Form->input('022z', array('id' => '022z', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
 
@@ -1366,37 +1432,32 @@ th {
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
-		<td>Número de íncipit.</td>
+		<td>Número del pasaje.</td>
 		<td><?php echo $this->Form->input('031c', array('id' => '031c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$d</b></td>
-		<td>Voz o instrumento.</td>
+		<td>Título o encabezamiento.</td>
 		<td><?php echo $this->Form->input('031d', array('id' => '031d', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$e</b></td>
-		<td>Rol.</td>
+		<td>Personaje.</td>
 		<td><?php echo $this->Form->input('031e', array('id' => '031e', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$f</b></td>
-		<td>Nombre del movimiento.</td>
-		<td><?php echo $this->Form->input('031f', array('id' => '031f', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 		<tr>
 		<td><b>$g</b></td>
-		<td> Tonalidad o modo.</td>
+		<td>Clave.</td>
 		<td><?php echo $this->Form->input('031g', array('id' => '031g', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$m</b></td>
-		<td>Clave.</td>
+		<td>Voz/instrumento</td>
 		<td><?php echo $this->Form->input('031m', array('id' => '031m', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$n</b></td>
-		<td>Armadura de clave.</td>
+		<td>Armadura.</td>
 		<td><?php echo $this->Form->input('031n', array('id' => '031n', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
@@ -1406,7 +1467,7 @@ th {
 	</tr>
 	<tr>
 		<td><b>$p</b></td>
-		<td>Notación musical codificada.</td>
+		<td>Notación musical.</td>
 		<td><?php echo $this->Form->input('031p', array('id' => '031p', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
@@ -1416,28 +1477,48 @@ th {
 	</tr>
 	<tr>
 		<td><b>$r</b></td>
-		<td>Nota codificada de validación.</td>
+		<td>Tonalidad o modo.</td>
 		<td><?php echo $this->Form->input('031r', array('id' => '031r', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$s</b></td>
-		<td> Íncipit literario.</td>
+		<td>Nota de validez codificada.</td>
 		<td><?php echo $this->Form->input('031s', array('id' => '031s', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$t</b></td>
-		<td> Íncipit literario <font color="red">(Obligatorio)</font>.</td>
+		<td>Texto del íncipit.</td>
 		<td><?php echo $this->Form->input('031t', array('id' => '031t', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$u</b></td>
-		<td>Identificador de recurso uniforme.</td>
+		<td>Identificador Uniforme del Recurso.</td>
 		<td><?php echo $this->Form->input('031u', array('id' => '031u', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
+		<td><b>$y</b></td>
+		<td>Texto del enlace.</td>
+		<td><?php echo $this->Form->input('031y', array('id' => '031y', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
 		<td><b>$z</b></td>
-		<td>Idioma del texto.</td>
+		<td>Nota pública.</td>
 		<td><?php echo $this->Form->input('031z', array('id' => '031z', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$2</b></td>
+		<td>Código del sistema.</td>
+		<td><?php echo $this->Form->input('0312', array('id' => '0312', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$6</b></td>
+		<td>Enlace.</td>
+		<td><?php echo $this->Form->input('0316', array('id' => '0316', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$8</b></td>
+		<td>Enlace entre campos y número de secuencia.</td>
+		<td><?php echo $this->Form->input('0318', array('id' => '0318', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	
 </table>
@@ -1489,10 +1570,519 @@ th {
 			)
 		)); ?></td>
 	</tr>
-	<tr>
+		<tr>
 		<td><b>$a</b></td>
 		<td>Código del idioma.</td>
-		<td><?php echo $this->Form->input('041a', array('id' => '041a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('041a', array('id' => '041a', 'label' => false, 'div' => false, 'class' => 'form-control',
+				'options' => array(
+				'aar' => 'aar - Afar',
+				'abk' => 'abk - Abkhaz',
+				'ace' => 'ace - Achinese',
+				'ach' => 'ach - Acoli',
+				'ada' => 'ada - Adangme',
+				'ady' => 'ady - Adygei',
+				'afa' => 'afa - Afroasiatic (Other)',
+				'afh' => 'afh - Afrihili (Artificial language)',
+				'afr' => 'afr - Afrikaans',
+				'ain' => 'ain - Ainu',
+				'ajm' => 'ajm - Aljamía',
+				'aka' => 'aka - Akan',
+				'akk' => 'akk - Akkadian',
+				'alb' => 'alb - Albanian',
+				'ale' => 'ale - Aleut',
+				'alg' => 'alg - Algonquian (Other)',
+				'alt' => 'alt - Altai',
+				'amh' => 'amh - Amharic',
+				'ang' => 'ang - English, Old (ca. 450-1100)',
+				'anp' => 'anp - Angika',
+				'apa' => 'apa - Apache languages',
+				'ara' => 'ara - Arabic',
+				'arc' => 'arc - Aramaic',
+				'arg' => 'arg - Aragonese Spanish',
+				'arm' => 'arm - Armenian',
+				'arn' => 'arn - Mapuche',
+				'arp' => 'arp - Arapaho',
+				'art' => 'art - Artificial (Other)',
+				'arw' => 'arw - Arawak',
+				'asm' => 'asm - Assamese',
+				'ast' => 'ast - Bable',
+				'ath' => 'ath - Athapascan (Other)',
+				'aus' => 'aus - Australian languages',
+				'ava' => 'ava - Avaric',
+				'ave' => 'ave - Avestan',
+				'awa' => 'awa - Awadhi',
+				'aym' => 'aym - Aymara',
+				'aze' => 'aze - Azerbaijani',
+				'bad' => 'bad - Banda languages',
+				'bai' => 'bai - Bamileke languages',
+				'bak' => 'bak - Bashkir',
+				'bal' => 'bal - Baluchi',
+				'bam' => 'bam - Bambara',
+				'ban' => 'ban - Balinese',
+				'baq' => 'baq - Basque',
+				'bas' => 'bas - Basa',
+				'bat' => 'bat - Baltic (Other)',
+				'bej' => 'bej - Beja',
+				'bel' => 'bel - Belarusian',
+				'bem' => 'bem - Bemba',
+				'ben' => 'ben - Bengali',
+				'ber' => 'ber - Berber (Other)',
+				'bho' => 'bho - Bhojpuri',
+				'bih' => 'bih - Bihari',
+				'bik' => 'bik - Bikol',
+				'bin' => 'bin - Edo',
+				'bis' => 'bis - Bislama',
+				'bla' => 'bla - Siksika',
+				'bnt' => 'bnt - Bantu (Other)',
+				'bos' => 'bos - Bosnian',
+				'bra' => 'bra - Braj',
+				'bre' => 'bre - Breton',
+				'btk' => 'btk - Batak',
+				'bua' => 'bua - Buriat',
+				'bug' => 'bug - Bugis',
+				'bul' => 'bul - Bulgarian',
+				'bur' => 'bur - Burmese',
+				'byn' => 'byn - Bilin',
+				'cad' => 'cad - Caddo',
+				'cai' => 'cai - Central American Indian (Other)',
+				'cam' => 'cam - Khmer',
+				'car' => 'car - Carib',
+				'cat' => 'cat - Catalan',
+				'cau' => 'cau - Caucasian (Other)',
+				'ceb' => 'ceb - Cebuano',
+				'cel' => 'cel - Celtic (Other)',
+				'cha' => 'cha - Chamorro',
+				'chb' => 'chb - Chibcha',
+				'che' => 'che - Chechen',
+				'chg' => 'chg - Chagatai',
+				'chi' => 'chi - Chinese',
+				'chk' => 'chk - Chuukese',
+				'chm' => 'chm - Mari',
+				'chn' => 'chn - Chinook jargon',
+				'cho' => 'cho - Choctaw',
+				'chp' => 'chp - Chipewyan',
+				'chr' => 'chr - Cherokee',
+				'chu' => 'chu - Church Slavic',
+				'chv' => 'chv - Chuvash',
+				'chy' => 'chy - Cheyenne',
+				'cmc' => 'cmc - Chamic languages',
+				'cop' => 'cop - Coptic',
+				'cor' => 'cor - Cornish',
+				'cos' => 'cos - Corsican',
+				'cpe' => 'cpe - Creoles and Pidgins, French-based (Other)',
+				'cpf' => 'cpf - Creoles and Pidgins, Portuguese-based (Other)',
+				'cre' => 'cre - Cree',
+				'crh' => 'crh - Crimean Tatar',
+				'crp' => 'crp - Creoles and Pidgins (Other)',
+				'csb' => 'csb - Kashubian',
+				'cus' => 'cus - Cushitic (Other)',
+				'cze' => 'cze - Czech',
+				'dak' => 'dak - Dakota',
+				'dan' => 'dan - Danish',
+				'dar' => 'dar - Dargwa',
+				'day' => 'day - Dayak',
+				'del' => 'del - Delaware',
+				'den' => 'den - Slave',
+				'dgr' => 'dgr - Dogrib',
+				'din' => 'din - Dinka',
+				'div' => 'div - Divehi',
+				'doi' => 'doi - Dogri',
+				'dra' => 'dra - Dravidian (Other)',
+				'dsb' => 'dsb - Lower Sorbian',
+				'dua' => 'dua - Duala',
+				'dum' => 'dum - Dutch, Middle (ca. 1050-1350)',
+				'dut' => 'dut - Dutch',
+				'dyu' => 'dyu - Dyula',
+				'dzo' => 'dzo - Dzongkha',
+				'efi' => 'efi - Efik',
+				'egy' => 'egy - Egyptian',
+				'eka' => 'eka - Ekajuk',
+				'elx' => 'elx - Elamite',
+				'eng' => 'eng - English',
+				'enm' => 'enm - English, Middle (1100-1500)',
+				'epo' => 'epo - Esperanto',
+				'esk' => 'esk - Eskimo languages',
+				'esp' => 'esp - Esperanto',
+				'est' => 'est - Estonian',
+				'eth' => 'eth - Ethiopic',
+				'ewe' => 'ewe - Ewe',
+				'ewo' => 'ewo - Ewondo',
+				'fan' => 'fan - Fang',
+				'fao' => 'fao - Faroese',
+				'far' => 'far - Faroese',
+				'fat' => 'fat - Fanti',
+				'fij' => 'fij - Fijian',
+				'fil' => 'fil - Filipino',
+				'fin' => 'fin - Finnish',
+				'fiu' => 'fiu - Finno-Ugrian (Other)',
+				'fon' => 'fon - Fon',
+				'fre' => 'fre - French',
+				'fri' => 'fri - Frisian',
+				'frm' => 'frm - French, Middle (ca. 1300-1600)',
+				'fro' => 'fro - French, Old (ca. 842-1300)',
+				'frr' => 'frr - North Frisian',
+				'frs' => 'frs - East Frisian',
+				'fry' => 'fry - Frisian',
+				'ful' => 'ful - Fula',
+				'fur' => 'fur - Friulian',
+				'gaa' => 'gaa - Gã',
+				'gae' => 'gae - Scottish Gaelix',
+				'gag' => 'gag - Galician',
+				'gal' => 'gal - Oromo',
+				'gay' => 'gay - Gayo',
+				'gba' => 'gba - Gbaya',
+				'gem' => 'gem - Germanic (Other)',
+				'geo' => 'geo - Georgian',
+				'ger' => 'ger - German',
+				'gez' => 'gez - Ethiopic',
+				'gil' => 'gil - Gilbertese',
+				'gla' => 'gla - Scottish Gaelic',
+				'gle' => 'gle - Irish',
+				'glg' => 'glg - Galician',
+				'glv' => 'glv - Manx',
+				'gmh' => 'gmh - German, Middle High (ca. 1050-1500)',
+				'goh' => 'goh - German, Old High (ca. 750-1050)',
+				'gon' => 'gon - Gondi',
+				'gor' => 'gor - Gorontalo',
+				'got' => 'got - Gothic',
+				'grb' => 'grb - Grebo',
+				'grc' => 'grc - Greek, Ancient (to 1453)',
+				'gre' => 'gre - Greek, Modern (1453- )',
+				'grn' => 'grn - Guarani',
+				'gsw' => 'gsw - Swiss German',
+				'gua' => 'gua - Guarani',
+				'guj' => 'guj - Gujarati',
+				'gwi' => 'gwi - Gwichin',
+				'hai' => 'hai - Haida',
+				'hat' => 'hat - Haitian French Creole',
+				'hau' => 'hau - Hausa',
+				'haw' => 'haw - Hawaiian',
+				'heb' => 'heb - Hebrew',
+				'her' => 'her - Herero',
+				'hil' => 'hil - Hiligaynon',
+				'him' => 'him - Himachali',
+				'hin' => 'hin - Hindi',
+				'hit' => 'hit - Hittite',
+				'hmn' => 'hmn - Hmong',
+				'hmo' => 'hmo - Hiri Motu',
+				'hsb' => 'hsb - Upper Sorbian',
+				'hun' => 'hun - Hungarian',
+				'iba' => 'iba - Iban',
+				'ibo' => 'ibo - Igbo',
+				'ice' => 'ice - Icelandic',
+				'ido' => 'ido - Ido',
+				'iii' => 'iii - Sichuan Yi',
+				'ijo' => 'ijo - Ijo',
+				'iku' => 'iku - Inuktitut',
+				'ile' => 'ile - Interlingue',
+				'ilo' => 'ilo - Iloko',
+				'inc' => 'inc - Indic (Other)',
+				'ind' => 'ind - Indonesian',
+				'ine' => 'ine - Indo-European (Other)',
+				'inh' => 'inh - Ingush',
+				'ipk' => 'ipk - Inupiaq',
+				'ira' => 'ira - Iranian (Other)',
+				'iri' => 'iri - Irish',
+				'iro' => 'iro - Iroquoian (Other)',
+				'ita' => 'ita - Italian',
+				'jav' => 'jav - Javanese',
+				'jbo' => 'jbo - Lojban (Artificial language)',
+				'jpn' => 'jpn - Japanese',
+				'jpr' => 'jpr - Judeo-Persian',
+				'jrb' => 'jrb - Judeo-Arabic',
+				'kaa' => 'kaa - Kara-Kalpak',
+				'kab' => 'kab - Kabyle',
+				'kac' => 'kac - Kachin',
+				'kal' => 'kal - Kalâtdlisut',
+				'kam' => 'kam - Kamba',
+				'kan' => 'kan - Kannada',
+				'kar' => 'kar - Karen languages',
+				'kas' => 'kas - Kashmiri',
+				'kau' => 'kau - Kanuri',
+				'kaw' => 'kaw - Kawi',
+				'kaz' => 'kaz - Kazakh',
+				'kbd' => 'kbd - Kabardian',
+				'kha' => 'kha - Khasi',
+				'khi' => 'khi - Khoisan (Other)',
+				'khm' => 'khm - Khmer',
+				'kho' => 'kho - Khotanese',
+				'kik' => 'kik - Kikuyu',
+				'kin' => 'kin - Kinyarwanda',
+				'kir' => 'kir - Kyrgyz',
+				'kmb' => 'kmb - Kimbundu',
+				'kok' => 'kok - Konkani',
+				'kom' => 'kom - Komi',
+				'kon' => 'kon - Kongo',
+				'kor' => 'kor - Korean',
+				'kos' => 'kos - Kusaie',
+				'kpe' => 'kpe - Kpelle',
+				'krc' => 'krc - Karachay-Balkar',
+				'krl' => 'krl - Karelian',
+				'kro' => 'kro - Kru (Other)',
+				'kru' => 'kru - Kurukh',
+				'kua' => 'kua - Kuanyama',
+				'kum' => 'kum - Kumyk',
+				'kur' => 'kur - Kurdish',
+				'kus' => 'kus - Kusaie',
+				'kut' => 'kut - Kootenai',
+				'lad' => 'lad - Ladino',
+				'lah' => 'lah - Lahndā',
+				'lam' => 'lam - Lamba (Zambia and Congo)',
+				'lan' => 'lan - Occitan (post 1500)',
+				'lao' => 'lao - Lao',
+				'lap' => 'lap - Sami',
+				'lat' => 'lat - Latin',
+				'lav' => 'lav - Latvian',
+				'lez' => 'lez - Lezgian',
+				'lim' => 'lim - Limburgish',
+				'lin' => 'lin - Lingala',
+				'lit' => 'lit - Lithuanian',
+				'lol' => 'lol - Mongo-Nkundu',
+				'loz' => 'loz - Lozi',
+				'ltz' => 'ltz - Luxembourgish',
+				'lua' => 'lua - Luba-Lulua',
+				'lub' => 'lub - Luba-Katanga',
+				'lug' => 'lug - Ganda',
+				'lui' => 'lui - Luiseño',
+				'lun' => 'lun - Lunda',
+				'luo' => 'Luo - Luo (Kenya and Tanzania)',
+				'lus' => 'lus - Lushai',
+				'mac' => 'mac - Macedonian',
+				'mad' => 'mad - Madurese',
+				'mag' => 'mag - Magahi',
+				'mah' => 'mah - Marshallese',
+				'mai' => 'mai - Maithili',
+				'mak' => 'mak - Makasar',
+				'mal' => 'mal - Malayalam',
+				'man' => 'man - Mandingo',
+				'mao' => 'mao - Maori',
+				'map' => 'map - map - Austronesian (Other)',
+				'mar' => 'mar - Marathi',
+				'mas' => 'mas - Masai',
+				'max' => 'max - Manx',
+				'may' => 'may - Malay',
+				'mdf' => 'mdf - Moksha',
+				'mdr' => 'mdr - Mandar',
+				'men' => 'men - Mende',
+				'mic' => 'mic - Micmac',
+				'min' => 'min - Minangkabau',
+				'mis' => 'mis - Miscellaneous languages',
+				'mkh' => 'mkh - Mon-Khmer (Other)',
+				'mla' => 'mla - Malagasy',
+				'mlg' => 'mlg - Malagasy',
+				'mlt' => 'mlt - Maltese',
+				'mnc' => 'mnc - Manchu',
+				'mni' => 'mni - Manipuri',
+				'mno' => 'mno - Manobo languages',
+				'moh' => 'moh - Mohawk',
+				'mol' => 'mol - Moldavian',
+				'mon' => 'mon - Mongolian',
+				'mos' => 'mos - Mooré',
+				'mul' => 'mul - Multiple languages',
+				'mun' => 'mun - Munda (Other)',
+				'mus' => 'mus - Creek',
+				'mwl' => 'mwl - Mirandese',
+				'mwr' => 'mwr - Marwari',
+				'myn' => 'myn - Mayan languages',
+				'myv' => 'myv - Erzya',
+				'nah' => 'nah - Nahuatl',
+				'nai' => 'nai - North American Indian (Other)',
+				'nap' => 'nap - Neapolitan Italian',
+				'nau' => 'nau - Nauru',
+				'nav' => 'nav - Navajo',
+				'nbl' => 'nbl - Ndebele (South Africa)',
+				'nde' => 'nde - Ndebele (Zimbabwe)',
+				'ndo' => 'ndo - Ndonga',
+				'nds' => 'nds - Low German',
+				'nep' => 'nep - Nepali',
+				'new' => 'new - Newari',
+				'nia' => 'nia - Nias',
+				'nic' => 'nic - Niger-Kordofanian (Other)',
+				'niu' => 'niu - Niuean',
+				'nno' => 'nno - Norwegian (Nynorsk)',
+				'nob' => 'nob - Norwegian (Bokmål)',
+				'nog' => 'nog - Nogai',
+				'non' => 'non - Old Norse',
+				'nor' => 'nor - Norwegian',
+				'nqo' => "nqo - N'Ko",
+				'nso' => 'nso - Northern Sotho',
+				'nub' => 'nub - Nubian languages',
+				'nwc' => 'nwc - Newari, Old',
+				'nya' => 'nya - Nyanja',
+				'nym' => 'nym - Nyamwezi',
+				'nyn' => 'nyn - Nyankole',
+				'nyo' => 'nyo - Nyoro',
+				'nzi' => 'nzi - Nzima',
+				'oci' => 'oci - Occitan (post 1500)',
+				'oji' => 'oji - Ojibwa',
+				'ori' => 'ori - Oriya',
+				'orm' => 'or, - Oromo',
+				'osa' => 'osa - Osage',
+				'oss' => 'oss - Ossetic',
+				'ota' => 'ota - Turkish, Ottoman',
+				'oto' => 'oto - Otomian languages',
+				'paa' => 'paa - Papuan (Other)',
+				'pag' => 'pag - Pangasinan',
+				'pal' => 'pal - Pahlavi',
+				'pam' => 'pam - Pampanga',
+				'pan' => 'pan - Panjabi',
+				'pap' => 'pap - Papiamento',
+				'pau' => 'peu - Palauan',
+				'peo' => 'peo - Old Persian (ca. 600-400 B.C.)',
+				'per' => 'per - Persian',
+				'phi' => 'phi -  Philippine (Other)',
+				'phn' => 'phn - Phoenician',
+				'pli' => 'pli - Pali',
+				'pol' => 'pol - Polish',
+				'pon' => 'pon - Ponape',
+				'por' => 'por - Portuguese',
+				'pra' => 'pra - Prakrit languages',
+				'pro' => 'pro - Provençal (to 1500)',
+				'pus' => 'pus - Pushto',
+				'que' => 'que - Quechua',
+				'raj' => 'raj - Rajasthani',
+				'rap' => 'rap - Rapanui',
+				'rar' => 'rar - Rarotongan',
+				'roa' => 'roa - Romance (Other)',
+				'roh' => 'roh - Raeto-Romance',
+				'rom' => 'rom - Romani',
+				'rum' => 'rum - Romanian',
+				'run' => 'run - Rundi',
+				'rup' => 'sup - Aromanian',
+				'rus' => 'rus - Russian',
+				'sad' => 'sad - Sandawe',
+				'sag' => 'sag - Sango (Ubangi Creole)',
+				'sah' => 'sah - Yakut',
+				'sai' => 'sai - South American Indian (Other)',
+				'sal' => 'sal - Salishan languages',
+				'sam' => 'sam - Samaritan Aramaic',
+				'san' => 'san - Sanskrit',
+				'sao' => 'sao - Samoan',
+				'sas' => 'sas - Sasak',
+				'sat' => 'sat - Santali',
+				'scc' => 'scc - Serbian',
+				'scn' => 'scn - Sicilian Italian',
+				'sco' => 'sco - Scots',
+				'scr' => 'scr - Croatian',
+				'sel' => 'sel - Selkup',
+				'sga' => 'sga - Irish, Old (to 1100)',
+				'sgn' => 'sgn - Sign languages',
+				'shn' => 'shn - Shan',
+				'sho' => 'sho - Shona',
+				'sid' => 'sid - Sidamo',
+				'sin' => 'sin - Sinhalese',
+				'sio' => 'sio - Siouan (Other)',
+				'sit' => 'sit - Sino-Tibetan (Other)',
+				'sla' => 'sla - Slavic (Other)',
+				'slo' => 'slo - Slovak',
+				'slv' => 'slv - Slovenian',
+				'sma' => 'sma - Southern Sami',
+				'sme' => 'sme - Northern Sami',
+				'smi' => 'smi - Sami',
+				'smj' => 'smj - Lule Sami',
+				'smn' => 'smn - Inari Sami',
+				'smo' => 'smo - Samoan',
+				'sms' => 'sms - Skolt Sami',
+				'sna' => 'sna - Shona',
+				'snd' => 'snd - Sindhi',
+				'snh' => 'snh - Sinhalese',
+				'snk' => 'snk - Soninke',
+				'sog' => 'sog - Sogdian',
+				'som' => 'som - Somali',
+				'son' => 'son - Songhai',
+				'sot' => 'sot - Sotho',
+				'spa' => 'spa - Spanish',
+				'srd' => 'srd - Sardinian',
+				'srn' => 'srn - Sranan',
+				'srr' => 'srr - Serer',
+				'ssa' => 'ssa - Nilo-Saharan (Other)',
+				'sso' => 'sso - Sotho',
+				'ssw' => 'ssw - Swazi',
+				'suk' => 'suk - Sukuma',
+				'sun' => 'sun - Sundanese',
+				'sus' => 'sus - Susu',
+				'sux' => 'sux - Sumerian',
+				'swa' => 'swa - Swahili',
+				'swe' => 'swe - Swedish',
+				'swz' => 'swz - Swazi',
+				'syc' => 'syc - Syriac',
+				'syr' => 'syr - Syriac, Modern',
+				'tag' => 'tag - Tagalog',
+				'tah' => 'tah - Tahitian',
+				'tai' => 'tai - Tai (Other)',
+				'taj' => 'taj - Tajik',
+				'tam' => 'tam - Tamil',
+				'tar' => 'tar - Tatar',
+				'tat' => 'tat - Tatar',
+				'tel' => 'tel - Telugu',
+				'tem' => 'tem - Temne',
+				'ter' => 'ter - Terena',
+				'tet' => 'tet - Tetum',
+				'tgk' => 'tgk - Tajik',
+				'tgl' => 'tgl - Tagalog',
+				'tha' => 'tha - Thai',
+				'tib' => 'tib - Tibetan',
+				'tig' => 'tig - Tigré',
+				'tir' => 'tir - Tigrinya',
+				'tiv' => 'tiv - Tiv',
+				'tkl' => 'tkl - Tokelauan',
+				'tlh' => 'tlh - Klingon (Artificial language)',
+				'tli' => 'tli - Tlingit',
+				'tmh' => 'tmh - Tamashek',
+				'tog' => 'tog - Tonga (Nyasa)',
+				'ton' => 'ton - Tongan',
+				'tpi' => 'tpi - Tok Pisin',
+				'tru' => 'tru - Truk',
+				'tsi' => 'tsi - Tsimshian',
+				'tsn' => 'tsn - Tswana',
+				'tso' => 'tso - Tsonga',
+				'tsw' => 'tsw - Tswana',
+				'tuk' => 'tuk - Turkmen',
+				'tum' => 'tum - Tumbuka',
+				'tup' => 'tup - Tupi languages',
+				'tur' => 'tur - Turkish',
+				'tut' => 'tut - Altaic (Other)',
+				'tvl' => 'tvl - Tuvaluan',
+				'twi' => 'twi - Twi',
+				'tyv' => 'tyv - Tuvinian',
+				'udm' => 'udm - Udmurt',
+				'uga' => 'uga - Ugaritic',
+				'uig' => 'iug - Uighur',
+				'ukr' => 'ukr - Ukrainian',
+				'umb' => 'umb - Umbundu',
+				'und' => 'und - Undetermined',
+				'urd' => 'urd - Urdu',
+				'uzb' => 'uzb - Uzbek',
+				'vai' => 'vai - Vai',
+				'ven' => 'ven - Venda',
+				'vie' => 'vie - Vietnamese',
+				'vol' => 'vol - Volapük',
+				'vot' => 'vot - Votic',
+				'wak' => 'wak - Wakashan languages',
+				'wal' => 'wal - Wolayta',
+				'war' => 'war - Waray',
+				'was' => 'was - Washo',
+				'wel' => 'wel - Welsh',
+				'wen' => 'wen - Sorbian (Other)',
+				'wln' => 'wln - Walloon',
+				'wol' => 'wol - Wolof',
+				'xho' => 'xho - Xhosa',
+				'yao' => 'yao - Yao (Africa)',
+				'yap' => 'yap - Yapese',
+				'yid' => 'yid - Yiddish',
+				'yor' => 'yor - Yoruba',
+				'ypk' => 'ypk - Yupik languages',
+				'zap' => 'zap - Zapotec',
+				'zbl' => 'zbl - Blissymbolics',
+				'zen' => 'zen - Zenaga',
+				'zha' => 'zha - Zhuang',
+				'znd' => 'znd - Zande languages',
+				'zul' => 'zul - Zulu',
+				'zun' => 'zun - Zuni',
+				'zxx' => 'zxx - No linguistic content',
+				'zza' => 'zza - Zaza'
+			), 'default' => 'spa'
+		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
@@ -1518,23 +2108,481 @@ th {
 	<tr>
 		<td><b>$a</b></td>
 		<td>Código MARC del país.</td>
-		<td><?php echo $this->Form->input('044a', array('id' => '044a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('044a', array('id' => '044a', 'label' => false, 'div' => false, 'class' => 'form-control',
+		'options' => array(
+				'-aa' => '-aa Albania',
+				'abc' => 'abc - Alberta',
+				'-ac' => '-ac - Ashmore and Cartier Islands',
+				'-ae' => '-ae - Algeria',
+				'-af' => '-af - Afghanistan',
+				'-ag' => '-ag -Argentina',
+				'-ai' => '-ai - Anguilla',
+				'aip' => 'aip Armenia (Republic)',
+				'air' => 'air - Armenian S.S.R.',
+				'-aj' => '-aj - Azerbaijan',
+				'ajr' => 'ajr - Azerbaijan S.S.R.',
+				'aku' => 'aku - Alaska',
+				'alu' => 'alu - Alabama',
+				'-am' => '-am - Anguilla',
+				'-an' => '-an - Andorra',
+				'-ao' => '-ao - Angola',
+				'-aq' => '-aq - Antigua and Barbuda',
+				'aru' => 'aru - Arkansas',
+				'-as' => '-as - American Samoa',
+				'-at' => '-at - Australia',
+				'-au' => '-au - Austria',
+				'-aw' => '-aw - Aruba',
+				'-ay' => '-ay - Antarctica',
+				'azu' => 'azu - Arizona',
+				'-ba' => '-ba - Bahrain',
+				'-bb' => '-bb - Barbados',
+				'bcc' => 'bcc - British Columbia',
+				'-bd' => '-bd - Burundi',
+				'-be' => '-be - Belgium',
+				'-bf' => '-bf - Bahamas',
+				'-bg' => '-bg - Bangladesh',
+				'-bh' => '-bh - Belize',
+				'-bi' => '-bi - British Indian Ocean Territory',
+				'-bl' => '-bl - Brazil',
+				'-bm' => '-bm- Bermuda Islands',
+				'-bn' => '-bn - Bosnia and Hercegovina',
+				'-bo' => '-bo - Bolivia',
+				'-bp' => '-bp - Solomon Islands',
+				'-br' => '-br - Burma',
+				'-bs' => '-bs - Botswana',
+				'-bt' => '-bt - Bhutan',
+				'-bu' => '-bu -Bulgaria',
+				'-bv' => '-bv - Bouvet Island',
+				'-bw' => '-bw - Belarus',
+				'bwr' => 'bwr - Byelorussian S.S.R.',
+				'-bx' => '-bx - Brunei',
+				'cau' => 'cau - California',
+				'-cb' => '-cb - Cambodia',
+				'-cc' => '-cc -China',
+				'-cd' => '-cd - Chad',
+				'-ce' => '-ce - Sri Lanka',
+				'-cf' => '-cf - Congo (Brazzaville)',
+				'-cg' => '-cg - Congo (Democratic Republic)',
+				'-ch' => '-ch - China (Republic : 1949- )',
+				'-ci' => '-ci - Croatia',
+				'-cj' => '-cj - Cayman Islands',
+				'-ck' => '-ck - Colombia',
+				'-cl' => '-cl - Chile',
+				'-cm' => '-cm - Cameroon',
+				'-cn' => '-cn - Canada',
+				'cou' => 'cou - Colorado',
+				'-cp' => '-cp - Canton and Enderbury Islands',
+				'-cq' => '-cq - Comoros',
+				'-cr' => '-cr - Costa Rica',
+				'-cs' => '-cs - Czechoslovakia',
+				'ctu' => 'ctu - Connecticut',
+				'-cu' => '-cu - Cuba',
+				'-cv' => '-cv - Cape Verde',
+				'-cw' => '-cw - Cook Islands',
+				'-cx' => '-cx - Central African Republic',
+				'-cy' => '-cy - Cyprus',
+				'-cz' => '-cz - Canal Zone',
+				'dcu' => 'dcu - District of Columbia',
+				'deu' => 'deu - Delaware',
+				'-dk' => '-dk - Denmark',
+				'-dm' => '-dm - Benin',
+				'-dq' => '-dq - Dominica',
+				'-dr' => '-dr - Dominican Republic',
+				'-ea' => '-ea - Eritrea',
+				'-ec' => '-ec - Ecuador',
+				'-eg' => '-eg - Equatorial Guinea',
+				'-em' => '-em - East Timor',
+				'enk' => 'enk - England',
+				'-er' => '-er - Estonia',
+				/*'err' => 'Estonia',*/
+				'-es' => '-es - El Salvador',
+				'-et' => '-et - Ethiopia',
+				'-fa' => '-fa - Faroe Islands',
+				'-fg' => '-fg - French Guiana',
+				'-fi' => '-fi - Finland',
+				'-fj' => '-fj - Fiji',
+				'-fk' => '-fk - Falkland Islands',
+				'flu' => 'flu - Florida',
+				'-fm' => '-fm - Micronesia (Federated States)',
+				'-fp' => '-fp - French Polynesia',
+				'-fr' => '-fr - France',
+				'-fs' => '-fs - Terres australes et antarctiques françaises',
+				'-ft' => '-ft - Djibouti',
+				'gau' => 'gau - GeorgiaCode Sequence',
+				'-gb' => '-gb - Kiribati',
+				'-gd' => '-gd - Grenada',
+				'-ge' => '-ge - Germany (East)',
+				'-gh' => '-gh - Ghana',
+				'-gi' => '-gi - Gibraltar',
+				'-gl' => '-gl - Greenland',
+				'-gm' => '-gm - Gambia',
+				'-gn' => '-gn - Gilbert and Ellice Islands',
+				'-go' => '-go - Gabon',
+				'-gp' => '-gp - Guadeloupe',
+				'-gr' => '-gr - Greece',
+				'-gs' => '-gs - Georgia (Republic)',
+				'gsr' => 'gsr - Georgian S.S.R.',
+				'-gt' => '-gt - Guatemala',
+				'-gu' => '-gu - Guam',
+				'-gv' => '-gv - Guinea',
+				'-gw' => '-gw - Germany',
+				'-gy' => '-gy - Guyana',
+				'-gz' => '-gz - Gaza Strip',
+				'hiu' => 'hiu - Hawaii',
+				'-hk' => '-hk - Hong Kong',
+				'-hm' => '-hm - Heard and McDonald Islands',
+				'-ho' => '-ho - Honduras',
+				'-ht' => '-ht - Haiti',
+				'-hu' => '-hu - Hungary',
+				'iau' => 'iau - Iowa',
+				'-ic' => '-ic - Iceland',
+				'idu' => 'idu - Idaho',
+				'-ie' => '-ie - Ireland',
+				'-ii' => '-ii - India',
+				'ilu' => 'ilu - Illinois',
+				'inu' => 'inu - Indiana',
+				'-io' => '-io - Indonesia',
+				'-iq' => '-iq - Iraq',
+				'-ir' => '-ir - Iran',
+				'-is' => '-is - Israel',
+				'-it' => '-it - Italy',
+				'-iu' => '-iu - Israel-Syria Demilitarized Zones',
+				'-iv' => "-iv - Côte d’Ivoire",
+				'-iw' => '-iw - Israel-Jordan Demilitarized Zones',
+				'-iy' => '-iy - Iraq-Saudi Arabia Neutral Zone',
+				'-ja' => '-ja - Japan',
+				'-ji' => '-ji - Johnston Atoll',
+				'-jm' => '-jm - Jamaica',
+				'-jn' => '-jn - Jan Mayen',
+				'-jo' => '-jo - Jordan',
+				'-ke' => '-ke - Kenya',
+				'-kg' => '-kg - Kyrgyzstan',
+				'kgr' => 'kgr - Kirghiz S.S.R.',
+				'-kn' => '-kn - Korea (North)',
+				'-ko' => '-ko - Korea (South)',
+				'ksu' => 'ksu - Kansas',
+				'-ku' => '-ku - Kuwait',
+				'kyu' => 'kyu -Kentucky',
+				'-kz' => '-kz - Kazakhstan',
+				'kzr' => 'kzr - Kazakh S.S.R.',
+				'lau' => 'lau - Louisiana',
+				'-lb' => 'Liberia',
+				'-le' => '-lb - Lebanon',
+				'-lh' => '-lh - Liechtenstein',
+				'-li' => '-li - Lithuania',
+				/*'lir' => 'Lithuania',*/
+				'-ln' => '-ln - Central and Southern Line Islands',
+				'-lo' => '-lo - Lesotho',
+				'-ls' => '-ls - Laos',
+				'-lu' => '-lu - Luxembourg',
+				'-lv' => '-lv - Latvia',
+				/*'lvr' => 'Latvia',*/
+				'-ly' => '-ly - Libya',
+				'mau' => 'mau - Massachusetts',
+				'mbc' => 'mbc - Manitoba',
+				'-mc' => '-mc - Monaco',
+				'mdu' => 'mdu - Maryland',
+				'meu' => 'meu - Maine',
+				'-mf' => '-mf - Mauritius',
+				'-mg' => '-mg - Madagascar',
+				'-mh' => '-mh - Macao',
+				'miu' => 'miu - Michigan',
+				'-mj' => '-mj - Montserrat',
+				'-mk' => '-mk - Oman',
+				'-ml' => '-ml - Mali',
+				'-mm' => '-mm - Malta',
+				'mnu' => 'mnu - Minnesota',
+				'mou' => 'mou - Missouri',
+				'-mp' => '-mp - Mongolia',
+				'-mq' => '-mq - Martinique',
+				'-mr' => '-mr - Morocco',
+				'msu' => 'msu - Mississippi',
+				'mtu' => 'mtu - Montana',
+				'-mu' => '-mu - Mauritania',
+				'-mv' => '-mv - Moldova',
+				'mvr' => 'mvr - Moldavian S.S.R.',
+				'-mw' => '-mw - Malawi',
+				'-mx' => '-mx - Mexico',
+				'-my' => '-my - Malaysia',
+				'-mz' => '-mz - Mozambique',
+				'-na' => '-na - Netherlands Antilles',
+				'nbu' => 'nbu - Nebraska',
+				'ncu' => 'ncu - North Carolina',
+				'ndu' => 'ndu - North Dakota',
+				'-ne' => '-ne - Netherlands',
+				'nfc' => 'nfc - Newfoundland and Labrador',
+				'-ng' => '-ng - Niger',
+				'nhu' => 'nhu - New Hampshire',
+				'nik' => 'nik - Northern Ireland',
+				'nju' => 'nju - New Jersey',
+				'nkc' => 'nkc - New Brunswick',
+				'-nl' => '-nl - New CaledoniaCode Sequence',
+				'-nm' => '-nm - Northern Mariana Islands',
+				'nmu' => 'nmu - New Mexico',
+				'-nn' => '-nn - Vanuatu',
+				'-no' => '-no - Norway',
+				'-np' => '-np - Nepal',
+				'-nq' => '-nq - Nicaragua',
+				'-nr' => '-nr - Nigeria',
+				'nsc' => 'nsc - Nova Scotia',
+				'ntc' => 'ntc - Northwest Territories',
+				'-nu' => '-nu - Nauru',
+				'nuc' => 'nuc - Nunavut',
+				'nvu' => 'nvu - Nevada',
+				'-nx' => '-nx - Norfolk Island',
+				'nyu' => 'nyu - New York (State)',
+				'-nz' => '-nz - New Zealand',
+				'ohu' => 'ohu - Ohio',
+				'oku' => 'oku - Oklahoma',
+				'onc' => 'onc - Ontario',
+				'oru' => 'oru - Oregon',
+				'-ot' => '-ot - Mayotte',
+				'pau' => 'pau - Pennsylvania',
+				'-pc' => '-pc - Pitcairn Island',
+				'-pe' => '-pe - Peru',
+				'-pf' => '-pf - Paracel Islands',
+				'-pg' => '-pg - Guinea-Bissau',
+				'-ph' => '-ph - Philippines',
+				'pic' => 'pic - Prince Edward Island',
+				'-pk' => '-pk - Pakistan',
+				'-pl' => '-pl - Poland',
+				'-pn' => '-pn - Panama',
+				'-po' => '-po - Portugal',
+				'-pp' => '-pp - Papua New Guinea',
+				'-pr' => '-pr - Puerto Rico',
+				'-pt' => '-pt - Portuguese Timor',
+				'-pw' => '-pw - Palau',
+				'-py' => '-py - Paraguay',
+				'-qa' => '-qa - Qatar',
+				'quc' => 'quc - Québec (Province)',
+				'-re' => '-re - Réunion',
+				'-rh' => '-rh - Zimbabwe',
+				'riu' => 'riu - Rhode Island',
+				'-rm' => '-rm - Romania',
+				'-ru' => '-ru - Russia (Federation)',
+				'rur' => 'rur - Russian S.F.S.R.',
+				'-rw' => '-rw - Rwanda',
+				'-ry' => '-ry - Ryukyu Islands, Southern',
+				'-sa' => '-sa - South Africa',
+				'-sb' => '-sb - Svalbard',
+				'scu' => 'scu - South Carolina',
+				'sdu' => 'sdu - South Dakota',
+				'-se' => '-se - Seychelles',
+				'-sf' => '-sf - Sao Tome and Principe',
+				'-sg' => '-sg - Senegal',
+				'-sh' => '-sh - Spanish North Africa',
+				'-si' => '-si - Singapore',
+				'-sj' => '-sj - Sudan',
+				'-sk' => '-sk - Sikkim',
+				'-sl' => '-sl - Sierra Leone',
+				'-sm' => '-sm - San Marino',
+				'snc' => 'snc - Saskatchewan',
+				'-so' => '-so - Somalia',
+				'-sp' => '-sp - Spain',
+				'-sq' => '-sq - Swaziland',
+				'-sr' => '-sr - Surinam',
+				'-ss' => '-ss - Western Sahara',
+				'stk' => 'stk - Scotland',
+				'-su' => '-su - Saudi Arabia',
+				'-sv' => '-sv - Swan Islands',
+				'-sw' => '-sw - Sweden',
+				'-sx' => '-sx - Namibia',
+				'-sy' => '-sy - Syria',
+				'-sz' => '-sz - Switzerland',
+				'-ta' => '-ta - Tajikistan',
+				'tar' => 'tar - Tajik S.S.R.',
+				'-tc' => '-tc - Turks and Caicos Islands',
+				'-tg' => '-tg - Togo',
+				'-th' => '-th - Thailand',
+				'-ti' => '-ti - Tunisia',
+				'-tk' => '-tk - Turkmenistan',
+				'tkr' => 'tkr - Turkmen S.S.R.',
+				'-tl' => '-tl - Tokelau',
+				'tnu' => 'tnu - Tennessee',
+				'-to' => '-to - Tonga',
+				'-tr' => '-tr - Trinidad and Tobago',
+				'-ts' => '-ts - United Arab Emirates',
+				'-tt' => '-tt - Trust Territory of the Pacific Islands',
+				'-tu' => '-tu - Turkey',
+				'-tv' => '-tv - Tuvalu',
+				'txu' => 'txu - Texas',
+				'-tz' => '-tz - Tanzania',
+				'-ua' => '-ua - Egypt',
+				'-uc' => '-uc - United States Misc. Caribbean Islands',
+				'-ug' => '-ug - Uganda',
+				'-ui' => '-ui - United Kingdom Misc. Islands',
+				/*'uik' => 'United Kingdom Misc. Islands',*/
+				'-uk' => '-uk - United Kingdom',
+				'-un' => '-un - Ukraine',
+				/*'unr' => 'Ukraine',*/
+				'-up' => '-up - United States Misc. Pacific Islands',
+				'-ur' => '-ur - Soviet Union',
+				'-us' => '-us - United States',
+				'utu' => 'utu - Utah',
+				'-uv' => '-uv - Burkina Faso',
+				'-uy' => '-uy - Uruguay',
+				'-uz' => '-uz - Uzbekistan',
+				'uzr' => 'uzr - Uzbek S.S.R.Code Sequence',
+				'vau' => 'vau - Virginia',
+				'-vb' => '-vb - British Virgin Islands',
+				'-vc' => '-vc - Vatican City',
+				've' => '-ve - Venezuela',
+				'-vi' => '-vi - Virgin Islands of the United States',
+				'-vm' => '-vm - Vietnam',
+				'-vn' => '-vn - Vietnam, North',
+				'-vp' => '-vp - Various places',
+				'-vs' => '-vs - Vietnam, South',
+				'vtu' => 'vtu - Vermont',
+				'wau' => 'wau - Washington (State)',
+				'-wb' => '-wb - West Berlin',
+				'-wf' => '-wf - Wallis and Futuna',
+				'wiu' => 'wiu - Wisconsin',
+				'-wj' => '-wj - West Bank of the Jordan River',
+				'-wk' => '-wk - Wake Island',
+				'wlk' => 'wlk - Wales',
+				'-ws' => '-ws - Samoa',
+				'wvu' => 'wvu - West Virginia',
+				'wyu' => 'wyu - Wyoming',
+				'-xa' => '-xa - Christmas Island (Indian Ocean)',
+				'-xb' => '-xb - Cocos (Keeling)Islands',
+				'-xc' => '-xc - Maldives',
+				'-xd' => '-xd - Saint Kitts-Nevis',
+				'-xe' => '-xe - Marshall Islands',
+				'-xf' => '-xf - Midway Islands',
+				'-xh' => '-xh - Niue',
+				'-xi' => '-xi - Saint Kitts-Nevis-Anguilla',
+				'-xj' => '-xj - Saint Helena',
+				'-xk' => '-xk - Saint Lucia',
+				'-xl' => '-xl - Saint Pierre and Miquelon',
+				'-xm' => '-xm - Saint Vincent and the Grenadines',
+				'-xn' => '-xn - Macedonia',
+				'-xo' => '-xo - Slovakia',
+				'-xp' => '-xp - Spratly Island',
+				'-xr' => '-xr - Czech Republic',
+				'-xs' => '-xs - South Georgia and the South Sandwich Islands',
+				'-xv' => '-xv - lovenia',
+				'xxx' => 'xxx - No place, unknown, or undetermined',
+				/*'xxc' => 'Canada',
+				'xxk' => 'United Kingdom',*/
+				/*'xxr' => 'Soviet Union',*/
+				/*'xxu' => 'United States',*/
+				'-ye' => '-ye - Yemen',
+				'ykc' => 'Ykc - ukon Territory',
+				'-ys' => '-ys - Yemen (People’s Democratic Republic)',
+				'-yu' => '-yu - Serbia and Montenegro',
+				'-za' => '-za - Zambia'
+			), 'default' => 've'
+		)); ?></td>
 	</tr>
 </table>
 
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>047</b></th>
-		<th style="width: 45%;"><b>Código de forma de composición .</b></th>
+		<th style="width: 45%;"><b>Código de forma de composición musical.</b></th>
 		<th style="width: 45%;">
 			<label id="l-047">&nbsp;</label>
 			<?php echo $this->Form->hidden('047', array('id' => '047', 'label' => false, 'div' => false)); ?>
 		</th>
 	</tr>
+		<tr>
+		<td><b>I1</b></td>
+		<td>No definido.</td>
+		<td><?php echo $this->Form->input('047i1', array('id' => '047i1', 'label' => false, 'div' => false, 'class' => 'form-control',
+			'options' => array(
+				'#' => '# - No se proporciona información'
+			), 'selected' => '#'
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>I2</b></td>
+		<td>Fuente del código.</td>
+		<td><?php echo $this->Form->input('047i2', array('id' => '047i2', 'label' => false, 'div' => false, 'class' => 'form-control',
+			'options' => array(
+					'#' => '# - Código MARC de lengua',
+					'7' => '7 - Fuente especificada en el subcampo $b'
+			)
+		)); ?></td>
+	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>Código de la forma de composición.</font>.</td>
-		<td><?php echo $this->Form->input('047a', array('id' => '047a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>Código de la forma de composición musical.</td>
+		<td><?php echo $this->Form->input('047a', array('id' => '047a', 'label' => false, 'div' => false, 'class' => 'form-control',
+			'options' => array(
+				'an' => 'an - Antífonas',
+				'bd' => 'bd - Baladas',
+				'bg' => 'bg - Bluegrass',
+				'bl' => 'bl - Blues',
+				'bt' => 'bt - Ballets',
+				'ca' => 'ca - Chaconas',
+				'cb' => 'cb - Cantos, otras religiones',
+				'cc' => 'cc - Cantos cristianos',
+				'cg' => 'cg - Concerti grossi',
+				'ch' => 'ch - Corales',
+				'cl' => 'cl - Preludios corales',
+				'cn' => 'cn - Cánones',
+				'co' => 'co - Conciertos',
+				'cp' => 'cp - Polifonías',
+				'cr' => 'cr - Canciones de navidad',
+				'cs' => 'cs - Música aleatoria',
+				'ct' => 'ct - Cantatas',
+				'cy' => 'cy - Música country',
+				'cz' => 'cz - Canzonas',
+				'df' => 'df - Bailes',
+				'dv' => 'dv - Divertimentos, serenatas, casaciones o nocturnos',
+				'fg' => 'fg - Fugas',
+				'fl' => 'fl- Flamenco',
+				'fm' => 'fm - Música popular',
+				'ft' => 'ft - Fantasías',
+				'gm' => 'gm - Música gospel',
+				'hy' => 'hy - Himnos',
+				'jz' => 'jz - Jazz',
+				'mc' => 'mc - Revistas y comedias musicales',
+				'md' => 'md - Madrigales',
+				'mi' => 'mi - Minuetos',
+				'mo' => 'mo - Motetes',
+				'mp' => 'mp - Música para cine',
+				'mr' => 'mr - Marchas',
+				'ms' => 'ms - Misas',
+				'mu' => 'mu - Varias formas musicales',
+				'mz' => 'mz - Mazurcas',
+				'nc' => 'nc - Nocturnos',
+				'nn' => 'nn - No aplicable',
+				'op' => 'op - Óperas',
+				'or' => 'or - Oratorios',
+				'ov' => 'ov - Oberturas',
+				'pg' => 'pg - Música de programa',
+				'po' => 'po - Polonesas',
+				'pp' => 'pp - Música ligera',
+				'pr' => 'pr - Preludios',
+				'ps' => 'ps - Pasacalles',
+				'pt' => 'pt - Cantos polifónicos',
+				'pv' => 'pv - Pavanas',
+				'rc' => 'rc - Música rock',
+				'rd' => 'rd - Rondós',
+				'rg' => 'rg - Ragtime',
+				'ri' => 'ri - Ricercares',
+				'rp' => 'rp - Rapsodias',
+				'rq' => 'rq - Requiems',
+				'sd' => 'sd - Música de baile',
+				'sg' => 'sg - Canciones',
+				'sn' => 'sn - Sonatas',
+				'sp' => 'sp - Poemas sinfónicos',
+				'st' => 'st - Estudios y ejercicios',
+				'su' => 'su - Suites',
+				'sy' => 'sy - Sinfonías',
+				'tc' => 'tc - Tocatas',
+				'tl' => 'tl - Teatro lírico',
+				'ts' => 'ts - Trío-sonatas',
+				'uu' => 'uu - Desconocido',
+				'vi' => 'vi - Villancicos',
+				'vr' => 'vr - Variaciones',
+				'wz' => 'wz - Valses',
+				'za' => 'za - Zarzuelas',
+				'zz' => 'zz - Otro',
+				'||' => '|| - No se utiliza'
+				)
+		)); ?></td>
 	</tr>
 </table>
 
@@ -1566,39 +2614,118 @@ th {
 				), 'selected' => '#'
 		)); ?></td>
 	</tr>
-	<tr>
+		<tr>
 		<td><b>$a</b></td>
 		<td>Código de ejecutante o conjunto.</font>.</td>
-		<td><?php echo $this->Form->input('048a', array('id' => '048a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('048a', array('id' => '048a', 'label' => false, 'div' => false, 'class' => 'form-control',
+		'options' => array(
+			'ba' => 'ba Metales – Corno', 
+'bb' => 'bb Metales – Trompeta', 
+'bc' => 'bc Metales – Corneta', 
+'bd' => 'bd Metales – Trombón', 
+'be' => 'be Metales – Tuba', 
+'bf' => 'bf Metales – Saxofon barítono', 
+'bn' => 'bn Metales – No determinado', 
+'bu' => 'bu Metales – Desconocido', 
+'by' => 'by Metales – Étnico', 
+'bz' => 'bz Metales – Otros', 
+'ca' => 'ca Coros – Mixtos', 
+'cb' => 'cb Coros – Femenino', 
+'cc' => 'cc Coros – Masculino', 
+'cd' => 'cd Coros – Infantil', 
+'cn' => 'cn Coros – No determinado', 
+'cu' => 'cu Coros – Desconocido', 
+'cy' => 'cy Coros – Étnico', 
+'ea' => 'ea Electrónico – Sintetizador', 
+'eb' => 'eb Electrónico – Cinta', 
+'ec' => 'ec Electrónico – Computador',
+'ed' => 'ed Electrónico – Ondas Martinot', 
+'en' => 'en Electrónico – No determinado', 
+'eu' => 'eu Electrónico – Desconocido', 
+'ez' => 'ez Electrónico – Otros', 
+'ka' => 'ka Teclados – Piano', 
+'kb' => 'kb Teclados – Órgano', 
+'kc' => 'kc Teclados – Clave', 
+'kd' => 'kd Teclados – Clavicordio', 
+'ke' => 'ke Teclados – Contínuo', 
+'kf' => 'kf Teclados – Celeste', 
+'kn' => 'kn Teclados – No determinado', 
+'ku' => 'ku Teclados – Desconocido', 
+'ky' => 'ky Teclados – Étnico',
+'kz' => 'kz Teclados – Otros', 
+'oa' => 'oa Conjunto mayor – Orquesta completa', 
+'ob' => 'ob Conjunto mayor – Orquesta de cámara',
+'oc' => 'oc Conjunto mayor – Orquesta de cuerdas', 
+'od' => 'od Conjunto mayor – Banda',
+'oe' => 'oe Conjunto mayor – Orquesta de baile', 
+'of' => 'of Conjunto mayor – Bandas de alientos metálicos (con o sin percusión)',
+'on' => 'on Conjunto mayor – No especificado',
+'ou' => 'ou Conjunto mayor – Desconocido',
+'oy' => 'oy Conjunto mayor – Étnico',
+'oz' => 'oz Conjunto mayor – Otros', 
+'pa' => 'pa Percusión – Timpano', 
+'pb' => 'pb Percusión – Xilófono', 
+'pc' => 'pc Percusión – Marimba', 
+'pd' => 'pd Percusión Tambor', 
+'pn' => 'pn Percusión – No especificado', 
+'pu' => 'pu Percusión – Desconocido',
+'py' => 'py Percusión – Étnico', 
+'pz' => 'pz Percusión – Otros', 
+'sa' => 'sa Cuerdas con arco Violín',
+'sb' => 'sb Cuerdas con arco – Viola', 
+'sc' => 'sc Cuerdas con arco – Violonchelo',
+'sd' => 'sd Cuerdas con arco Violón', 
+'se' => 'se Cuerdas con arco – Viola antigua', 
+'sf' => "sf Cuerdas con arco – Viola d'amore", 
+'sg' => 'sg Cuerdas con arco – Viola de gamba', 
+'sn' => 'sn Cuerdas con arco – No definido', 
+'su' => 'su Cuerdas con arco – Desconocido', 
+'sy' => 'sy Cuerdas con arco – Étnico', 
+'sz' => 'sz Cuerdas con arco – Otros', 
+'ta' => 'ta Cuerdas pulsadas – Arpa', 
+'tb' => 'tb Cuerdas pulsadas – Guitarra', 
+'tc' => 'tc Cuerdas pulsadas – Laúd', 
+'td' => 'td Cuerdas pulsadas – Mandolina', 
+'tn' => 'tn Cuerdas pulsadas -  No definido', 
+'tu' => 'tu Cuerdas pulsadas – Desconocido', 
+'ty' => 'ty Cuerdas pulsadas – Étnico', 
+'tz' => 'tz Cuerdas pulsadas – Otros', 
+'va' => 'va Voces – Soprano', 
+'vb' => 'vb Voces – Mezzo soprano', 
+'vc' => 'vc Voces – Contralto', 
+'vd' => 'vd Voces – Tenor', 
+'ve' => 've Voces – Barítono', 
+'vf' => 'vf Voces – Bajo', 
+'vg' => 'vg Voces- Contralto (masculino)', 
+'vh' => 'vh Voces – Voz alta', 
+'vi' => 'vi Voces – Media voz',
+'vj' => 'vj Voces – Voz baja', 
+'vn' => 'vn Voces – No definido',
+'vu' => 'vu Voces – Desconocido', 
+'vy' => 'vy Voces – Étnico', 
+'wa' => 'wa Alientos de madera – Flauta', 
+'wb' => 'wb Alientos de madera – Oboe', 
+'wc' => 'wc Alientos de madera – Clarinete', 
+'wd' => 'wd Alientos de madera – Fagot', 
+'we' => 'we Alientos de madera – Flautín', 
+'wf' => 'wf Alientos de madera – Corno inglés', 
+'wg' => 'wg Alientos de madera – Clarinete bajo', 
+'wh' => 'wh Alientos de madera – Flauta dulce', 
+'wi' => 'wi Alientos de madera – Saxofón', 
+'wn' => 'wn Alientos de madera – No definido', 
+'wu' => 'wu Alientos de madera Desconocido', 
+'wy' => 'wy Alientos de madera – Étnico', 
+'wz' => 'wz Alientos de madera – Otros', 
+'zn' => 'zn Instrumentos no definidos',
+'zu' => 'zu Desconocido')
+		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
-		<td>Código del solista.</font>.</td>
+		<td>Código del solista.</td>
 		<td><?php echo $this->Form->input('048b', array('id' => '048b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>049</b></th>
-		<th style="width: 45%;"><b>Autor o material venezolano.</b></th>
-		<th style="width: 45%;">
-			<label id="l-049">&nbsp;</label>
-			<?php echo $this->Form->hidden('049', array('id' => '049', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Autor venezolano.</td>
-		<td><?php echo $this->Form->input('049a', array('id' => '049a', 'label' => false, 'div' => false)); ?></td>
-	</tr>
-		<tr>
-		<td><b>$b</b></td>
-		<td>Material venezolano.</td>
-		<td><?php echo $this->Form->input('049b', array('id' => '049b', 'label' => false, 'div' => false)); ?></td>
-	</tr>
-</table>
-
 
 
 <table class="table">
@@ -1666,26 +2793,6 @@ th {
 		<td><b>$c</b></td>
 		<td>A disposición del centro catalogador.</td>
 		<td><?php echo $this->Form->input('092c', array('id' => '092c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>099</b></th>
-		<th style="width: 45%;"><b>Número de clasificación textual libre local.</b></td>
-		<th style="width: 45%;">
-			<label id="l-099">&nbsp;</label>
-			<?php echo $this->Form->hidden('099', array('id' => '099', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Siglas de la colección.</td>
-		<td><?php echo $this->Form->input('099a', array('id' => '099a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Siglas de manuscritos.</td>
-		<td><?php echo $this->Form->input('099b', array('id' => '099b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
 </div>
@@ -1774,109 +2881,9 @@ th {
 	</tr>
 </table>
 
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>130</b></th>
-		<th style="width: 45%;"><b>Título uniforme (Punto de acceso).</b></th>
-		<th style="width: 45%;">
-			<label id="l-130">&nbsp;</label>
-			<?php echo $this->Form->hidden('130', array('id' => '130', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>I1</b></td>
-		<td>Caracteres que no alfabetizan.</td>
-		<td><?php echo $this->Form->input('130i1', array('id' => '130i1', 'label' => false, 'div' => false, 'class' => 'form-control', 
-			'options' => array(
-				'0' => '0',
-				'1' => '1',
-				'2' => '2',
-				'3' => '3',
-				'4' => '4',
-				'5' => '5',
-				'6' => '6',
-				'7' => '7',
-				'8' => '8',
-				'9' => '9',		
-			), 'selected' => '0'
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>I2</b></td>
-		<td>No definido.</td>
-		<td><?php echo $this->Form->input('130i2', array('id' => '130i2', 'label' => false, 'div' => false, 'class' => 'form-control',
-			'options' => array(
-					'#' => '# - No definido'
-			)
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Título uniforme.</td>
-		<td><?php echo $this->Form->input('130a', array('id' => '130a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$n</b></td>
-		<td>Número de parte o sección de la obra.</td>
-		<td><?php echo $this->Form->input('130n', array('id' => '130n', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$p</b></td>
-		<td>Nombre de parte o sección de la obra.</td>
-		<td><?php echo $this->Form->input('130p', array('id' => '130p', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
 </div>
 
 <div id="2xx" class="tabs" style="display: none;">
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>222</b></th>
-		<th style="width: 45%;"><b>Título clave.</b></th>
-		<th style="width: 45%;">
-			<label id="l-222">&nbsp;</label>
-			<?php echo $this->Form->hidden('222', array('id' => '222', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>I1</b></td>
-		<td>No definido.</td>
-		<td><?php echo $this->Form->input('222i1', array('id' => '222i1', 'label' => false, 'div' => false, 'class' => 'form-control', 
-			'options' => array(
-				'#' => '# - No definido'
-			)
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>I2</b></td>
-		<td>Caracteres que no alfabetizan.</td>
-		<td><?php echo $this->Form->input('222i2', array('id' => '222i2', 'label' => false, 'div' => false, 'class' => 'form-control',
-			'options' => array(
-				'0' => '0',
-				'1' => '1',
-				'2' => '2',
-				'3' => '3',
-				'4' => '4',
-				'5' => '5',
-				'6' => '6',
-				'7' => '7',
-				'8' => '8',
-				'9' => '9'
-			)
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Título clave.</td>
-		<td><?php echo $this->Form->input('222a', array('id' => '222a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Información adicional.</td>
-		<td><?php echo $this->Form->input('222b', array('id' => '222b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>240</b></th>
@@ -2063,47 +3070,6 @@ th {
 
 <table class="table">
 	<tr>
-		<th style="width: 10%;"><b>247</b></th>
-		<th style="width: 45%;"><b>Título anterior.</b></th>
-		<th style="width: 45%;">
-			<label id="l-247">&nbsp;</label>
-			<?php echo $this->Form->hidden('247', array('id' => '247', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Título.</td>
-		<td><?php echo $this->Form->input('247a', array('id' => '247a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Subtítulo o título paralelo.</td>
-		<td><?php echo $this->Form->input('247b', array('id' => '247b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$f</b></td>
-		<td>Fecha o designación secuencial.</td>
-		<td><?php echo $this->Form->input('247f', array('id' => '247f', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$g</b></td>
-		<td>Nota sobre el título anterior.</td>
-		<td><?php echo $this->Form->input('247g', array('id' => '247g', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$n</b></td>
-		<td>Número de parte o sección de la obra.</td>
-		<td><?php echo $this->Form->input('247n', array('id' => '247n', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$p</b></td>
-		<td>Nombre de parte o sección de la obra.</td>
-		<td><?php echo $this->Form->input('247p', array('id' => '247p', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
 		<th style="width: 10%;"><b>250</b></th>
 		<th style="width: 45%;"><b>Mención de edición.</b></th>
 		<th style="width: 45%;">
@@ -2125,7 +3091,7 @@ th {
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>254</b></th>
-		<th style="width: 45%;"><b>Mención de edición.</b></th>
+		<th style="width: 45%;"><b>Mención de presentación musical.</b></th>
 		<th style="width: 45%;">
 			<label id="l-254">&nbsp;</label>
 			<?php echo $this->Form->hidden('254', array('id' => '254', 'label' => false, 'div' => false)); ?>
@@ -2133,7 +3099,7 @@ th {
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>Mención de edición o presentación musical.</td>
+		<td>Mención de presentación musical.</td>
 		<td><?php echo $this->Form->input('254a', array('id' => '254a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
@@ -2154,17 +3120,17 @@ th {
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>Lugar de publicación, distribución, etc <font color="red">(Obligatorio)</font>.</td>
+		<td>Lugar de publicación, distribución, etc.</td>
 		<td><?php echo $this->Form->input('260a', array('id' => '260a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
-		<td>Nombre del editor, distribuidor, etc <font color="red">(Obligatorio)</font>.</td>
+		<td>Nombre del editor, distribuidor, etc.</td>
 		<td><?php echo $this->Form->input('260b', array('id' => '260b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
-		<td>Fecha de publicación, distribución, etc <font color="red">(Obligatorio)</font>.</td>
+		<td>Fecha de publicación, distribución, etc.</td>
 		<td><?php echo $this->Form->input('260c', array('id' => '260c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
@@ -2222,144 +3188,6 @@ th {
 		<td><?php echo $this->Form->input('306b', array('id' => '306b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>310</b></th>
-		<th style="width: 45%;"><b>Periodicidad actual.</b></th>
-		<th style="width: 45%;">
-			<label id="l-310">&nbsp;</label>
-			<?php echo $this->Form->hidden('310', array('id' => '310', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Periodicidad actual.</td>
-		<td><?php echo $this->Form->input('310a', array('id' => '310a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Fecha de comienzo de la periodicidad actual.</td>
-		<td><?php echo $this->Form->input('310b', array('id' => '310b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>321</b></th>
-		<th style="width: 45%;"><b>Periodicidad anterior.</b></th>
-		<th style="width: 45%;">
-			<label id="l-321">&nbsp;</label>
-			<?php echo $this->Form->hidden('321', array('id' => '321', 'label' => false, 'div' => false)); ?>
-		</t>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Periodicidad anterior.</td>
-		<td><?php echo $this->Form->input('321a', array('id' => '321a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Fechas de la periodicidad anterior.</td>
-		<td><?php echo $this->Form->input('321b', array('id' => '321b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>336</b></th>
-		<th style="width: 45%;"><b>Tipo de contenido.</b></th>
-		<th style="width: 45%;">
-			<label id="l-336">&nbsp;</label>
-			<?php echo $this->Form->hidden('336', array('id' => '336', 'label' => false, 'div' => false, 'class' => 'form-control')); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Término del tipo de contenido.</font></td>
-		<td><?php echo $this->Form->input('336a', array('id' => '336a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Código de tipo de contenido.</td>
-		<td><?php echo $this->Form->input('336b', array('id' => '336b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>337</b></th>
-		<th style="width: 45%;"><b>Tipo de medio.</b></th>
-		<th style="width: 45%;">
-			<label id="l-337">&nbsp;</label>
-			<?php echo $this->Form->hidden('337', array('id' => '337', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Nombre del tipo de medio.</td>
-		<td><?php echo $this->Form->input('337a', array('id' => '337a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Código de tipo de medio.</td>
-		<td><?php echo $this->Form->input('337b', array('id' => '337b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>340</b></th>
-		<th style="width: 45%;"><b>Medio físico/Tipo de Soporte.</b></td>
-		<th style="width: 45%;">
-			<label id="l-340">&nbsp;</label>
-			<?php echo $this->Form->hidden('340', array('id' => '340', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Base y configuración del material.</td>
-		<td><?php echo $this->Form->input('340a', array('id' => '340a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Dimensiones.</td>
-		<td><?php echo $this->Form->input('340b', array('id' => '340b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$c</b></td>
-		<td>Materiales aplicados a la superficie.</td>
-		<td><?php echo $this->Form->input('340c', array('id' => '340c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$d</b></td>
-		<td>Técnica en la que se registra la información.</td>
-		<td><?php echo $this->Form->input('340d', array('id' => '340d', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$e</b></td>
-		<td>Soporte.</td>
-		<td><?php echo $this->Form->input('340e', array('id' => '340e', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>362</b></th>
-		<th style="width: 45%;"><b>Fechas de publicación y/o designación secuencial.</b></th>
-		<th style="width: 45%;">
-			<label id="l-362">&nbsp;</label>
-			<?php echo $this->Form->hidden('362', array('id' => '362', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Fechas de publicación y/o designación secuencial.</td>
-		<td><?php echo $this->Form->input('362a', array('id' => '362a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>380</b></th>
@@ -2374,6 +3202,27 @@ th {
 		<td>Forma de la obra.</td>
 		<td><?php echo $this->Form->input('380a', array('id' => '380a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
+	<tr>
+		<td><b>$0</b></td>
+		<td>Número de control del registro.</td>
+		<td><?php echo $this->Form->input('3800', array('id' => '3800', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$2</b></td>
+		<td>Fuente del término.</td>
+		<td><?php echo $this->Form->input('3802', array('id' => '3802', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$6</b></td>
+		<td>Enlace.</td>
+		<td><?php echo $this->Form->input('3806', array('id' => '3806', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$8</b></td>
+		<td>Enlace entre campos y número de secuencia.</td>
+		<td><?php echo $this->Form->input('3808', array('id' => '3808', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	
 </table>
 <table class="table">
 	<tr>
@@ -2390,45 +3239,100 @@ th {
 		<td><?php echo $this->Form->input('381a', array('id' => '381a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
-</div>
-
-<div id="4xx" class="tabs" style="display: none;">
 
 <table class="table">
 	<tr>
-		<th style="width: 10%;"><b>440</b></th>
-		<th style="width: 45%;"><b>Mencion de serie/Asiento secundario-titulo.</b></th>
+		<th style="width: 10%;"><b>382</b></th>
+		<th style="width: 45%;"><b>Medio de interpretación.</b></th>
 		<th style="width: 45%;">
-			<label id="l-440">&nbsp;</label>
-			<?php echo $this->Form->hidden('440', array('id' => '440', 'label' => false, 'div' => false)); ?>
+			<label id="l-382">&nbsp;</label>
+			<?php echo $this->Form->hidden('382', array('id' => '382', 'label' => false, 'div' => false)); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>Título de la serie.</td>
-		<td><?php echo $this->Form->input('440a', array('id' => '440a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$n</b></td>
-		<td>Número de parte o seccion de la obra.</td>
-		<td><?php echo $this->Form->input('440n', array('id' => '440n', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$p</b></td>
-		<td>Nombre de parte o seccion de la obra.</td>
-		<td><?php echo $this->Form->input('440p', array('id' => '440p', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$x</b></td>
-		<td>Número normalizado de la serie.</td>
-		<td><?php echo $this->Form->input('440x', array('id' => '440x', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$v</b></td>
-		<td>Volúmen.</td>
-		<td><?php echo $this->Form->input('440v', array('id' => '440v', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>Medio de interpretación.</td>
+		<td><?php echo $this->Form->input('382a', array('id' => '382a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
+
+<table class="table">
+	<tr>
+		<th style="width: 10%;"><b>383</b></th>
+		<th style="width: 45%;"><b>Designación numérica de obra musical.</b></th>
+		<th style="width: 45%;">
+			<label id="l-383">&nbsp;</label>
+			<?php echo $this->Form->hidden('383', array('id' => '383', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Número de serie.</td>
+		<td><?php echo $this->Form->input('383a', array('id' => '383a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$b</b></td>
+		<td>Número de opus.</td>
+		<td><?php echo $this->Form->input('383b', array('id' => '383b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$c</b></td>
+		<td>Número de catálogo temático.</td>
+		<td><?php echo $this->Form->input('383c', array('id' => '383c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$d</b></td>
+		<td>Código de catálogo temático.</td>
+		<td><?php echo $this->Form->input('383d', array('id' => '383d', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$e</b></td>
+		<td>Editor asociado al número de serie o de opus.</td>
+		<td><?php echo $this->Form->input('383e', array('id' => '383e', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+</table>
+
+<table class="table">
+	<tr>
+		<th style="width: 10%;"><b>384</b></th>
+		<th style="width: 45%;"><b>Tonalidad.</b></th>
+		<th style="width: 45%;">
+			<label id="l-384">&nbsp;</label>
+			<?php echo $this->Form->hidden('384', array('id' => '384', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>I1</b></td>
+		<td>Tipo de tonalidad.</td>
+		<td><?php echo $this->Form->input('384i1', array('id' => '384i1', 'label' => false, 'div' => false,  'class' => 'form-control',
+			'options' => array(
+					'#' => '# - Se desconoce la relación con la tonalidad original',
+					'0' => '0 - Tonalidad original',
+					'1' => '1 - Tonalidad transportada'
+			), 'selected' => '0'
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>I2</b></td>
+		<td>No definido.</td>
+		<td><?php echo $this->Form->input('384i2', array('id' => '384i2', 'label' => false, 'div' => false, 'class' => 'form-control',
+			'options' => array(
+					'#' => '# - No definido'
+			), 'selected' => '#'
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Tonalidad.</td>
+		<td><?php echo $this->Form->input('384a', array('id' => '384a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+</table>
+
+</div>
+
+<div id="4xx" class="tabs" style="display: none;">
+
+
 <table class="table">
 	<tr>
 		<th style="width: 1o%;"><b>490</b></th>
@@ -2554,7 +3458,7 @@ th {
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>508</b></th>
-		<th style="width: 45%;"><b>Nota de “Con”.</b></th>
+		<th style="width: 45%;"><b>Nota de créditos de creación o producción.</b></th>
 		<th style="width: 45%;">
 			<label id="l-508">&nbsp;</label>
 			<?php echo $this->Form->hidden('508', array('id' => '508', 'label' => false, 'div' => false)); ?>
@@ -2562,52 +3466,9 @@ th {
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>Con.</td>
+		<td>Nota de créditos de creación o producción.</td>
 		<td><?php echo $this->Form->input('508a', array('id' => '508a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>510</b></th>
-		<th style="width: 45%;"><b>Nota de citas o referencias bibliográficas.</b></th>
-		<th style="width: 45%;">
-			<label id="l-510">&nbsp;</label>
-			<?php echo $this->Form->hidden('510', array('id' => '510', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>I1</b></td>
-		<td>Cobertura/localización dentro de la fuente.</td>
-		<td><?php echo $this->Form->input('510i1', array('id' => '510i1', 'label' => false, 'div' => false, 'class' => 'form-control', 
-			'options' => array(
-				'0' => '0 - Cobertura desconocida',
-				'1' => '1 - Cobertura completa',
-				'2' => '2 - Cobertura selectiva',
-				'3' => '3 - No se indica la localización dentro de la fuente',
-				'4' => '4 - Se indica la localización dentro de la fuente'
-			), 'selected' => '3'
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>I2</b></td>
-		<td>No definido.</td>
-		<td><?php echo $this->Form->input('510i2', array('id' => '510i2', 'label' => false, 'div' => false, 'class' => 'form-control',
-			'options' => array(
-					'#' => '# - No definido'
-			)
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Nombre de la fuente.</td>
-		<td><?php echo $this->Form->input('510a', array('id' => '510a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$c</b></td>
-		<td>Localización dentro de la fuente.</td>
-		<td><?php echo $this->Form->input('510c', array('id' => '510c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
 
 <table class="table">
 	<tr>
@@ -2644,20 +3505,19 @@ th {
 	</tr>
 </table>
 
-
 <table class="table">
 	<tr>
-		<th style="width: 10%;"><b>515</b></th>
-		<th style="width: 45%;"><b>Nota de peculiaridades de la numeración.</b></th>
+		<th style="width: 10%;"><b>518</b></th>
+		<th style="width: 45%;"><b>Nota de fecha/hora y lugar de un acontecimiento.</b></th>
 		<th style="width: 45%;">
-			<label id="l-515">&nbsp;</label>
-			<?php echo $this->Form->hidden('515', array('id' => '515', 'label' => false, 'div' => false)); ?>
+			<label id="l-518">&nbsp;</label>
+			<?php echo $this->Form->hidden('518', array('id' => '518', 'label' => false, 'div' => false)); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>Nota de peculiaridades de la numeración.</td>
-		<td><?php echo $this->Form->input('515a', array('id' => '515a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>Nota de fecha/hora y lugar de un acontecimiento.</td>
+		<td><?php echo $this->Form->input('518a', array('id' => '518a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
 
@@ -2699,11 +3559,6 @@ th {
 		<td>Sumario, etc.</td>
 		<td><?php echo $this->Form->input('520a', array('id' => '520a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Otras explicaciones complementarias.</td>
-		<td><?php echo $this->Form->input('520b', array('id' => '520b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
 </table>
 <table class="table">
 	<tr>
@@ -2719,13 +3574,13 @@ th {
 		<td>Control de visualización asociada.</td>
 		<td><?php echo $this->Form->input('521i1', array('id' => '521i1', 'label' => false, 'div' => false, 'class' => 'form-control', 
 			'options' => array(
-				'#' => '# - Sumario',
-				'0' => '0 - Materia',
-				'1' => '1 - Reseña',
-				'2' => '2 - Alcance y contenido',
-				'3' => '3 - Resumen',
-				'4' => '4 - Aviso sobre el contenido',
-				'8' => '8 - No genera visualización asociada'
+				'#' => 'Destinatario' ,
+			'0'=> 'Nivel de lectura',
+			'1'=> 'Edad',
+			'2' => 'Curso',
+			'3' => 'Características especiales del destinatario',
+			'4' => 'Nivel de interés o motivación',
+			'8' => 'No genera visualización asociada'
 			), 'selected' => '#'
 		)); ?></td>
 	</tr>
@@ -2747,58 +3602,37 @@ th {
 
 <table class="table">
 	<tr>
-		<th style="width: 10%;"><b>530</b></th>
-		<th style="width: 45%;"><b>Nota de formato físico adicional disponible.</b></th>
+		<th style="width: 10%;"><b>545</b></th>
+		<th style="width: 45%;"><b>Datos biográficos o históricos.</b></th>
 		<th style="width: 45%;">
-			<label id="l-530">&nbsp;</label>
-			<?php echo $this->Form->hidden('530', array('id' => '530', 'label' => false, 'div' => false)); ?>
+			<label id="l-545">&nbsp;</label>
+			<?php echo $this->Form->hidden('545', array('id' => '545', 'label' => false, 'div' => false)); ?>
 		</th>
 	</tr>
 	<tr>
-		<td><b>$a</b></td>
-		<td>Nota de formato físico adicional disponible.</td>
-		<td><?php echo $this->Form->input('530a', array('id' => '530a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><b>I1</b></td>
+		<td>Control de visualización asociada.</td>
+		<td><?php echo $this->Form->input('545i1', array('id' => '545i1', 'label' => false, 'div' => false, 'class' => 'form-control', 
+			'options' => array(
+				'#' => '# - No se proporciona información',
+				'0' => '0 - Resumen biográfico',
+				'1' => '1 - Historia administrativa'
+			), 'selected' => '#'
+		)); ?></td>
 	</tr>
 	<tr>
-		<td><b>$c</b></td>
-		<td>Condiciones de adquisición.</td>
-		<td><?php echo $this->Form->input('530c', array('id' => '530c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$u</b></td>
-		<td>Dirección electrónica.</td>
-		<td><?php echo $this->Form->input('530u', array('id' => '530u', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>534</b></th>
-		<th style="width: 45%;"><b>Nota sobre la versión original.</b></th>
-		<th style="width: 45%;">
-			<label id="l-534">&nbsp;</label>
-			<?php echo $this->Form->hidden('534', array('id' => '534', 'label' => false, 'div' => false)); ?>
-		</th>
+		<td><b>I2</b></td>
+		<td>No definido.</td>
+		<td><?php echo $this->Form->input('545i2', array('id' => '545i2', 'label' => false, 'div' => false, 'class' => 'form-control',
+			'options' => array(
+					'#' => '# - No definido'
+			)
+		)); ?></td>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>Autor.</td>
-		<td><?php echo $this->Form->input('534a', array('id' => '534a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$c</b></td>
-		<td>Publicación, distribución, etc. del original.</td>
-		<td><?php echo $this->Form->input('534c', array('id' => '534c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$l</b></td>
-		<td>Localización del original.</td>
-		<td><?php echo $this->Form->input('534l', array('id' => '534l', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$p</b></td>
-		<td>Frase introductoria.</td>
-		<td><?php echo $this->Form->input('534p', array('id' => '534p', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>Datos biográficos o históricos.</td>
+		<td><?php echo $this->Form->input('545a', array('id' => '545a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
 
@@ -2825,37 +3659,6 @@ th {
 
 <table class="table">
 	<tr>
-		<th style="width: 10%;"><b>555</b></th>
-		<th style="width: 45%;"><b>Nota de índice acumulativo u otros instrumentos bibliográficos.</b></th>
-		<th style="width: 45%;">
-			<label id="l-555">&nbsp;</label>
-			<?php echo $this->Form->hidden('555', array('id' => '555', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Nota de índice acumulativo u otros instrumentos bibliográficos.</td>
-		<td><?php echo $this->Form->input('555a', array('id' => '555a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Fuente de la adquisición.</td>
-		<td><?php echo $this->Form->input('555b', array('id' => '555b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$d</b></td>
-		<td>Referencia bibliográfica.</td>
-		<td><?php echo $this->Form->input('555d', array('id' => '555d', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$u</b></td>
-		<td>Dirección electrónica.</td>
-		<td><?php echo $this->Form->input('555u', array('id' => '555u', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
 		<th style="width: 10%;"><b>588</b></th>
 		<th style="width: 45%;"><b>Nota de fuente de la descripción.</b></th>
 		<th style="width: 45%;">
@@ -2869,49 +3672,35 @@ th {
 		<td><?php echo $this->Form->input('588a', array('id' => '588a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
+
 <table class="table">
 	<tr>
-		<th style="width: 5%;"><b>590</b></th>
-		<th style="width: 60%;"><b>Nota local.</b></th>
-		<th style="width: 35%;">
-			<label id="l-590">&nbsp;</label>
-			<?php echo $this->Form->hidden('590', array('id' => '590', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Nota local.</td>
-		<td><?php echo $this->Form->input('590a', array('id' => '590a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-<table class="table">
-	<tr>
-		<th style="width: 5%;"><b>592/2</b></th>
+		<th style="width: 5%;"><b>592</b></th>
 		<th style="width: 45%;"><b>Notas al íncipit musical.</b></th>
 		<th style="width: 45%;">
-			<label id="l-5922">&nbsp;</label>
-			<?php echo $this->Form->hidden('5922', array('id' => '5922', 'label' => false, 'div' => false)); ?>
+			<label id="l-592">&nbsp;</label>
+			<?php echo $this->Form->hidden('592', array('id' => '592', 'label' => false, 'div' => false)); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$b</b></td>
-		<td>Instrumento - Medio sonoro  <font color="red">(Obligatorio).</font>.</td>
-		<td><?php echo $this->Form->input('5922b', array('id' => '5922b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>Instrumento - Medio sonoro</td>
+		<td><?php echo $this->Form->input('592b', array('id' => '592b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$c</b></td>
-		<td>Género-Tempo  <font color="red">(Obligatorio).</td>
-		<td><?php echo $this->Form->input('5922c', array('id' => '5922c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>Género-Tempo.</td>
+		<td><?php echo $this->Form->input('592c', array('id' => '592c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$f</b></td>
-		<td>Armadura de clave-Tonalidad   <font color="red">(Obligatorio).</td>
-		<td><?php echo $this->Form->input('5922f', array('id' => '5922f', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>Armadura de clave-Tonalidad.</td>
+		<td><?php echo $this->Form->input('592f', array('id' => '592f', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
 		<td><b>$g</b></td>
 		<td>Compás.</td>
-		<td><?php echo $this->Form->input('5922g', array('id' => '5922g', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td><?php echo $this->Form->input('592g', array('id' => '592g', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
 
@@ -3071,6 +3860,21 @@ th {
 	</tr>
 </table>
 
+<table class="table">
+	<tr>
+		<th style="width: 10%;"><b>648</b></th>
+		<th style="width: 45%;"><b>Punto de acceso adicional de materia -Término cronológico.</b></th>
+		<th style="width: 45%;">
+			<label id="l-648">&nbsp;</label>
+			<?php echo $this->Form->hidden('648', array('id' => '648', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Término cronológico.</font>.</td>
+		<td><?php echo $this->Form->input('648a', array('id' => '648a', 'label' => false, 'div' => false, 'class' => 'form-control', 'empty' => 'Seleccione', 'options' => array('XVII' => 'XVII', 'XVIII' => 'XVIII', 'XIX' => 'XIX', 'XX' => 'XX'))); ?></td>
+	</tr>
+</table>
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>650</b></th>
@@ -3238,26 +4042,11 @@ th {
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>Palabra clave <font color="red">(Obligatorio)</font>.</td>
+		<td>Palabra clave.</td>
 		<td><?php echo $this->Form->input('653a', array('id' => '653a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
 
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>690</b></th>
-		<th style="width: 45%;"><b>Siglo.</b></th>
-		<th style="width: 45%;">
-			<label id="l-690">&nbsp;</label>
-			<?php echo $this->Form->hidden('690', array('id' => '690', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Siglo.</font>.</td>
-		<td><?php echo $this->Form->input('690a', array('id' => '690a', 'label' => false, 'div' => false, 'class' => 'form-control', 'empty' => 'Seleccione', 'options' => array('XVII' => 'XVII', 'XVIII' => 'XVIII', 'XIX' => 'XIX', 'XX' => 'XX'))); ?></td>
-	</tr>
-</table>
 </div>
 
 <div id="7xx" class="tabs" style="display: none;">
@@ -3293,7 +4082,7 @@ th {
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>Nombre de persona <font color="red">(Obligatorio)</font>.</td>
+		<td>Nombre de persona.</td>
 		<td><?php echo $this->Form->input('700a', array('id' => '700a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 	<tr>
@@ -3527,6 +4316,140 @@ th {
 </div>
 
 <div id="8xx" class="tabs" style="display: none;">
+	
+	<table class="table">
+	<tr>
+		<th style="width: 10%;"><b>800</b></th>
+		<th style="width: 45%;"><b>Punto de acceso adicional de serie - Nombre de persona.</b></th>
+		<th style="width: 45%;">
+			<label id="l-800">&nbsp;</label>
+			<?php echo $this->Form->hidden('800', array('id' => '800', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>I1</b></td>
+		<td>Elemento inicial del nombre de persona.</td>
+		<td><?php echo $this->Form->input('800i1', array('id' => '800i1', 'label' => false, 'div' => false, 'class' => 'form-control', 
+			'options' => array(
+				'0' => '0 - Nombre',
+				'1' => '1 - Apellido(s)',
+				'3' => '3 - Nombre de familia'
+				),
+			'selected' => '1',
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>I2</b></td>
+		<td>No definido.</td>
+		<td><?php echo $this->Form->input('800i2', array('id' => '800i2', 'label' => false, 'div' => false, 'class' => 'form-control',
+			'options' => array(
+				'#' => '# - No definido'
+			)
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Nombre de persona.</td>
+		<td><?php echo $this->Form->input('800a', array('id' => '800a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$d</b></td>
+		<td>Fechas asociadas al nombre.</td>
+		<td><?php echo $this->Form->input('800d', array('id' => '800d', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$t</b></td>
+		<td>Título de la obra.</td>
+		<td><?php echo $this->Form->input('800t', array('id' => '800t', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+</table>
+
+<table class="table">
+	<tr>
+		<th style="width: 10%;"><b>810</b></th>
+		<th style="width: 45%;"><b>Punto de acceso adicional de serie - Nombre de entidad.</b></th>
+		<th style="width: 45%;">
+			<label id="l-810">&nbsp;</label>
+			<?php echo $this->Form->hidden('810', array('id' => '810', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>I1</b></td>
+		<td>Elemento inicial del nombre de entidad.</td>
+		<td><?php echo $this->Form->input('810i1', array('id' => '810i1', 'label' => false, 'div' => false, 'class' => 'form-control', 
+			'options' => array(
+				'0' => '0 - Nombre en orden inverso',
+				'1' => '1 - Nombre de jurisdicción',
+				'2' => '2 - Nombre en orden directo'
+				),
+			'selected' => '2',
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>I2</b></td>
+		<td>No definido.</td>
+		<td><?php echo $this->Form->input('810i2', array('id' => '810i2', 'label' => false, 'div' => false, 'class' => 'form-control',
+			'options' => array(
+				'#' => '# - No definido'
+			)
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Nombre de persona.</td>
+		<td><?php echo $this->Form->input('810a', array('id' => '810a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$b</b></td>
+		<td>Fechas asociadas al nombre.</td>
+		<td><?php echo $this->Form->input('810b', array('id' => '810b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+
+</table>
+
+<table class="table">
+	<tr>
+		<th style="width: 10%;"><b>811</b></th>
+		<th style="width: 45%;"><b>Punto de acceso adicional de serie - Nombre de congreso.</b></th>
+		<th style="width: 45%;">
+			<label id="l-811">&nbsp;</label>
+			<?php echo $this->Form->hidden('811', array('id' => '811', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>I1</b></td>
+		<td>Elemento inicial del nombre de congreso.</td>
+		<td><?php echo $this->Form->input('811i1', array('id' => '811i1', 'label' => false, 'div' => false, 'class' => 'form-control', 
+			'options' => array(
+				'0' => '0 - Nombre en orden inverso',
+				'1' => '1 - Nombre de jurisdicción',
+				'2' => '2 - Nombre en orden directo'
+				),
+			'selected' => '2',
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>I2</b></td>
+		<td>No definido.</td>
+		<td><?php echo $this->Form->input('811i2', array('id' => '811i2', 'label' => false, 'div' => false, 'class' => 'form-control',
+			'options' => array(
+				'#' => '# - No definido'
+			)
+		)); ?></td>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Nombre de congreso o nombre de jurisdicción como elemento inicial.</td>
+		<td><?php echo $this->Form->input('811a', array('id' => '811a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+	<tr>
+		<td><b>$d</b></td>
+		<td>Fecha del congreso.</td>
+		<td><?php echo $this->Form->input('811d', array('id' => '811d', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+
+</table>
+
 <table class="table">
 	<tr>
 		<th style="width: 10%;"><b>850</b></th>
@@ -3684,12 +4607,14 @@ th {
 	
 	<table class="table">
 		<tr>
-			<th style="width: 50%;">Portada de la obra (preferiblemente jpg o gif).</th>
+			<th style="width: 50%;">Portada de la obra (preferiblemente jpg o tiff). (Obligatorio).</th>
 			<th style="width: 50%;">Archivo o Documento (preferiblemente pdf o doc). (Obligatorio).</th>
 		</tr>
 		<tr>
-			<td><?php echo $this->Form->input('cover', array('label' => false, 'type' => 'file', 'style' => 'width: 100%')); ?></td>
-			<td><?php echo $this->Form->input('item', array('label' => false, 'type' => 'file', 'style' => 'width: 100%')); ?></td>
+			<td><?php echo $this->Form->input('cover', array('label' => false, 'type' => 'file', 'style' => 'width: 100%')); ?>
+			<?php echo "<b>Tamaño máximo permitido: 2M" . ini_set('upload_max_filesize', '2M') . '.</b>';?></td>
+			<td><?php echo $this->Form->input('item', array('label' => false, 'type' => 'file', 'style' => 'width: 100%')); ?>
+			<?php echo "<b>Tamaño máximo permitido: 2M" . ini_set('upload_max_filesize', '2M') . '.</b>';?></td>
 		</tr>
 	</table>
 	
@@ -3851,12 +4776,8 @@ $(document).ready(function() {
 		tmp_008 = tmp_008 + $('#008-15-17').val();
 	}
 
-	if ($('#008-18').val().length > 0) {
-		tmp_008 = tmp_008 + $('#008-18').val();
-	}
-
-	if ($('#008-19').val().length > 0) {
-		tmp_008 = tmp_008 + $('#008-19').val();
+	if ($('#008-18-19').val().length > 0) {
+		tmp_008 = tmp_008 + $('#008-18-19').val();
 	}
 
 	if ($('#008-20').val().length > 0) {
@@ -3866,7 +4787,9 @@ $(document).ready(function() {
 	if ($('#008-21').val().length > 0) {
 		tmp_008 = tmp_008 + $('#008-21').val();
 	}
-
+	if ($('#008-24-29').val().length > 0) {
+		tmp_008 = tmp_008 + $('#008-24-29').val();
+	}
 	if ($('#008-35-37').val().length > 0) {
 		tmp_008 = tmp_008 + $('#008-35-37').val();
 	}
@@ -3906,12 +4829,8 @@ $(document).ready(function() {
 			tmp_008 = tmp_008 + $('#008-15-17').val();
 		}
 
-		if ($('#008-18').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-18').val();
-		}
-
-		if ($('#008-19').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-19').val();
+		if ($('#008-18-19').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-18-19').val();
 		}
 
 		if ($('#008-20').val().length > 0) {
@@ -3921,7 +4840,9 @@ $(document).ready(function() {
 		if ($('#008-21').val().length > 0) {
 			tmp_008 = tmp_008 + $('#008-21').val();
 		}
-
+		if ($('#008-24-29').val().length > 0) {
+		tmp_008 = tmp_008 + $('#008-24-29').val();
+		}
 		if ($('#008-35-37').val().length > 0) {
 			tmp_008 = tmp_008 + $('#008-35-37').val();
 		}
@@ -3962,12 +4883,8 @@ $(document).ready(function() {
 			tmp_008 = tmp_008 + $('#008-15-17').val();
 		}
 
-		if ($('#008-18').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-18').val();
-		}
-
-		if ($('#008-19').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-19').val();
+		if ($('#008-18-19').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-18-19').val();
 		}
 
 		if ($('#008-20').val().length > 0) {
@@ -3976,6 +4893,9 @@ $(document).ready(function() {
 
 		if ($('#008-21').val().length > 0) {
 			tmp_008 = tmp_008 + $('#008-21').val();
+		}
+		if ($('#008-24-29').val().length > 0) {
+		tmp_008 = tmp_008 + $('#008-24-29').val();
 		}
 
 		if ($('#008-35-37').val().length > 0) {
@@ -4018,12 +4938,8 @@ $(document).ready(function() {
 			tmp_008 = tmp_008 + $('#008-15-17').val();
 		}
 
-		if ($('#008-18').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-18').val();
-		}
-
-		if ($('#008-19').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-19').val();
+		if ($('#008-18-19').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-18-19').val();
 		}
 
 		if ($('#008-20').val().length > 0) {
@@ -4033,7 +4949,9 @@ $(document).ready(function() {
 		if ($('#008-21').val().length > 0) {
 			tmp_008 = tmp_008 + $('#008-21').val();
 		}
-
+		if ($('#008-24-29').val().length > 0) {
+		tmp_008 = tmp_008 + $('#008-24-29').val();
+		}
 		if ($('#008-35-37').val().length > 0) {
 			tmp_008 = tmp_008 + $('#008-35-37').val();
 		}
@@ -4074,12 +4992,8 @@ $(document).ready(function() {
 			tmp_008 = tmp_008 + $('#008-15-17').val();
 		}
 
-		if ($('#008-18').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-18').val();
-		}
-
-		if ($('#008-19').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-19').val();
+		if ($('#008-18-19').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-18-19').val();
 		}
 
 		if ($('#008-20').val().length > 0) {
@@ -4089,7 +5003,9 @@ $(document).ready(function() {
 		if ($('#008-21').val().length > 0) {
 			tmp_008 = tmp_008 + $('#008-21').val();
 		}
-
+		if ($('#008-24-29').val().length > 0) {
+		tmp_008 = tmp_008 + $('#008-24-29').val();
+		}
 		if ($('#008-35-37').val().length > 0) {
 			tmp_008 = tmp_008 + $('#008-35-37').val();
 		}
@@ -4130,14 +5046,9 @@ $(document).ready(function() {
 			tmp_008 = tmp_008 + $('#008-15-17').val();
 		}
 
-		if ($('#008-18').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-18').val();
+		if ($('#008-18-19').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-18-19').val();
 		}
-
-		if ($('#008-19').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-19').val();
-		}
-
 		if ($('#008-20').val().length > 0) {
 			tmp_008 = tmp_008 + $('#008-20').val();
 		}
@@ -4145,7 +5056,9 @@ $(document).ready(function() {
 		if ($('#008-21').val().length > 0) {
 			tmp_008 = tmp_008 + $('#008-21').val();
 		}
-
+		if ($('#008-24-29').val().length > 0) {
+		tmp_008 = tmp_008 + $('#008-24-29').val();
+		}
 		if ($('#008-35-37').val().length > 0) {
 			tmp_008 = tmp_008 + $('#008-35-37').val();
 		}
@@ -4186,12 +5099,8 @@ $(document).ready(function() {
 			tmp_008 = tmp_008 + $('#008-15-17').val();
 		}
 
-		if ($('#008-18').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-18').val();
-		}
-
-		if ($('#008-19').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-19').val();
+		if ($('#008-18-19').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-18-19').val();
 		}
 
 		if ($('#008-20').val().length > 0) {
@@ -4201,7 +5110,9 @@ $(document).ready(function() {
 		if ($('#008-21').val().length > 0) {
 			tmp_008 = tmp_008 + $('#008-21').val();
 		}
-
+		if ($('#008-24-29').val().length > 0) {
+		tmp_008 = tmp_008 + $('#008-24-29').val();
+		}
 		if ($('#008-35-37').val().length > 0) {
 			tmp_008 = tmp_008 + $('#008-35-37').val();
 		}
@@ -4215,7 +5126,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$("#008-18").change(function(event) {
+	$("#008-18-19").change(function(event) {
 		var tmp_008 = "";
 
 		if ($('#008-06').val().length > 0) {
@@ -4242,12 +5153,8 @@ $(document).ready(function() {
 			tmp_008 = tmp_008 + $('#008-15-17').val();
 		}
 
-		if ($('#008-18').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-18').val();
-		}
-
-		if ($('#008-19').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-19').val();
+		if ($('#008-18-19').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-18-19').val();
 		}
 
 		if ($('#008-20').val().length > 0) {
@@ -4257,61 +5164,8 @@ $(document).ready(function() {
 		if ($('#008-21').val().length > 0) {
 			tmp_008 = tmp_008 + $('#008-21').val();
 		}
-
-		if ($('#008-35-37').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-35-37').val();
-		}
-		
-		if (tmp_008.length > 0) {
-			$("#008").val('<?php echo date('ymd', time()); ?>' + tmp_008);
-			$("#l-008").html('<?php echo date('ymd', time()); ?>' + tmp_008);
-		} else {
-			$("#008").val('');
-			$("#l-008").html('&nbsp;');
-		}
-	});
-
-	$("#008-19").change(function(event) {
-		var tmp_008 = "";
-
-		if ($('#008-06').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-06').val();
-		}
-
-		if ($('#008-07-10').val().length > 0) {
-			if($("#008-07-10 option:selected").val() != 'pf'){
-				tmp_008 = tmp_008 + $('#008-07-10').val();
-			} else {
-				tmp_008 = tmp_008 + $('#fecha008-07-10').val();
-			}
-		}
-
-		if ($('#008-11-14').val().length > 0) {
-			if($("#008-11-14 option:selected").val() != 'sf'){
-				tmp_008 = tmp_008 + $('#008-11-14').val();
-			} else {
-				tmp_008 = tmp_008 + $('#fecha008-11-14').val();
-			}
-		}
-
-		if ($('#008-15-17').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-15-17').val();
-		}
-
-		if ($('#008-18').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-18').val();
-		}
-
-		if ($('#008-19').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-19').val();
-		}
-
-		if ($('#008-20').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-20').val();
-		}
-
-		if ($('#008-21').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-21').val();
+		if ($('#008-24-29').val().length > 0) {
+		tmp_008 = tmp_008 + $('#008-24-29').val();
 		}
 
 		if ($('#008-35-37').val().length > 0) {
@@ -4354,12 +5208,8 @@ $(document).ready(function() {
 			tmp_008 = tmp_008 + $('#008-15-17').val();
 		}
 
-		if ($('#008-18').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-18').val();
-		}
-
-		if ($('#008-19').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-19').val();
+		if ($('#008-18-19').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-18-19').val();
 		}
 
 		if ($('#008-20').val().length > 0) {
@@ -4410,14 +5260,9 @@ $(document).ready(function() {
 			tmp_008 = tmp_008 + $('#008-15-17').val();
 		}
 
-		if ($('#008-18').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-18').val();
+		if ($('#008-18-19').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-18-19').val();
 		}
-
-		if ($('#008-19').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-19').val();
-		}
-
 		if ($('#008-20').val().length > 0) {
 			tmp_008 = tmp_008 + $('#008-20').val();
 		}
@@ -4425,7 +5270,9 @@ $(document).ready(function() {
 		if ($('#008-21').val().length > 0) {
 			tmp_008 = tmp_008 + $('#008-21').val();
 		}
-
+		if ($('#008-24-29').val().length > 0) {
+		tmp_008 = tmp_008 + $('#008-24-29').val();
+		}
 		if ($('#008-35-37').val().length > 0) {
 			tmp_008 = tmp_008 + $('#008-35-37').val();
 		}
@@ -4438,6 +5285,61 @@ $(document).ready(function() {
 			$("#l-008").html('&nbsp;');
 		}
 	});
+
+		$("#008-24-29").change(function(event) {
+		var tmp_008 = "";
+
+		if ($('#008-06').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-06').val();
+		}
+
+		if ($('#008-07-10').val().length > 0) {
+			if($("#008-07-10 option:selected").val() != 'pf'){
+				tmp_008 = tmp_008 + $('#008-07-10').val();
+			} else {
+				tmp_008 = tmp_008 + $('#fecha008-07-10').val();
+			}
+		}
+
+		if ($('#008-11-14').val().length > 0) {
+			if($("#008-11-14 option:selected").val() != 'sf'){
+				tmp_008 = tmp_008 + $('#008-11-14').val();
+			} else {
+				tmp_008 = tmp_008 + $('#fecha008-11-14').val();
+			}
+		}
+
+		if ($('#008-15-17').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-15-17').val();
+		}
+
+		if ($('#008-18-19').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-18-19').val();
+		}
+
+		if ($('#008-20').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-20').val();
+		}
+
+		if ($('#008-21').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-21').val();
+		}
+		if ($('#008-24-29').val().length > 0) {
+		tmp_008 = tmp_008 + $('#008-24-29').val();
+		}
+		if ($('#008-35-37').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-35-37').val();
+		}
+		
+		if (tmp_008.length > 0) {
+			$("#008").val('<?php echo date('ymd', time()); ?>' + tmp_008);
+			$("#l-008").html('<?php echo date('ymd', time()); ?>' + tmp_008);
+		} else {
+			$("#008").val('');
+			$("#l-008").html('&nbsp;');
+		}
+	});
+
 
 	$("#008-35-37").change(function(event) {
 		var tmp_008 = "";
@@ -4466,12 +5368,8 @@ $(document).ready(function() {
 			tmp_008 = tmp_008 + $('#008-15-17').val();
 		}
 
-		if ($('#008-18').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-18').val();
-		}
-
-		if ($('#008-19').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-19').val();
+		if ($('#008-18-19').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-18-19').val();
 		}
 
 		if ($('#008-20').val().length > 0) {
@@ -4481,7 +5379,9 @@ $(document).ready(function() {
 		if ($('#008-21').val().length > 0) {
 			tmp_008 = tmp_008 + $('#008-21').val();
 		}
-
+		if ($('#008-24-29').val().length > 0) {
+		tmp_008 = tmp_008 + $('#008-24-29').val();
+		}
 		if ($('#008-35-37').val().length > 0) {
 			tmp_008 = tmp_008 + $('#008-35-37').val();
 		}
@@ -4493,8 +5393,7 @@ $(document).ready(function() {
 			$("#008").val('');
 			$("#l-008").html('&nbsp;');
 		}
-	});
-	
+	});	
 	$("#017a").bind('keyup change', function(event) {
 		if ($('#017a').val().length > 0) {
 			$("#017").val('##' + '^a' + $('#017a').val());
@@ -4751,10 +5650,7 @@ $(document).ready(function() {
 		if ($('#031e').val().length > 0) {
 			tmp_031 = tmp_031 + '^e' + $('#031e').val();
 		}
-		if ($('#031f').val().length > 0) {
-			tmp_031 = tmp_031 + '^f' + $('#031f').val();
-		}
-			if ($('#031g').val().length > 0) {
+		if ($('#031g').val().length > 0) {
 			tmp_031 = tmp_031 + '^g' + $('#031g').val();
 		}
 			if ($('#031m').val().length > 0) {
@@ -4786,8 +5682,21 @@ $(document).ready(function() {
 		if ($('#031u').val().length > 0) {
 			tmp_031 = tmp_031 + '^u' + $('#031u').val();
 		}
+	
+		if ($('#031y').val().length > 0) {
+			tmp_031 = tmp_031 + '^y' + $('#031y').val();
+		}
 		if ($('#031z').val().length > 0) {
 			tmp_031 = tmp_031 + '^z' + $('#031z').val();
+		}
+		if ($('#0312').val().length > 0) {
+			tmp_031 = tmp_031 + '^2' + $('#0312').val();
+		}
+		if ($('#0316').val().length > 0) {
+			tmp_031 = tmp_031 + '^6' + $('#0316').val();
+		}
+		if ($('#0318').val().length > 0) {
+			tmp_031 = tmp_031 + '^8' + $('#0318').val();
 		}
 		if (tmp_031.length > 0) {
 			$("#031").val('##' + tmp_031);
@@ -4798,7 +5707,7 @@ $(document).ready(function() {
 		}		
 	});
 
-	$("#031b").bind('keyup change', function(event) {
+$("#031b").bind('keyup change', function(event) {
 		var tmp_031 = "";
 
 		if ($('#031a').val().length > 0) {
@@ -4815,12 +5724,9 @@ $(document).ready(function() {
 		if ($('#031d').val().length > 0) {
 			tmp_031 = tmp_031 + '^d' + $('#031d').val();
 		}
+	
 		if ($('#031e').val().length > 0) {
 			tmp_031 = tmp_031 + '^e' + $('#031e').val();
-		}
-
-		if ($('#031f').val().length > 0) {
-			tmp_031 = tmp_031 + '^f' + $('#031f').val();
 		}
 		if ($('#031g').val().length > 0) {
 			tmp_031 = tmp_031 + '^g' + $('#031g').val();
@@ -4835,14 +5741,14 @@ $(document).ready(function() {
 		if ($('#031o').val().length > 0) {
 			tmp_031 = tmp_031 + '^o' + $('#031o').val();
 		}
-		if ($('#031p').val().length > 0) {
+			if ($('#031p').val().length > 0) {
 			tmp_031 = tmp_031 + '^p' + $('#031p').val();
 		}
 
 		if ($('#031q').val().length > 0) {
 			tmp_031 = tmp_031 + '^q' + $('#031q').val();
 		}
-		if ($('#031r').val().length > 0) {
+			if ($('#031r').val().length > 0) {
 			tmp_031 = tmp_031 + '^r' + $('#031r').val();
 		}
 		if ($('#031s').val().length > 0) {
@@ -4854,8 +5760,21 @@ $(document).ready(function() {
 		if ($('#031u').val().length > 0) {
 			tmp_031 = tmp_031 + '^u' + $('#031u').val();
 		}
+	
+		if ($('#031y').val().length > 0) {
+			tmp_031 = tmp_031 + '^y' + $('#031y').val();
+		}
 		if ($('#031z').val().length > 0) {
 			tmp_031 = tmp_031 + '^z' + $('#031z').val();
+		}
+		if ($('#0312').val().length > 0) {
+			tmp_031 = tmp_031 + '^2' + $('#0312').val();
+		}
+		if ($('#0316').val().length > 0) {
+			tmp_031 = tmp_031 + '^6' + $('#0316').val();
+		}
+		if ($('#0318').val().length > 0) {
+			tmp_031 = tmp_031 + '^8' + $('#0318').val();
 		}
 		if (tmp_031.length > 0) {
 			$("#031").val('##' + tmp_031);
@@ -4866,7 +5785,7 @@ $(document).ready(function() {
 		}		
 	});
 	
-		$("#031c").bind('keyup change', function(event) {
+	$("#031c").bind('keyup change', function(event) {
 		var tmp_031 = "";
 
 		if ($('#031a').val().length > 0) {
@@ -4883,12 +5802,9 @@ $(document).ready(function() {
 		if ($('#031d').val().length > 0) {
 			tmp_031 = tmp_031 + '^d' + $('#031d').val();
 		}
-				if ($('#031e').val().length > 0) {
+	
+		if ($('#031e').val().length > 0) {
 			tmp_031 = tmp_031 + '^e' + $('#031e').val();
-		}
-
-		if ($('#031f').val().length > 0) {
-			tmp_031 = tmp_031 + '^f' + $('#031f').val();
 		}
 		if ($('#031g').val().length > 0) {
 			tmp_031 = tmp_031 + '^g' + $('#031g').val();
@@ -4896,7 +5812,7 @@ $(document).ready(function() {
 			if ($('#031m').val().length > 0) {
 			tmp_031 = tmp_031 + '^m' + $('#031m').val();
 		}
-		if ($('#031n').val().length > 0) {
+			if ($('#031n').val().length > 0) {
 			tmp_031 = tmp_031 + '^n' + $('#031n').val();
 		}
 
@@ -4922,8 +5838,21 @@ $(document).ready(function() {
 		if ($('#031u').val().length > 0) {
 			tmp_031 = tmp_031 + '^u' + $('#031u').val();
 		}
+	
+		if ($('#031y').val().length > 0) {
+			tmp_031 = tmp_031 + '^y' + $('#031y').val();
+		}
 		if ($('#031z').val().length > 0) {
 			tmp_031 = tmp_031 + '^z' + $('#031z').val();
+		}
+		if ($('#0312').val().length > 0) {
+			tmp_031 = tmp_031 + '^2' + $('#0312').val();
+		}
+		if ($('#0316').val().length > 0) {
+			tmp_031 = tmp_031 + '^6' + $('#0316').val();
+		}
+		if ($('#0318').val().length > 0) {
+			tmp_031 = tmp_031 + '^8' + $('#0318').val();
 		}
 		if (tmp_031.length > 0) {
 			$("#031").val('##' + tmp_031);
@@ -4951,79 +5880,9 @@ $(document).ready(function() {
 		if ($('#031d').val().length > 0) {
 			tmp_031 = tmp_031 + '^d' + $('#031d').val();
 		}
+	
 		if ($('#031e').val().length > 0) {
 			tmp_031 = tmp_031 + '^e' + $('#031e').val();
-		}
-
-		if ($('#031f').val().length > 0) {
-			tmp_031 = tmp_031 + '^f' + $('#031f').val();
-		}
-			if ($('#031g').val().length > 0) {
-			tmp_031 = tmp_031 + '^g' + $('#031g').val();
-		}
-			if ($('#031m').val().length > 0) {
-			tmp_031 = tmp_031 + '^m' + $('#031m').val();
-		}
-			if ($('#031n').val().length > 0) {
-			tmp_031 = tmp_031 + '^n' + $('#031n').val();
-		}
-
-		if ($('#031o').val().length > 0) {
-			tmp_031 = tmp_031 + '^o' + $('#031o').val();
-		}
-			if ($('#031p').val().length > 0) {
-			tmp_031 = tmp_031 + '^p' + $('#031p').val();
-		}
-
-		if ($('#031q').val().length > 0) {
-			tmp_031 = tmp_031 + '^q' + $('#031q').val();
-		}
-		if ($('#031r').val().length > 0) {
-			tmp_031 = tmp_031 + '^r' + $('#031r').val();
-		}
-		if ($('#031s').val().length > 0) {
-			tmp_031 = tmp_031 + '^s' + $('#031s').val();
-		}
-		if ($('#031t').val().length > 0) {
-			tmp_031 = tmp_031 + '^t' + $('#031t').val();
-		}
-		if ($('#031u').val().length > 0) {
-			tmp_031 = tmp_031 + '^u' + $('#031u').val();
-		}
-		if ($('#031z').val().length > 0) {
-			tmp_031 = tmp_031 + '^z' + $('#031z').val();
-		}
-		if (tmp_031.length > 0) {
-			$("#031").val('##' + tmp_031);
-			$("#l-031").html('##' + tmp_031);
-		} else {
-			$("#031").val('');
-			$("#l-031").html('&nbsp;');	
-		}		
-	});	
-	
-	$("#031e").bind('keyup change', function(event) {
-		var tmp_031 = "";
-
-		if ($('#031a').val().length > 0) {
-			tmp_031 = tmp_031 + '^a' + $('#031a').val();
-		}
-
-		if ($('#031b').val().length > 0) {
-			tmp_031 = tmp_031 + '^b' + $('#031b').val();
-		}
-		if ($('#031c').val().length > 0) {
-			tmp_031 = tmp_031 + '^c' + $('#031c').val();
-		}
-
-		if ($('#031d').val().length > 0) {
-			tmp_031 = tmp_031 + '^d' + $('#031d').val();
-		}
-			if ($('#031e').val().length > 0) {
-			tmp_031 = tmp_031 + '^e' + $('#031e').val();
-		}
-		if ($('#031f').val().length > 0) {
-			tmp_031 = tmp_031 + '^f' + $('#031f').val();
 		}
 		if ($('#031g').val().length > 0) {
 			tmp_031 = tmp_031 + '^g' + $('#031g').val();
@@ -5057,8 +5916,21 @@ $(document).ready(function() {
 		if ($('#031u').val().length > 0) {
 			tmp_031 = tmp_031 + '^u' + $('#031u').val();
 		}
+	
+		if ($('#031y').val().length > 0) {
+			tmp_031 = tmp_031 + '^y' + $('#031y').val();
+		}
 		if ($('#031z').val().length > 0) {
 			tmp_031 = tmp_031 + '^z' + $('#031z').val();
+		}
+		if ($('#0312').val().length > 0) {
+			tmp_031 = tmp_031 + '^2' + $('#0312').val();
+		}
+		if ($('#0316').val().length > 0) {
+			tmp_031 = tmp_031 + '^6' + $('#0316').val();
+		}
+		if ($('#0318').val().length > 0) {
+			tmp_031 = tmp_031 + '^8' + $('#0318').val();
 		}
 		if (tmp_031.length > 0) {
 			$("#031").val('##' + tmp_031);
@@ -5069,7 +5941,7 @@ $(document).ready(function() {
 		}		
 	});
 	
-	$("#031f").bind('keyup change', function(event) {
+	$("#031e").bind('keyup change', function(event) {
 		var tmp_031 = "";
 
 		if ($('#031a').val().length > 0) {
@@ -5086,12 +5958,9 @@ $(document).ready(function() {
 		if ($('#031d').val().length > 0) {
 			tmp_031 = tmp_031 + '^d' + $('#031d').val();
 		}
-			if ($('#031e').val().length > 0) {
+	
+		if ($('#031e').val().length > 0) {
 			tmp_031 = tmp_031 + '^e' + $('#031e').val();
-		}
-
-		if ($('#031f').val().length > 0) {
-			tmp_031 = tmp_031 + '^f' + $('#031f').val();
 		}
 		if ($('#031g').val().length > 0) {
 			tmp_031 = tmp_031 + '^g' + $('#031g').val();
@@ -5113,7 +5982,7 @@ $(document).ready(function() {
 		if ($('#031q').val().length > 0) {
 			tmp_031 = tmp_031 + '^q' + $('#031q').val();
 		}
-		if ($('#031r').val().length > 0) {
+			if ($('#031r').val().length > 0) {
 			tmp_031 = tmp_031 + '^r' + $('#031r').val();
 		}
 		if ($('#031s').val().length > 0) {
@@ -5125,8 +5994,21 @@ $(document).ready(function() {
 		if ($('#031u').val().length > 0) {
 			tmp_031 = tmp_031 + '^u' + $('#031u').val();
 		}
+	
+		if ($('#031y').val().length > 0) {
+			tmp_031 = tmp_031 + '^y' + $('#031y').val();
+		}
 		if ($('#031z').val().length > 0) {
 			tmp_031 = tmp_031 + '^z' + $('#031z').val();
+		}
+		if ($('#0312').val().length > 0) {
+			tmp_031 = tmp_031 + '^2' + $('#0312').val();
+		}
+		if ($('#0316').val().length > 0) {
+			tmp_031 = tmp_031 + '^6' + $('#0316').val();
+		}
+		if ($('#0318').val().length > 0) {
+			tmp_031 = tmp_031 + '^8' + $('#0318').val();
 		}
 		if (tmp_031.length > 0) {
 			$("#031").val('##' + tmp_031);
@@ -5136,7 +6018,6 @@ $(document).ready(function() {
 			$("#l-031").html('&nbsp;');	
 		}		
 	});
-
 	
 	$("#031g").bind('keyup change', function(event) {
 		var tmp_031 = "";
@@ -5155,18 +6036,14 @@ $(document).ready(function() {
 		if ($('#031d').val().length > 0) {
 			tmp_031 = tmp_031 + '^d' + $('#031d').val();
 		}
-			if ($('#031e').val().length > 0) {
+	
+		if ($('#031e').val().length > 0) {
 			tmp_031 = tmp_031 + '^e' + $('#031e').val();
-		}
-
-		if ($('#031f').val().length > 0) {
-			tmp_031 = tmp_031 + '^f' + $('#031f').val();
 		}
 		if ($('#031g').val().length > 0) {
 			tmp_031 = tmp_031 + '^g' + $('#031g').val();
 		}
-
-		if ($('#031m').val().length > 0) {
+			if ($('#031m').val().length > 0) {
 			tmp_031 = tmp_031 + '^m' + $('#031m').val();
 		}
 			if ($('#031n').val().length > 0) {
@@ -5183,7 +6060,7 @@ $(document).ready(function() {
 		if ($('#031q').val().length > 0) {
 			tmp_031 = tmp_031 + '^q' + $('#031q').val();
 		}
-		if ($('#031r').val().length > 0) {
+			if ($('#031r').val().length > 0) {
 			tmp_031 = tmp_031 + '^r' + $('#031r').val();
 		}
 		if ($('#031s').val().length > 0) {
@@ -5195,8 +6072,21 @@ $(document).ready(function() {
 		if ($('#031u').val().length > 0) {
 			tmp_031 = tmp_031 + '^u' + $('#031u').val();
 		}
+	
+		if ($('#031y').val().length > 0) {
+			tmp_031 = tmp_031 + '^y' + $('#031y').val();
+		}
 		if ($('#031z').val().length > 0) {
 			tmp_031 = tmp_031 + '^z' + $('#031z').val();
+		}
+		if ($('#0312').val().length > 0) {
+			tmp_031 = tmp_031 + '^2' + $('#0312').val();
+		}
+		if ($('#0316').val().length > 0) {
+			tmp_031 = tmp_031 + '^6' + $('#0316').val();
+		}
+		if ($('#0318').val().length > 0) {
+			tmp_031 = tmp_031 + '^8' + $('#0318').val();
 		}
 		if (tmp_031.length > 0) {
 			$("#031").val('##' + tmp_031);
@@ -5224,18 +6114,14 @@ $(document).ready(function() {
 		if ($('#031d').val().length > 0) {
 			tmp_031 = tmp_031 + '^d' + $('#031d').val();
 		}
-			if ($('#031e').val().length > 0) {
+	
+		if ($('#031e').val().length > 0) {
 			tmp_031 = tmp_031 + '^e' + $('#031e').val();
-		}
-
-		if ($('#031f').val().length > 0) {
-			tmp_031 = tmp_031 + '^f' + $('#031f').val();
 		}
 		if ($('#031g').val().length > 0) {
 			tmp_031 = tmp_031 + '^g' + $('#031g').val();
 		}
-
-		if ($('#031m').val().length > 0) {
+			if ($('#031m').val().length > 0) {
 			tmp_031 = tmp_031 + '^m' + $('#031m').val();
 		}
 			if ($('#031n').val().length > 0) {
@@ -5245,7 +6131,7 @@ $(document).ready(function() {
 		if ($('#031o').val().length > 0) {
 			tmp_031 = tmp_031 + '^o' + $('#031o').val();
 		}
-		if ($('#031p').val().length > 0) {
+			if ($('#031p').val().length > 0) {
 			tmp_031 = tmp_031 + '^p' + $('#031p').val();
 		}
 
@@ -5264,8 +6150,21 @@ $(document).ready(function() {
 		if ($('#031u').val().length > 0) {
 			tmp_031 = tmp_031 + '^u' + $('#031u').val();
 		}
+	
+		if ($('#031y').val().length > 0) {
+			tmp_031 = tmp_031 + '^y' + $('#031y').val();
+		}
 		if ($('#031z').val().length > 0) {
 			tmp_031 = tmp_031 + '^z' + $('#031z').val();
+		}
+		if ($('#0312').val().length > 0) {
+			tmp_031 = tmp_031 + '^2' + $('#0312').val();
+		}
+		if ($('#0316').val().length > 0) {
+			tmp_031 = tmp_031 + '^6' + $('#0316').val();
+		}
+		if ($('#0318').val().length > 0) {
+			tmp_031 = tmp_031 + '^8' + $('#0318').val();
 		}
 		if (tmp_031.length > 0) {
 			$("#031").val('##' + tmp_031);
@@ -5293,36 +6192,31 @@ $(document).ready(function() {
 		if ($('#031d').val().length > 0) {
 			tmp_031 = tmp_031 + '^d' + $('#031d').val();
 		}
-			if ($('#031e').val().length > 0) {
+	
+		if ($('#031e').val().length > 0) {
 			tmp_031 = tmp_031 + '^e' + $('#031e').val();
-		}
-
-		if ($('#031f').val().length > 0) {
-			tmp_031 = tmp_031 + '^f' + $('#031f').val();
 		}
 		if ($('#031g').val().length > 0) {
 			tmp_031 = tmp_031 + '^g' + $('#031g').val();
 		}
-
-		if ($('#031m').val().length > 0) {
+			if ($('#031m').val().length > 0) {
 			tmp_031 = tmp_031 + '^m' + $('#031m').val();
 		}
-		
-		if ($('#031n').val().length > 0) {
+			if ($('#031n').val().length > 0) {
 			tmp_031 = tmp_031 + '^n' + $('#031n').val();
 		}
 
 		if ($('#031o').val().length > 0) {
 			tmp_031 = tmp_031 + '^o' + $('#031o').val();
 		}
-		if ($('#031p').val().length > 0) {
+			if ($('#031p').val().length > 0) {
 			tmp_031 = tmp_031 + '^p' + $('#031p').val();
 		}
 
 		if ($('#031q').val().length > 0) {
 			tmp_031 = tmp_031 + '^q' + $('#031q').val();
 		}
-		if ($('#031r').val().length > 0) {
+			if ($('#031r').val().length > 0) {
 			tmp_031 = tmp_031 + '^r' + $('#031r').val();
 		}
 		if ($('#031s').val().length > 0) {
@@ -5334,8 +6228,21 @@ $(document).ready(function() {
 		if ($('#031u').val().length > 0) {
 			tmp_031 = tmp_031 + '^u' + $('#031u').val();
 		}
+	
+		if ($('#031y').val().length > 0) {
+			tmp_031 = tmp_031 + '^y' + $('#031y').val();
+		}
 		if ($('#031z').val().length > 0) {
 			tmp_031 = tmp_031 + '^z' + $('#031z').val();
+		}
+		if ($('#0312').val().length > 0) {
+			tmp_031 = tmp_031 + '^2' + $('#0312').val();
+		}
+		if ($('#0316').val().length > 0) {
+			tmp_031 = tmp_031 + '^6' + $('#0316').val();
+		}
+		if ($('#0318').val().length > 0) {
+			tmp_031 = tmp_031 + '^8' + $('#0318').val();
 		}
 		if (tmp_031.length > 0) {
 			$("#031").val('##' + tmp_031);
@@ -5363,36 +6270,31 @@ $(document).ready(function() {
 		if ($('#031d').val().length > 0) {
 			tmp_031 = tmp_031 + '^d' + $('#031d').val();
 		}
-			if ($('#031e').val().length > 0) {
+	
+		if ($('#031e').val().length > 0) {
 			tmp_031 = tmp_031 + '^e' + $('#031e').val();
-		}
-
-		if ($('#031f').val().length > 0) {
-			tmp_031 = tmp_031 + '^f' + $('#031f').val();
 		}
 		if ($('#031g').val().length > 0) {
 			tmp_031 = tmp_031 + '^g' + $('#031g').val();
 		}
-
-		if ($('#031m').val().length > 0) {
+			if ($('#031m').val().length > 0) {
 			tmp_031 = tmp_031 + '^m' + $('#031m').val();
 		}
-		
-		if ($('#031n').val().length > 0) {
+			if ($('#031n').val().length > 0) {
 			tmp_031 = tmp_031 + '^n' + $('#031n').val();
 		}
 
 		if ($('#031o').val().length > 0) {
 			tmp_031 = tmp_031 + '^o' + $('#031o').val();
 		}
-		if ($('#031p').val().length > 0) {
+			if ($('#031p').val().length > 0) {
 			tmp_031 = tmp_031 + '^p' + $('#031p').val();
 		}
 
 		if ($('#031q').val().length > 0) {
 			tmp_031 = tmp_031 + '^q' + $('#031q').val();
 		}
-		if ($('#031r').val().length > 0) {
+			if ($('#031r').val().length > 0) {
 			tmp_031 = tmp_031 + '^r' + $('#031r').val();
 		}
 		if ($('#031s').val().length > 0) {
@@ -5404,8 +6306,21 @@ $(document).ready(function() {
 		if ($('#031u').val().length > 0) {
 			tmp_031 = tmp_031 + '^u' + $('#031u').val();
 		}
+	
+		if ($('#031y').val().length > 0) {
+			tmp_031 = tmp_031 + '^y' + $('#031y').val();
+		}
 		if ($('#031z').val().length > 0) {
 			tmp_031 = tmp_031 + '^z' + $('#031z').val();
+		}
+		if ($('#0312').val().length > 0) {
+			tmp_031 = tmp_031 + '^2' + $('#0312').val();
+		}
+		if ($('#0316').val().length > 0) {
+			tmp_031 = tmp_031 + '^6' + $('#0316').val();
+		}
+		if ($('#0318').val().length > 0) {
+			tmp_031 = tmp_031 + '^8' + $('#0318').val();
 		}
 		if (tmp_031.length > 0) {
 			$("#031").val('##' + tmp_031);
@@ -5433,36 +6348,31 @@ $(document).ready(function() {
 		if ($('#031d').val().length > 0) {
 			tmp_031 = tmp_031 + '^d' + $('#031d').val();
 		}
-			if ($('#031e').val().length > 0) {
+	
+		if ($('#031e').val().length > 0) {
 			tmp_031 = tmp_031 + '^e' + $('#031e').val();
-		}
-
-		if ($('#031f').val().length > 0) {
-			tmp_031 = tmp_031 + '^f' + $('#031f').val();
 		}
 		if ($('#031g').val().length > 0) {
 			tmp_031 = tmp_031 + '^g' + $('#031g').val();
 		}
-
-		if ($('#031m').val().length > 0) {
+			if ($('#031m').val().length > 0) {
 			tmp_031 = tmp_031 + '^m' + $('#031m').val();
 		}
-		
-		if ($('#031n').val().length > 0) {
+			if ($('#031n').val().length > 0) {
 			tmp_031 = tmp_031 + '^n' + $('#031n').val();
 		}
 
 		if ($('#031o').val().length > 0) {
 			tmp_031 = tmp_031 + '^o' + $('#031o').val();
 		}
-		if ($('#031p').val().length > 0) {
+			if ($('#031p').val().length > 0) {
 			tmp_031 = tmp_031 + '^p' + $('#031p').val();
 		}
 
 		if ($('#031q').val().length > 0) {
 			tmp_031 = tmp_031 + '^q' + $('#031q').val();
 		}
-		if ($('#031r').val().length > 0) {
+			if ($('#031r').val().length > 0) {
 			tmp_031 = tmp_031 + '^r' + $('#031r').val();
 		}
 		if ($('#031s').val().length > 0) {
@@ -5474,8 +6384,21 @@ $(document).ready(function() {
 		if ($('#031u').val().length > 0) {
 			tmp_031 = tmp_031 + '^u' + $('#031u').val();
 		}
+	
+		if ($('#031y').val().length > 0) {
+			tmp_031 = tmp_031 + '^y' + $('#031y').val();
+		}
 		if ($('#031z').val().length > 0) {
 			tmp_031 = tmp_031 + '^z' + $('#031z').val();
+		}
+		if ($('#0312').val().length > 0) {
+			tmp_031 = tmp_031 + '^2' + $('#0312').val();
+		}
+		if ($('#0316').val().length > 0) {
+			tmp_031 = tmp_031 + '^6' + $('#0316').val();
+		}
+		if ($('#0318').val().length > 0) {
+			tmp_031 = tmp_031 + '^8' + $('#0318').val();
 		}
 		if (tmp_031.length > 0) {
 			$("#031").val('##' + tmp_031);
@@ -5503,36 +6426,31 @@ $(document).ready(function() {
 		if ($('#031d').val().length > 0) {
 			tmp_031 = tmp_031 + '^d' + $('#031d').val();
 		}
-			if ($('#031e').val().length > 0) {
+	
+		if ($('#031e').val().length > 0) {
 			tmp_031 = tmp_031 + '^e' + $('#031e').val();
-		}
-
-		if ($('#031f').val().length > 0) {
-			tmp_031 = tmp_031 + '^f' + $('#031f').val();
 		}
 		if ($('#031g').val().length > 0) {
 			tmp_031 = tmp_031 + '^g' + $('#031g').val();
 		}
-
-		if ($('#031m').val().length > 0) {
+			if ($('#031m').val().length > 0) {
 			tmp_031 = tmp_031 + '^m' + $('#031m').val();
 		}
-		
-		if ($('#031n').val().length > 0) {
+			if ($('#031n').val().length > 0) {
 			tmp_031 = tmp_031 + '^n' + $('#031n').val();
 		}
 
 		if ($('#031o').val().length > 0) {
 			tmp_031 = tmp_031 + '^o' + $('#031o').val();
 		}
-		if ($('#031p').val().length > 0) {
+			if ($('#031p').val().length > 0) {
 			tmp_031 = tmp_031 + '^p' + $('#031p').val();
 		}
 
 		if ($('#031q').val().length > 0) {
 			tmp_031 = tmp_031 + '^q' + $('#031q').val();
 		}
-		if ($('#031r').val().length > 0) {
+			if ($('#031r').val().length > 0) {
 			tmp_031 = tmp_031 + '^r' + $('#031r').val();
 		}
 		if ($('#031s').val().length > 0) {
@@ -5544,8 +6462,21 @@ $(document).ready(function() {
 		if ($('#031u').val().length > 0) {
 			tmp_031 = tmp_031 + '^u' + $('#031u').val();
 		}
+	
+		if ($('#031y').val().length > 0) {
+			tmp_031 = tmp_031 + '^y' + $('#031y').val();
+		}
 		if ($('#031z').val().length > 0) {
 			tmp_031 = tmp_031 + '^z' + $('#031z').val();
+		}
+		if ($('#0312').val().length > 0) {
+			tmp_031 = tmp_031 + '^2' + $('#0312').val();
+		}
+		if ($('#0316').val().length > 0) {
+			tmp_031 = tmp_031 + '^6' + $('#0316').val();
+		}
+		if ($('#0318').val().length > 0) {
+			tmp_031 = tmp_031 + '^8' + $('#0318').val();
 		}
 		if (tmp_031.length > 0) {
 			$("#031").val('##' + tmp_031);
@@ -5573,36 +6504,31 @@ $(document).ready(function() {
 		if ($('#031d').val().length > 0) {
 			tmp_031 = tmp_031 + '^d' + $('#031d').val();
 		}
-			if ($('#031e').val().length > 0) {
+	
+		if ($('#031e').val().length > 0) {
 			tmp_031 = tmp_031 + '^e' + $('#031e').val();
-		}
-
-		if ($('#031f').val().length > 0) {
-			tmp_031 = tmp_031 + '^f' + $('#031f').val();
 		}
 		if ($('#031g').val().length > 0) {
 			tmp_031 = tmp_031 + '^g' + $('#031g').val();
 		}
-
-		if ($('#031m').val().length > 0) {
+			if ($('#031m').val().length > 0) {
 			tmp_031 = tmp_031 + '^m' + $('#031m').val();
 		}
-		
-		if ($('#031n').val().length > 0) {
+			if ($('#031n').val().length > 0) {
 			tmp_031 = tmp_031 + '^n' + $('#031n').val();
 		}
 
 		if ($('#031o').val().length > 0) {
 			tmp_031 = tmp_031 + '^o' + $('#031o').val();
 		}
-		if ($('#031p').val().length > 0) {
+			if ($('#031p').val().length > 0) {
 			tmp_031 = tmp_031 + '^p' + $('#031p').val();
 		}
 
 		if ($('#031q').val().length > 0) {
 			tmp_031 = tmp_031 + '^q' + $('#031q').val();
 		}
-		if ($('#031r').val().length > 0) {
+			if ($('#031r').val().length > 0) {
 			tmp_031 = tmp_031 + '^r' + $('#031r').val();
 		}
 		if ($('#031s').val().length > 0) {
@@ -5614,8 +6540,21 @@ $(document).ready(function() {
 		if ($('#031u').val().length > 0) {
 			tmp_031 = tmp_031 + '^u' + $('#031u').val();
 		}
+	
+		if ($('#031y').val().length > 0) {
+			tmp_031 = tmp_031 + '^y' + $('#031y').val();
+		}
 		if ($('#031z').val().length > 0) {
 			tmp_031 = tmp_031 + '^z' + $('#031z').val();
+		}
+		if ($('#0312').val().length > 0) {
+			tmp_031 = tmp_031 + '^2' + $('#0312').val();
+		}
+		if ($('#0316').val().length > 0) {
+			tmp_031 = tmp_031 + '^6' + $('#0316').val();
+		}
+		if ($('#0318').val().length > 0) {
+			tmp_031 = tmp_031 + '^8' + $('#0318').val();
 		}
 		if (tmp_031.length > 0) {
 			$("#031").val('##' + tmp_031);
@@ -5643,36 +6582,31 @@ $(document).ready(function() {
 		if ($('#031d').val().length > 0) {
 			tmp_031 = tmp_031 + '^d' + $('#031d').val();
 		}
-			if ($('#031e').val().length > 0) {
+	
+		if ($('#031e').val().length > 0) {
 			tmp_031 = tmp_031 + '^e' + $('#031e').val();
-		}
-
-		if ($('#031f').val().length > 0) {
-			tmp_031 = tmp_031 + '^f' + $('#031f').val();
 		}
 		if ($('#031g').val().length > 0) {
 			tmp_031 = tmp_031 + '^g' + $('#031g').val();
 		}
-
-		if ($('#031m').val().length > 0) {
+			if ($('#031m').val().length > 0) {
 			tmp_031 = tmp_031 + '^m' + $('#031m').val();
 		}
-		
-		if ($('#031n').val().length > 0) {
+			if ($('#031n').val().length > 0) {
 			tmp_031 = tmp_031 + '^n' + $('#031n').val();
 		}
 
 		if ($('#031o').val().length > 0) {
 			tmp_031 = tmp_031 + '^o' + $('#031o').val();
 		}
-		if ($('#031p').val().length > 0) {
+			if ($('#031p').val().length > 0) {
 			tmp_031 = tmp_031 + '^p' + $('#031p').val();
 		}
 
 		if ($('#031q').val().length > 0) {
 			tmp_031 = tmp_031 + '^q' + $('#031q').val();
 		}
-		if ($('#031r').val().length > 0) {
+			if ($('#031r').val().length > 0) {
 			tmp_031 = tmp_031 + '^r' + $('#031r').val();
 		}
 		if ($('#031s').val().length > 0) {
@@ -5684,8 +6618,21 @@ $(document).ready(function() {
 		if ($('#031u').val().length > 0) {
 			tmp_031 = tmp_031 + '^u' + $('#031u').val();
 		}
+	
+		if ($('#031y').val().length > 0) {
+			tmp_031 = tmp_031 + '^y' + $('#031y').val();
+		}
 		if ($('#031z').val().length > 0) {
 			tmp_031 = tmp_031 + '^z' + $('#031z').val();
+		}
+		if ($('#0312').val().length > 0) {
+			tmp_031 = tmp_031 + '^2' + $('#0312').val();
+		}
+		if ($('#0316').val().length > 0) {
+			tmp_031 = tmp_031 + '^6' + $('#0316').val();
+		}
+		if ($('#0318').val().length > 0) {
+			tmp_031 = tmp_031 + '^8' + $('#0318').val();
 		}
 		if (tmp_031.length > 0) {
 			$("#031").val('##' + tmp_031);
@@ -5713,36 +6660,31 @@ $(document).ready(function() {
 		if ($('#031d').val().length > 0) {
 			tmp_031 = tmp_031 + '^d' + $('#031d').val();
 		}
-			if ($('#031e').val().length > 0) {
+	
+		if ($('#031e').val().length > 0) {
 			tmp_031 = tmp_031 + '^e' + $('#031e').val();
-		}
-
-		if ($('#031f').val().length > 0) {
-			tmp_031 = tmp_031 + '^f' + $('#031f').val();
 		}
 		if ($('#031g').val().length > 0) {
 			tmp_031 = tmp_031 + '^g' + $('#031g').val();
 		}
-
-		if ($('#031m').val().length > 0) {
+			if ($('#031m').val().length > 0) {
 			tmp_031 = tmp_031 + '^m' + $('#031m').val();
 		}
-		
-		if ($('#031n').val().length > 0) {
+			if ($('#031n').val().length > 0) {
 			tmp_031 = tmp_031 + '^n' + $('#031n').val();
 		}
 
 		if ($('#031o').val().length > 0) {
 			tmp_031 = tmp_031 + '^o' + $('#031o').val();
 		}
-		if ($('#031p').val().length > 0) {
+			if ($('#031p').val().length > 0) {
 			tmp_031 = tmp_031 + '^p' + $('#031p').val();
 		}
 
 		if ($('#031q').val().length > 0) {
 			tmp_031 = tmp_031 + '^q' + $('#031q').val();
 		}
-		if ($('#031r').val().length > 0) {
+			if ($('#031r').val().length > 0) {
 			tmp_031 = tmp_031 + '^r' + $('#031r').val();
 		}
 		if ($('#031s').val().length > 0) {
@@ -5754,8 +6696,21 @@ $(document).ready(function() {
 		if ($('#031u').val().length > 0) {
 			tmp_031 = tmp_031 + '^u' + $('#031u').val();
 		}
+	
+		if ($('#031y').val().length > 0) {
+			tmp_031 = tmp_031 + '^y' + $('#031y').val();
+		}
 		if ($('#031z').val().length > 0) {
 			tmp_031 = tmp_031 + '^z' + $('#031z').val();
+		}
+		if ($('#0312').val().length > 0) {
+			tmp_031 = tmp_031 + '^2' + $('#0312').val();
+		}
+		if ($('#0316').val().length > 0) {
+			tmp_031 = tmp_031 + '^6' + $('#0316').val();
+		}
+		if ($('#0318').val().length > 0) {
+			tmp_031 = tmp_031 + '^8' + $('#0318').val();
 		}
 		if (tmp_031.length > 0) {
 			$("#031").val('##' + tmp_031);
@@ -5783,36 +6738,31 @@ $(document).ready(function() {
 		if ($('#031d').val().length > 0) {
 			tmp_031 = tmp_031 + '^d' + $('#031d').val();
 		}
-			if ($('#031e').val().length > 0) {
+	
+		if ($('#031e').val().length > 0) {
 			tmp_031 = tmp_031 + '^e' + $('#031e').val();
-		}
-
-		if ($('#031f').val().length > 0) {
-			tmp_031 = tmp_031 + '^f' + $('#031f').val();
 		}
 		if ($('#031g').val().length > 0) {
 			tmp_031 = tmp_031 + '^g' + $('#031g').val();
 		}
-
-		if ($('#031m').val().length > 0) {
+			if ($('#031m').val().length > 0) {
 			tmp_031 = tmp_031 + '^m' + $('#031m').val();
 		}
-		
-		if ($('#031n').val().length > 0) {
+			if ($('#031n').val().length > 0) {
 			tmp_031 = tmp_031 + '^n' + $('#031n').val();
 		}
 
 		if ($('#031o').val().length > 0) {
 			tmp_031 = tmp_031 + '^o' + $('#031o').val();
 		}
-		if ($('#031p').val().length > 0) {
+			if ($('#031p').val().length > 0) {
 			tmp_031 = tmp_031 + '^p' + $('#031p').val();
 		}
 
 		if ($('#031q').val().length > 0) {
 			tmp_031 = tmp_031 + '^q' + $('#031q').val();
 		}
-		if ($('#031r').val().length > 0) {
+			if ($('#031r').val().length > 0) {
 			tmp_031 = tmp_031 + '^r' + $('#031r').val();
 		}
 		if ($('#031s').val().length > 0) {
@@ -5824,8 +6774,21 @@ $(document).ready(function() {
 		if ($('#031u').val().length > 0) {
 			tmp_031 = tmp_031 + '^u' + $('#031u').val();
 		}
+	
+		if ($('#031y').val().length > 0) {
+			tmp_031 = tmp_031 + '^y' + $('#031y').val();
+		}
 		if ($('#031z').val().length > 0) {
 			tmp_031 = tmp_031 + '^z' + $('#031z').val();
+		}
+		if ($('#0312').val().length > 0) {
+			tmp_031 = tmp_031 + '^2' + $('#0312').val();
+		}
+		if ($('#0316').val().length > 0) {
+			tmp_031 = tmp_031 + '^6' + $('#0316').val();
+		}
+		if ($('#0318').val().length > 0) {
+			tmp_031 = tmp_031 + '^8' + $('#0318').val();
 		}
 		if (tmp_031.length > 0) {
 			$("#031").val('##' + tmp_031);
@@ -5836,6 +6799,83 @@ $(document).ready(function() {
 		}		
 	});
 	
+	$("#031y").bind('keyup change', function(event) {
+		var tmp_031 = "";
+
+		if ($('#031a').val().length > 0) {
+			tmp_031 = tmp_031 + '^a' + $('#031a').val();
+		}
+
+		if ($('#031b').val().length > 0) {
+			tmp_031 = tmp_031 + '^b' + $('#031b').val();
+		}
+		if ($('#031c').val().length > 0) {
+			tmp_031 = tmp_031 + '^c' + $('#031c').val();
+		}
+
+		if ($('#031d').val().length > 0) {
+			tmp_031 = tmp_031 + '^d' + $('#031d').val();
+		}
+	
+		if ($('#031e').val().length > 0) {
+			tmp_031 = tmp_031 + '^e' + $('#031e').val();
+		}
+		if ($('#031g').val().length > 0) {
+			tmp_031 = tmp_031 + '^g' + $('#031g').val();
+		}
+			if ($('#031m').val().length > 0) {
+			tmp_031 = tmp_031 + '^m' + $('#031m').val();
+		}
+			if ($('#031n').val().length > 0) {
+			tmp_031 = tmp_031 + '^n' + $('#031n').val();
+		}
+
+		if ($('#031o').val().length > 0) {
+			tmp_031 = tmp_031 + '^o' + $('#031o').val();
+		}
+			if ($('#031p').val().length > 0) {
+			tmp_031 = tmp_031 + '^p' + $('#031p').val();
+		}
+
+		if ($('#031q').val().length > 0) {
+			tmp_031 = tmp_031 + '^q' + $('#031q').val();
+		}
+			if ($('#031r').val().length > 0) {
+			tmp_031 = tmp_031 + '^r' + $('#031r').val();
+		}
+		if ($('#031s').val().length > 0) {
+			tmp_031 = tmp_031 + '^s' + $('#031s').val();
+		}
+		if ($('#031t').val().length > 0) {
+			tmp_031 = tmp_031 + '^t' + $('#031t').val();
+		}
+		if ($('#031u').val().length > 0) {
+			tmp_031 = tmp_031 + '^u' + $('#031u').val();
+		}
+	
+		if ($('#031y').val().length > 0) {
+			tmp_031 = tmp_031 + '^y' + $('#031y').val();
+		}
+		if ($('#031z').val().length > 0) {
+			tmp_031 = tmp_031 + '^z' + $('#031z').val();
+		}
+		if ($('#0312').val().length > 0) {
+			tmp_031 = tmp_031 + '^2' + $('#0312').val();
+		}
+		if ($('#0316').val().length > 0) {
+			tmp_031 = tmp_031 + '^6' + $('#0316').val();
+		}
+		if ($('#0318').val().length > 0) {
+			tmp_031 = tmp_031 + '^8' + $('#0318').val();
+		}
+		if (tmp_031.length > 0) {
+			$("#031").val('##' + tmp_031);
+			$("#l-031").html('##' + tmp_031);
+		} else {
+			$("#031").val('');
+			$("#l-031").html('&nbsp;');	
+		}		
+	});
 	$("#031z").bind('keyup change', function(event) {
 		var tmp_031 = "";
 
@@ -5853,36 +6893,31 @@ $(document).ready(function() {
 		if ($('#031d').val().length > 0) {
 			tmp_031 = tmp_031 + '^d' + $('#031d').val();
 		}
-			if ($('#031e').val().length > 0) {
+	
+		if ($('#031e').val().length > 0) {
 			tmp_031 = tmp_031 + '^e' + $('#031e').val();
-		}
-
-		if ($('#031f').val().length > 0) {
-			tmp_031 = tmp_031 + '^f' + $('#031f').val();
 		}
 		if ($('#031g').val().length > 0) {
 			tmp_031 = tmp_031 + '^g' + $('#031g').val();
 		}
-
-		if ($('#031m').val().length > 0) {
+			if ($('#031m').val().length > 0) {
 			tmp_031 = tmp_031 + '^m' + $('#031m').val();
 		}
-		
-		if ($('#031n').val().length > 0) {
+			if ($('#031n').val().length > 0) {
 			tmp_031 = tmp_031 + '^n' + $('#031n').val();
 		}
 
 		if ($('#031o').val().length > 0) {
 			tmp_031 = tmp_031 + '^o' + $('#031o').val();
 		}
-		if ($('#031p').val().length > 0) {
+			if ($('#031p').val().length > 0) {
 			tmp_031 = tmp_031 + '^p' + $('#031p').val();
 		}
 
 		if ($('#031q').val().length > 0) {
 			tmp_031 = tmp_031 + '^q' + $('#031q').val();
 		}
-		if ($('#031r').val().length > 0) {
+			if ($('#031r').val().length > 0) {
 			tmp_031 = tmp_031 + '^r' + $('#031r').val();
 		}
 		if ($('#031s').val().length > 0) {
@@ -5894,8 +6929,252 @@ $(document).ready(function() {
 		if ($('#031u').val().length > 0) {
 			tmp_031 = tmp_031 + '^u' + $('#031u').val();
 		}
+	
+		if ($('#031y').val().length > 0) {
+			tmp_031 = tmp_031 + '^y' + $('#031y').val();
+		}
 		if ($('#031z').val().length > 0) {
 			tmp_031 = tmp_031 + '^z' + $('#031z').val();
+		}
+		if ($('#0312').val().length > 0) {
+			tmp_031 = tmp_031 + '^2' + $('#0312').val();
+		}
+		if ($('#0316').val().length > 0) {
+			tmp_031 = tmp_031 + '^6' + $('#0316').val();
+		}
+		if ($('#0318').val().length > 0) {
+			tmp_031 = tmp_031 + '^8' + $('#0318').val();
+		}
+		if (tmp_031.length > 0) {
+			$("#031").val('##' + tmp_031);
+			$("#l-031").html('##' + tmp_031);
+		} else {
+			$("#031").val('');
+			$("#l-031").html('&nbsp;');	
+		}		
+	});
+	$("#0312").bind('keyup change', function(event) {
+		var tmp_031 = "";
+
+		if ($('#031a').val().length > 0) {
+			tmp_031 = tmp_031 + '^a' + $('#031a').val();
+		}
+
+		if ($('#031b').val().length > 0) {
+			tmp_031 = tmp_031 + '^b' + $('#031b').val();
+		}
+		if ($('#031c').val().length > 0) {
+			tmp_031 = tmp_031 + '^c' + $('#031c').val();
+		}
+
+		if ($('#031d').val().length > 0) {
+			tmp_031 = tmp_031 + '^d' + $('#031d').val();
+		}
+	
+		if ($('#031e').val().length > 0) {
+			tmp_031 = tmp_031 + '^e' + $('#031e').val();
+		}
+		if ($('#031g').val().length > 0) {
+			tmp_031 = tmp_031 + '^g' + $('#031g').val();
+		}
+			if ($('#031m').val().length > 0) {
+			tmp_031 = tmp_031 + '^m' + $('#031m').val();
+		}
+			if ($('#031n').val().length > 0) {
+			tmp_031 = tmp_031 + '^n' + $('#031n').val();
+		}
+
+		if ($('#031o').val().length > 0) {
+			tmp_031 = tmp_031 + '^o' + $('#031o').val();
+		}
+			if ($('#031p').val().length > 0) {
+			tmp_031 = tmp_031 + '^p' + $('#031p').val();
+		}
+
+		if ($('#031q').val().length > 0) {
+			tmp_031 = tmp_031 + '^q' + $('#031q').val();
+		}
+			if ($('#031r').val().length > 0) {
+			tmp_031 = tmp_031 + '^r' + $('#031r').val();
+		}
+		if ($('#031s').val().length > 0) {
+			tmp_031 = tmp_031 + '^s' + $('#031s').val();
+		}
+		if ($('#031t').val().length > 0) {
+			tmp_031 = tmp_031 + '^t' + $('#031t').val();
+		}
+		if ($('#031u').val().length > 0) {
+			tmp_031 = tmp_031 + '^u' + $('#031u').val();
+		}
+	
+		if ($('#031y').val().length > 0) {
+			tmp_031 = tmp_031 + '^y' + $('#031y').val();
+		}
+		if ($('#031z').val().length > 0) {
+			tmp_031 = tmp_031 + '^z' + $('#031z').val();
+		}
+		if ($('#0312').val().length > 0) {
+			tmp_031 = tmp_031 + '^2' + $('#0312').val();
+		}
+		if ($('#0316').val().length > 0) {
+			tmp_031 = tmp_031 + '^6' + $('#0316').val();
+		}
+		if ($('#0318').val().length > 0) {
+			tmp_031 = tmp_031 + '^8' + $('#0318').val();
+		}
+		if (tmp_031.length > 0) {
+			$("#031").val('##' + tmp_031);
+			$("#l-031").html('##' + tmp_031);
+		} else {
+			$("#031").val('');
+			$("#l-031").html('&nbsp;');	
+		}		
+	});
+	$("#0316").bind('keyup change', function(event) {
+		var tmp_031 = "";
+
+		if ($('#031a').val().length > 0) {
+			tmp_031 = tmp_031 + '^a' + $('#031a').val();
+		}
+
+		if ($('#031b').val().length > 0) {
+			tmp_031 = tmp_031 + '^b' + $('#031b').val();
+		}
+		if ($('#031c').val().length > 0) {
+			tmp_031 = tmp_031 + '^c' + $('#031c').val();
+		}
+
+		if ($('#031d').val().length > 0) {
+			tmp_031 = tmp_031 + '^d' + $('#031d').val();
+		}
+	
+		if ($('#031e').val().length > 0) {
+			tmp_031 = tmp_031 + '^e' + $('#031e').val();
+		}
+		if ($('#031g').val().length > 0) {
+			tmp_031 = tmp_031 + '^g' + $('#031g').val();
+		}
+			if ($('#031m').val().length > 0) {
+			tmp_031 = tmp_031 + '^m' + $('#031m').val();
+		}
+			if ($('#031n').val().length > 0) {
+			tmp_031 = tmp_031 + '^n' + $('#031n').val();
+		}
+
+		if ($('#031o').val().length > 0) {
+			tmp_031 = tmp_031 + '^o' + $('#031o').val();
+		}
+			if ($('#031p').val().length > 0) {
+			tmp_031 = tmp_031 + '^p' + $('#031p').val();
+		}
+
+		if ($('#031q').val().length > 0) {
+			tmp_031 = tmp_031 + '^q' + $('#031q').val();
+		}
+			if ($('#031r').val().length > 0) {
+			tmp_031 = tmp_031 + '^r' + $('#031r').val();
+		}
+		if ($('#031s').val().length > 0) {
+			tmp_031 = tmp_031 + '^s' + $('#031s').val();
+		}
+		if ($('#031t').val().length > 0) {
+			tmp_031 = tmp_031 + '^t' + $('#031t').val();
+		}
+		if ($('#031u').val().length > 0) {
+			tmp_031 = tmp_031 + '^u' + $('#031u').val();
+		}
+	
+		if ($('#031y').val().length > 0) {
+			tmp_031 = tmp_031 + '^y' + $('#031y').val();
+		}
+		if ($('#031z').val().length > 0) {
+			tmp_031 = tmp_031 + '^z' + $('#031z').val();
+		}
+		if ($('#0312').val().length > 0) {
+			tmp_031 = tmp_031 + '^2' + $('#0312').val();
+		}
+		if ($('#0316').val().length > 0) {
+			tmp_031 = tmp_031 + '^6' + $('#0316').val();
+		}
+		if ($('#0318').val().length > 0) {
+			tmp_031 = tmp_031 + '^8' + $('#0318').val();
+		}
+		if (tmp_031.length > 0) {
+			$("#031").val('##' + tmp_031);
+			$("#l-031").html('##' + tmp_031);
+		} else {
+			$("#031").val('');
+			$("#l-031").html('&nbsp;');	
+		}		
+	});
+	$("#0318").bind('keyup change', function(event) {
+		var tmp_031 = "";
+
+		if ($('#031a').val().length > 0) {
+			tmp_031 = tmp_031 + '^a' + $('#031a').val();
+		}
+
+		if ($('#031b').val().length > 0) {
+			tmp_031 = tmp_031 + '^b' + $('#031b').val();
+		}
+		if ($('#031c').val().length > 0) {
+			tmp_031 = tmp_031 + '^c' + $('#031c').val();
+		}
+
+		if ($('#031d').val().length > 0) {
+			tmp_031 = tmp_031 + '^d' + $('#031d').val();
+		}
+	
+		if ($('#031e').val().length > 0) {
+			tmp_031 = tmp_031 + '^e' + $('#031e').val();
+		}
+		if ($('#031g').val().length > 0) {
+			tmp_031 = tmp_031 + '^g' + $('#031g').val();
+		}
+			if ($('#031m').val().length > 0) {
+			tmp_031 = tmp_031 + '^m' + $('#031m').val();
+		}
+			if ($('#031n').val().length > 0) {
+			tmp_031 = tmp_031 + '^n' + $('#031n').val();
+		}
+
+		if ($('#031o').val().length > 0) {
+			tmp_031 = tmp_031 + '^o' + $('#031o').val();
+		}
+			if ($('#031p').val().length > 0) {
+			tmp_031 = tmp_031 + '^p' + $('#031p').val();
+		}
+
+		if ($('#031q').val().length > 0) {
+			tmp_031 = tmp_031 + '^q' + $('#031q').val();
+		}
+			if ($('#031r').val().length > 0) {
+			tmp_031 = tmp_031 + '^r' + $('#031r').val();
+		}
+		if ($('#031s').val().length > 0) {
+			tmp_031 = tmp_031 + '^s' + $('#031s').val();
+		}
+		if ($('#031t').val().length > 0) {
+			tmp_031 = tmp_031 + '^t' + $('#031t').val();
+		}
+		if ($('#031u').val().length > 0) {
+			tmp_031 = tmp_031 + '^u' + $('#031u').val();
+		}
+	
+		if ($('#031y').val().length > 0) {
+			tmp_031 = tmp_031 + '^y' + $('#031y').val();
+		}
+		if ($('#031z').val().length > 0) {
+			tmp_031 = tmp_031 + '^z' + $('#031z').val();
+		}
+		if ($('#0312').val().length > 0) {
+			tmp_031 = tmp_031 + '^2' + $('#0312').val();
+		}
+		if ($('#0316').val().length > 0) {
+			tmp_031 = tmp_031 + '^6' + $('#0316').val();
+		}
+		if ($('#0318').val().length > 0) {
+			tmp_031 = tmp_031 + '^8' + $('#0318').val();
 		}
 		if (tmp_031.length > 0) {
 			$("#031").val('##' + tmp_031);
@@ -5922,7 +7201,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$("#041i1").change(function(event) {
+$("#041i1").change(function(event) {
 		var tmp_041 = "";
 
 		if ($('#041a').val().length > 0) {
@@ -6067,7 +7346,40 @@ $(document).ready(function() {
 			$("#l-047").html('&nbsp;');
 		}
 	});
-	
+	$("#048i1").bind('keyup change', function(event) {
+		var tmp_048 = "";
+
+		if ($('#048a').val().length > 0) {
+			tmp_048 = tmp_048 + '^a' + $('#048a').val();
+		}
+		if ($('#048b').val().length > 0) {
+			tmp_048 = tmp_048 + '^b' + $('#048b').val();
+		}
+		if (tmp_048.length > 0) {
+			$("#048").val($("#048i1").val() + $("#048i2").val() + tmp_048);
+			$("#l-048").html($("#048i1").val() + $("#048i2").val() + tmp_048);
+		} else {
+			$("#048").val('');
+			$("#l-048").html('&nbsp;');
+		}
+	});
+	$("#048i2").bind('keyup change', function(event) {
+		var tmp_048 = "";
+
+		if ($('#048a').val().length > 0) {
+			tmp_048 = tmp_048 + '^a' + $('#048a').val();
+		}
+		if ($('#048b').val().length > 0) {
+			tmp_048 = tmp_048 + '^b' + $('#048b').val();
+		}
+		if (tmp_048.length > 0) {
+			$("#048").val($("#048i1").val() + $("#048i2").val() + tmp_048);
+			$("#l-048").html($("#048i1").val() + $("#048i2").val() + tmp_048);
+		} else {
+			$("#048").val('');
+			$("#l-048").html('&nbsp;');
+		}
+	});
 	$("#048a").bind('keyup change', function(event) {
 		var tmp_048 = "";
 
@@ -7603,19 +8915,19 @@ $(document).ready(function() {
 				y++;
 			}
 			
-			if (y == 17) {$("#690a option[value=XVII]").attr("selected", true); w = "XVII";}
-			if (y == 18) {$("#690a option[value=XVIII]").attr("selected", true); w = "XVIII";}
-			if (y == 19) {$("#690a option[value=XIX]").attr("selected", true); w = "XIX";}
-			if (y == 20) {$("#690a option[value=XX]").attr("selected", true); w = "XX";}
+			if (y == 17) {$("#648a option[value=XVII]").attr("selected", true); w = "XVII";}
+			if (y == 18) {$("#648a option[value=XVIII]").attr("selected", true); w = "XVIII";}
+			if (y == 19) {$("#648a option[value=XIX]").attr("selected", true); w = "XIX";}
+			if (y == 20) {$("#648a option[value=XX]").attr("selected", true); w = "XX";}
 
-			var tmp_690 = '^a' + w;
+			var tmp_648 = '^a' + w;
 			
-			if (tmp_690.length > 0) {
-				$("#690").val('##' + tmp_690);
-				$("#l-690").html('##' + tmp_690);
+			if (tmp_648.length > 0) {
+				$("#648").val('##' + tmp_648);
+				$("#l-648").html('##' + tmp_648);
 			} else {
-				$("#690").val('');
-				$("#l-690").html('&nbsp;');
+				$("#648").val('');
+				$("#l-648").html('&nbsp;');
 			}
 		}
 		
@@ -8112,13 +9424,24 @@ $(document).ready(function() {
 		}
 	});
 
-	$("#380a").bind('keyup change', function(event) {
+		$("#380a").bind('keyup change', function(event) {
 		var tmp_380 = "";
 
 		if ($('#380a').val().length > 0) {
 			tmp_380 = tmp_380 + '^a' + $('#380a').val();
 		}
-
+		if ($('#3800').val().length > 0) {
+			tmp_380 = tmp_380 + '^0' + $('#3800').val();
+		}
+		if ($('#3802').val().length > 0) {
+			tmp_380 = tmp_380 + '^2' + $('#3802').val();
+		}
+		if ($('#3806').val().length > 0) {
+			tmp_380 = tmp_380 + '^6' + $('#3806').val();
+		}
+		if ($('#3808').val().length > 0) {
+			tmp_380 = tmp_380 + '^8' + $('#3808').val();
+		}
 		if (tmp_380.length > 0) {
 			$("#380").val('##' + tmp_380);
 			$("#l-380").html('##' + tmp_380);
@@ -8127,139 +9450,391 @@ $(document).ready(function() {
 			$("#l-380").html('&nbsp;');
 		}
 	});
-	
-	$("#440a").bind('keyup change', function(event) {
-		var tmp_440 = "";
+	$("#3800").bind('keyup change', function(event) {
+		var tmp_380 = "";
 
-		if ($('#440a').val().length > 0) {
-			tmp_440 = tmp_440 + '^a' + $('#440a').val();
+		if ($('#380a').val().length > 0) {
+			tmp_380 = tmp_380 + '^a' + $('#380a').val();
 		}
-		if ($('#440n').val().length > 0) {
-			tmp_440 = tmp_440 + '^n' + $('#440n').val();
+		if ($('#3800').val().length > 0) {
+			tmp_380 = tmp_380 + '^0' + $('#3800').val();
 		}
-		if ($('#440p').val().length > 0) {
-			tmp_440 = tmp_440 + '^p' + $('#440p').val();
+		if ($('#3802').val().length > 0) {
+			tmp_380 = tmp_380 + '^2' + $('#3802').val();
 		}
-		if ($('#440x').val().length > 0) {
-			tmp_440 = tmp_440 + '^x' + $('#440x').val();
+		if ($('#3806').val().length > 0) {
+			tmp_380 = tmp_380 + '^6' + $('#3806').val();
 		}
-		if ($('#440v').val().length > 0) {
-			tmp_440 = tmp_440 + '^v' + $('#440v').val();
+		if ($('#3808').val().length > 0) {
+			tmp_380 = tmp_380 + '^8' + $('#3808').val();
 		}
-		if (tmp_440.length > 0) {
-			$("#440").val('##' + tmp_440);
-			$("#l-440").html('##' + tmp_440);
+		if (tmp_380.length > 0) {
+			$("#380").val('##' + tmp_380);
+			$("#l-380").html('##' + tmp_380);
 		} else {
-			$("#440").val('');
-			$("#l-440").html('&nbsp;');
+			$("#380").val('');
+			$("#l-380").html('&nbsp;');
+		}
+	});
+	$("#3802").bind('keyup change', function(event) {
+		var tmp_380 = "";
+
+		if ($('#380a').val().length > 0) {
+			tmp_380 = tmp_380 + '^a' + $('#380a').val();
+		}
+		if ($('#3800').val().length > 0) {
+			tmp_380 = tmp_380 + '^0' + $('#3800').val();
+		}
+		if ($('#3802').val().length > 0) {
+			tmp_380 = tmp_380 + '^2' + $('#3802').val();
+		}
+		if ($('#3806').val().length > 0) {
+			tmp_380 = tmp_380 + '^6' + $('#3806').val();
+		}
+		if ($('#3808').val().length > 0) {
+			tmp_380 = tmp_380 + '^8' + $('#3808').val();
+		}
+		if (tmp_380.length > 0) {
+			$("#380").val('##' + tmp_380);
+			$("#l-380").html('##' + tmp_380);
+		} else {
+			$("#380").val('');
+			$("#l-380").html('&nbsp;');
+		}
+	});
+	$("#3806").bind('keyup change', function(event) {
+		var tmp_380 = "";
+
+		if ($('#380a').val().length > 0) {
+			tmp_380 = tmp_380 + '^a' + $('#380a').val();
+		}
+		if ($('#3800').val().length > 0) {
+			tmp_380 = tmp_380 + '^0' + $('#3800').val();
+		}
+		if ($('#3802').val().length > 0) {
+			tmp_380 = tmp_380 + '^2' + $('#3802').val();
+		}
+		if ($('#3806').val().length > 0) {
+			tmp_380 = tmp_380 + '^6' + $('#3806').val();
+		}
+		if ($('#3808').val().length > 0) {
+			tmp_380 = tmp_380 + '^8' + $('#3808').val();
+		}
+		if (tmp_380.length > 0) {
+			$("#380").val('##' + tmp_380);
+			$("#l-380").html('##' + tmp_380);
+		} else {
+			$("#380").val('');
+			$("#l-380").html('&nbsp;');
+		}
+	});
+	$("#3808").bind('keyup change', function(event) {
+		var tmp_380 = "";
+
+		if ($('#380a').val().length > 0) {
+			tmp_380 = tmp_380 + '^a' + $('#380a').val();
+		}
+		if ($('#3800').val().length > 0) {
+			tmp_380 = tmp_380 + '^0' + $('#3800').val();
+		}
+		if ($('#3802').val().length > 0) {
+			tmp_380 = tmp_380 + '^2' + $('#3802').val();
+		}
+		if ($('#3806').val().length > 0) {
+			tmp_380 = tmp_380 + '^6' + $('#3806').val();
+		}
+		if ($('#3808').val().length > 0) {
+			tmp_380 = tmp_380 + '^8' + $('#3808').val();
+		}
+		if (tmp_380.length > 0) {
+			$("#380").val('##' + tmp_380);
+			$("#l-380").html('##' + tmp_380);
+		} else {
+			$("#380").val('');
+			$("#l-380").html('&nbsp;');
+		}
+	});
+	$("#383a").bind('keyup change', function(event) {
+		var tmp_383 = "";
+
+		if ($('#383a').val().length > 0) {
+			tmp_383 = tmp_383 + '^a' + $('#383a').val();
+		}
+		if ($('#383b').val().length > 0) {
+			tmp_383 = tmp_383 + '^b' + $('#383b').val();
+		}
+		if ($('#383c').val().length > 0) {
+			tmp_383 = tmp_383 + '^c' + $('#383c').val();
+		}
+		if ($('#383d').val().length > 0) {
+			tmp_383 = tmp_383 + '^d' + $('#383d').val();
+		}
+		if ($('#383e').val().length > 0) {
+			tmp_383 = tmp_383 + '^e' + $('#383e').val();
+		}
+		if (tmp_383.length > 0) {
+			$("#383").val('##' + tmp_383);
+			$("#l-383").html('##' + tmp_383);
+		} else {
+			$("#383").val('');
+			$("#l-383").html('&nbsp;');
+		}
+	});
+	
+	$("#383b").bind('keyup change', function(event) {
+		var tmp_383 = "";
+
+		if ($('#383a').val().length > 0) {
+			tmp_383 = tmp_383 + '^a' + $('#383a').val();
+		}
+		if ($('#383b').val().length > 0) {
+			tmp_383 = tmp_383 + '^b' + $('#383b').val();
+		}
+		if ($('#383c').val().length > 0) {
+			tmp_383 = tmp_383 + '^c' + $('#383c').val();
+		}
+		if ($('#383d').val().length > 0) {
+			tmp_383 = tmp_383 + '^d' + $('#383d').val();
+		}
+		if ($('#383e').val().length > 0) {
+			tmp_383 = tmp_383 + '^e' + $('#383e').val();
+		}
+		if (tmp_383.length > 0) {
+			$("#383").val('##' + tmp_383);
+			$("#l-383").html('##' + tmp_383);
+		} else {
+			$("#383").val('');
+			$("#l-383").html('&nbsp;');
+		}
+	});
+	$("#383c").bind('keyup change', function(event) {
+		var tmp_383 = "";
+
+		if ($('#383a').val().length > 0) {
+			tmp_383 = tmp_383 + '^a' + $('#383a').val();
+		}
+		if ($('#383b').val().length > 0) {
+			tmp_383 = tmp_383 + '^b' + $('#383b').val();
+		}
+		if ($('#383c').val().length > 0) {
+			tmp_383 = tmp_383 + '^c' + $('#383c').val();
+		}
+		if ($('#383d').val().length > 0) {
+			tmp_383 = tmp_383 + '^d' + $('#383d').val();
+		}
+		if ($('#383e').val().length > 0) {
+			tmp_383 = tmp_383 + '^e' + $('#383e').val();
+		}
+		if (tmp_383.length > 0) {
+			$("#383").val('##' + tmp_383);
+			$("#l-383").html('##' + tmp_383);
+		} else {
+			$("#383").val('');
+			$("#l-383").html('&nbsp;');
+		}
+	});
+	
+	$("#381a").bind('keyup change', function(event) {
+		var tmp_381 = "";
+
+		if ($('#381a').val().length > 0) {
+			tmp_381 = tmp_381 + '^a' + $('#381a').val();
+		}
+		if (tmp_381.length > 0) {
+			$("#381").val('##' + tmp_381);
+			$("#l-381").html('##' + tmp_381);
+		} else {
+			$("#381").val('');
+			$("#l-381").html('&nbsp;');
+		}
+	});
+	
+	$("#382a").bind('keyup change', function(event) {
+		var tmp_382 = "";
+
+		if ($('#382a').val().length > 0) {
+			tmp_382 = tmp_382 + '^a' + $('#382a').val();
+		}
+		if (tmp_382.length > 0) {
+			$("#382").val('##' + tmp_382);
+			$("#l-382").html('##' + tmp_382);
+		} else {
+			$("#382").val('');
+			$("#l-382").html('&nbsp;');
+		}
+	});
+		$("#383a").bind('keyup change', function(event) {
+		var tmp_383 = "";
+
+		if ($('#383a').val().length > 0) {
+			tmp_383 = tmp_383 + '^a' + $('#383a').val();
+		}
+		if ($('#383b').val().length > 0) {
+			tmp_383 = tmp_383 + '^b' + $('#383b').val();
+		}
+		if ($('#383c').val().length > 0) {
+			tmp_383 = tmp_383 + '^c' + $('#383c').val();
+		}
+		if ($('#383d').val().length > 0) {
+			tmp_383 = tmp_383 + '^d' + $('#383d').val();
+		}
+		if ($('#383e').val().length > 0) {
+			tmp_383 = tmp_383 + '^e' + $('#383e').val();
+		}
+		if (tmp_383.length > 0) {
+			$("#383").val('##' + tmp_383);
+			$("#l-383").html('##' + tmp_383);
+		} else {
+			$("#383").val('');
+			$("#l-383").html('&nbsp;');
+		}
+	});
+		$("#383b").bind('keyup change', function(event) {
+		var tmp_383 = "";
+
+		if ($('#383a').val().length > 0) {
+			tmp_383 = tmp_383 + '^a' + $('#383a').val();
+		}
+		if ($('#383b').val().length > 0) {
+			tmp_383 = tmp_383 + '^b' + $('#383b').val();
+		}
+		if ($('#383c').val().length > 0) {
+			tmp_383 = tmp_383 + '^c' + $('#383c').val();
+		}
+		if ($('#383d').val().length > 0) {
+			tmp_383 = tmp_383 + '^d' + $('#383d').val();
+		}
+		if ($('#383e').val().length > 0) {
+			tmp_383 = tmp_383 + '^e' + $('#383e').val();
+		}
+		if (tmp_383.length > 0) {
+			$("#383").val('##' + tmp_383);
+			$("#l-383").html('##' + tmp_383);
+		} else {
+			$("#383").val('');
+			$("#l-383").html('&nbsp;');
+		}
+	});
+		$("#383c").bind('keyup change', function(event) {
+		var tmp_383 = "";
+
+		if ($('#383a').val().length > 0) {
+			tmp_383 = tmp_383 + '^a' + $('#383a').val();
+		}
+		if ($('#383b').val().length > 0) {
+			tmp_383 = tmp_383 + '^b' + $('#383b').val();
+		}
+		if ($('#383c').val().length > 0) {
+			tmp_383 = tmp_383 + '^c' + $('#383c').val();
+		}
+		if ($('#383d').val().length > 0) {
+			tmp_383 = tmp_383 + '^d' + $('#383d').val();
+		}
+		if ($('#383e').val().length > 0) {
+			tmp_383 = tmp_383 + '^e' + $('#383e').val();
+		}
+		if (tmp_383.length > 0) {
+			$("#383").val('##' + tmp_383);
+			$("#l-383").html('##' + tmp_383);
+		} else {
+			$("#383").val('');
+			$("#l-383").html('&nbsp;');
+		}
+	});
+	$("#383d").bind('keyup change', function(event) {
+		var tmp_383 = "";
+
+		if ($('#383a').val().length > 0) {
+			tmp_383 = tmp_383 + '^a' + $('#383a').val();
+		}
+		if ($('#383b').val().length > 0) {
+			tmp_383 = tmp_383 + '^b' + $('#383b').val();
+		}
+		if ($('#383c').val().length > 0) {
+			tmp_383 = tmp_383 + '^c' + $('#383c').val();
+		}
+		if ($('#383d').val().length > 0) {
+			tmp_383 = tmp_383 + '^d' + $('#383d').val();
+		}
+		if ($('#383e').val().length > 0) {
+			tmp_383 = tmp_383 + '^e' + $('#383e').val();
+		}
+		if (tmp_383.length > 0) {
+			$("#383").val('##' + tmp_383);
+			$("#l-383").html('##' + tmp_383);
+		} else {
+			$("#383").val('');
+			$("#l-383").html('&nbsp;');
+		}
+	});
+	$("#383e").bind('keyup change', function(event) {
+		var tmp_383 = "";
+
+		if ($('#383a').val().length > 0) {
+			tmp_383 = tmp_383 + '^a' + $('#383a').val();
+		}
+		if ($('#383b').val().length > 0) {
+			tmp_383 = tmp_383 + '^b' + $('#383b').val();
+		}
+		if ($('#383c').val().length > 0) {
+			tmp_383 = tmp_383 + '^c' + $('#383c').val();
+		}
+		if ($('#383d').val().length > 0) {
+			tmp_383 = tmp_383 + '^d' + $('#383d').val();
+		}
+		if ($('#383e').val().length > 0) {
+			tmp_383 = tmp_383 + '^e' + $('#383e').val();
+		}
+		if (tmp_383.length > 0) {
+			$("#383").val('##' + tmp_383);
+			$("#l-383").html('##' + tmp_383);
+		} else {
+			$("#383").val('');
+			$("#l-383").html('&nbsp;');
 		}
 	});
 
-	$("#440n").bind('keyup change', function(event) {
-		var tmp_440 = "";
+$("#384i1").bind('keyup change', function(event) {
+		var tmp_384 = "";
 
-		if ($('#440a').val().length > 0) {
-			tmp_440 = tmp_440 + '^a' + $('#440a').val();
+		if ($('#384a').val().length > 0) {
+			tmp_384 = tmp_384 + '^a' + $('#384a').val();
 		}
-		if ($('#440n').val().length > 0) {
-			tmp_440 = tmp_440 + '^n' + $('#440n').val();
-		}
-		if ($('#440p').val().length > 0) {
-			tmp_440 = tmp_440 + '^p' + $('#440p').val();
-		}
-		if ($('#440x').val().length > 0) {
-			tmp_440 = tmp_440 + '^x' + $('#440x').val();
-		}
-		if ($('#440v').val().length > 0) {
-			tmp_440 = tmp_440 + '^v' + $('#440v').val();
-		}
-		if (tmp_440.length > 0) {
-			$("#440").val('##' + tmp_440);
-			$("#l-440").html('##' + tmp_440);
+		if (tmp_384.length > 0) {
+			$("#384").val($("#384i1").val() + $("#384i2").val() + tmp_384);
+			$("#l-384").html($("#384i1").val() + $("#384i2").val() + tmp_384);
 		} else {
-			$("#440").val('');
-			$("#l-440").html('&nbsp;');
+			$("#384").val('');
+			$("#l-384").html('&nbsp;');
 		}
 	});
 	
-	$("#440p").bind('keyup change', function(event) {
-		var tmp_440 = "";
+	$("#384i2").bind('keyup change', function(event) {
+		var tmp_384 = "";
 
-		if ($('#440a').val().length > 0) {
-			tmp_440 = tmp_440 + '^a' + $('#440a').val();
+		if ($('#384a').val().length > 0) {
+			tmp_384 = tmp_384 + '^a' + $('#384a').val();
 		}
-		if ($('#440n').val().length > 0) {
-			tmp_440 = tmp_440 + '^n' + $('#440n').val();
-		}
-		if ($('#440p').val().length > 0) {
-			tmp_440 = tmp_440 + '^p' + $('#440p').val();
-		}
-		if ($('#440x').val().length > 0) {
-			tmp_440 = tmp_440 + '^x' + $('#440x').val();
-		}
-		if ($('#440v').val().length > 0) {
-			tmp_440 = tmp_440 + '^v' + $('#440v').val();
-		}
-		if (tmp_440.length > 0) {
-			$("#440").val('##' + tmp_440);
-			$("#l-440").html('##' + tmp_440);
+		if (tmp_384.length > 0) {
+			$("#384").val($("#384i1").val() + $("#384i2").val() + tmp_384);
+			$("#l-384").html($("#384i1").val() + $("#384i2").val() + tmp_384);
 		} else {
-			$("#440").val('');
-			$("#l-440").html('&nbsp;');
+			$("#384").val('');
+			$("#l-384").html('&nbsp;');
 		}
 	});
-	
-	$("#440x").bind('keyup change', function(event) {
-		var tmp_440 = "";
+	$("#384a").bind('keyup change', function(event) {
+		var tmp_384 = "";
 
-		if ($('#440a').val().length > 0) {
-			tmp_440 = tmp_440 + '^a' + $('#440a').val();
+		if ($('#384a').val().length > 0) {
+			tmp_384 = tmp_384 + '^a' + $('#384a').val();
 		}
-		if ($('#440n').val().length > 0) {
-			tmp_440 = tmp_440 + '^n' + $('#440n').val();
-		}
-		if ($('#440p').val().length > 0) {
-			tmp_440 = tmp_440 + '^p' + $('#440p').val();
-		}
-		if ($('#440x').val().length > 0) {
-			tmp_440 = tmp_440 + '^x' + $('#440x').val();
-		}
-		if ($('#440v').val().length > 0) {
-			tmp_440 = tmp_440 + '^v' + $('#440v').val();
-		}
-		if (tmp_440.length > 0) {
-			$("#440").val('##' + tmp_440);
-			$("#l-440").html('##' + tmp_440);
+		if (tmp_384.length > 0) {
+			$("#384").val($("#384i1").val() + $("#384i2").val() + tmp_384);
+			$("#l-384").html($("#384i1").val() + $("#384i2").val() + tmp_384);
 		} else {
-			$("#440").val('');
-			$("#l-440").html('&nbsp;');
-		}
-	});
-	
-	$("#440v").bind('keyup change', function(event) {
-		var tmp_440 = "";
-
-		if ($('#440a').val().length > 0) {
-			tmp_440 = tmp_440 + '^a' + $('#440a').val();
-		}
-		if ($('#440n').val().length > 0) {
-			tmp_440 = tmp_440 + '^n' + $('#440n').val();
-		}
-		if ($('#440p').val().length > 0) {
-			tmp_440 = tmp_440 + '^p' + $('#440p').val();
-		}
-		if ($('#440x').val().length > 0) {
-			tmp_440 = tmp_440 + '^x' + $('#440x').val();
-		}
-		if ($('#440v').val().length > 0) {
-			tmp_440 = tmp_440 + '^v' + $('#440v').val();
-		}
-		if (tmp_440.length > 0) {
-			$("#440").val('##' + tmp_440);
-			$("#l-440").html('##' + tmp_440);
-		} else {
-			$("#440").val('');
-			$("#l-440").html('&nbsp;');
+			$("#384").val('');
+			$("#l-384").html('&nbsp;');
 		}
 	});
 	
@@ -8558,20 +10133,35 @@ $(document).ready(function() {
 			$("#l-511").html('&nbsp;');
 		}
 	});
-	
-	$("#515a").bind('keyup change', function(event) {
-		var tmp_515 = "";
+	$("#508a").bind('keyup change', function(event) {
+		var tmp_508 = "";
 
-		if ($('#515a').val().length > 0) {
-			tmp_515 = tmp_515 + '^a' + $('#515a').val();
+		if ($('#508a').val().length > 0) {
+			tmp_508 = tmp_508 + '^a' + $('#508a').val();
 		}
-
-		if (tmp_515.length > 0) {
-			$("#515").val('##' + tmp_515);
-			$("#l-515").html('##' + tmp_515);
+		
+		if (tmp_508.length > 0) {
+			$("#508").val('##' + tmp_508);
+			$("#l-508").html('##' + tmp_508);
 		} else {
-			$("#515").val('');
-			$("#l-515").html('&nbsp;');
+			$("#508").val('');
+			$("#l-508").html('&nbsp;');
+		}
+	});
+	
+	$("#518a").bind('keyup change', function(event) {
+		var tmp_518 = "";
+
+		if ($('#518a').val().length > 0) {
+			tmp_518 = tmp_518 + '^a' + $('#518a').val();
+		}
+		
+		if (tmp_518.length > 0) {
+			$("#518").val('##' + tmp_518);
+			$("#l-518").html('##' + tmp_518);
+		} else {
+			$("#518").val('');
+			$("#l-518").html('&nbsp;');
 		}
 	});
 
@@ -8581,9 +10171,7 @@ $(document).ready(function() {
 		if ($('#520a').val().length > 0) {
 			tmp_520 = tmp_520 + '^a' + $('#520a').val();
 		}
-		if ($('#520b').val().length > 0) {
-			tmp_520 = tmp_520 + '^b' + $('#520b').val();
-		}
+		
 		if (tmp_520.length > 0) {
 			$("#520").val($("#520i1").val() + $("#520i2").val() + tmp_520);
 			$("#l-520").html($("#520i1").val() + $("#520i2").val() + tmp_520);
@@ -8599,9 +10187,7 @@ $(document).ready(function() {
 		if ($('#520a').val().length > 0) {
 			tmp_520 = tmp_520 + '^a' + $('#520a').val();
 		}
-		if ($('#520b').val().length > 0) {
-			tmp_520 = tmp_520 + '^b' + $('#520b').val();
-		}
+	
 		if (tmp_520.length > 0) {
 			$("#520").val($("#520i1").val() + $("#520i2").val() + tmp_520);
 			$("#l-520").html($("#520i1").val() + $("#520i2").val() + tmp_520);
@@ -8617,9 +10203,7 @@ $(document).ready(function() {
 		if ($('#520a').val().length > 0) {
 			tmp_520 = tmp_520 + '^a' + $('#520a').val();
 		}
-		if ($('#520b').val().length > 0) {
-			tmp_520 = tmp_520 + '^b' + $('#520b').val();
-		}
+	
 		if (tmp_520.length > 0) {
 			$("#520").val($("#520i1").val() + $("#520i2").val() + tmp_520);
 			$("#l-520").html($("#520i1").val() + $("#520i2").val() + tmp_520);
@@ -8628,23 +10212,7 @@ $(document).ready(function() {
 			$("#l-520").html('&nbsp;');
 		}
 	});
-	$("#520b").bind('keyup change', function(event) {
-		var tmp_520 = "";
-
-		if ($('#520a').val().length > 0) {
-			tmp_520 = tmp_520 + '^a' + $('#520a').val();
-		}
-		if ($('#520b').val().length > 0) {
-			tmp_520 = tmp_520 + '^b' + $('#520b').val();
-		}
-		if (tmp_520.length > 0) {
-			$("#520").val($("#520i1").val() + $("#520i2").val() + tmp_520);
-			$("#l-520").html($("#520i1").val() + $("#520i2").val() + tmp_520);
-		} else {
-			$("#520").val('');
-			$("#l-520").html('&nbsp;');
-		}
-	});
+	
 	
 	$("#521a").bind('keyup change', function(event) {
 		var tmp_521 = "";
@@ -8732,116 +10300,49 @@ $(document).ready(function() {
 			$("#l-530").html('&nbsp;');
 		}
 	});
+	
+		$("#545i1").change(function(event) {
+		var tmp_545 = "";
 
-	$("#534a").bind('keyup change', function(event) {
-		var tmp_534 = "";
-
-		if ($('#534a').val().length > 0) {
-			tmp_534 = tmp_534 + '^a' + $('#534a').val();
+		if ($('#545a').val().length > 0) {
+			tmp_545 = tmp_545 + '^a' + $('#545a').val();
 		}
-
-		if ($('#534c').val().length > 0) {
-			tmp_534 = tmp_534 + '^c' + $('#534c').val();
-		}
-
-		if ($('#534l').val().length > 0) {
-			tmp_534 = tmp_534 + '^l' + $('#534l').val();
-		}
-
-		if ($('#534p').val().length > 0) {
-			tmp_534 = tmp_534 + '^p' + $('#534p').val();
-		}
-		
-		if (tmp_534.length > 0) {
-			$("#534").val('##' + tmp_534);
-			$("#l-534").html('##' + tmp_534);
+		if (tmp_545.length > 0) {
+			$("#545").val($("#545i1").val() + $("#545i2").val() + tmp_545);
+			$("#l-545").html($("#545i1").val() + $("#545i2").val() + tmp_545);
 		} else {
-			$("#534").val('');
-			$("#l-534").html('&nbsp;');
+			$("#545").val('');
+			$("#l-545").html('&nbsp;');
 		}
 	});
 
-	$("#534c").bind('keyup change', function(event) {
-		var tmp_534 = "";
+	$("#545i2").change(function(event) {
+		var tmp_545 = "";
 
-		if ($('#534a').val().length > 0) {
-			tmp_534 = tmp_534 + '^a' + $('#534a').val();
+		if ($('#545a').val().length > 0) {
+			tmp_545 = tmp_545 + '^a' + $('#545a').val();
 		}
-
-		if ($('#534c').val().length > 0) {
-			tmp_534 = tmp_534 + '^c' + $('#534c').val();
-		}
-
-		if ($('#534l').val().length > 0) {
-			tmp_534 = tmp_534 + '^l' + $('#534l').val();
-		}
-
-		if ($('#534p').val().length > 0) {
-			tmp_534 = tmp_534 + '^p' + $('#534p').val();
-		}
-		
-		if (tmp_534.length > 0) {
-			$("#534").val('##' + tmp_534);
-			$("#l-534").html('##' + tmp_534);
+		if (tmp_545.length > 0) {
+			$("#545").val($("#545i1").val() + $("#545i2").val() + tmp_545);
+			$("#l-545").html($("#545i1").val() + $("#545i2").val() + tmp_545);
 		} else {
-			$("#534").val('');
-			$("#l-534").html('&nbsp;');
+			$("#545").val('');
+			$("#l-545").html('&nbsp;');
 		}
 	});
 
-	$("#534l").bind('keyup change', function(event) {
-		var tmp_534 = "";
+	$("#545a").bind('keyup change', function(event) {
+		var tmp_545 = "";
 
-		if ($('#534a').val().length > 0) {
-			tmp_534 = tmp_534 + '^a' + $('#534a').val();
+		if ($('#545a').val().length > 0) {
+			tmp_545 = tmp_545 + '^a' + $('#545a').val();
 		}
-
-		if ($('#534c').val().length > 0) {
-			tmp_534 = tmp_534 + '^c' + $('#534c').val();
-		}
-
-		if ($('#534l').val().length > 0) {
-			tmp_534 = tmp_534 + '^l' + $('#534l').val();
-		}
-
-		if ($('#534p').val().length > 0) {
-			tmp_534 = tmp_534 + '^p' + $('#534p').val();
-		}
-		
-		if (tmp_534.length > 0) {
-			$("#534").val('##' + tmp_534);
-			$("#l-534").html('##' + tmp_534);
+		if (tmp_545.length > 0) {
+			$("#545").val($("#545i1").val() + $("#545i2").val() + tmp_545);
+			$("#l-545").html($("#545i1").val() + $("#545i2").val() + tmp_545);
 		} else {
-			$("#534").val('');
-			$("#l-534").html('&nbsp;');
-		}
-	});
-
-	$("#534p").bind('keyup change', function(event) {
-		var tmp_534 = "";
-
-		if ($('#534a').val().length > 0) {
-			tmp_534 = tmp_534 + '^a' + $('#534a').val();
-		}
-
-		if ($('#534c').val().length > 0) {
-			tmp_534 = tmp_534 + '^c' + $('#534c').val();
-		}
-
-		if ($('#534l').val().length > 0) {
-			tmp_534 = tmp_534 + '^l' + $('#534l').val();
-		}
-
-		if ($('#534p').val().length > 0) {
-			tmp_534 = tmp_534 + '^p' + $('#534p').val();
-		}
-		
-		if (tmp_534.length > 0) {
-			$("#534").val('##' + tmp_534);
-			$("#l-534").html('##' + tmp_534);
-		} else {
-			$("#534").val('');
-			$("#l-534").html('&nbsp;');
+			$("#545").val('');
+			$("#l-545").html('&nbsp;');
 		}
 	});
 
@@ -8884,116 +10385,19 @@ $(document).ready(function() {
 			$("#l-546").html('&nbsp;');
 		}
 	});
+	$("#561a").bind('keyup change', function(event) {
+		var tmp_561 = "";
 
-	$("#555a").bind('keyup change', function(event) {
-		var tmp_555 = "";
-
-		if ($('#555a').val().length > 0) {
-			tmp_555 = tmp_555 + '^a' + $('#555a').val();
-		}
-
-		if ($('#555b').val().length > 0) {
-			tmp_555 = tmp_555 + '^b' + $('#555b').val();
-		}
-
-		if ($('#555d').val().length > 0) {
-			tmp_555 = tmp_555 + '^d' + $('#555d').val();
-		}
-
-		if ($('#555u').val().length > 0) {
-			tmp_555 = tmp_555 + '^u' + $('#555u').val();
+		if ($('#561a').val().length > 0) {
+			tmp_561 = tmp_561 + '^a' + $('#561a').val();
 		}
 		
-		if (tmp_555.length > 0) {
-			$("#555").val('##' + tmp_555);
-			$("#l-555").html('##' + tmp_555);
+		if (tmp_561.length > 0) {
+			$("#561").val('##' + tmp_561);
+			$("#l-561").html('##' + tmp_561);
 		} else {
-			$("#555").val('');
-			$("#l-555").html('&nbsp;');
-		}
-	});
-
-	$("#555b").bind('keyup change', function(event) {
-		var tmp_555 = "";
-
-		if ($('#555a').val().length > 0) {
-			tmp_555 = tmp_555 + '^a' + $('#555a').val();
-		}
-
-		if ($('#555b').val().length > 0) {
-			tmp_555 = tmp_555 + '^b' + $('#555b').val();
-		}
-
-		if ($('#555d').val().length > 0) {
-			tmp_555 = tmp_555 + '^d' + $('#555d').val();
-		}
-
-		if ($('#555u').val().length > 0) {
-			tmp_555 = tmp_555 + '^u' + $('#555u').val();
-		}
-		
-		if (tmp_555.length > 0) {
-			$("#555").val('##' + tmp_555);
-			$("#l-555").html('##' + tmp_555);
-		} else {
-			$("#555").val('');
-			$("#l-555").html('&nbsp;');
-		}
-	});
-
-	$("#555d").bind('keyup change', function(event) {
-		var tmp_555 = "";
-
-		if ($('#555a').val().length > 0) {
-			tmp_555 = tmp_555 + '^a' + $('#555a').val();
-		}
-
-		if ($('#555b').val().length > 0) {
-			tmp_555 = tmp_555 + '^b' + $('#555b').val();
-		}
-
-		if ($('#555d').val().length > 0) {
-			tmp_555 = tmp_555 + '^d' + $('#555d').val();
-		}
-
-		if ($('#555u').val().length > 0) {
-			tmp_555 = tmp_555 + '^u' + $('#555u').val();
-		}
-		
-		if (tmp_555.length > 0) {
-			$("#555").val('##' + tmp_555);
-			$("#l-555").html('##' + tmp_555);
-		} else {
-			$("#555").val('');
-			$("#l-555").html('&nbsp;');
-		}
-	});
-
-	$("#555u").bind('keyup change', function(event) {
-		var tmp_555 = "";
-
-		if ($('#555a').val().length > 0) {
-			tmp_555 = tmp_555 + '^a' + $('#555a').val();
-		}
-
-		if ($('#555b').val().length > 0) {
-			tmp_555 = tmp_555 + '^b' + $('#555b').val();
-		}
-
-		if ($('#555d').val().length > 0) {
-			tmp_555 = tmp_555 + '^d' + $('#555d').val();
-		}
-
-		if ($('#555u').val().length > 0) {
-			tmp_555 = tmp_555 + '^u' + $('#555u').val();
-		}
-		
-		if (tmp_555.length > 0) {
-			$("#555").val('##' + tmp_555);
-			$("#l-555").html('##' + tmp_555);
-		} else {
-			$("#555").val('');
-			$("#l-555").html('&nbsp;');
+			$("#561").val('');
+			$("#l-561").html('&nbsp;');
 		}
 	});
 
@@ -9028,96 +10432,96 @@ $(document).ready(function() {
 			$("#l-590").html('&nbsp;');
 		}
 	});
-	$("#5922b").bind('keyup change', function(event) {
-		var tmp_5922 = "";
+	$("#592b").bind('keyup change', function(event) {
+		var tmp_592 = "";
 
-		if ($('#5922b').val().length > 0) {
-			tmp_5922 = tmp_5922 + '^b' + $('#5922b').val();
+		if ($('#592b').val().length > 0) {
+			tmp_592 = tmp_592 + '^b' + $('#592b').val();
 		}
-		if ($('#5922c').val().length > 0) {
-			tmp_5922 = tmp_5922 + '^c' + $('#5922c').val();
-		}
-		if ($('#5922f').val().length > 0) {
-			tmp_5922 = tmp_5922 + '^f' + $('#5922f').val();
-		}
-		if ($('#5922g').val().length > 0) {
-			tmp_5922 = tmp_5922 + '^g' + $('#5922g').val();
-		}
-		if (tmp_5922.length > 0) {
-			$("#5922").val('##' + tmp_5922);
-			$("#l-5922").html('##' + tmp_5922);
-		} else {
-			$("#5922").val('');
-			$("#l-5922").html('&nbsp;');
-		}
-	});
-	$("#5922c").bind('keyup change', function(event) {
-		var tmp_5922 = "";
-
-		if ($('#5922b').val().length > 0) {
-			tmp_5922 = tmp_5922 + '^b' + $('#5922b').val();
-		}
-		if ($('#5922c').val().length > 0) {
-			tmp_5922 = tmp_5922 + '^c' + $('#5922c').val();
-		}
-		if ($('#5922f').val().length > 0) {
-			tmp_5922 = tmp_5922 + '^f' + $('#5922f').val();
-		}
-		if ($('#5922g').val().length > 0) {
-			tmp_5922 = tmp_5922 + '^g' + $('#5922g').val();
-		}
-		if (tmp_5922.length > 0) {
-			$("#5922").val('##' + tmp_5922);
-			$("#l-5922").html('##' + tmp_5922);
-		} else {
-			$("#5922").val('');
-			$("#l-5922").html('&nbsp;');
-		}
-	});
-	$("#5922f").bind('keyup change', function(event) {
-		var tmp_5922 = "";
-
-		if ($('#5922b').val().length > 0) {
-			tmp_5922 = tmp_5922 + '^b' + $('#5922b').val();
-		}
-		if ($('#5922c').val().length > 0) {
-			tmp_5922 = tmp_5922 + '^c' + $('#5922c').val();
-		}
-		if ($('#5922f').val().length > 0) {
-			tmp_5922 = tmp_5922 + '^f' + $('#5922f').val();
-		}
-		if ($('#5922g').val().length > 0) {
-			tmp_5922 = tmp_5922 + '^g' + $('#5922g').val();
-		}
-		if (tmp_5922.length > 0) {
-			$("#5922").val('##' + tmp_5922);
-			$("#l-5922").html('##' + tmp_5922);
-		} else {
-			$("#5922").val('');
-			$("#l-5922").html('&nbsp;');
-		}
-	});
-	$("#5922g").bind('keyup change', function(event) {
-		var tmp_5922 = "";
-
-		if ($('#5922b').val().length > 0) {
-			tmp_5922 = tmp_5922 + '^b' + $('#5922b').val();
-		}
-		if ($('#5922c').val().length > 0) {
-			tmp_5922 = tmp_5922 + '^c' + $('#5922c').val();
+		if ($('#592c').val().length > 0) {
+			tmp_592 = tmp_592 + '^c' + $('#592c').val();
 		}
 		if ($('#592f').val().length > 0) {
-			tmp_5922 = tmp_5922 + '^f' + $('#5922f').val();
+			tmp_592 = tmp_592 + '^f' + $('#592f').val();
 		}
-		if ($('#5922g').val().length > 0) {
-			tmp_5922 = tmp_5922 + '^g' + $('#5922g').val();
+		if ($('#592g').val().length > 0) {
+			tmp_592 = tmp_592 + '^g' + $('#592g').val();
 		}
-		if (tmp_5922.length > 0) {
-			$("#5922").val('##' + tmp_5922);
-			$("#l-5922").html('##' + tmp_5922);
+		if (tmp_592.length > 0) {
+			$("#592").val('##' + tmp_592);
+			$("#l-592").html('##' + tmp_592);
 		} else {
-			$("#5922").val('');
-			$("#l-5922").html('&nbsp;');
+			$("#592").val('');
+			$("#l-592").html('&nbsp;');
+		}
+	});
+	$("#592c").bind('keyup change', function(event) {
+		var tmp_592 = "";
+
+		if ($('#592b').val().length > 0) {
+			tmp_592 = tmp_592 + '^b' + $('#592b').val();
+		}
+		if ($('#592c').val().length > 0) {
+			tmp_592 = tmp_592 + '^c' + $('#592c').val();
+		}
+		if ($('#592f').val().length > 0) {
+			tmp_592 = tmp_592 + '^f' + $('#592f').val();
+		}
+		if ($('#592g').val().length > 0) {
+			tmp_592 = tmp_592 + '^g' + $('#592g').val();
+		}
+		if (tmp_592.length > 0) {
+			$("#592").val('##' + tmp_592);
+			$("#l-592").html('##' + tmp_592);
+		} else {
+			$("#592").val('');
+			$("#l-592").html('&nbsp;');
+		}
+	});
+	$("#592f").bind('keyup change', function(event) {
+		var tmp_592 = "";
+
+		if ($('#592b').val().length > 0) {
+			tmp_592 = tmp_592 + '^b' + $('#592b').val();
+		}
+		if ($('#592c').val().length > 0) {
+			tmp_592 = tmp_592 + '^c' + $('#592c').val();
+		}
+		if ($('#592f').val().length > 0) {
+			tmp_592 = tmp_592 + '^f' + $('#592f').val();
+		}
+		if ($('#592g').val().length > 0) {
+			tmp_592 = tmp_592 + '^g' + $('#592g').val();
+		}
+		if (tmp_592.length > 0) {
+			$("#592").val('##' + tmp_592);
+			$("#l-592").html('##' + tmp_592);
+		} else {
+			$("#592").val('');
+			$("#l-592").html('&nbsp;');
+		}
+	});
+	$("#592g").bind('keyup change', function(event) {
+		var tmp_592 = "";
+
+		if ($('#592b').val().length > 0) {
+			tmp_592 = tmp_592 + '^b' + $('#592b').val();
+		}
+		if ($('#592c').val().length > 0) {
+			tmp_592 = tmp_592 + '^c' + $('#592c').val();
+		}
+		if ($('#592f').val().length > 0) {
+			tmp_592 = tmp_592 + '^f' + $('#592f').val();
+		}
+		if ($('#592g').val().length > 0) {
+			tmp_592 = tmp_592 + '^g' + $('#592g').val();
+		}
+		if (tmp_592.length > 0) {
+			$("#592").val('##' + tmp_592);
+			$("#l-592").html('##' + tmp_592);
+		} else {
+			$("#592").val('');
+			$("#l-592").html('&nbsp;');
 		}
 	});
 
@@ -9920,6 +11324,24 @@ $(document).ready(function() {
 			$("#l-610").html('&nbsp;');
 		}
 	});
+	
+		
+	$("#648a").bind('keyup change', function(event) {
+		var tmp_648 = "";
+
+		if ($('#648a').val().length > 0) {
+			tmp_648 = tmp_648 + '^a' + $('#648a').val();
+		}
+		
+		if (tmp_648.length > 0) {
+			$("#648").val('##' + tmp_648);
+			$("#l-648").html('##' + tmp_648);
+		} else {
+			$("#648").val('');
+			$("#l-648").html('&nbsp;');
+		}
+	});
+
 
 	$("#650i1").change(function(event) {
 		var tmp_650 = "";
@@ -10449,21 +11871,6 @@ $(document).ready(function() {
 		}
 	});
 
-	$("#690a").bind('keyup change', function(event) {
-		var tmp_690 = "";
-
-		if ($('#690a').val().length > 0) {
-			tmp_690 = tmp_690 + '^a' + $('#690a').val();
-		}
-		
-		if (tmp_690.length > 0) {
-			$("#690").val(tmp_690);
-			$("#l-690").html(tmp_690);
-		} else {
-			$("#690").val('');
-			$("#l-690").html('&nbsp;');
-		}
-	});
 
 	$("#700i1").change(function(event) {
 		var tmp_700 = "";
@@ -11872,6 +13279,283 @@ $(document).ready(function() {
 			$("#l-773").html('&nbsp;');
 		}
 	});
+	
+		$("#800i1").change(function(event) {
+		var tmp_800 = "";
+
+		if ($('#800a').val().length > 0) {
+			tmp_800 = tmp_800 + '^a' + $('#800a').val();
+		}
+
+		if ($('#800d').val().length > 0) {
+			tmp_800 = tmp_800 + '^d' + $('#800d').val();
+		}
+
+		if ($('#800t').val().length > 0) {
+			tmp_800 = tmp_800 + '^t' + $('#800t').val();
+		}
+
+		if (tmp_800.length > 0) {
+			$("#800").val($("#800i1").val() + $("#800i2").val() + tmp_800);
+			$("#l-800").html($("#800i1").val() + $("#800i2").val() + tmp_800);
+		} else {
+			$("#800").val('');
+			$("#l-800").html('&nbsp;');
+		}
+	});
+
+	$("#800i2").change(function(event) {
+		var tmp_800 = "";
+
+		if ($('#800a').val().length > 0) {
+			tmp_800 = tmp_800 + '^a' + $('#800a').val();
+		}
+
+		if ($('#800d').val().length > 0) {
+			tmp_800 = tmp_800 + '^d' + $('#800d').val();
+		}
+
+		if ($('#800t').val().length > 0) {
+			tmp_800 = tmp_800 + '^t' + $('#800t').val();
+		}
+
+		if (tmp_800.length > 0) {
+			$("#800").val($("#800i1").val() + $("#800i2").val() + tmp_800);
+			$("#l-800").html($("#800i1").val() + $("#800i2").val() + tmp_800);
+		} else {
+			$("#800").val('');
+			$("#l-800").html('&nbsp;');
+		}
+	});
+
+	$("#800a").bind('keyup change', function(event) {
+		var tmp_800 = "";
+
+		if ($('#800a').val().length > 0) {
+			tmp_800 = tmp_800 + '^a' + $('#800a').val();
+		}
+
+		if ($('#800d').val().length > 0) {
+			tmp_800 = tmp_800 + '^d' + $('#800d').val();
+		}
+
+		if ($('#800t').val().length > 0) {
+			tmp_800 = tmp_800 + '^t' + $('#800t').val();
+		}
+
+		if (tmp_800.length > 0) {
+			$("#800").val($("#800i1").val() + $("#800i2").val() + tmp_800);
+			$("#l-800").html($("#800i1").val() + $("#800i2").val() + tmp_800);
+		} else {
+			$("#800").val('');
+			$("#l-800").html('&nbsp;');
+		}
+	});
+	
+		$("#800d").bind('keyup change', function(event) {
+		var tmp_800 = "";
+
+		if ($('#800a').val().length > 0) {
+			tmp_800 = tmp_800 + '^a' + $('#800a').val();
+		}
+
+		if ($('#800d').val().length > 0) {
+			tmp_800 = tmp_800 + '^d' + $('#800d').val();
+		}
+
+		if ($('#800t').val().length > 0) {
+			tmp_800 = tmp_800 + '^t' + $('#800t').val();
+		}
+
+		if (tmp_800.length > 0) {
+			$("#800").val($("#800i1").val() + $("#800i2").val() + tmp_800);
+			$("#l-800").html($("#800i1").val() + $("#800i2").val() + tmp_800);
+		} else {
+			$("#800").val('');
+			$("#l-800").html('&nbsp;');
+		}
+	});
+	
+		$("#800t").bind('keyup change', function(event) {
+		var tmp_800 = "";
+
+		if ($('#800a').val().length > 0) {
+			tmp_800 = tmp_800 + '^a' + $('#800a').val();
+		}
+
+		if ($('#800d').val().length > 0) {
+			tmp_800 = tmp_800 + '^d' + $('#800d').val();
+		}
+
+		if ($('#800t').val().length > 0) {
+			tmp_800 = tmp_800 + '^t' + $('#800t').val();
+		}
+
+		if (tmp_800.length > 0) {
+			$("#800").val($("#800i1").val() + $("#800i2").val() + tmp_800);
+			$("#l-800").html($("#800i1").val() + $("#800i2").val() + tmp_800);
+		} else {
+			$("#800").val('');
+			$("#l-800").html('&nbsp;');
+		}
+	});
+
+	$("#810i1").change(function(event) {
+		var tmp_810 = "";
+
+		if ($('#810a').val().length > 0) {
+			tmp_810 = tmp_810 + '^a' + $('#810a').val();
+		}
+
+		if ($('#810b').val().length > 0) {
+			tmp_810 = tmp_810 + '^b' + $('#810b').val();
+		}
+		if (tmp_810.length > 0) {
+			$("#810").val($("#810i1").val() + $("#810i2").val() + tmp_810);
+			$("#l-810").html($("#810i1").val() + $("#810i2").val() + tmp_810);
+		} else {
+			$("#810").val('');
+			$("#l-810").html('&nbsp;');
+		}
+	});
+
+	$("#810i2").change(function(event) {
+		var tmp_810 = "";
+
+		if ($('#810a').val().length > 0) {
+			tmp_810 = tmp_810 + '^a' + $('#810a').val();
+		}
+
+		if ($('#810b').val().length > 0) {
+			tmp_810 = tmp_810 + '^b' + $('#810b').val();
+		}
+		if (tmp_810.length > 0) {
+			$("#810").val($("#810i1").val() + $("#810i2").val() + tmp_810);
+			$("#l-810").html($("#810i1").val() + $("#810i2").val() + tmp_810);
+		} else {
+			$("#810").val('');
+			$("#l-810").html('&nbsp;');
+		}
+	});
+
+	$("#810a").bind('keyup change', function(event) {
+		var tmp_810 = "";
+
+		if ($('#810a').val().length > 0) {
+			tmp_810 = tmp_810 + '^a' + $('#810a').val();
+		}
+
+		if ($('#810b').val().length > 0) {
+			tmp_810 = tmp_810 + '^b' + $('#810b').val();
+		}
+
+		if (tmp_810.length > 0) {
+			$("#810").val($("#810i1").val() + $("#810i2").val() + tmp_810);
+			$("#l-810").html($("#810i1").val() + $("#810i2").val() + tmp_810);
+		} else {
+			$("#810").val('');
+			$("#l-810").html('&nbsp;');
+		}
+	});
+	
+		$("#810b").bind('keyup change', function(event) {
+		var tmp_810 = "";
+
+		if ($('#810a').val().length > 0) {
+			tmp_810 = tmp_810 + '^a' + $('#810a').val();
+		}
+
+		if ($('#810b').val().length > 0) {
+			tmp_810 = tmp_810 + '^b' + $('#810b').val();
+		}
+
+		if (tmp_810.length > 0) {
+			$("#810").val($("#810i1").val() + $("#810i2").val() + tmp_810);
+			$("#l-810").html($("#810i1").val() + $("#810i2").val() + tmp_810);
+		} else {
+			$("#810").val('');
+			$("#l-810").html('&nbsp;');
+		}
+	});
+	
+	
+		$("#811i1").change(function(event) {
+		var tmp_811 = "";
+
+		if ($('#811a').val().length > 0) {
+			tmp_811 = tmp_811 + '^a' + $('#811a').val();
+		}
+
+		if ($('#811d').val().length > 0) {
+			tmp_811 = tmp_811 + '^d' + $('#811d').val();
+		}
+		if (tmp_811.length > 0) {
+			$("#811").val($("#811i1").val() + $("#811i2").val() + tmp_811);
+			$("#l-811").html($("#811i1").val() + $("#811i2").val() + tmp_811);
+		} else {
+			$("#811").val('');
+			$("#l-811").html('&nbsp;');
+		}
+	});
+
+	$("#811i2").change(function(event) {
+		var tmp_811 = "";
+
+		if ($('#811a').val().length > 0) {
+			tmp_811 = tmp_811 + '^a' + $('#811a').val();
+		}
+
+		if ($('#811d').val().length > 0) {
+			tmp_811 = tmp_811 + '^d' + $('#811d').val();
+		}
+		if (tmp_811.length > 0) {
+			$("#811").val($("#811i1").val() + $("#811i2").val() + tmp_811);
+			$("#l-811").html($("#811i1").val() + $("#811i2").val() + tmp_811);
+		} else {
+			$("#811").val('');
+			$("#l-811").html('&nbsp;');
+		}
+	});
+
+	$("#811a").bind('keyup change', function(event) {
+		var tmp_811 = "";
+
+		if ($('#811a').val().length > 0) {
+			tmp_811 = tmp_811 + '^a' + $('#811a').val();
+		}
+
+		if ($('#811d').val().length > 0) {
+			tmp_811 = tmp_811 + '^d' + $('#811d').val();
+		}
+
+		if (tmp_811.length > 0) {
+			$("#811").val($("#811i1").val() + $("#811i2").val() + tmp_811);
+			$("#l-811").html($("#811i1").val() + $("#811i2").val() + tmp_811);
+		} else {
+			$("#811").val('');
+			$("#l-811").html('&nbsp;');
+		}
+	});
+	
+		$("#811d").bind('keyup change', function(event) {
+		var tmp_811 = "";
+
+		if ($('#811a').val().length > 0) {
+			tmp_811 = tmp_811 + '^a' + $('#811a').val();
+		}
+
+		if ($('#811d').val().length > 0) {
+			tmp_811 = tmp_811 + '^d' + $('#811d').val();
+		}
+
+		if (tmp_811.length > 0) {
+			$("#811").val($("#811i1").val() + $("#811i2").val() + tmp_811);
+			$("#l-811").html($("#811i1").val() + $("#811i2").val() + tmp_811);
+		} else {
+			$("#811").val('');
+			$("#l-811").html('&nbsp;');
+		}
+	});
 
 	$("#850a").bind('keyup change', function(event) {
 		var tmp_850 = "";
@@ -12453,15 +14137,34 @@ $(document).ready(function() {
 	
 	// Campos obligatorios vacíos.
 	$('#PrintedAddForm').submit(function(event) {
-		if ($('#031t').val() == ""){
-			alert("EL campo 'Íncipit literario' no puede estar vacío.");
+		/*if ($('#031d').val() == ""){
+			alert("EL campo 'Voz o instrumento' no puede estar vacío.");
 			$(".tabs").hide();
 			$('.active').removeClass('active');
 			$('#t0xx').parent().addClass('active');
 			$('#0xx').show();
-			$('#031t').focus();
+			$('#031d').focus();
 			return false;
 		}
+		if ($('#031g').val() == ""){
+			alert("EL campo 'Tonalidad o modo' no puede estar vacío.");
+			$(".tabs").hide();
+			$('.active').removeClass('active');
+			$('#t0xx').parent().addClass('active');
+			$('#0xx').show();
+			$('#031g').focus();
+			return false;
+		}
+		
+	/*	if ($('#031p').val() == ""){
+			alert("EL campo 'Íncipit codificado' no puede estar vacío.");
+			$(".tabs").hide();
+			$('.active').removeClass('active');
+			$('#t0xx').parent().addClass('active');
+			$('#0xx').show();
+			$('#031p').focus();
+			return false;
+		}*/
 		
 		if ($('#100a').val() == ""){
 			alert("EL campo 'Nombre de persona' no puede estar vacío.");
@@ -12483,7 +14186,7 @@ $(document).ready(function() {
 			return false;
 		}
 
-		if ($('#260a').val() == ""){
+		/*if ($('#260a').val() == ""){
 			alert("EL campo 'Lugar de publicación, distribución, etc.' no puede estar vacío.");
 			$(".tabs").hide();
 			$('.active').removeClass('active');
@@ -12513,34 +14216,7 @@ $(document).ready(function() {
 			return false;
 		}
 		
-		if ($('#5922b').val() == ""){
-			alert("EL campo 'Instrumento - Medio sonoro.' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t5xx').parent().addClass('active');
-			$('#5xx').show();
-			$('#5922b').focus();
-			return false;
-		}
-		if ($('#5922c').val() == ""){
-			alert("EL campo 'Género - Tempo.' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t5xx').parent().addClass('active');
-			$('#5xx').show();
-			$('#5922c').focus();
-			return false;
-		}
-		if ($('#5922f').val() == ""){
-			alert("EL campo 'Armadura de clave - Tonalidad.' no puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t5xx').parent().addClass('active');
-			$('#5xx').show();
-			$('#5922f').focus();
-			return false;
-		}
-		/*if ($('#650a').val() == ""){
+		if ($('#650a').val() == ""){
 			alert("EL campo 'Materia.' No puede estar vacío.");
 			$(".tabs").hide();
 			$('.active').removeClass('active');
@@ -12548,7 +14224,7 @@ $(document).ready(function() {
 			$('#6xx').show();
 			$('#650a').focus();
 			return false;
-		}*/
+		}
 
 		if ($('#653a').val() == ""){
 			alert("EL campo 'Término de indización – No controlado' no puede estar vacío.");
@@ -12569,7 +14245,7 @@ $(document).ready(function() {
 			$('#700a').focus();
 			return false;
 
-		}
+		}*/
 		if ($('#PrintedCover').val() == ""){
 			alert("Debe seleccionar una portada para la obra.");
 			$('#ItemItem').focus();
@@ -12593,13 +14269,13 @@ $(document).ready(function() {
 	});
 });
 
-var authors = <?php echo $authors; ?>;
-var titles = <?php echo $titles; ?>;
-var places = <?php echo $places; ?>;
-var editors = <?php echo $editors; ?>;
-var years = <?php echo $years; ?>;
-var publications = <?php echo $publications; ?>;
-var matters = <?php echo $matters; ?>;
+//var authors = <?php echo $authors; ?>;
+//var titles = <?php echo $titles; ?>;
+//var places = <?php echo $places; ?>;
+//var editors = <?php echo $editors; ?>;
+//var years = <?php echo $years; ?>;
+//var publications = <?php echo $publications; ?>;
+//var matters = <?php echo $matters; ?>;
 </script>
 <?php echo $this->Html->script('autocomplete/jquery.autocomplete.min'); ?>
 <?php echo $this->Html->script('autocomplete/currency-autocomplete'); ?>

@@ -234,20 +234,122 @@ class PrintedsController extends AppController {
 			if (!empty($this->data['printeds']['Año'])) {
 				$conditions['Item.260 LIKE'] = '%^c' . $this->data['printeds']['Año'] . '%';
 			}
-			if (!empty($this->data['printeds']['IncipitLiterario'])) {
+		/*	if (!empty($this->data['printeds']['IncipitLiterario'])) {
 				$conditions['Item.031 LIKE'] = '%^t' . $this->data['printeds']['IncipitLiterario'] . '%';
+			}*/
+			if (!empty($this->data['printeds']['Instrumento'])) {
+				$conditions['Item.382 LIKE'] = '%^a' . $this->data['printeds']['Instrumento'] . '%';
 			}
-			if (!empty($this->data['printeds']['MedioSonoro'])) {
-				$conditions['Item.5922 LIKE'] = '%^b' . $this->data['printeds']['MedioSonoro'] . '%';
+			if (!empty($this->data['printeds']['NotacionMusical'])) {
+				$conditions['Item.031 LIKE'] = '%^p' . $this->data['printeds']['NotacionMusical'] . '%';
 			}
-			if (!empty($this->data['printeds']['Genero'])) {
-				$conditions['Item.5922 LIKE'] = '%^c' . $this->data['printeds']['Genero'] . '%';
-			}
+		//	if (!empty($this->data['printeds']['Genero'])) {
+		//		$conditions['Item.031 LIKE'] = '%^c' . $this->data['printeds']['Genero'] . '%';
+		//	}
 			if (!empty($this->data['printeds']['Tonalidad'])) {
-				$conditions['Item.5922 LIKE'] = '%^f' . $this->data['printeds']['Tonalidad'] . '%';
+				$conditions['Item.031 LIKE'] = '%^r' . $this->data['printeds']['Tonalidad'] . '%';
 			}
 			if (!empty($this->data['printeds']['Responsabilidad'])) {
 				$conditions['Item.700 LIKE'] = '%^a' . $this->data['printeds']['Responsabilidad'] . '%';
+			}
+			if (!empty($this->data['printeds']['copyright'])) {
+				$conditions['Item.017 LIKE'] = '%^a' . $this->data['printeds']['copyright'] . '%';
+			}
+			if (!empty($this->data['printeds']['ISBN'])) {
+				$conditions['Item.020 LIKE'] = '%^a' . $this->data['printeds']['ISBN'] . '%';
+			}
+			if (!empty($this->data['printeds']['Númeroplancha'])) {
+				$conditions['Item.028 LIKE'] = '%^a' . $this->data['printeds']['Númeroplancha'] . '%';
+			}
+			if (!empty($this->data['printeds']['Autorcorporativo'])) {
+				$conditions['Item.110 LIKE'] = '%^a' . $this->data['printeds']['Autorcorporativo'] . '%';
+			}
+			if (!empty($this->data['printeds']['Titulouniforme'])) {
+				$conditions['Item.240 LIKE'] = '%^a' . $this->data['printeds']['Titulouniforme'] . '%';
+			}
+			if (!empty($this->data['printeds']['Menciónmusical'])) {
+				$conditions['Item.254 LIKE'] = '%^a' . $this->data['printeds']['Menciónmusical'] . '%';
+			}
+			if (!empty($this->data['printeds']['Descripcionfisica'])) {
+				$conditions['Item.300 LIKE'] = '%^a' . $this->data['printeds']['Descripcionfisica'] . '%';
+			}
+			if (!empty($this->data['printeds']['Formaobra'])) {
+				$conditions['Item.380 LIKE'] = '%^a' . $this->data['printeds']['Formaobra'] . '%';
+			}
+			if (!empty($this->data['printeds']['Compas'])) {
+				$conditions['Item.381 LIKE'] = '%^a' . $this->data['printeds']['Compas'] . '%';
+			}
+			if (!empty($this->data['printeds']['Mediointerpretacion'])) {
+				$conditions['Item.382 LIKE'] = '%^a' . $this->data['printeds']['Mediointerpretacion'] . '%';
+			}
+			if (!empty($this->data['printeds']['Designaciónmusical'])) {
+				$conditions['Item.383 LIKE'] = '%^a' . $this->data['printeds']['Designaciónmusical'] . '%';
+			}
+			if (!empty($this->data['printeds']['Tonalidad'])) {
+				$conditions['Item.384 LIKE'] = '%^a' . $this->data['printeds']['Tonalidad'] . '%';
+			}
+			if (!empty($this->data['printeds']['Mencionserie'])) {
+				$conditions['Item.490 LIKE'] = '%^a' . $this->data['printeds']['Mencionserie'] . '%';
+			}
+			if (!empty($this->data['printeds']['Notageneral'])) {
+				$conditions['Item.500 LIKE'] = '%^a' . $this->data['printeds']['Notageneral'] . '%';
+			}
+			if (!empty($this->data['printeds']['Notacon'])) {
+				$conditions['Item.501 LIKE'] = '%^a' . $this->data['printeds']['Notacon'] . '%';
+			}
+			if (!empty($this->data['printeds']['Notaformato'])) {
+				$conditions['Item.505 LIKE'] = '%^a' . $this->data['printeds']['Notaformato'] . '%';
+			}
+			if (!empty($this->data['printeds']['Notaproduccion'])) {
+				$conditions['Item.508 LIKE'] = '%^a' . $this->data['printeds']['Notaproduccion'] . '%';
+			}
+			if (!empty($this->data['printeds']['Notaacontecimiento'])) {
+				$conditions['Item.518 LIKE'] = '%^a' . $this->data['printeds']['Notaacontecimiento'] . '%';
+			}
+			if (!empty($this->data['printeds']['Notasumario'])) {
+				$conditions['Item.520 LIKE'] = '%^a' . $this->data['printeds']['Notasumario'] . '%';
+			}
+			if (!empty($this->data['printeds']['Notaaudiencia'])) {
+				$conditions['Item.521 LIKE'] = '%^a' . $this->data['printeds']['Notaaudiencia'] . '%';
+			}
+			if (!empty($this->data['printeds']['Notalengua'])) {
+				$conditions['Item.545 LIKE'] = '%^a' . $this->data['printeds']['Notalengua'] . '%';
+			}
+			if (!empty($this->data['printeds']['Notasdescripcion'])) {
+				$conditions['Item.588 LIKE'] = '%^a' . $this->data['printeds']['Notasdescripcion'] . '%';
+			}
+			if (!empty($this->data['printeds']['Notafuente'])) {
+				$conditions['Item.592 LIKE'] = '%^a' . $this->data['printeds']['Notafuente'] . '%';
+			}
+			if (!empty($this->data['printeds']['Nombrepersona'])) {
+				$conditions['Item.600 LIKE'] = '%^a' . $this->data['printeds']['Nombrepersona'] . '%';
+			}
+			if (!empty($this->data['printeds']['Nombrescorporativa'])) {
+				$conditions['Item.610 LIKE'] = '%^a' . $this->data['printeds']['Nombrescorporativa'] . '%';
+			}
+			if (!empty($this->data['printeds']['Siglo'])) {
+				$conditions['Item.648 LIKE'] = '%^a' . $this->data['printeds']['Siglo'] . '%';
+			}
+			if (!empty($this->data['printeds']['Nombregeográfico'])) {
+				$conditions['Item.651 LIKE'] = '%^a' . $this->data['printeds']['Nombregeográfico'] . '%';
+			}
+			if (!empty($this->data['printeds']['Nombrescorporativos'])) {
+				$conditions['Item.710 LIKE'] = '%^a' . $this->data['printeds']['Nombrescorporativos'] . '%';
+			}
+			if (!empty($this->data['printeds']['Titulorelacionado'])) {
+				$conditions['Item.740 LIKE'] = '%^a' . $this->data['printeds']['Titulorelacionado'] . '%';
+			}
+			if (!empty($this->data['printeds']['Fuente'])) {
+				$conditions['Item.773 LIKE'] = '%^a' . $this->data['printeds']['Fuente'] . '%';
+			}
+			if (!empty($this->data['printeds']['Institucionfondos'])) {
+				$conditions['Item.850 LIKE'] = '%^a' . $this->data['printeds']['Institucionfondos'] . '%';
+			}
+			if (!empty($this->data['printeds']['Localizacion'])) {
+				$conditions['Item.852 LIKE'] = '%^a' . $this->data['printeds']['Localizacion'] . '%';
+			}
+			if (!empty($this->data['printeds']['Localizacionelectronicos'])) {
+				$conditions['Item.856 LIKE'] = '%^a' . $this->data['printeds']['Localizacionelectronicos'] . '%';
 			}
 			
 		} else {
@@ -283,7 +385,7 @@ class PrintedsController extends AppController {
 		$this->paginate = array(
 				//'limit' => '1',
 				'conditions' => $conditions,
-				//'order' => 'ASC'
+				'order' => 'Item.id DESC'
 		);
 		//debug($conditions); die;
 		$this->set('items', $this->paginate('Item'));
@@ -676,6 +778,62 @@ function literary($letter = null) {
 
 }
 
+function codific($letter = null) {
+	$conditions =  array('OR' => array(array('Item.h-006' => 'c', 'Item.h-007' => 'm', 'Item.published' => '1'), //||
+			array('Item.h-006' => 'c', 'Item.h-007' => 'b', 'Item.published' => '1'), 
+			array('Item.h-006' => 'c', 'Item.h-007' => 'c', 'Item.published' => '1'),
+			array('Item.h-006' => 'c', 'Item.h-007' => 'a', 'Item.published' => '1')));
+	//$conditions1 = array('Item.h-006' => 'k', 'Item.h-007' => 'm', 'Item.published' => '1');
+	//$conditions2 = array('Item.h-006' => 'k', 'Item.h-007' => 'a', 'Item.published' => '1');
+		
+		
+		if ($letter != null){
+			($conditions['Item.031 LIKE '] = "%^p" . $letter . "%" );//|| $conditions1['Item.653 LIKE '] = "%^a" . $matter . "%" ||
+			//$conditions2['Item.653 LIKE '] = "%^a" . $matter . "%" );
+			//debug($conditions); die;
+		} 
+	
+		/*
+		if (!empty($this->data)) { // Si llegan datos de una busqueda.
+			$this->data['Book']['year'] = $this->data['Book']['year']['year']; // Se arregla el campo year.
+			$this->Session->write('Search', $this->data); // Se guarda en sesion la busqueda.
+			$conditions = $this->buildConditions($this->data);
+			//debug($conditions); die;
+	
+		} else { // Si se viene del home o del paginador ...
+	
+			//$this->Session->delete('Search');
+			//if (isset($this->passedArgs[0]) && (substr($this->passedArgs[0], 0, 4) != "page")) {
+			if ($this->Session->check('Search')) {
+				$conditions = $this->buildConditions($this->Session->read('Search'));
+			}
+			//}
+		}*/
+	
+		/*if ($letter != null) {
+			if ($letter != '0-9') {
+				$conditions = array('Item.title LIKE' => $letter.'%', 'Item.type_id' => '2');
+			} else {
+				$conditions = array("
+						Item.title LIKE '0%' OR Item.title LIKE '1%' OR Item.title LIKE '2%' OR Item.title LIKE '3%' OR
+						Item.title LIKE '4%' OR Item.title LIKE '5%' OR Item.title LIKE '6%' OR Item.title LIKE '7%' OR
+						Item.title LIKE '8%' OR Item.title LIKE '9%'
+						", 'Item.type_id' => '2');
+			}
+		}*/
+		
+		$this->Item->recursive = 1;
+		
+		$this->paginate = array(
+				//'limit' => '1',
+				'conditions' => $conditions,
+				//'order' => 'Item.title ASC'
+		);
+	
+		$this->set('items', $this->paginate('Item'));
+
+}
+
 function responsability($letter = null) {
 	$conditions =  array('OR' => array(array('Item.h-006' => 'c', 'Item.h-007' => 'm', 'Item.published' => '1'), //||
 			array('Item.h-006' => 'c', 'Item.h-007' => 'b', 'Item.published' => '1'), 
@@ -713,7 +871,7 @@ function sound($letter = null) {
 		
 		
 		if ($letter != null){
-			($conditions['Item.5922 LIKE '] = "%^b" . $letter . "%" );//|| $conditions1['Item.653 LIKE '] = "%^a" . $matter . "%" ||
+			($conditions['Item.031 LIKE '] = "%^m" . $letter . "%" );//|| $conditions1['Item.653 LIKE '] = "%^a" . $matter . "%" ||
 			//$conditions2['Item.653 LIKE '] = "%^a" . $matter . "%" );
 			//debug($conditions); die;
 		} 
@@ -729,7 +887,7 @@ function sound($letter = null) {
 
 }	
 
-function gender($letter = null) {
+/*function gender($letter = null) {
 	$conditions =  array('OR' => array(array('Item.h-006' => 'c', 'Item.h-007' => 'm', 'Item.published' => '1'), //||
 			array('Item.h-006' => 'c', 'Item.h-007' => 'b', 'Item.published' => '1'), 
 			array('Item.h-006' => 'c', 'Item.h-007' => 'c', 'Item.published' => '1'),
@@ -753,7 +911,7 @@ function gender($letter = null) {
 	
 		$this->set('items', $this->paginate('Item'));
 
-}
+}*/
 
 function hue ($letter = null) {
 	$conditions =  array('OR' => array(array('Item.h-006' => 'c', 'Item.h-007' => 'm', 'Item.published' => '1'), //||
@@ -765,7 +923,7 @@ function hue ($letter = null) {
 		
 		
 		if ($letter != null){
-			($conditions['Item.5922 LIKE '] = "%^f" . $letter . "%" );//|| $conditions1['Item.653 LIKE '] = "%^a" . $matter . "%" ||
+			($conditions['Item.031 LIKE '] = "%^r" . $letter . "%" );//|| $conditions1['Item.653 LIKE '] = "%^a" . $matter . "%" ||
 			//$conditions2['Item.653 LIKE '] = "%^a" . $matter . "%" );
 			//debug($conditions); die;
 		} 
@@ -973,7 +1131,31 @@ function hue ($letter = null) {
 		} else {
 			$this->set(compact('titles', false));
 		}
+		//-----------------------------Sub-Campo 031p-------------------//
+		$codifics = $this->Item->find('list', array('fields' => array('031')));
 		
+		if ($codifics) {
+			$list = "";
+			// Recorre para extraer el contenido del subcampo deseado.
+			foreach ($codifics as $a => $v){
+				$v = $this->marc21_decode($v);
+				$list[$a] = $v['a'];
+			}
+			
+			$list = array_unique($list);
+			asort($list);
+			
+			// Recorre para darle el formato deseado.
+			$l = "";
+			foreach ($list as $a => $v){
+				$l = $l . "{ value: '" . $v . "', data: '" . $v . "' }, ";
+			}
+			
+			$codifics = "[" . $l . "]";
+			$this->set(compact('codifics', $codifics));
+		} else {
+			$this->set(compact('codifics', false));
+		}
 		// ------------------------- Sub-Campo 260a ------------------------- //
 		
 		$places = $this->Item->find('list', array('fields' => array('260')));
@@ -1164,15 +1346,15 @@ function hue ($letter = null) {
 		}		
 	
 
-	//---------------------------Sub-Campo 5922b----------------------------//
-		$sounds = $this->Item->find('list', array('fields' => array('5922')));
+	//---------------------------Sub-Campo 031d----------------------------//
+		$sounds = $this->Item->find('list', array('fields' => array('031')));
 		
 		if ($sounds) {
 			$list = "";
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($sounds as $a => $v){
 				$v = $this->marc21_decode($v);
-				$list[$a] = $v['b'];
+				$list[$a] = $v['m'];
 			}
 			
 			$list = array_unique($list);
@@ -1190,8 +1372,8 @@ function hue ($letter = null) {
 			$this->set(compact('sounds', false));
 		}
 	
-	//---------------------------Sub-Campo 5922c----------------------------//
-		$genders = $this->Item->find('list', array('fields' => array('5922')));
+	//---------------------------Sub-Campo 031g----------------------------//
+	/*	$genders = $this->Item->find('list', array('fields' => array('031')));
 		
 		if ($genders) {
 			$list = "";
@@ -1214,17 +1396,17 @@ function hue ($letter = null) {
 			$this->set(compact('genders', $genders));
 		} else {
 			$this->set(compact('genders', false));
-		}
+		}*/
 	
-	//---------------------------Sub-Campo 5922f----------------------------//
-		$hues = $this->Item->find('list', array('fields' => array('5922')));
+	//---------------------------Sub-Campo 031g----------------------------//
+		$hues = $this->Item->find('list', array('fields' => array('031')));
 		
 		if ($hues) {
 			$list = "";
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($hues as $a => $v){
 				$v = $this->marc21_decode($v);
-				$list[$a] = $v['f'];
+				$list[$a] = $v['r'];
 			}
 			
 			$list = array_unique($list);
@@ -1551,15 +1733,15 @@ function hue ($letter = null) {
 		}
 	
 
-	//---------------------------Sub-Campo 5922b----------------------------//
-		$sounds = $this->Item->find('list', array('fields' => array('5922')));
+	//---------------------------Sub-Campo 031d----------------------------//
+		$sounds = $this->Item->find('list', array('fields' => array('031')));
 		
 		if ($sounds) {
 			$list = "";
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($sounds as $a => $v){
 				$v = $this->marc21_decode($v);
-				$list[$a] = $v['b'];
+				$list[$a] = $v['m'];
 			}
 			
 			$list = array_unique($list);
@@ -1579,7 +1761,7 @@ function hue ($letter = null) {
 	
 	
 	//---------------------------Sub-Campo 5922c----------------------------//
-		$genders = $this->Item->find('list', array('fields' => array('5922')));
+	/*	$genders = $this->Item->find('list', array('fields' => array('5922')));
 		
 		if ($genders) {
 			$list = "";
@@ -1603,16 +1785,16 @@ function hue ($letter = null) {
 		} else {
 			$this->set(compact('genders', false));
 		}
-	
+	*/
 	//---------------------------Sub-Campo 5922f----------------------------//
-		$hues = $this->Item->find('list', array('fields' => array('5922')));
+		$hues = $this->Item->find('list', array('fields' => array('031')));
 		
 		if ($hues) {
 			$list = "";
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($hues as $a => $v){
 				$v = $this->marc21_decode($v);
-				$list[$a] = $v['f'];
+				$list[$a] = $v['r'];
 			}
 			
 			$list = array_unique($list);
@@ -1628,6 +1810,32 @@ function hue ($letter = null) {
 			$this->set(compact('hues', $hues));
 		} else {
 			$this->set(compact('hues', false));
+		}
+		
+		//-----------------------------Sub-Campo 031p-------------------//
+		$codifics = $this->Item->find('list', array('fields' => array('031')));
+		
+		if ($codifics) {
+			$list = "";
+			// Recorre para extraer el contenido del subcampo deseado.
+			foreach ($codifics as $a => $v){
+				$v = $this->marc21_decode($v);
+				$list[$a] = $v['a'];
+			}
+			
+			$list = array_unique($list);
+			asort($list);
+			
+			// Recorre para darle el formato deseado.
+			$l = "";
+			foreach ($list as $a => $v){
+				$l = $l . "{ value: '" . $v . "', data: '" . $v . "' }, ";
+			}
+			
+			$codifics = "[" . $l . "]";
+			$this->set(compact('codifics', $codifics));
+		} else {
+			$this->set(compact('codifics', false));
 		}
 		
 	//---------------------------Sub-Campo 700a----------------------------//
@@ -1666,7 +1874,7 @@ function hue ($letter = null) {
 		
 		$item = $this->Item->find('first', array('conditions' => array('Item.id' => $id)));
 		if ($this->Item->delete($id)) {
-			$this->Session->setFlash(__('Item eliminado', true));
+			$this->Session->setFlash(__('Obra eliminada', true));
 			$this->Attachment->delete_files($item['Item']['item_file_path']);
 			if (!isset($this->passedArgs[1])) {
 				$this->redirect(array('action'=>'index'));
