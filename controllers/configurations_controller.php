@@ -17,6 +17,9 @@ class ConfigurationsController extends AppController {
 	function index() {
 	}
 	
+	function help(){
+		
+	}
 	function sitebackup () {
 		$this->autoRender = false;
 		
@@ -25,12 +28,12 @@ class ConfigurationsController extends AppController {
 		}
 		
 		//$dir = '/home/guzman6001/Dropbox/atesis/app/backups';
-		//$dir = $_SERVER['HTTP_HOST'] . $this->base.DS.'webroot'.DS.'backups'.DS;
-		$dir = "C:".DS."Program Files (x86)".DS."Apache Software Foundation".DS."Apache2.2".DS."htdocs".DS."tesis".DS."webroot".DS."backups".DS;
+		$dir = $_SERVER['HTTP_HOST'] . $this->base . "/app/";
+		//$dir = "C:".DS."Program Files (x86)".DS."Apache Software Foundation".DS."Apache2.2".DS."htdocs".DS."tesis".DS."webroot".DS."backups".DS;
 		
-		//$respaldar = '/home/guzman6001/Dropbox/atesis';
-		//$respaldar = $_SERVER['HTTP_HOST'] . $this->base.DS.'webroot'.DS.'backups'.DS;
-		$respaldar = "C:".DS."Program Files (x86)".DS."Apache Software Foundation".DS."Apache2.2".DS."htdocs".DS."tesis".DS."webroot".DS."backups".DS;
+		$respaldar = $_SERVER['HTTP_HOST']. $this->base . "/app/webroot/backups/";
+		//$respaldar = $_SERVER['HTTP_HOST'] . $this->base.DS.'app'.DS.'webroot'.DS.'backups'.DS;
+		//$respaldar = "C:".DS."Program Files (x86)".DS."Apache Software Foundation".DS."Apache2.2".DS."htdocs".DS."tesis".DS."webroot".DS."backups".DS;
 		
 		// Directory to backup.
 		$filename = 'bvmjm' . date("_Y_m_d_H_i_s") . '.tar'; //path to where the file will be saved.
@@ -42,7 +45,7 @@ class ConfigurationsController extends AppController {
 		//} else {
 			if(!shell_exec("tar cvf $C_RUTA_ARCHIVO $respaldar")) {
 				//$this->Session->setFlash(__('No se pudo comprimir el respaldo, por favor verifique que está instalado TAR.', true));
-				echo "<div style='border: solid #803C00; border-style: !important;'>No se pudo comprimir el respaldo, por favor verifique que está instalado TAR.</div>";
+				echo "<div style='border: solid #803C00; border-style: !important;'>No se pudo comprimir el respaldo, por favor verifique que está instalado .tar.</div>";
 			} else {
 				//$this->Session->setFlash(__('Respaldo creado con éxito.', true));
 				echo "<div style='border: solid #803C00; border-style: !important;'>Respaldo creado con éxito. <br /><a href='".$C_RUTA_ARCHIVO."' target='_new'>Abrir</a></div>";
@@ -62,19 +65,19 @@ class ConfigurationsController extends AppController {
 
 		//Directorio
 		//$dir = $_SERVER['HTTP_HOST'] . $this->base.DS.'webroot'.DS.'backups'.DS;
-		$dir = "C:".DS."Program Files (x86)".DS."Apache Software Foundation".DS."Apache2.2".DS."htdocs".DS."tesis".DS."webroot".DS."backups".DS;
+		$dir = $this->base . "/html/app/webroot/backups";
 		
 		//Servidor MySql
 		$C_SERVER = 'localhost';
 	
 		//Base de datos
-		$C_BASE_DATOS = 'tesis';
+		$C_BASE_DATOS = 'bvmjm';
 		//$C_BASE_DATOS = 'ofeliast_tesis';
 	
 		//Usuario y contraseña de la base de datos mysql
-		$C_USUARIO = 'root';
+		$C_USUARIO = 'bvmjm';
 		//$C_USUARIO = 'ofeliast_tesis';
-		$C_CONTRASENA = 'root';
+		$C_CONTRASENA = 't2kf3w7d3i';
 		//$C_CONTRASENA = '7z4gyhf18)Dc';
 		
 		//Ruta archivo de salida
