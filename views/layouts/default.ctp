@@ -84,7 +84,7 @@
 									<?php echo $this->Html->link('Documentos', '/'); ?>
 								</li>
 								<li>
-									<?php echo $this->Html->link('Trabajos Académicos', '/'); ?>
+									<?php echo $this->Html->link('Trabajos Académicos', '/academic_papers'); ?>
 								</li>
 							</ul>
 						</li>
@@ -107,7 +107,7 @@
 								  <li><a href="#">Música Impresa</a></li>
 								  <li><a href="#">Iconógrafías</a></li>
 								  <li><a href="#">Documentos</a></li>
-								  <li><a href="#">Trabajos Académicos</a></li>
+								  <li><a href="<?php echo $this->base; ?>/academic_papers/advanced_search">Trabajos Académicos</a></li>
 								</ul>
 							</div>
 						</div>
