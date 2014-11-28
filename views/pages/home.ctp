@@ -272,7 +272,7 @@
 					<p style="text-align: justify;">Este módulo almacenará los trabajos especiales de grado, trabajos de ascenso y tesis de Maestría y Doctorado del Departamento de música de la 
 					Escuela de Artes, así como artículos académicos de estudiantes y profesores de la UCV y otras casas de estudio con carreras musicales en Venezuela.</p>
 					<p class="text-center">
-						<?php echo $this->Html->link('Más Información', '/', array('class' => 'btn btn-primary', 'onclick' => 'alert("Módulo en construcción."); return false;')); ?>
+						<?php echo $this->Html->link('Más Información', '/academic_papers', array('class' => 'btn btn-primary')); ?>
 						<?php //echo $this->Html->link('Entrar', '/', array('class' => 'btn btn-primary', 'onclick' => 'alert("Módulo en construcción."); return false;')); ?>
 					</p>
 				</div>
