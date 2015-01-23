@@ -20,12 +20,6 @@ class AcademicPapersController extends AppController {
 				'title',
 				'marc21',
 				'intro'
-				/*'libros',
-				'revistas',
-				'manuscritos',
-				'impresos',
-				'iconografias',
-				'trabajos'*/
 		);
 		
 		//if ($this->Session->read('Auth.User.group_id') == '3'){
