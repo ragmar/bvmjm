@@ -12,47 +12,17 @@ th {
 </style>
 <ul class="breadcrumb" style="margin: 0">
   <li><a href="<?php echo $this->base; ?>">Inicio</a></li>
-  <li><a href="<?php echo $this->base; ?>/iconographies">Iconografía Musical Venezolana</a></li>
-  <li>Agregar Obra </li>
+  <li><a href="<?php echo $this->base; ?>/academic_papers">Trabajos Acad&eacute;micos</a></li>
+  <li>Agregar Trabajo </li>
 </ul>
 
 <div class="items">
 <div class="col-md-12 column">
-<h2>Agregar Obra</h2>
+<h2>Agregar Trabajo Acad&eacute;mico</h2>
 
-<?php echo $this->Form->create('Iconographie', array('enctype' => 'multipart/form-data')); ?>
+<?php echo $this->Form->create('AcademicPaper', array('enctype' => 'multipart/form-data')); ?>
 
 <h5>Datos de Cabecera o Líder</h5>
-
-<!--
-<div style="text-align: center;">
-	<select id="tipo" class="form-control">
-			<option value="0">Seleccione el tipo de registro</option>
-		<optgroup label="MATERIAL TEXTUAL">
-			<option value="1">Libro</option>
-			<option value="2">Revista</option>
-			<option value="3">Parte de Libro</option>
-			<option value="4">Parte de Revista</option>
-		</optgroup>
-		<optgroup label="MÚSICA ESCRITA">
-			<option value="5">Música Impresa</option>
-			<option value="6">Música Manuscrita</option>
-			<option value="7">Música Impresa (parte componente)</option>
-			<option value="8">Música Manuscrita (parte componente)</option>
-			<option value="9">Música Impresa (parte de revista)</option>
-			<option value="10">Música Impresa (colección)</option>
-			<option value="11">Música Manuscrita (colección facticia)</option>
-		</optgroup>
-		<optgroup label="MATERIAL GRÁFICO">
-			<option value="12">Imágenes fijas bidimensionales</option>
-			<option value="13">Imágenes fijas bidimensionales (parte de libro)</option>
-			<option value="14">Imágenes fijas bidimensionales (parte de revista)</option>
-		</optgroup>
-	</select>
-</div>
-
-<br />
--->
 
 <table class="table">
 	<tr>
@@ -78,22 +48,22 @@ th {
 		<?php
 		echo $this->Form->input('h-006', array('label' => false, 'class' => 'form-control',
 			'options' => array(
-				/*'a' => 'a - Material textual.',
+				'a' => 'a - Material textual.',
 				'c' => 'c - Música notada impresa.',
 				'd' => 'd - Música notada manuscrita.',
 				'e' => 'e - Material cartográfico.',
 				'f' => 'f - Material cartográfico manuscrito.',
 				'g' => 'g - Material gráfico proyectable.',
 				'i' => 'i - Grabación sonora no musical.',
-				'j' => 'j - Grabación sonora musical.',*/
+				'j' => 'j - Grabación sonora musical.',
 				'k' => 'k - Material gráfico bidimensional, no proyectable.',
-				/*'m' => 'm - Archivo de ordenador.',
+				'm' => 'm - Archivo de ordenador.',
 				'o' => 'o - Kit.',
 				'p' => 'p - Material mixto.',
 				'r' => 'r - Objeto tridimensional artificial o natural.',
-				't' => 't - Material textual manuscrito.'*/
+				't' => 't - Material textual manuscrito.'
 				),
-			'selected' => 'k'/*,
+			'selected' => 't'/*,
 			'empty' => 'Seleccione'*/
 		)); ?>
 		</td>
@@ -106,11 +76,11 @@ th {
 			'options' => array(
 				'a' => 'a - Parte componente monográfica.',
 				'b' => 'b - Parte componente seriada.',
-				/*'c' => 'c - Colección.',
+				'c' => 'c - Colección.',
 				'd' => 'd - Subunidad.',
-				'i' => 'i - Recurso integrable.',*/
+				'i' => 'i - Recurso integrable.',
 				'm' => 'm - Monografía.',
-				/*'s' => 's - Publicación seriada.'*/
+				's' => 's - Publicación seriada.'
 			),
 			'selected' => 'm'/*,
 			'empty' => 'Seleccione'*/
@@ -168,7 +138,7 @@ th {
 	<li><a class="tab" href="" id="t1xx">1XX</a></li>
 	<li><a class="tab" href="" id="t2xx">2XX</a></li>
 	<li><a class="tab" href="" id="t3xx">3XX</a></li>
-	<li><a class="tab" href="" id="t4xx">4XX</a></li>
+	<li class="disabled"><a class="tab" href="" id="t4xx">4XX</a></li>
 	<li><a class="tab" href="" id="t5xx">5XX</a></li>
 	<li><a class="tab" href="" id="t6xx">6XX</a></li>
 	<li><a class="tab" href="" id="t7xx">7XX</a></li>
@@ -632,67 +602,25 @@ th {
 		)); ?></td>
 	</tr>
 	<tr>
-		<td><b>008 [18]</b></td>
-		<td>Periodicidad.</td>
-		<td><?php echo $this->Form->input('008-18', array('id' => '008-18', 'label' => false, 'class' => 'form-control', 'div' => false, 
+		<td><b>008 [24-27]</b></td>
+		<td>Naturaleza del contenido.</td>
+		<td><?php echo $this->Form->input('008-24-27', array('id' => '008-24-27', 'label' => false, 'class' => 'form-control', 'div' => false, 
 			'options' => array(
-				'#' => '# - Periodicidad no determinada',
-				'a' => 'a - Anual',
-				'b' => 'b - Bimestral',
-				'c' => 'c - Bisemanal',
-				'd' => 'd - Diaria',
-				'e' => 'e - Bimensual',
-				'f' => 'f - Semestral',
-				'g' => 'g - Bienal',
-				'h' => 'h - Trienal',
-				'j' => 'j - Trimensual',
-				'k' => 'k - Actualizado de forma continuada',
-				'm' => 'm - Mensual',
-				'q' => 'q - Trimestral',
-				's' => 's - Quincenal',
-				't' => 't - Cuatrimestral',
-				'u' => 'u - Desconocido',
-				'w' => 'w - Semanal',
-				'z' => 'z - Otro',
-				'|' => '| - No se utiliza'
-			)
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>008 [19]</b></td>
-		<td>Regularidad.</td>
-		<td><?php echo $this->Form->input('008-19', array('id' => '008-19', 'label' => false, 'class' => 'form-control', 'div' => false,
-			'options' => array(
-				'n' => 'n - Irregular normalizada',
-				'r' => 'r - Regular',
-				'u' => 'u - Desconocida',
-				'x' => 'x - Completamente irregular',
-				'|' => '| - No se utiliza'
-			)
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>008 [20]</b></td>
-		<td>No definida.</td>
-		<td><?php echo $this->Form->input('008-20', array('id' => '008-20', 'label' => false, 'class' => 'form-control', 'div' => false,
-			'options' => array(
-				'#' => '# - No definida'
-			)
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>008 [21]</b></td>
-		<td>Tipo de recurso continuado.</td>
-		<td><?php echo $this->Form->input('008-21', array('id' => '008-21', 'label' => false, 'class' => 'form-control', 'div' => false,
-			'options' => array(
-				'#' => '# - Ninguno de los siguientes',
-				'd' => 'd - Base de datos actualizable',
-				'l' => 'l - Hojas sueltas actualizables',
-				'm' => 'm - Serie monográfica',
-				'n' => 'n - Periódico',
-				'p' => 'p - Revista',
-				'w' => 'w - Sitio web actualizable',
-				'|' => '| - No se utiliza'
+				'#' => '# - No se especifica la naturaleza del contenido',
+				'a' => 'a - Resúmenes/sumarios',
+				'b' => 'b - Bibliografías',
+				'c' => 'c - Catálogos',
+				'd' => 'd - Diccionarios',
+				'e' => 'e - Enciclopedias',
+				'f' => 'f - Manuales',
+				'g' => 'g - Artículos sobre temas legales',
+				'i' => 'i - Índices',
+				'j' => 'j - Documentos de patente',
+				'k' => 'k - Discografías',
+				'l' => 'l - Legislación',
+				'm' => 'm - Tesis',
+				'n' => 'n - Estado de la cuestión en una materia',
+				'o' => 'o - Reseñas',
 			)
 		)); ?></td>
 	</tr>
@@ -1214,138 +1142,6 @@ th {
 
 <table class="table">
 	<tr>
-		<th style="width: 10%;"><b>017</b></th>
-		<th style="width: 45%;"><b>Número de copyright o de depósito legal.</b></th>
-		<th style="width: 45%;">
-			<label id="l-017">&nbsp;</label>
-			<?php echo $this->Form->hidden('017', array('id' => '017', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Número de copyright o de depósito legal.</td>
-		<td><?php echo $this->Form->input('017a', array('id' => '017a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>020</b></th>
-		<th style="width: 45%;"><b>Número Internacional Normalizado para Libros (ISBN).</b></th>
-		<th style="width: 45%;">
-			<label id="l-020">&nbsp;</label>
-			<?php echo $this->Form->hidden('020', array('id' => '020', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>ISBN.</td>
-		<td><?php echo $this->Form->input('020a', array('id' => '020a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$c</b></td>
-		<td>Términos de disponibilidad.</td>
-		<td><?php echo $this->Form->input('020c', array('id' => '020c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$z</b></td>
-		<td>ISBN Inválido/Cancelado.</td>
-		<td><?php echo $this->Form->input('020z', array('id' => '020z', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>022</b></th>
-		<th style="width: 45%;"><b>Número Internacional Normalizado para Publicaciones Seriadas (ISSN).</b></th>
-		<th style="width: 45%;">
-			<label id="l-022">&nbsp;</label>
-			<?php echo $this->Form->hidden('022', array('id' => '022', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>ISSN.</td>
-		<td><?php echo $this->Form->input('022a', array('id' => '022a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$y</b></td>
-		<td>ISSN incorrecto.</td>
-		<td><?php echo $this->Form->input('022y', array('id' => '022y', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$z</b></td>
-		<td>ISSN cancelado.</td>
-		<td><?php echo $this->Form->input('022z', array('id' => '022z', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>024</b></th>
-		<th style="width: 45%;"><b>Otros identificadores normalizados (ISMN).</b></th>
-		<th style="width: 45%;">
-			<label id="l-024">&nbsp;</label>
-			<?php echo $this->Form->hidden('024', array('id' => '024', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>I1</b></td>
-		<td>Cobertura/localización dentro de la fuente.</td>
-		<td><?php echo $this->Form->input('024i1', array('id' => '024i1', 'label' => false, 'div' => false, 'class' => 'form-control',
-			'options' => array(
-				'0' => '0 - Cobertura desconocida',
-				'1' => '1 - Cobertura completa',
-				'2' => '2 - Cobertura selectiva',
-				'3' => '3 - No se indica la localización dentro de la fuente',
-				'4' => '4 - Se indica la localización dentro de la fuente'
-			), 'selected' => '2'
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>I2</b></td>
-		<td>No definido.</td>
-		<td><?php echo $this->Form->input('024i2', array('id' => '024i2', 'label' => false, 'div' => false, 'class' => 'form-control',
-			'options' => array(
-					'#' => '# - No definido'
-			)
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>ISMN.</td>
-		<td><?php echo $this->Form->input('024a', array('id' => '024a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$y</b></td>
-		<td>ISMN incorrecto.</td>
-		<td><?php echo $this->Form->input('024y', array('id' => '024y', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>028</b></th>
-		<th style="width: 45%;"><b>Número de plancha.</b></th>
-		<th style="width: 45%;">
-			<label id="l-028">&nbsp;</label>
-			<?php echo $this->Form->hidden('028', array('id' => '028', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Número de plancha.</td>
-		<td><?php echo $this->Form->input('028a', array('id' => '028a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Fuente del número de plancha.</td>
-		<td><?php echo $this->Form->input('028b', array('id' => '028b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-
-<table class="table">
-	<tr>
 		<th style="width: 10%;"><b>040</b></th>
 		<th style="width: 45%;"><b>Fuente de la catalogación.</b></th>
 		<th style="width: 45%;">
@@ -1425,105 +1221,6 @@ th {
 
 <table class="table">
 	<tr>
-		<th style="width: 10%;"><b>047</b></th>
-		<th style="width: 45%;"><b>Código de forma de composición .</b></th>
-		<th style="width: 45%;">
-			<label id="l-047">&nbsp;</label>
-			<?php echo $this->Form->hidden('047', array('id' => '047', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>I1</b></td>
-		<td>Punto de acceso adicional.</td>
-		<td><?php echo $this->Form->input('047i1', array('id' => '047i1', 'label' => false, 'div' => false,'class' => 'form-control', 
-			'options' => array(
-				'0' => '0 - No hay punto de acceso adicional',
-				'1' => '1 - Hay punto de acceso adicional',
-			), 'selected' => '1'
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>I2</b></td>
-		<td>Control de nota.</td>
-		<td><?php echo $this->Form->input('047i2', array('id' => '047i2', 'label' => false, 'div' => false, 'class' => 'form-control',
-			'options' => array(
-				'0' => '0 - Se genera nota',
-				'1' => '1 - No se genera nota',
-			)
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Código de la forma de composición.</font>.</td>
-		<td><?php echo $this->Form->input('047a', array('id' => '047a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>048</b></th>
-		<th style="width: 45%;"><b>Número de instrumentos y voces.</b></th>
-		<th style="width: 45%;">
-			<label id="l-048">&nbsp;</label>
-			<?php echo $this->Form->hidden('048', array('id' => '048', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>I1</b></td>
-		<td>No definido.</td>
-		<td><?php echo $this->Form->input('048i1', array('id' => '048i1', 'label' => false, 'div' => false,  'class' => 'form-control',
-			'options' => array(
-				'#' => '# - No definido',
-			), 'selected' => '#'
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>I2</b></td>
-		<td>Fuente del código.</td>
-		<td><?php echo $this->Form->input('048i2', array('id' => '048i2', 'label' => false, 'div' => false, 'class' => 'form-control',
-			'options' => array(
-				'#' => '# - Código MARC',
-				'7'	=>	'7 - Fuente especificada en el subcampo $2',
-				), 'selected' => '#'
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Código de ejecutante o conjunto.</font>.</td>
-		<td><?php echo $this->Form->input('048a', array('id' => '048a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Código del solista.</font>.</td>
-		<td><?php echo $this->Form->input('048b', array('id' => '048b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>049</b></th>
-		<th style="width: 45%;"><b>Autor o material venezolano.</b></th>
-		<th style="width: 45%;">
-			<label id="l-049">&nbsp;</label>
-			<?php echo $this->Form->hidden('049', array('id' => '049', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Autor venezolano.</td>
-		<td><?php echo $this->Form->input('049a', array('id' => '049a', 'label' => false, 'div' => false)); ?></td>
-	</tr>
-		<tr>
-		<td><b>$b</b></td>
-		<td>Material venezolano.</td>
-		<td><?php echo $this->Form->input('049b', array('id' => '049b', 'label' => false, 'div' => false)); ?></td>
-	</tr>
-</table>
-
-
-
-<table class="table">
-	<tr>
 		<th style="width: 10%;"><b>082</b></th>
 		<th style="width: 45%;"><b>Número de la Clasificación Decimal Dewey.</b></th>
 		<th style="width: 45%;">
@@ -1589,26 +1286,7 @@ th {
 		<td><?php echo $this->Form->input('092c', array('id' => '092c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>099</b></th>
-		<th style="width: 45%;"><b>Número de clasificación textual libre local.</b></td>
-		<th style="width: 45%;">
-			<label id="l-099">&nbsp;</label>
-			<?php echo $this->Form->hidden('099', array('id' => '099', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Siglas de la colección.</td>
-		<td><?php echo $this->Form->input('099a', array('id' => '099a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Siglas de manuscritos.</td>
-		<td><?php echo $this->Form->input('099b', array('id' => '099b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
+
 </div>
 
 <div id="1xx" class="tabs" style="display: none;">
@@ -1653,204 +1331,9 @@ th {
 	</tr>
 </table>
 
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>110</b></th>
-		<th style="width: 45%;"><b>Autor corporativo.</b></th>
-		<th style="width: 45%;">
-			<label id="l-110">&nbsp;</label>
-			<?php echo $this->Form->hidden('110', array('id' => '110', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>I1</b></td>
-		<td>Tipo de elemento inicial del nombre de entidad corporativa.</td>
-		<td><?php echo $this->Form->input('110i1', array('id' => '110i1', 'label' => false, 'div' => false, 'class' => 'form-control', 
-			'options' => array(
-				'#' => '# - No definido',
-				'0' => '0 - Nombre en orden inverso',
-				'1' => '1 - Nombre de jurisdicción',
-				'2' => '2 - Nombre en orden directo'
-			), 'selected' => '2'
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>I2</b></td>
-		<td>No definido.</td>
-		<td><?php echo $this->Form->input('110i2', array('id' => '110i2', 'label' => false, 'div' => false, 'class' => 'form-control',
-			'options' => array(
-				'#' => '# - No definido'
-			)
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Nombre de autor corporativo.</td>
-		<td><?php echo $this->Form->input('110a', array('id' => '110a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Unidad subordinada.</td>
-		<td><?php echo $this->Form->input('110b', array('id' => '110b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>130</b></th>
-		<th style="width: 45%;"><b>Título uniforme (Punto de acceso).</b></th>
-		<th style="width: 45%;">
-			<label id="l-130">&nbsp;</label>
-			<?php echo $this->Form->hidden('130', array('id' => '130', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>I1</b></td>
-		<td>Caracteres que no alfabetizan.</td>
-		<td><?php echo $this->Form->input('130i1', array('id' => '130i1', 'label' => false, 'div' => false, 'class' => 'form-control', 
-			'options' => array(
-				'0' => '0',
-				'1' => '1',
-				'2' => '2',
-				'3' => '3',
-				'4' => '4',
-				'5' => '5',
-				'6' => '6',
-				'7' => '7',
-				'8' => '8',
-				'9' => '9',		
-			), 'selected' => '0'
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>I2</b></td>
-		<td>No definido.</td>
-		<td><?php echo $this->Form->input('130i2', array('id' => '130i2', 'label' => false, 'div' => false, 'class' => 'form-control',
-			'options' => array(
-					'#' => '# - No definido'
-			)
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Título uniforme.</td>
-		<td><?php echo $this->Form->input('130a', array('id' => '130a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$n</b></td>
-		<td>Número de parte o sección de la obra.</td>
-		<td><?php echo $this->Form->input('130n', array('id' => '130n', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$p</b></td>
-		<td>Nombre de parte o sección de la obra.</td>
-		<td><?php echo $this->Form->input('130p', array('id' => '130p', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
 </div>
 
 <div id="2xx" class="tabs" style="display: none;">
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>222</b></th>
-		<th style="width: 45%;"><b>Título clave.</b></th>
-		<th style="width: 45%;">
-			<label id="l-222">&nbsp;</label>
-			<?php echo $this->Form->hidden('222', array('id' => '222', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>I1</b></td>
-		<td>No definido.</td>
-		<td><?php echo $this->Form->input('222i1', array('id' => '222i1', 'label' => false, 'div' => false, 'class' => 'form-control', 
-			'options' => array(
-				'#' => '# - No definido'
-			)
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>I2</b></td>
-		<td>Caracteres que no alfabetizan.</td>
-		<td><?php echo $this->Form->input('222i2', array('id' => '222i2', 'label' => false, 'div' => false, 'class' => 'form-control',
-			'options' => array(
-				'0' => '0',
-				'1' => '1',
-				'2' => '2',
-				'3' => '3',
-				'4' => '4',
-				'5' => '5',
-				'6' => '6',
-				'7' => '7',
-				'8' => '8',
-				'9' => '9'
-			)
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Título clave.</td>
-		<td><?php echo $this->Form->input('222a', array('id' => '222a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Información adicional.</td>
-		<td><?php echo $this->Form->input('222b', array('id' => '222b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>240</b></th>
-		<th style="width: 45%;"><b>Título uniforme.</b></th>
-		<th style="width: 45%;">
-			<label id="l-240">&nbsp;</label>
-			<?php echo $this->Form->hidden('240', array('id' => '240', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>I1</b></td>
-		<td>Impresión o visualización.</td>
-		<td><?php echo $this->Form->input('240i1', array('id' => '240i1', 'label' => false, 'div' => false, 'class' => 'form-control',
-			'options' => array(
-				'0' => '0 - No se imprime ni se visualiza',
-				'1' => '1 - Se imprime o se visualiza'
-			), 'selected' => '1'
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>I2</b></td>
-		<td>Caracteres que no alfabetizan.</td>
-		<td><?php echo $this->Form->input('240i2', array('id' => '240i2', 'label' => false, 'div' => false, 'class' => 'form-control', 
-			'options' => array(
-				'0' => '0',
-				'1' => '1',
-				'2' => '2',
-				'3' => '3',
-				'4' => '4',
-				'5' => '5',
-				'6' => '6',
-				'7' => '7',
-				'8' => '8',
-				'9' => '9',		
-			), 'selected' => '0'
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Título uniforme.</td>
-		<td><?php echo $this->Form->input('240a', array('id' => '240a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$n</b></td>
-		<td>Número de parte o sección de la obra.</td>
-		<td><?php echo $this->Form->input('240n', array('id' => '240n', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$p</b></td>
-		<td>Nombre de parte o sección de la obra.</td>
-		<td><?php echo $this->Form->input('240p', array('id' => '240p', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
 
 <table class="table">
 	<tr>
@@ -1913,144 +1396,6 @@ th {
 
 <table class="table">
 	<tr>
-		<th style="width: 10%;"><b>246</b></th>
-		<th style="width: 45%;"><b>Variante de título.</b></th>
-		<th style="width: 45%;">
-			<label id="l-246">&nbsp;</label>
-			<?php echo $this->Form->hidden('246', array('id' => '246', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>I1</b></td>
-		<td>Control de nota/punto de acceso adicional.</td>
-		<td><?php echo $this->Form->input('246i1', array('id' => '246i1', 'label' => false, 'div' => false, 'class' => 'form-control',
-			'options' => array(
-				'0' => '0 - Nota, no hay punto de acceso adicional',
-				'1' => '1 - Nota, hay punto de acceso adicional',
-				'2' => '2 - Ni hay nota ni punto de acceso adicional',
-				'3' => '3 - No hay nota, hay punto de acceso adicional'
-			)
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>I2</b></td>
-		<td>Tipo de título.</td>
-		<td><?php echo $this->Form->input('246i2', array('id' => '246i2', 'label' => false, 'div' => false, 'class' => 'form-control', 
-			'options' => array(
-				'#' => '# - No se especifica',
-				'0' => '0 - Parte de título',
-				'1' => '1 - Título paralelo',
-				'2' => '2 - Título distintivo',
-				'3' => '3 - Otro título',
-				'4' => '4 - Título de la cubierta',
-				'5' => '5 - Título de la portada adicional',
-				'6' => '6 - Título de la cabecera',
-				'7' => '7 - “Titulillo”, título de margen',
-				'8' => '8 - Título del lomo'		
-			)
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Título.</td>
-		<td><?php echo $this->Form->input('246a', array('id' => '246a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Subtítulo o título paralelo.</td>
-		<td><?php echo $this->Form->input('246b', array('id' => '246b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$i</b></td>
-		<td>Texto de visualización.</td>
-		<td><?php echo $this->Form->input('246i', array('id' => '246i', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>247</b></th>
-		<th style="width: 45%;"><b>Título anterior.</b></th>
-		<th style="width: 45%;">
-			<label id="l-247">&nbsp;</label>
-			<?php echo $this->Form->hidden('247', array('id' => '247', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Título.</td>
-		<td><?php echo $this->Form->input('247a', array('id' => '247a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Subtítulo o título paralelo.</td>
-		<td><?php echo $this->Form->input('247b', array('id' => '247b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$f</b></td>
-		<td>Fecha o designación secuencial.</td>
-		<td><?php echo $this->Form->input('247f', array('id' => '247f', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$g</b></td>
-		<td>Nota sobre el título anterior.</td>
-		<td><?php echo $this->Form->input('247g', array('id' => '247g', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$n</b></td>
-		<td>Número de parte o sección de la obra.</td>
-		<td><?php echo $this->Form->input('247n', array('id' => '247n', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$p</b></td>
-		<td>Nombre de parte o sección de la obra.</td>
-		<td><?php echo $this->Form->input('247p', array('id' => '247p', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>250</b></th>
-		<th style="width: 45%;"><b>Mención de edición.</b></th>
-		<th style="width: 45%;">
-			<label id="l-250">&nbsp;</label>
-			<?php echo $this->Form->hidden('250', array('id' => '250', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Mención de edición.</td>
-		<td><?php echo $this->Form->input('250a', array('id' => '250a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Resto de la mención de edición.</td>
-		<td><?php echo $this->Form->input('250b', array('id' => '250b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>254</b></th>
-		<th style="width: 45%;"><b>Mención de edición.</b></th>
-		<th style="width: 45%;">
-			<label id="l-254">&nbsp;</label>
-			<?php echo $this->Form->hidden('254', array('id' => '254', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Mención de edición o presentación musical.</td>
-		<td><?php echo $this->Form->input('254a', array('id' => '254a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Resto de la mención de edición o presentación musical.</td>
-		<td><?php echo $this->Form->input('254b', array('id' => '254b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
 		<th style="width: 10%;"><b>260</b></th>
 		<th style="width: 45%;"><b>Publicación, distribución, etc. (pie de imprenta).</b></th>
 		<th style="width: 45%;">
@@ -2107,273 +1452,6 @@ th {
 		<td><?php echo $this->Form->input('300e', array('id' => '300e', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>306</b></th>
-		<th style="width: 45%;"><b>Duración.</b></th>
-		<th style="width: 45%;">
-			<label id="l-306">&nbsp;</label>
-			<?php echo $this->Form->hidden('306', array('id' => '306', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Duración.</td>
-		<td><?php echo $this->Form->input('306a', array('id' => '306a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Fecha de comienzo de la periodicidad actual.</td>
-		<td><?php echo $this->Form->input('306b', array('id' => '306b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>310</b></th>
-		<th style="width: 45%;"><b>Periodicidad actual.</b></th>
-		<th style="width: 45%;">
-			<label id="l-310">&nbsp;</label>
-			<?php echo $this->Form->hidden('310', array('id' => '310', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Periodicidad actual.</td>
-		<td><?php echo $this->Form->input('310a', array('id' => '310a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Fecha de comienzo de la periodicidad actual.</td>
-		<td><?php echo $this->Form->input('310b', array('id' => '310b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>321</b></th>
-		<th style="width: 45%;"><b>Periodicidad anterior.</b></th>
-		<th style="width: 45%;">
-			<label id="l-321">&nbsp;</label>
-			<?php echo $this->Form->hidden('321', array('id' => '321', 'label' => false, 'div' => false)); ?>
-		</t>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Periodicidad anterior.</td>
-		<td><?php echo $this->Form->input('321a', array('id' => '321a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Fechas de la periodicidad anterior.</td>
-		<td><?php echo $this->Form->input('321b', array('id' => '321b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 5%;"><b>336</b></th>
-		<th style="width: 60%;"><b>Tipo de contenido.</b></th>
-		<th style="width: 35%;">
-			<label id="l-336">&nbsp;</label>
-			<?php echo $this->Form->hidden('336', array('id' => '336', 'label' => false, 'div' => false, 'class' => 'form-control')); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Término del tipo de contenido.</font></td>
-		<td><?php echo $this->Form->input('336a', array('id' => '336a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Código de tipo de contenido.</td>
-		<td><?php echo $this->Form->input('336b', array('id' => '336b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 5%;"><b>337</b></th>
-		<th style="width: 60%;"><b>Tipo de medio.</b></th>
-		<th style="width: 35%;">
-			<label id="l-337">&nbsp;</label>
-			<?php echo $this->Form->hidden('337', array('id' => '337', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Nombre del tipo de medio.</td>
-		<td><?php echo $this->Form->input('337a', array('id' => '337a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Código de tipo de medio.</td>
-		<td><?php echo $this->Form->input('337b', array('id' => '337b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>340</b></th>
-		<th style="width: 45%;"><b>Medio físico/Tipo de Soporte.</b></td>
-		<th style="width: 45%;">
-			<label id="l-340">&nbsp;</label>
-			<?php echo $this->Form->hidden('340', array('id' => '340', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Base y configuración del material.</td>
-		<td><?php echo $this->Form->input('340a', array('id' => '340a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Dimensiones.</td>
-		<td><?php echo $this->Form->input('340b', array('id' => '340b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$c</b></td>
-		<td>Materiales aplicados a la superficie.</td>
-		<td><?php echo $this->Form->input('340c', array('id' => '340c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$d</b></td>
-		<td>Técnica en la que se registra la información.</td>
-		<td><?php echo $this->Form->input('340d', array('id' => '340d', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$e</b></td>
-		<td>Soporte.</td>
-		<td><?php echo $this->Form->input('340e', array('id' => '340e', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>362</b></th>
-		<th style="width: 45%;"><b>Fechas de publicación y/o designación secuencial.</b></th>
-		<th style="width: 45%;">
-			<label id="l-362">&nbsp;</label>
-			<?php echo $this->Form->hidden('362', array('id' => '362', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Fechas de publicación y/o designación secuencial.</td>
-		<td><?php echo $this->Form->input('362a', array('id' => '362a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>380</b></th>
-		<th style="width: 45%;"><b>Forma de la obra.</b></th>
-		<th style="width: 45%;">
-			<label id="l-380">&nbsp;</label>
-			<?php echo $this->Form->hidden('380', array('id' => '380', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Forma de la obra.</td>
-		<td><?php echo $this->Form->input('380a', array('id' => '380a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>381</b></th>
-		<th style="width: 45%;"><b>Otras características distintivas de obra (Compás).</b></th>
-		<th style="width: 45%;">
-			<label id="l-381">&nbsp;</label>
-			<?php echo $this->Form->hidden('381', array('id' => '381', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Nomenclatura de compás.</td>
-		<td><?php echo $this->Form->input('381a', array('id' => '381a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-</div>
-
-<div id="4xx" class="tabs" style="display: none;">
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>440</b></th>
-		<th style="width: 45%;"><b>Mencion de serie/Asiento secundario-titulo.</b></th>
-		<th style="width: 45%;">
-			<label id="l-440">&nbsp;</label>
-			<?php echo $this->Form->hidden('440', array('id' => '440', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Título de la serie.</td>
-		<td><?php echo $this->Form->input('440a', array('id' => '440a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$n</b></td>
-		<td>Número de parte o seccion de la obra.</td>
-		<td><?php echo $this->Form->input('440n', array('id' => '440n', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$p</b></td>
-		<td>Nombre de parte o seccion de la obra.</td>
-		<td><?php echo $this->Form->input('440p', array('id' => '440p', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$x</b></td>
-		<td>Número normalizado de la serie.</td>
-		<td><?php echo $this->Form->input('440x', array('id' => '440x', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$v</b></td>
-		<td>Volúmen.</td>
-		<td><?php echo $this->Form->input('440v', array('id' => '440v', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-<table class="table">
-	<tr>
-		<th style="width: 1o%;"><b>490</b></th>
-		<th style="width: 45%;"><b> Mención de la serie.</b></th>
-		<th style="width: 45%;">
-			<label id="l-490">&nbsp;</label>
-			<?php echo $this->Form->hidden('490', array('id' => '490', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>I1</b></td>
-		<td>Política de recuperación de series.</td>
-		<td><?php echo $this->Form->input('490i1', array('id' => '490i1', 'label' => false, 'div' => false,  'class' => 'form-control',
-			'options' => array(
-					'0' => '0 - Serie sin recuperación',
-					'1' => '1 - Serie con recuperación'
-			), 'selected' => '0'
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>I2</b></td>
-		<td>No definido.</td>
-		<td><?php echo $this->Form->input('490i2', array('id' => '490i2', 'label' => false, 'div' => false, 'class' => 'form-control',
-			'options' => array(
-					'#' => '# - No definido'
-			), 'selected' => '#'
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Nombre de la fuente.</td>
-		<td><?php echo $this->Form->input('490a', array('id' => '490a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$v</b></td>
-		<td>Localización dentro de la fuente.</td>
-		<td><?php echo $this->Form->input('490v', array('id' => '490v', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
 </div>
 
 <div id="5xx" class="tabs" style="display: none;">
@@ -2395,17 +1473,33 @@ th {
 
 <table class="table">
 	<tr>
-		<th style="width: 10%;"><b>501</b></th>
-		<th style="width: 45%;"><b>Nota de “Con”.</b></th>
+		<th style="width: 10%;"><b>502</b></th>
+		<th style="width: 45%;"><b>Nota de tesis.</b></th>
 		<th style="width: 45%;">
-			<label id="l-501">&nbsp;</label>
-			<?php echo $this->Form->hidden('501', array('id' => '501', 'label' => false, 'div' => false)); ?>
+			<label id="l-502">&nbsp;</label>
+			<?php echo $this->Form->hidden('502', array('id' => '502', 'label' => false, 'div' => false)); ?>
 		</th>
 	</tr>
 	<tr>
 		<td><b>$a</b></td>
-		<td>Con.</td>
-		<td><?php echo $this->Form->input('501a', array('id' => '501a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+		<td>Nota de tesis.</td>
+		<td><?php echo $this->Form->input('502a', array('id' => '502a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
+	</tr>
+</table>
+
+<table class="table">
+	<tr>
+		<th style="width: 10%;"><b>504</b></th>
+		<th style="width: 45%;"><b>Nota de bibliografía, etc.</b></th>
+		<th style="width: 45%;">
+			<label id="l-504">&nbsp;</label>
+			<?php echo $this->Form->hidden('504', array('id' => '504', 'label' => false, 'div' => false)); ?>
+		</th>
+	</tr>
+	<tr>
+		<td><b>$a</b></td>
+		<td>Nota de bibliografía, etc.</td>
+		<td><?php echo $this->Form->input('504a', array('id' => '504a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
 
@@ -2449,252 +1543,6 @@ th {
 
 <table class="table">
 	<tr>
-		<th style="width: 10%;"><b>508</b></th>
-		<th style="width: 45%;"><b>Nota de “Con”.</b></th>
-		<th style="width: 45%;">
-			<label id="l-508">&nbsp;</label>
-			<?php echo $this->Form->hidden('508', array('id' => '508', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Con.</td>
-		<td><?php echo $this->Form->input('508a', array('id' => '508a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>510</b></th>
-		<th style="width: 45%;"><b>Nota de citas o referencias bibliográficas.</b></th>
-		<th style="width: 45%;">
-			<label id="l-510">&nbsp;</label>
-			<?php echo $this->Form->hidden('510', array('id' => '510', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>I1</b></td>
-		<td>Cobertura/localización dentro de la fuente.</td>
-		<td><?php echo $this->Form->input('510i1', array('id' => '510i1', 'label' => false, 'div' => false, 'class' => 'form-control', 
-			'options' => array(
-				'0' => '0 - Cobertura desconocida',
-				'1' => '1 - Cobertura completa',
-				'2' => '2 - Cobertura selectiva',
-				'3' => '3 - No se indica la localización dentro de la fuente',
-				'4' => '4 - Se indica la localización dentro de la fuente'
-			), 'selected' => '3'
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>I2</b></td>
-		<td>No definido.</td>
-		<td><?php echo $this->Form->input('510i2', array('id' => '510i2', 'label' => false, 'div' => false, 'class' => 'form-control',
-			'options' => array(
-					'#' => '# - No definido'
-			)
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Nombre de la fuente.</td>
-		<td><?php echo $this->Form->input('510a', array('id' => '510a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$c</b></td>
-		<td>Localización dentro de la fuente.</td>
-		<td><?php echo $this->Form->input('510c', array('id' => '510c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>511</b></th>
-		<th style="width: 45%;"><b>Nota de participantes o intérpretes.</b></th>
-		<th style="width: 45%;">
-			<label id="l-511">&nbsp;</label>
-			<?php echo $this->Form->hidden('511', array('id' => '511', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>I1</b></td>
-		<td>Control de visualización asociada.</td>
-		<td><?php echo $this->Form->input('511i1', array('id' => '511i1', 'label' => false, 'div' => false, 'class' => 'form-control', 
-			'options' => array(
-				'0' => '0 - No genera visualización asociada',
-				'1' => '1 - Intérpretes'
-			), 'selected' => '1'
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>I2</b></td>
-		<td>No definido.</td>
-		<td><?php echo $this->Form->input('511i2', array('id' => '511i2', 'label' => false, 'div' => false, 'class' => 'form-control',
-			'options' => array(
-					'#' => '# - No definido'
-			)
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Nota de participantes o intérpretes.</font></td>
-		<td><?php echo $this->Form->input('511a', array('id' => '511a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>515</b></th>
-		<th style="width: 45%;"><b>Nota de peculiaridades de la numeración.</b></th>
-		<th style="width: 45%;">
-			<label id="l-515">&nbsp;</label>
-			<?php echo $this->Form->hidden('515', array('id' => '515', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Nota de peculiaridades de la numeración.</td>
-		<td><?php echo $this->Form->input('515a', array('id' => '515a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>520</b></th>
-		<th style="width: 45%;"><b>Nota de sumario, etc.</b></th>
-		<th style="width: 45%;">
-			<label id="l-520">&nbsp;</label>
-			<?php echo $this->Form->hidden('520', array('id' => '520', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>I1</b></td>
-		<td>Control de visualización asociada.</td>
-		<td><?php echo $this->Form->input('520i1', array('id' => '520i1', 'label' => false, 'div' => false, 'class' => 'form-control', 
-			'options' => array(
-				'#' => '# - Sumario',
-				'0' => '0 - Materia',
-				'1' => '1 - Reseña',
-				'2' => '2 - Alcance y contenido',
-				'3' => '3 - Resumen',
-				'4' => '4 - Aviso sobre el contenido',
-				'8' => '8 - No genera visualización asociada'
-			), 'selected' => '#'
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>I2</b></td>
-		<td>No definido.</td>
-		<td><?php echo $this->Form->input('520i2', array('id' => '520i2', 'label' => false, 'div' => false, 'class' => 'form-control',
-			'options' => array(
-					'#' => '# - No definido'
-			)
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Sumario, etc.</td>
-		<td><?php echo $this->Form->input('520a', array('id' => '520a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>521</b></th>
-		<th style="width: 45%;"><b>Nota de audiencia.</b></th>
-		<th style="width: 45%;">
-			<label id="l-521">&nbsp;</label>
-			<?php echo $this->Form->hidden('521', array('id' => '521', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>I1</b></td>
-		<td>Control de visualización asociada.</td>
-		<td><?php echo $this->Form->input('521i1', array('id' => '521i1', 'label' => false, 'div' => false, 'class' => 'form-control', 
-			'options' => array(
-				'#' => '# - Sumario',
-				'0' => '0 - Materia',
-				'1' => '1 - Reseña',
-				'2' => '2 - Alcance y contenido',
-				'3' => '3 - Resumen',
-				'4' => '4 - Aviso sobre el contenido',
-				'8' => '8 - No genera visualización asociada'
-			), 'selected' => '#'
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>I2</b></td>
-		<td>No definido.</td>
-		<td><?php echo $this->Form->input('521i2', array('id' => '521i2', 'label' => false, 'div' => false, 'class' => 'form-control',
-			'options' => array(
-					'#' => '# - No definido'
-			)
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Nota de audiencia.</td>
-		<td><?php echo $this->Form->input('521a', array('id' => '521a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>530</b></th>
-		<th style="width: 45%;"><b>Nota de formato físico adicional disponible.</b></th>
-		<th style="width: 45%;">
-			<label id="l-530">&nbsp;</label>
-			<?php echo $this->Form->hidden('530', array('id' => '530', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Nota de formato físico adicional disponible.</td>
-		<td><?php echo $this->Form->input('530a', array('id' => '530a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$c</b></td>
-		<td>Condiciones de adquisición.</td>
-		<td><?php echo $this->Form->input('530c', array('id' => '530c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$u</b></td>
-		<td>Dirección electrónica.</td>
-		<td><?php echo $this->Form->input('530u', array('id' => '530u', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>534</b></th>
-		<th style="width: 45%;"><b>Nota sobre la versión original.</b></th>
-		<th style="width: 45%;">
-			<label id="l-534">&nbsp;</label>
-			<?php echo $this->Form->hidden('534', array('id' => '534', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Autor.</td>
-		<td><?php echo $this->Form->input('534a', array('id' => '534a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$c</b></td>
-		<td>Publicación, distribución, etc. del original.</td>
-		<td><?php echo $this->Form->input('534c', array('id' => '534c', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$l</b></td>
-		<td>Localización del original.</td>
-		<td><?php echo $this->Form->input('534l', array('id' => '534l', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$p</b></td>
-		<td>Frase introductoria.</td>
-		<td><?php echo $this->Form->input('534p', array('id' => '534p', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
 		<th style="width: 10%;"><b>546</b></th>
 		<th style="width: 45%;"><b>Nota de lengua.</b></th>
 		<th style="width: 45%;">
@@ -2716,37 +1564,6 @@ th {
 
 <table class="table">
 	<tr>
-		<th style="width: 10%;"><b>555</b></th>
-		<th style="width: 45%;"><b>Nota de índice acumulativo u otros instrumentos bibliográficos.</b></th>
-		<th style="width: 45%;">
-			<label id="l-555">&nbsp;</label>
-			<?php echo $this->Form->hidden('555', array('id' => '555', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Nota de índice acumulativo u otros instrumentos bibliográficos.</td>
-		<td><?php echo $this->Form->input('555a', array('id' => '555a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Fuente de la adquisición.</td>
-		<td><?php echo $this->Form->input('555b', array('id' => '555b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$d</b></td>
-		<td>Referencia bibliográfica.</td>
-		<td><?php echo $this->Form->input('555d', array('id' => '555d', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$u</b></td>
-		<td>Dirección electrónica.</td>
-		<td><?php echo $this->Form->input('555u', array('id' => '555u', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
-<table class="table">
-	<tr>
 		<th style="width: 10%;"><b>588</b></th>
 		<th style="width: 45%;"><b>Nota de fuente de la descripción.</b></th>
 		<th style="width: 45%;">
@@ -2760,22 +1577,6 @@ th {
 		<td><?php echo $this->Form->input('588a', array('id' => '588a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
-<table class="table">
-	<tr>
-		<th style="width: 5%;"><b>590</b></th>
-		<th style="width: 60%;"><b>Nota local.</b></th>
-		<th style="width: 35%;">
-			<label id="l-590">&nbsp;</label>
-			<?php echo $this->Form->hidden('590', array('id' => '590', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Nota local.</td>
-		<td><?php echo $this->Form->input('590a', array('id' => '590a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
-
 </div>
 
 <div id="6xx" class="tabs" style="display: none;">
@@ -3289,87 +2090,6 @@ th {
 		<td><?php echo $this->Form->input('740p', array('id' => '740p', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
 	</tr>
 </table>
-
-<table class="table">
-	<tr>
-		<th style="width: 10%;"><b>773</b></th>
-		<th style="width: 45%;"><b>Enlace al documento fuente.</b></th>
-		<th style="width: 45%;">
-			<label id="l-773">&nbsp;</label>
-			<?php echo $this->Form->hidden('773', array('id' => '773', 'label' => false, 'div' => false)); ?>
-		</th>
-	</tr>
-	<tr>
-		<td><b>I1</b></td>
-		<td>Control de nota.</td>
-		<td><?php echo $this->Form->input('773i1', array('id' => '773i1', 'label' => false, 'div' => false, 'class' => 'form-control', 
-			'options' => array(
-				'0' => '0 - Genera nota',
-				'1' => '1 - No genera nota'
-			), 'selected' => '1'
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>I2</b></td>
-		<td>Control de visualización asociada.</td>
-		<td><?php echo $this->Form->input('773i2', array('id' => '773i2', 'label' => false, 'div' => false, 'class' => 'form-control',
-			'options' => array(
-				'#' => '# - En',
-				'8' => '8 - No genera visualización asociada'
-			)
-		)); ?></td>
-	</tr>
-	<tr>
-		<td><b>$a</b></td>
-		<td>Autor.</td>
-		<td><?php echo $this->Form->input('773a', array('id' => '773a', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$b</b></td>
-		<td>Edición.</td>
-		<td><?php echo $this->Form->input('773b', array('id' => '773b', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$d</b></td>
-		<td>Lugar, editor y fecha de publicación.</td>
-		<td><?php echo $this->Form->input('773d', array('id' => '773d', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$g</b></td>
-		<td>Parte(s) relacionada(s).</td>
-		<td><?php echo $this->Form->input('773g', array('id' => '773g', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$h</b></td>
-		<td>Descripción física.</td>
-		<td><?php echo $this->Form->input('773h', array('id' => '773h', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$k</b></td>
-		<td>Datos de la serie del documento relacionado.</td>
-		<td><?php echo $this->Form->input('773k', array('id' => '773k', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$n</b></td>
-		<td>Nota.</td>
-		<td><?php echo $this->Form->input('773n', array('id' => '773n', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$q</b></td>
-		<td>Numeración y primera página.</td>
-		<td><?php echo $this->Form->input('773q', array('id' => '773q', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$t</b></td>
-		<td>Título.</td>
-		<td><?php echo $this->Form->input('773t', array('id' => '773t', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-	<tr>
-		<td><b>$z</b></td>
-		<td>Número Internacional Normalizado para Libros (ISBN).</td>
-		<td><?php echo $this->Form->input('773z', array('id' => '773z', 'label' => false, 'div' => false, 'class' => 'form-control')); ?></td>
-	</tr>
-</table>
 </div>
 
 <div id="8xx" class="tabs" style="display: none;">
@@ -3539,7 +2259,7 @@ th {
 		</tr>
 	</table>
 	
-	<input type="checkbox" id="IconographiePublished" value="1" checked="checked" name="data[Iconographie][published]" style="width: 30px;">Publicado
+	<input type="checkbox" id="AcademicPaperPublished" value="1" checked="checked" name="data[AcademicPaper][published]" style="width: 30px;">Publicado
 
 	<div style="text-align: right;"><a href="#top" class="btn btn-primary">Ir Arriba</a></div>
 	
@@ -3563,7 +2283,7 @@ $(document).ready(function() {
 	$(".tab").click(function(event) {
 		var id = $(this).attr('id');
 
-		if (id.localeCompare("t9xx")) {
+		if (id.localeCompare("t4xx") && id.localeCompare("t9xx")) {
 			$(".tabs").hide();
 			$('.active').removeClass('active');
 			$(this).parent().addClass('active');
@@ -3573,7 +2293,7 @@ $(document).ready(function() {
 		if (id == "t1xx"){ $('#1xx').show(); }
 		if (id == "t2xx"){ $('#2xx').show(); }
 		if (id == "t3xx"){ $('#3xx').show(); }
-		if (id == "t4xx"){ $('#4xx').show(); }
+// 		if (id == "t4xx"){ $('#4xx').show(); }
 		if (id == "t5xx"){ $('#5xx').show(); }
 		if (id == "t6xx"){ $('#6xx').show(); }
 		if (id == "t7xx"){ $('#7xx').show(); }
@@ -3697,20 +2417,8 @@ $(document).ready(function() {
 		tmp_008 = tmp_008 + $('#008-15-17').val();
 	}
 
-	if ($('#008-18').val().length > 0) {
-		tmp_008 = tmp_008 + $('#008-18').val();
-	}
-
-	if ($('#008-19').val().length > 0) {
-		tmp_008 = tmp_008 + $('#008-19').val();
-	}
-
-	if ($('#008-20').val().length > 0) {
-		tmp_008 = tmp_008 + $('#008-20').val();
-	}
-
-	if ($('#008-21').val().length > 0) {
-		tmp_008 = tmp_008 + $('#008-21').val();
+	if ($('#008-24-27').val().length > 0) {
+		tmp_008 = tmp_008 + $('#008-24-27').val();
 	}
 
 	if ($('#008-35-37').val().length > 0) {
@@ -3752,20 +2460,8 @@ $(document).ready(function() {
 			tmp_008 = tmp_008 + $('#008-15-17').val();
 		}
 
-		if ($('#008-18').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-18').val();
-		}
-
-		if ($('#008-19').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-19').val();
-		}
-
-		if ($('#008-20').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-20').val();
-		}
-
-		if ($('#008-21').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-21').val();
+		if ($('#008-24-27').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-24-27').val();
 		}
 
 		if ($('#008-35-37').val().length > 0) {
@@ -3808,20 +2504,8 @@ $(document).ready(function() {
 			tmp_008 = tmp_008 + $('#008-15-17').val();
 		}
 
-		if ($('#008-18').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-18').val();
-		}
-
-		if ($('#008-19').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-19').val();
-		}
-
-		if ($('#008-20').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-20').val();
-		}
-
-		if ($('#008-21').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-21').val();
+		if ($('#008-24-27').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-24-27').val();
 		}
 
 		if ($('#008-35-37').val().length > 0) {
@@ -3864,20 +2548,8 @@ $(document).ready(function() {
 			tmp_008 = tmp_008 + $('#008-15-17').val();
 		}
 
-		if ($('#008-18').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-18').val();
-		}
-
-		if ($('#008-19').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-19').val();
-		}
-
-		if ($('#008-20').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-20').val();
-		}
-
-		if ($('#008-21').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-21').val();
+		if ($('#008-24-27').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-24-27').val();
 		}
 
 		if ($('#008-35-37').val().length > 0) {
@@ -3920,20 +2592,8 @@ $(document).ready(function() {
 			tmp_008 = tmp_008 + $('#008-15-17').val();
 		}
 
-		if ($('#008-18').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-18').val();
-		}
-
-		if ($('#008-19').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-19').val();
-		}
-
-		if ($('#008-20').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-20').val();
-		}
-
-		if ($('#008-21').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-21').val();
+		if ($('#008-24-27').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-24-27').val();
 		}
 
 		if ($('#008-35-37').val().length > 0) {
@@ -3976,20 +2636,8 @@ $(document).ready(function() {
 			tmp_008 = tmp_008 + $('#008-15-17').val();
 		}
 
-		if ($('#008-18').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-18').val();
-		}
-
-		if ($('#008-19').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-19').val();
-		}
-
-		if ($('#008-20').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-20').val();
-		}
-
-		if ($('#008-21').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-21').val();
+		if ($('#008-24-27').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-24-27').val();
 		}
 
 		if ($('#008-35-37').val().length > 0) {
@@ -4032,20 +2680,8 @@ $(document).ready(function() {
 			tmp_008 = tmp_008 + $('#008-15-17').val();
 		}
 
-		if ($('#008-18').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-18').val();
-		}
-
-		if ($('#008-19').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-19').val();
-		}
-
-		if ($('#008-20').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-20').val();
-		}
-
-		if ($('#008-21').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-21').val();
+		if ($('#008-24-27').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-24-27').val();
 		}
 
 		if ($('#008-35-37').val().length > 0) {
@@ -4061,7 +2697,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$("#008-18").change(function(event) {
+	$("#008-24-27").change(function(event) {
 		var tmp_008 = "";
 
 		if ($('#008-06').val().length > 0) {
@@ -4088,20 +2724,8 @@ $(document).ready(function() {
 			tmp_008 = tmp_008 + $('#008-15-17').val();
 		}
 
-		if ($('#008-18').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-18').val();
-		}
-
-		if ($('#008-19').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-19').val();
-		}
-
-		if ($('#008-20').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-20').val();
-		}
-
-		if ($('#008-21').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-21').val();
+		if ($('#008-24-27').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-24-27').val();
 		}
 
 		if ($('#008-35-37').val().length > 0) {
@@ -4117,173 +2741,6 @@ $(document).ready(function() {
 		}
 	});
 
-	$("#008-19").change(function(event) {
-		var tmp_008 = "";
-
-		if ($('#008-06').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-06').val();
-		}
-
-		if ($('#008-07-10').val().length > 0) {
-			if($("#008-07-10 option:selected").val() != 'pf'){
-				tmp_008 = tmp_008 + $('#008-07-10').val();
-			} else {
-				tmp_008 = tmp_008 + $('#fecha008-07-10').val();
-			}
-		}
-
-		if ($('#008-11-14').val().length > 0) {
-			if($("#008-11-14 option:selected").val() != 'sf'){
-				tmp_008 = tmp_008 + $('#008-11-14').val();
-			} else {
-				tmp_008 = tmp_008 + $('#fecha008-11-14').val();
-			}
-		}
-
-		if ($('#008-15-17').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-15-17').val();
-		}
-
-		if ($('#008-18').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-18').val();
-		}
-
-		if ($('#008-19').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-19').val();
-		}
-
-		if ($('#008-20').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-20').val();
-		}
-
-		if ($('#008-21').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-21').val();
-		}
-
-		if ($('#008-35-37').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-35-37').val();
-		}
-		
-		if (tmp_008.length > 0) {
-			$("#008").val('<?php echo date('ymd', time()); ?>' + tmp_008);
-			$("#l-008").html('<?php echo date('ymd', time()); ?>' + tmp_008);
-		} else {
-			$("#008").val('');
-			$("#l-008").html('&nbsp;');
-		}
-	});
-
-	$("#008-20").change(function(event) {
-		var tmp_008 = "";
-
-		if ($('#008-06').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-06').val();
-		}
-
-		if ($('#008-07-10').val().length > 0) {
-			if($("#008-07-10 option:selected").val() != 'pf'){
-				tmp_008 = tmp_008 + $('#008-07-10').val();
-			} else {
-				tmp_008 = tmp_008 + $('#fecha008-07-10').val();
-			}
-		}
-
-		if ($('#008-11-14').val().length > 0) {
-			if($("#008-11-14 option:selected").val() != 'sf'){
-				tmp_008 = tmp_008 + $('#008-11-14').val();
-			} else {
-				tmp_008 = tmp_008 + $('#fecha008-11-14').val();
-			}
-		}
-
-		if ($('#008-15-17').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-15-17').val();
-		}
-
-		if ($('#008-18').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-18').val();
-		}
-
-		if ($('#008-19').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-19').val();
-		}
-
-		if ($('#008-20').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-20').val();
-		}
-
-		if ($('#008-21').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-21').val();
-		}
-
-		if ($('#008-35-37').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-35-37').val();
-		}
-		
-		if (tmp_008.length > 0) {
-			$("#008").val('<?php echo date('ymd', time()); ?>' + tmp_008);
-			$("#l-008").html('<?php echo date('ymd', time()); ?>' + tmp_008);
-		} else {
-			$("#008").val('');
-			$("#l-008").html('&nbsp;');
-		}
-	});
-
-	$("#008-21").change(function(event) {
-		var tmp_008 = "";
-
-		if ($('#008-06').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-06').val();
-		}
-
-		if ($('#008-07-10').val().length > 0) {
-			if($("#008-07-10 option:selected").val() != 'pf'){
-				tmp_008 = tmp_008 + $('#008-07-10').val();
-			} else {
-				tmp_008 = tmp_008 + $('#fecha008-07-10').val();
-			}
-		}
-
-		if ($('#008-11-14').val().length > 0) {
-			if($("#008-11-14 option:selected").val() != 'sf'){
-				tmp_008 = tmp_008 + $('#008-11-14').val();
-			} else {
-				tmp_008 = tmp_008 + $('#fecha008-11-14').val();
-			}
-		}
-
-		if ($('#008-15-17').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-15-17').val();
-		}
-
-		if ($('#008-18').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-18').val();
-		}
-
-		if ($('#008-19').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-19').val();
-		}
-
-		if ($('#008-20').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-20').val();
-		}
-
-		if ($('#008-21').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-21').val();
-		}
-
-		if ($('#008-35-37').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-35-37').val();
-		}
-		
-		if (tmp_008.length > 0) {
-			$("#008").val('<?php echo date('ymd', time()); ?>' + tmp_008);
-			$("#l-008").html('<?php echo date('ymd', time()); ?>' + tmp_008);
-		} else {
-			$("#008").val('');
-			$("#l-008").html('&nbsp;');
-		}
-	});
 
 	$("#008-35-37").change(function(event) {
 		var tmp_008 = "";
@@ -4312,20 +2769,8 @@ $(document).ready(function() {
 			tmp_008 = tmp_008 + $('#008-15-17').val();
 		}
 
-		if ($('#008-18').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-18').val();
-		}
-
-		if ($('#008-19').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-19').val();
-		}
-
-		if ($('#008-20').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-20').val();
-		}
-
-		if ($('#008-21').val().length > 0) {
-			tmp_008 = tmp_008 + $('#008-21').val();
+		if ($('#008-24-27').val().length > 0) {
+			tmp_008 = tmp_008 + $('#008-24-27').val();
 		}
 
 		if ($('#008-35-37').val().length > 0) {
@@ -4339,201 +2784,6 @@ $(document).ready(function() {
 			$("#008").val('');
 			$("#l-008").html('&nbsp;');
 		}
-	});
-	
-	$("#017a").bind('keyup change', function(event) {
-		if ($('#017a').val().length > 0) {
-			$("#017").val('##' + '^a' + $('#017a').val());
-			$("#l-017").html('##' + '^a' + $('#017a').val());
-		} else {
-			$("#017").val('');
-			$("#l-017").html('&nbsp;');
-		}
-	});
-
-	$("#020a").bind('keyup change', function(event) {
-		var tmp_020 = "";
-
-		if ($('#020a').val().length > 0) {
-			tmp_020 = tmp_020 + '^a' + $('#020a').val();
-		}
-
-		if ($('#020c').val().length > 0) {
-			tmp_020 = tmp_020 + '^c' + $('#020c').val();
-		}
-		
-		if ($('#020z').val().length > 0) {
-			tmp_020 = tmp_020 + '^z' + $('#020z').val();
-		}
-
-		if (tmp_020.length > 0) {
-			$("#020").val('##' + tmp_020);
-			$("#l-020").html('##' + tmp_020);
-		} else {
-			$("#020").val('');
-			$("#l-020").html('&nbsp;');
-		}
-	});
-
-	$("#020c").bind('keyup change', function(event) {
-		var tmp_020 = "";
-
-		if ($('#020a').val().length > 0) {
-			tmp_020 = tmp_020 + '^a' + $('#020a').val();
-		}
-
-		if ($('#020c').val().length > 0) {
-			tmp_020 = tmp_020 + '^c' + $('#020c').val();
-		}
-		
-		if ($('#020z').val().length > 0) {
-			tmp_020 = tmp_020 + '^z' + $('#020z').val();
-		}
-
-		if (tmp_020.length > 0) {
-			$("#020").val('##' + tmp_020);
-			$("#l-020").html('##' + tmp_020);
-		} else {
-			$("#020").val('');
-			$("#l-020").html('&nbsp;');
-		}
-	});
-
-	$("#020z").bind('keyup change', function(event) {
-		var tmp_020 = "";
-
-		if ($('#020a').val().length > 0) {
-			tmp_020 = tmp_020 + '^a' + $('#020a').val();
-		}
-
-		if ($('#020c').val().length > 0) {
-			tmp_020 = tmp_020 + '^c' + $('#020c').val();
-		}
-		
-		if ($('#020z').val().length > 0) {
-			tmp_020 = tmp_020 + '^z' + $('#020z').val();
-		}
-
-		if (tmp_020.length > 0) {
-			$("#020").val('##' + tmp_020);
-			$("#l-020").html('##' + tmp_020);
-		} else {
-			$("#020").val('');
-			$("#l-020").html('&nbsp;');
-		}
-	});
-	
-	$("#022a").bind('keyup change', function(event) {
-		var tmp_022 = "";
-
-		if ($('#022a').val().length > 0) {
-			tmp_022 = tmp_022 + '^a' + $('#022a').val();
-		}
-
-		if ($('#022y').val().length > 0) {
-			tmp_022 = tmp_022 + '^y' + $('#022y').val();
-		}
-		
-		if ($('#022z').val().length > 0) {
-			tmp_022 = tmp_022 + '^z' + $('#022z').val();
-		}
-
-		if (tmp_022.length > 0) {
-			$("#022").val('##' + tmp_022);
-			$("#l-022").html('##' + tmp_022);
-		} else {
-			$("#022").val('');
-			$("#l-022").html('&nbsp;');
-		}
-	});
-
-	$("#022y").bind('keyup change', function(event) {
-		var tmp_022 = "";
-
-		if ($('#022a').val().length > 0) {
-			tmp_022 = tmp_022 + '^a' + $('#022a').val();
-		}
-
-		if ($('#022y').val().length > 0) {
-			tmp_022 = tmp_022 + '^y' + $('#022y').val();
-		}
-		
-		if ($('#022z').val().length > 0) {
-			tmp_022 = tmp_022 + '^z' + $('#022z').val();
-		}
-
-		if (tmp_022.length > 0) {
-			$("#022").val('##' + tmp_022);
-			$("#l-022").html('##' + tmp_022);
-		} else {
-			$("#022").val('');
-			$("#l-022").html('&nbsp;');
-		}
-	});
-
-	$("#022z").bind('keyup change', function(event) {
-		var tmp_022 = "";
-
-		if ($('#022a').val().length > 0) {
-			tmp_022 = tmp_022 + '^a' + $('#022a').val();
-		}
-
-		if ($('#022y').val().length > 0) {
-			tmp_022 = tmp_022 + '^y' + $('#022y').val();
-		}
-		
-		if ($('#022z').val().length > 0) {
-			tmp_022 = tmp_022 + '^z' + $('#022z').val();
-		}
-
-		if (tmp_022.length > 0) {
-			$("#022").val('##' + tmp_022);
-			$("#l-022").html('##' + tmp_022);
-		} else {
-			$("#022").val('');
-			$("#l-022").html('&nbsp;');
-		}
-	});
-
-	$("#028a").bind('keyup change', function(event) {
-		var tmp_028 = "";
-
-		if ($('#028a').val().length > 0) {
-			tmp_028 = tmp_028 + '^a' + $('#028a').val();
-		}
-
-		if ($('#028b').val().length > 0) {
-			tmp_028 = tmp_028 + '^b' + $('#028b').val();
-		}
-
-		if (tmp_028.length > 0) {
-			$("#028").val('20' + tmp_028);
-			$("#l-028").html('20' + tmp_028);
-		} else {
-			$("#028").val('');
-			$("#l-028").html('&nbsp;');
-		}
-	});
-
-	$("#028b").bind('keyup change', function(event) {
-		var tmp_028 = "";
-
-		if ($('#028a').val().length > 0) {
-			tmp_028 = tmp_028 + '^a' + $('#028a').val();
-		}
-
-		if ($('#028b').val().length > 0) {
-			tmp_028 = tmp_028 + '^b' + $('#028b').val();
-		}
-
-		if (tmp_028.length > 0) {
-			$("#028").val('20' + tmp_028);
-			$("#l-028").html('20' + tmp_028);
-		} else {
-			$("#028").val('');
-			$("#l-028").html('&nbsp;');
-			
-		}		
 	});
 
 	$("#040a").bind('keyup change', function(event) {
@@ -4913,406 +3163,6 @@ $(document).ready(function() {
 			$("#l-100").html('&nbsp;');
 		}
 	});
-
-	$("#110i1").change(function(event) {
-		var tmp_110 = "";
-
-		if ($('#110a').val().length > 0) {
-			tmp_110 = tmp_110 + '^a' + $('#110a').val();
-		}
-
-		if ($('#110b').val().length > 0) {
-			tmp_110 = tmp_110 + '^b' + $('#110b').val();
-		}
-		
-		if (tmp_110.length > 0) {
-			$("#110").val($("#110i1").val() + $("#110i2").val() + tmp_110);
-			$("#l-110").html($("#110i1").val() + $("#110i2").val() + tmp_110);
-		} else {
-			$("#110").val('');
-			$("#l-110").html('&nbsp;');
-		}
-	});
-
-	$("#110i2").change(function(event) {
-		var tmp_110 = "";
-
-		if ($('#110a').val().length > 0) {
-			tmp_110 = tmp_110 + '^a' + $('#110a').val();
-		}
-
-		if ($('#110b').val().length > 0) {
-			tmp_110 = tmp_110 + '^b' + $('#110b').val();
-		}
-		
-		if (tmp_110.length > 0) {
-			$("#110").val($("#110i1").val() + $("#110i2").val() + tmp_110);
-			$("#l-110").html($("#110i1").val() + $("#110i2").val() + tmp_110);
-		} else {
-			$("#110").val('');
-			$("#l-110").html('&nbsp;');
-		}
-	});
-
-	$("#110a").bind('keyup change', function(event) {
-		var tmp_110 = "";
-
-		if ($('#110a').val().length > 0) {
-			tmp_110 = tmp_110 + '^a' + $('#110a').val();
-		}
-
-		if ($('#110b').val().length > 0) {
-			tmp_110 = tmp_110 + '^b' + $('#110b').val();
-		}
-		
-		if (tmp_110.length > 0) {
-			$("#110").val($("#110i1").val() + $("#110i2").val() + tmp_110);
-			$("#l-110").html($("#110i1").val() + $("#110i2").val() + tmp_110);
-		} else {
-			$("#110").val('');
-			$("#l-110").html('&nbsp;');
-		}
-	});
-	
-	$("#110b").bind('keyup change', function(event) {
-		var tmp_110 = "";
-
-		if ($('#110a').val().length > 0) {
-			tmp_110 = tmp_110 + '^a' + $('#110a').val();
-		}
-
-		if ($('#110b').val().length > 0) {
-			tmp_110 = tmp_110 + '^b' + $('#110b').val();
-		}
-
-		if (tmp_110.length > 0) {
-			$("#110").val($("#110i1").val() + $("#110i2").val() + tmp_110);
-			$("#l-110").html($("#110i1").val() + $("#110i2").val() + tmp_110);
-		} else {
-			$("#110").val('');
-			$("#l-110").html('&nbsp;');
-		}
-	});
-
-	$("#130i1").change(function(event) {
-		var tmp_130 = "";
-
-		if ($('#130a').val().length > 0) {
-			tmp_130 = tmp_130 + '^a' + $('#130a').val();
-		}
-
-		if ($('#130n').val().length > 0) {
-			tmp_130 = tmp_130 + '^n' + $('#130n').val();
-		}
-		
-		if ($('#130p').val().length > 0) {
-			tmp_130 = tmp_130 + '^p' + $('#130p').val();
-		}
-		
-		if (tmp_130.length > 0) {
-			$("#130").val($("#130i1").val() + $("#130i2").val() + tmp_130);
-			$("#l-130").html($("#130i1").val() + $("#130i2").val() + tmp_130);
-		} else {
-			$("#130").val('');
-			$("#l-130").html('&nbsp;');
-		}
-	});
-
-	$("#130i2").change(function(event) {
-		var tmp_130 = "";
-
-		if ($('#130a').val().length > 0) {
-			tmp_130 = tmp_130 + '^a' + $('#130a').val();
-		}
-
-		if ($('#130n').val().length > 0) {
-			tmp_130 = tmp_130 + '^n' + $('#130n').val();
-		}
-		
-		if ($('#130p').val().length > 0) {
-			tmp_130 = tmp_130 + '^p' + $('#130p').val();
-		}
-		
-		if (tmp_130.length > 0) {
-			$("#130").val($("#130i1").val() + $("#130i2").val() + tmp_130);
-			$("#l-130").html($("#130i1").val() + $("#130i2").val() + tmp_130);
-		} else {
-			$("#130").val('');
-			$("#l-130").html('&nbsp;');
-		}
-	});
-
-	$("#130a").bind('keyup change', function(event) {
-		var tmp_130 = "";
-
-		if ($('#130a').val().length > 0) {
-			tmp_130 = tmp_130 + '^a' + $('#130a').val();
-		}
-
-		if ($('#130n').val().length > 0) {
-			tmp_130 = tmp_130 + '^n' + $('#130n').val();
-		}
-		
-		if ($('#130p').val().length > 0) {
-			tmp_130 = tmp_130 + '^p' + $('#130p').val();
-		}
-		
-		if (tmp_130.length > 0) {
-			$("#130").val($("#130i1").val() + $("#130i2").val() + tmp_130);
-			$("#l-130").html($("#130i1").val() + $("#130i2").val() + tmp_130);
-		} else {
-			$("#130").val('');
-			$("#l-130").html('&nbsp;');
-		}
-	});
-	
-	$("#130n").bind('keyup change', function(event) {
-		var tmp_130 = "";
-
-		if ($('#130a').val().length > 0) {
-			tmp_130 = tmp_130 + '^a' + $('#130a').val();
-		}
-
-		if ($('#130n').val().length > 0) {
-			tmp_130 = tmp_130 + '^n' + $('#130n').val();
-		}
-
-		if ($('#130p').val().length > 0) {
-			tmp_130 = tmp_130 + '^p' + $('#130p').val();
-		}
-		
-		if (tmp_130.length > 0) {
-			$("#130").val($("#130i1").val() + $("#130i2").val() + tmp_130);
-			$("#l-130").html($("#130i1").val() + $("#130i2").val() + tmp_130);
-		} else {
-			$("#130").val('');
-			$("#l-130").html('&nbsp;');
-		}
-	});
-
-	$("#130p").bind('keyup change', function(event) {
-		var tmp_130 = "";
-
-		if ($('#130a').val().length > 0) {
-			tmp_130 = tmp_130 + '^a' + $('#130a').val();
-		}
-
-		if ($('#130n').val().length > 0) {
-			tmp_130 = tmp_130 + '^n' + $('#130n').val();
-		}
-
-		if ($('#130p').val().length > 0) {
-			tmp_130 = tmp_130 + '^p' + $('#130p').val();
-		}
-		
-		if (tmp_130.length > 0) {
-			$("#130").val($("#130i1").val() + $("#130i2").val() + tmp_130);
-			$("#l-130").html($("#130i1").val() + $("#130i2").val() + tmp_130);
-		} else {
-			$("#130").val('');
-			$("#l-130").html('&nbsp;');
-		}
-	});
-
-	$("#222i1").change(function(event) {
-		var tmp_222 = "";
-
-		if ($('#222a').val().length > 0) {
-			tmp_222 = tmp_222 + '^a' + $('#222a').val();
-		}
-
-		if ($('#222b').val().length > 0) {
-			tmp_222 = tmp_222 + '^b' + $('#222b').val();
-		}
-		
-		if (tmp_222.length > 0) {
-			$("#222").val($("#222i1").val() + $("#222i2").val() + tmp_222);
-			$("#l-222").html($("#222i1").val() + $("#222i2").val() + tmp_222);
-		} else {
-			$("#222").val('');
-			$("#l-222").html('&nbsp;');
-		}
-	});
-
-	$("#222i2").change(function(event) {
-		var tmp_222 = "";
-
-		if ($('#222a').val().length > 0) {
-			tmp_222 = tmp_222 + '^a' + $('#222a').val();
-		}
-
-		if ($('#222b').val().length > 0) {
-			tmp_222 = tmp_222 + '^b' + $('#222b').val();
-		}
-		
-		if (tmp_222.length > 0) {
-			$("#222").val($("#222i1").val() + $("#222i2").val() + tmp_222);
-			$("#l-222").html($("#222i1").val() + $("#222i2").val() + tmp_222);
-		} else {
-			$("#222").val('');
-			$("#l-222").html('&nbsp;');
-		}
-	});
-
-	$("#222a").bind('keyup change', function(event) {
-		var tmp_222 = "";
-
-		if ($('#222a').val().length > 0) {
-			tmp_222 = tmp_222 + '^a' + $('#222a').val();
-		}
-
-		if ($('#222b').val().length > 0) {
-			tmp_222 = tmp_222 + '^b' + $('#222b').val();
-		}
-		
-		if (tmp_222.length > 0) {
-			$("#222").val($("#222i1").val() + $("#222i2").val() + tmp_222);
-			$("#l-222").html($("#222i1").val() + $("#222i2").val() + tmp_222);
-		} else {
-			$("#222").val('');
-			$("#l-222").html('&nbsp;');
-		}
-	});
-	
-	$("#222b").bind('keyup change', function(event) {
-		var tmp_222 = "";
-
-		if ($('#222a').val().length > 0) {
-			tmp_222 = tmp_222 + '^a' + $('#222a').val();
-		}
-
-		if ($('#222b').val().length > 0) {
-			tmp_222 = tmp_222 + '^b' + $('#222b').val();
-		}
-
-		if (tmp_222.length > 0) {
-			$("#222").val($("#222i1").val() + $("#222i2").val() + tmp_222);
-			$("#l-222").html($("#222i1").val() + $("#222i2").val() + tmp_222);
-		} else {
-			$("#222").val('');
-			$("#l-222").html('&nbsp;');
-		}
-	});
-
-	$("#240i1").change(function(event) {
-		var tmp_240 = "";
-
-		if ($('#240a').val().length > 0) {
-			tmp_240 = tmp_240 + '^a' + $('#240a').val();
-		}
-
-		if ($('#240n').val().length > 0) {
-			tmp_240 = tmp_240 + '^n' + $('#240n').val();
-		}
-
-		if ($('#240p').val().length > 0) {
-			tmp_240 = tmp_240 + '^p' + $('#240p').val();
-		}
-		
-		if (tmp_240.length > 0) {
-			$("#240").val($("#240i1").val() + $("#240i2").val() + tmp_240);
-			$("#l-240").html($("#240i1").val() + $("#240i2").val() + tmp_240);
-		} else {
-			$("#240").val('');
-			$("#l-240").html('&nbsp;');
-		}
-	});
-
-	$("#240i2").change(function(event) {
-		var tmp_240 = "";
-
-		if ($('#240a').val().length > 0) {
-			tmp_240 = tmp_240 + '^a' + $('#240a').val();
-		}
-
-		if ($('#240n').val().length > 0) {
-			tmp_240 = tmp_240 + '^n' + $('#240n').val();
-		}
-
-		if ($('#240p').val().length > 0) {
-			tmp_240 = tmp_240 + '^p' + $('#240p').val();
-		}
-		
-		if (tmp_240.length > 0) {
-			$("#240").val($("#240i1").val() + $("#240i2").val() + tmp_240);
-			$("#l-240").html($("#240i1").val() + $("#240i2").val() + tmp_240);
-		} else {
-			$("#240").val('');
-			$("#l-240").html('&nbsp;');
-		}
-	});
-	
-	$("#240a").bind('keyup change', function(event) {
-		var tmp_240 = "";
-
-		if ($('#240a').val().length > 0) {
-			tmp_240 = tmp_240 + '^a' + $('#240a').val();
-		}
-
-		if ($('#240n').val().length > 0) {
-			tmp_240 = tmp_240 + '^n' + $('#240n').val();
-		}
-
-		if ($('#240p').val().length > 0) {
-			tmp_240 = tmp_240 + '^p' + $('#240p').val();
-		}
-		
-		if (tmp_240.length > 0) {
-			$("#240").val($("#240i1").val() + $("#240i2").val() + tmp_240);
-			$("#l-240").html($("#240i1").val() + $("#240i2").val() + tmp_240);
-		} else {
-			$("#240").val('');
-			$("#l-240").html('&nbsp;');
-		}
-	});
-
-	$("#240n").bind('keyup change', function(event) {
-		var tmp_240 = "";
-
-		if ($('#240a').val().length > 0) {
-			tmp_240 = tmp_240 + '^a' + $('#240a').val();
-		}
-
-		if ($('#240n').val().length > 0) {
-			tmp_240 = tmp_240 + '^n' + $('#240n').val();
-		}
-
-		if ($('#240p').val().length > 0) {
-			tmp_240 = tmp_240 + '^p' + $('#240p').val();
-		}
-		
-		if (tmp_240.length > 0) {
-			$("#240").val($("#240i1").val() + $("#240i2").val() + tmp_240);
-			$("#l-240").html($("#240i1").val() + $("#240i2").val() + tmp_240);
-		} else {
-			$("#240").val('');
-			$("#l-240").html('&nbsp;');
-		}
-	});
-
-	$("#240p").bind('keyup change', function(event) {
-		var tmp_240 = "";
-
-		if ($('#240a').val().length > 0) {
-			tmp_240 = tmp_240 + '^a' + $('#240a').val();
-		}
-
-		if ($('#240n').val().length > 0) {
-			tmp_240 = tmp_240 + '^n' + $('#240n').val();
-		}
-
-		if ($('#240p').val().length > 0) {
-			tmp_240 = tmp_240 + '^p' + $('#240p').val();
-		}
-		
-		if (tmp_240.length > 0) {
-			$("#240").val($("#240i1").val() + $("#240i2").val() + tmp_240);
-			$("#l-240").html($("#240i1").val() + $("#240i2").val() + tmp_240);
-		} else {
-			$("#240").val('');
-			$("#l-240").html('&nbsp;');
-		}
-	});
 	
 	$("#245i1").change(function(event) {
 		var tmp_245 = "";
@@ -5479,382 +3329,6 @@ $(document).ready(function() {
 		} else {
 			$("#245").val('');
 			$("#l-245").html('&nbsp;');
-		}
-	});
-
-	$("#246i1").change(function(event) {
-		var tmp_246 = "";
-
-		if ($('#246a').val().length > 0) {
-			tmp_246 = tmp_246 + '^a' + $('#246a').val();
-		}
-
-		if ($('#246b').val().length > 0) {
-			tmp_246 = tmp_246 + '^b' + $('#246b').val();
-		}
-
-		if ($('#246i').val().length > 0) {
-			tmp_246 = tmp_246 + '^i' + $('#246i').val();
-		}
-		
-		if (tmp_246.length > 0) {
-			$("#246").val($("#246i1").val() + $("#246i2").val() + tmp_246);
-			$("#l-246").html($("#246i1").val() + $("#246i2").val() + tmp_246);
-		} else {
-			$("#246").val('');
-			$("#l-246").html('&nbsp;');
-		}
-	});
-
-	$("#246i2").change(function(event) {
-		var tmp_246 = "";
-
-		if ($('#246a').val().length > 0) {
-			tmp_246 = tmp_246 + '^a' + $('#246a').val();
-		}
-
-		if ($('#246b').val().length > 0) {
-			tmp_246 = tmp_246 + '^b' + $('#246b').val();
-		}
-
-		if ($('#246i').val().length > 0) {
-			tmp_246 = tmp_246 + '^i' + $('#246i').val();
-		}
-
-		if (tmp_246.length > 0) {
-			$("#246").val($("#246i1").val() + $("#246i2").val() + tmp_246);
-			$("#l-246").html($("#246i1").val() + $("#246i2").val() + tmp_246);
-		} else {
-			$("#246").val('');
-			$("#l-246").html('&nbsp;');
-		}
-	});
-	
-	$("#246a").bind('keyup change', function(event) {
-		var tmp_246 = "";
-
-		if ($('#246a').val().length > 0) {
-			tmp_246 = tmp_246 + '^a' + $('#246a').val();
-		}
-
-		if ($('#246b').val().length > 0) {
-			tmp_246 = tmp_246 + '^b' + $('#246b').val();
-		}
-
-		if ($('#246i').val().length > 0) {
-			tmp_246 = tmp_246 + '^i' + $('#246i').val();
-		}
-
-		if (tmp_246.length > 0) {
-			$("#246").val($("#246i1").val() + $("#246i2").val() + tmp_246);
-			$("#l-246").html($("#246i1").val() + $("#246i2").val() + tmp_246);
-		} else {
-			$("#246").val('');
-			$("#l-246").html('&nbsp;');
-		}
-	});
-
-	$("#246b").bind('keyup change', function(event) {
-		var tmp_246 = "";
-
-		if ($('#246a').val().length > 0) {
-			tmp_246 = tmp_246 + '^a' + $('#246a').val();
-		}
-
-		if ($('#246b').val().length > 0) {
-			tmp_246 = tmp_246 + '^b' + $('#246b').val();
-		}
-
-		if ($('#246i').val().length > 0) {
-			tmp_246 = tmp_246 + '^i' + $('#246i').val();
-		}
-
-		if (tmp_246.length > 0) {
-			$("#246").val($("#246i1").val() + $("#246i2").val() + tmp_246);
-			$("#l-246").html($("#246i1").val() + $("#246i2").val() + tmp_246);
-		} else {
-			$("#246").val('');
-			$("#l-246").html('&nbsp;');
-		}
-	});
-
-	$("#246i").bind('keyup change', function(event) {
-		var tmp_246 = "";
-
-		if ($('#246a').val().length > 0) {
-			tmp_246 = tmp_246 + '^a' + $('#246a').val();
-		}
-
-		if ($('#246b').val().length > 0) {
-			tmp_246 = tmp_246 + '^b' + $('#246b').val();
-		}
-
-		if ($('#246i').val().length > 0) {
-			tmp_246 = tmp_246 + '^i' + $('#246i').val();
-		}
-
-		if (tmp_246.length > 0) {
-			$("#246").val($("#246i1").val() + $("#246i2").val() + tmp_246);
-			$("#l-246").html($("#246i1").val() + $("#246i2").val() + tmp_246);
-		} else {
-			$("#246").val('');
-			$("#l-246").html('&nbsp;');
-		}
-	});
-
-	$("#247a").bind('keyup change', function(event) {
-		var tmp_247 = "";
-
-		if ($('#247a').val().length > 0) {
-			tmp_247 = tmp_247 + '^a' + $('#247a').val();
-		}
-
-		if ($('#247b').val().length > 0) {
-			tmp_247 = tmp_247 + '^b' + $('#247b').val();
-		}
-
-		if ($('#247f').val().length > 0) {
-			tmp_247 = tmp_247 + '^f' + $('#247f').val();
-		}
-
-		if ($('#247g').val().length > 0) {
-			tmp_247 = tmp_247 + '^g' + $('#247g').val();
-		}
-
-		if ($('#247n').val().length > 0) {
-			tmp_247 = tmp_247 + '^n' + $('#247n').val();
-		}
-
-		if ($('#247p').val().length > 0) {
-			tmp_247 = tmp_247 + '^p' + $('#247p').val();
-		}
-		
-		if (tmp_247.length > 0) {
-			$("#247").val('##' + tmp_247);
-			$("#l-247").html('##' + tmp_247);
-		} else {
-			$("#247").val('');
-			$("#l-247").html('&nbsp;');
-		}
-	});
-
-	$("#247b").bind('keyup change', function(event) {
-		var tmp_247 = "";
-
-		if ($('#247a').val().length > 0) {
-			tmp_247 = tmp_247 + '^a' + $('#247a').val();
-		}
-
-		if ($('#247b').val().length > 0) {
-			tmp_247 = tmp_247 + '^b' + $('#247b').val();
-		}
-
-		if ($('#247f').val().length > 0) {
-			tmp_247 = tmp_247 + '^f' + $('#247f').val();
-		}
-
-		if ($('#247g').val().length > 0) {
-			tmp_247 = tmp_247 + '^g' + $('#247g').val();
-		}
-
-		if ($('#247n').val().length > 0) {
-			tmp_247 = tmp_247 + '^n' + $('#247n').val();
-		}
-
-		if ($('#247p').val().length > 0) {
-			tmp_247 = tmp_247 + '^p' + $('#247p').val();
-		}
-		
-		if (tmp_247.length > 0) {
-			$("#247").val('##' + tmp_247);
-			$("#l-247").html('##' + tmp_247);
-		} else {
-			$("#247").val('');
-			$("#l-247").html('&nbsp;');
-		}
-	});
-
-	$("#247f").bind('keyup change', function(event) {
-		var tmp_247 = "";
-
-		if ($('#247a').val().length > 0) {
-			tmp_247 = tmp_247 + '^a' + $('#247a').val();
-		}
-
-		if ($('#247b').val().length > 0) {
-			tmp_247 = tmp_247 + '^b' + $('#247b').val();
-		}
-
-		if ($('#247f').val().length > 0) {
-			tmp_247 = tmp_247 + '^f' + $('#247f').val();
-		}
-
-		if ($('#247g').val().length > 0) {
-			tmp_247 = tmp_247 + '^g' + $('#247g').val();
-		}
-
-		if ($('#247n').val().length > 0) {
-			tmp_247 = tmp_247 + '^n' + $('#247n').val();
-		}
-
-		if ($('#247p').val().length > 0) {
-			tmp_247 = tmp_247 + '^p' + $('#247p').val();
-		}
-		
-		if (tmp_247.length > 0) {
-			$("#247").val('##' + tmp_247);
-			$("#l-247").html('##' + tmp_247);
-		} else {
-			$("#247").val('');
-			$("#l-247").html('&nbsp;');
-		}
-	});
-
-	$("#247g").bind('keyup change', function(event) {
-		var tmp_247 = "";
-
-		if ($('#247a').val().length > 0) {
-			tmp_247 = tmp_247 + '^a' + $('#247a').val();
-		}
-
-		if ($('#247b').val().length > 0) {
-			tmp_247 = tmp_247 + '^b' + $('#247b').val();
-		}
-
-		if ($('#247f').val().length > 0) {
-			tmp_247 = tmp_247 + '^f' + $('#247f').val();
-		}
-
-		if ($('#247g').val().length > 0) {
-			tmp_247 = tmp_247 + '^g' + $('#247g').val();
-		}
-
-		if ($('#247n').val().length > 0) {
-			tmp_247 = tmp_247 + '^n' + $('#247n').val();
-		}
-
-		if ($('#247p').val().length > 0) {
-			tmp_247 = tmp_247 + '^p' + $('#247p').val();
-		}
-		
-		if (tmp_247.length > 0) {
-			$("#247").val('##' + tmp_247);
-			$("#l-247").html('##' + tmp_247);
-		} else {
-			$("#247").val('');
-			$("#l-247").html('&nbsp;');
-		}
-	});
-
-	$("#247n").bind('keyup change', function(event) {
-		var tmp_247 = "";
-
-		if ($('#247a').val().length > 0) {
-			tmp_247 = tmp_247 + '^a' + $('#247a').val();
-		}
-
-		if ($('#247b').val().length > 0) {
-			tmp_247 = tmp_247 + '^b' + $('#247b').val();
-		}
-
-		if ($('#247f').val().length > 0) {
-			tmp_247 = tmp_247 + '^f' + $('#247f').val();
-		}
-
-		if ($('#247g').val().length > 0) {
-			tmp_247 = tmp_247 + '^g' + $('#247g').val();
-		}
-
-		if ($('#247n').val().length > 0) {
-			tmp_247 = tmp_247 + '^n' + $('#247n').val();
-		}
-
-		if ($('#247p').val().length > 0) {
-			tmp_247 = tmp_247 + '^p' + $('#247p').val();
-		}
-		
-		if (tmp_247.length > 0) {
-			$("#247").val('##' + tmp_247);
-			$("#l-247").html('##' + tmp_247);
-		} else {
-			$("#247").val('');
-			$("#l-247").html('&nbsp;');
-		}
-	});
-
-	$("#247p").bind('keyup change', function(event) {
-		var tmp_247 = "";
-
-		if ($('#247a').val().length > 0) {
-			tmp_247 = tmp_247 + '^a' + $('#247a').val();
-		}
-
-		if ($('#247b').val().length > 0) {
-			tmp_247 = tmp_247 + '^b' + $('#247b').val();
-		}
-
-		if ($('#247f').val().length > 0) {
-			tmp_247 = tmp_247 + '^f' + $('#247f').val();
-		}
-
-		if ($('#247g').val().length > 0) {
-			tmp_247 = tmp_247 + '^g' + $('#247g').val();
-		}
-
-		if ($('#247n').val().length > 0) {
-			tmp_247 = tmp_247 + '^n' + $('#247n').val();
-		}
-
-		if ($('#247p').val().length > 0) {
-			tmp_247 = tmp_247 + '^p' + $('#247p').val();
-		}
-		
-		if (tmp_247.length > 0) {
-			$("#247").val('##' + tmp_247);
-			$("#l-247").html('##' + tmp_247);
-		} else {
-			$("#247").val('');
-			$("#l-247").html('&nbsp;');
-		}
-	});
-
-	$("#250a").bind('keyup change', function(event) {
-		var tmp_250 = "";
-
-		if ($('#250a').val().length > 0) {
-			tmp_250 = tmp_250 + '^a' + $('#250a').val();
-		}
-
-		if ($('#250b').val().length > 0) {
-			tmp_250 = tmp_250 + '^b' + $('#250b').val();
-		}
-		
-		if (tmp_250.length > 0) {
-			$("#250").val('##' + tmp_250);
-			$("#l-250").html('##' + tmp_250);
-		} else {
-			$("#250").val('');
-			$("#l-250").html('&nbsp;');
-		}
-	});
-
-	$("#250b").bind('keyup change', function(event) {
-		var tmp_250 = "";
-
-		if ($('#250a').val().length > 0) {
-			tmp_250 = tmp_250 + '^a' + $('#250a').val();
-		}
-
-		if ($('#250b').val().length > 0) {
-			tmp_250 = tmp_250 + '^b' + $('#250b').val();
-		}
-		
-		if (tmp_250.length > 0) {
-			$("#250").val('##' + tmp_250);
-			$("#l-250").html('##' + tmp_250);
-		} else {
-			$("#250").val('');
-			$("#l-250").html('&nbsp;');
 		}
 	});
 
@@ -6082,118 +3556,6 @@ $(document).ready(function() {
 		}
 	});
 
-	$("#310a").bind('keyup change', function(event) {
-		var tmp_310 = "";
-
-		if ($('#310a').val().length > 0) {
-			tmp_310 = tmp_310 + '^a' + $('#310a').val();
-		}
-
-		if ($('#310b').val().length > 0) {
-			tmp_310 = tmp_310 + '^b' + $('#310b').val();
-		}
-		
-		if (tmp_310.length > 0) {
-			$("#310").val('##' + tmp_310);
-			$("#l-310").html('##' + tmp_310);
-		} else {
-			$("#310").val('');
-			$("#l-310").html('&nbsp;');
-		}
-	});
-
-	$("#310b").bind('keyup change', function(event) {
-		var tmp_310 = "";
-
-		if ($('#310a').val().length > 0) {
-			tmp_310 = tmp_310 + '^a' + $('#310a').val();
-		}
-
-		if ($('#310b').val().length > 0) {
-			tmp_310 = tmp_310 + '^b' + $('#310b').val();
-		}
-		
-		if (tmp_310.length > 0) {
-			$("#310").val('##' + tmp_310);
-			$("#l-310").html('##' + tmp_310);
-		} else {
-			$("#310").val('');
-			$("#l-310").html('&nbsp;');
-		}
-	});
-
-	$("#321a").bind('keyup change', function(event) {
-		var tmp_321 = "";
-
-		if ($('#321a').val().length > 0) {
-			tmp_321 = tmp_321 + '^a' + $('#321a').val();
-		}
-
-		if ($('#321b').val().length > 0) {
-			tmp_321 = tmp_321 + '^b' + $('#321b').val();
-		}
-		
-		if (tmp_321.length > 0) {
-			$("#321").val('##' + tmp_321);
-			$("#l-321").html('##' + tmp_321);
-		} else {
-			$("#321").val('');
-			$("#l-321").html('&nbsp;');
-		}
-	});
-
-	$("#321b").bind('keyup change', function(event) {
-		var tmp_321 = "";
-
-		if ($('#321a').val().length > 0) {
-			tmp_321 = tmp_321 + '^a' + $('#321a').val();
-		}
-
-		if ($('#321b').val().length > 0) {
-			tmp_321 = tmp_321 + '^b' + $('#321b').val();
-		}
-		
-		if (tmp_321.length > 0) {
-			$("#321").val('##' + tmp_321);
-			$("#l-321").html('##' + tmp_321);
-		} else {
-			$("#321").val('');
-			$("#l-321").html('&nbsp;');
-		}
-	});
-
-	$("#362a").bind('keyup change', function(event) {
-		var tmp_362 = "";
-
-		if ($('#362a').val().length > 0) {
-			tmp_362 = tmp_362 + '^a' + $('#362a').val();
-		}
-
-		if (tmp_362.length > 0) {
-			$("#362").val('0#' + tmp_362);
-			$("#l-362").html('0#' + tmp_362);
-		} else {
-			$("#362").val('');
-			$("#l-362").html('&nbsp;');
-		}
-	});
-
-	$("#380a").bind('keyup change', function(event) {
-		var tmp_380 = "";
-
-		if ($('#380a').val().length > 0) {
-			tmp_380 = tmp_380 + '^a' + $('#380a').val();
-		}
-
-		if (tmp_380.length > 0) {
-			$("#380").val('##' + tmp_380);
-			$("#l-380").html('##' + tmp_380);
-		} else {
-			$("#380").val('');
-			$("#l-380").html('&nbsp;');
-		}
-	});
-
 	$("#500a").bind('keyup change', function(event) {
 		var tmp_500 = "";
 
@@ -6210,19 +3572,35 @@ $(document).ready(function() {
 		}
 	});
 
-	$("#501a").bind('keyup change', function(event) {
-		var tmp_501 = "";
+	$("#502a").bind('keyup change', function(event) {
+		var tmp_502 = "";
 
-		if ($('#501a').val().length > 0) {
-			tmp_501 = tmp_501 + '^a' + $('#501a').val();
+		if ($('#502a').val().length > 0) {
+			tmp_502 = tmp_502 + '^a' + $('#502a').val();
 		}
 
-		if (tmp_501.length > 0) {
-			$("#501").val('##' + tmp_501);
-			$("#l-501").html('##' + tmp_501);
+		if (tmp_502.length > 0) {
+			$("#502").val('##' + tmp_502);
+			$("#l-502").html('##' + tmp_502);
 		} else {
-			$("#501").val('');
-			$("#l-501").html('&nbsp;');
+			$("#502").val('');
+			$("#l-502").html('&nbsp;');
+		}
+	});
+
+	$("#504a").bind('keyup change', function(event) {
+		var tmp_504 = "";
+
+		if ($('#504a').val().length > 0) {
+			tmp_504 = tmp_504 + '^a' + $('#504a').val();
+		}
+
+		if (tmp_504.length > 0) {
+			$("#504").val('##' + tmp_504);
+			$("#l-504").html('##' + tmp_504);
+		} else {
+			$("#504").val('');
+			$("#l-504").html('&nbsp;');
 		}
 	});
 
@@ -6274,334 +3652,6 @@ $(document).ready(function() {
 		}
 	});
 
-	$("#510i1").change(function(event) {
-		var tmp_510 = "";
-
-		if ($('#510a').val().length > 0) {
-			tmp_510 = tmp_510 + '^a' + $('#510a').val();
-		}
-
-		if ($('#510c').val().length > 0) {
-			tmp_510 = tmp_510 + '^c' + $('#510c').val();
-		}
-		
-		if (tmp_510.length > 0) {
-			$("#510").val($("#510i1").val() + $("#510i2").val() + tmp_510);
-			$("#l-510").html($("#510i1").val() + $("#510i2").val() + tmp_510);
-		} else {
-			$("#510").val('');
-			$("#l-510").html('&nbsp;');
-		}
-	});
-
-	$("#510i2").change(function(event) {
-		var tmp_510 = "";
-
-		if ($('#510a').val().length > 0) {
-			tmp_510 = tmp_510 + '^a' + $('#510a').val();
-		}
-
-		if ($('#510c').val().length > 0) {
-			tmp_510 = tmp_510 + '^c' + $('#510c').val();
-		}
-		
-		if (tmp_510.length > 0) {
-			$("#510").val($("#510i1").val() + $("#510i2").val() + tmp_510);
-			$("#l-510").html($("#510i1").val() + $("#510i2").val() + tmp_510);
-		} else {
-			$("#510").val('');
-			$("#l-510").html('&nbsp;');
-		}
-	});
-
-	$("#510a").bind('keyup change', function(event) {
-		var tmp_510 = "";
-
-		if ($('#510a').val().length > 0) {
-			tmp_510 = tmp_510 + '^a' + $('#510a').val();
-		}
-
-		if ($('#510c').val().length > 0) {
-			tmp_510 = tmp_510 + '^c' + $('#510c').val();
-		}
-		
-		if (tmp_510.length > 0) {
-			$("#510").val($("#510i1").val() + $("#510i2").val() + tmp_510);
-			$("#l-510").html($("#510i1").val() + $("#510i2").val() + tmp_510);
-		} else {
-			$("#510").val('');
-			$("#l-510").html('&nbsp;');
-		}
-	});
-
-	$("#510c").bind('keyup change', function(event) {
-		var tmp_510 = "";
-
-		if ($('#510a').val().length > 0) {
-			tmp_510 = tmp_510 + '^a' + $('#510a').val();
-		}
-
-		if ($('#510c').val().length > 0) {
-			tmp_510 = tmp_510 + '^c' + $('#510c').val();
-		}
-		
-		if (tmp_510.length > 0) {
-			$("#510").val($("#510i1").val() + $("#510i2").val() + tmp_510);
-			$("#l-510").html($("#510i1").val() + $("#510i2").val() + tmp_510);
-		} else {
-			$("#510").val('');
-			$("#l-510").html('&nbsp;');
-		}
-	});
-
-	$("#515a").bind('keyup change', function(event) {
-		var tmp_515 = "";
-
-		if ($('#515a').val().length > 0) {
-			tmp_515 = tmp_515 + '^a' + $('#515a').val();
-		}
-
-		if (tmp_515.length > 0) {
-			$("#515").val('##' + tmp_515);
-			$("#l-515").html('##' + tmp_515);
-		} else {
-			$("#515").val('');
-			$("#l-515").html('&nbsp;');
-		}
-	});
-
-	$("#520i1").change(function(event) {
-		var tmp_520 = "";
-
-		if ($('#520a').val().length > 0) {
-			tmp_520 = tmp_520 + '^a' + $('#520a').val();
-		}
-
-		if (tmp_520.length > 0) {
-			$("#520").val($("#520i1").val() + $("#520i2").val() + tmp_520);
-			$("#l-520").html($("#520i1").val() + $("#520i2").val() + tmp_520);
-		} else {
-			$("#520").val('');
-			$("#l-520").html('&nbsp;');
-		}
-	});
-
-	$("#520i2").change(function(event) {
-		var tmp_520 = "";
-
-		if ($('#520a').val().length > 0) {
-			tmp_520 = tmp_520 + '^a' + $('#520a').val();
-		}
-
-		if (tmp_520.length > 0) {
-			$("#520").val($("#520i1").val() + $("#520i2").val() + tmp_520);
-			$("#l-520").html($("#520i1").val() + $("#520i2").val() + tmp_520);
-		} else {
-			$("#520").val('');
-			$("#l-520").html('&nbsp;');
-		}
-	});
-
-	$("#520a").bind('keyup change', function(event) {
-		var tmp_520 = "";
-
-		if ($('#520a').val().length > 0) {
-			tmp_520 = tmp_520 + '^a' + $('#520a').val();
-		}
-
-		if (tmp_520.length > 0) {
-			$("#520").val($("#520i1").val() + $("#520i2").val() + tmp_520);
-			$("#l-520").html($("#520i1").val() + $("#520i2").val() + tmp_520);
-		} else {
-			$("#520").val('');
-			$("#l-520").html('&nbsp;');
-		}
-	});
-
-	$("#530a").bind('keyup change', function(event) {
-		var tmp_530 = "";
-
-		if ($('#530a').val().length > 0) {
-			tmp_530 = tmp_530 + '^a' + $('#530a').val();
-		}
-
-		if ($('#530c').val().length > 0) {
-			tmp_530 = tmp_530 + '^c' + $('#530c').val();
-		}
-
-		if ($('#530u').val().length > 0) {
-			tmp_530 = tmp_530 + '^u' + $('#530u').val();
-		}
-		
-		if (tmp_530.length > 0) {
-			$("#530").val('##' + tmp_530);
-			$("#l-530").html('##' + tmp_530);
-		} else {
-			$("#530").val('');
-			$("#l-530").html('&nbsp;');
-		}
-	});
-
-	$("#530c").bind('keyup change', function(event) {
-		var tmp_530 = "";
-
-		if ($('#530a').val().length > 0) {
-			tmp_530 = tmp_530 + '^a' + $('#530a').val();
-		}
-
-		if ($('#530c').val().length > 0) {
-			tmp_530 = tmp_530 + '^c' + $('#530c').val();
-		}
-
-		if ($('#530u').val().length > 0) {
-			tmp_530 = tmp_530 + '^u' + $('#530u').val();
-		}
-		
-		if (tmp_530.length > 0) {
-			$("#530").val('##' + tmp_530);
-			$("#l-530").html('##' + tmp_530);
-		} else {
-			$("#530").val('');
-			$("#l-530").html('&nbsp;');
-		}
-	});
-
-	$("#530u").bind('keyup change', function(event) {
-		var tmp_530 = "";
-
-		if ($('#530a').val().length > 0) {
-			tmp_530 = tmp_530 + '^a' + $('#530a').val();
-		}
-
-		if ($('#530c').val().length > 0) {
-			tmp_530 = tmp_530 + '^c' + $('#530c').val();
-		}
-
-		if ($('#530u').val().length > 0) {
-			tmp_530 = tmp_530 + '^u' + $('#530u').val();
-		}
-		
-		if (tmp_530.length > 0) {
-			$("#530").val('##' + tmp_530);
-			$("#l-530").html('##' + tmp_530);
-		} else {
-			$("#530").val('');
-			$("#l-530").html('&nbsp;');
-		}
-	});
-
-	$("#534a").bind('keyup change', function(event) {
-		var tmp_534 = "";
-
-		if ($('#534a').val().length > 0) {
-			tmp_534 = tmp_534 + '^a' + $('#534a').val();
-		}
-
-		if ($('#534c').val().length > 0) {
-			tmp_534 = tmp_534 + '^c' + $('#534c').val();
-		}
-
-		if ($('#534l').val().length > 0) {
-			tmp_534 = tmp_534 + '^l' + $('#534l').val();
-		}
-
-		if ($('#534p').val().length > 0) {
-			tmp_534 = tmp_534 + '^p' + $('#534p').val();
-		}
-		
-		if (tmp_534.length > 0) {
-			$("#534").val('##' + tmp_534);
-			$("#l-534").html('##' + tmp_534);
-		} else {
-			$("#534").val('');
-			$("#l-534").html('&nbsp;');
-		}
-	});
-
-	$("#534c").bind('keyup change', function(event) {
-		var tmp_534 = "";
-
-		if ($('#534a').val().length > 0) {
-			tmp_534 = tmp_534 + '^a' + $('#534a').val();
-		}
-
-		if ($('#534c').val().length > 0) {
-			tmp_534 = tmp_534 + '^c' + $('#534c').val();
-		}
-
-		if ($('#534l').val().length > 0) {
-			tmp_534 = tmp_534 + '^l' + $('#534l').val();
-		}
-
-		if ($('#534p').val().length > 0) {
-			tmp_534 = tmp_534 + '^p' + $('#534p').val();
-		}
-		
-		if (tmp_534.length > 0) {
-			$("#534").val('##' + tmp_534);
-			$("#l-534").html('##' + tmp_534);
-		} else {
-			$("#534").val('');
-			$("#l-534").html('&nbsp;');
-		}
-	});
-
-	$("#534l").bind('keyup change', function(event) {
-		var tmp_534 = "";
-
-		if ($('#534a').val().length > 0) {
-			tmp_534 = tmp_534 + '^a' + $('#534a').val();
-		}
-
-		if ($('#534c').val().length > 0) {
-			tmp_534 = tmp_534 + '^c' + $('#534c').val();
-		}
-
-		if ($('#534l').val().length > 0) {
-			tmp_534 = tmp_534 + '^l' + $('#534l').val();
-		}
-
-		if ($('#534p').val().length > 0) {
-			tmp_534 = tmp_534 + '^p' + $('#534p').val();
-		}
-		
-		if (tmp_534.length > 0) {
-			$("#534").val('##' + tmp_534);
-			$("#l-534").html('##' + tmp_534);
-		} else {
-			$("#534").val('');
-			$("#l-534").html('&nbsp;');
-		}
-	});
-
-	$("#534p").bind('keyup change', function(event) {
-		var tmp_534 = "";
-
-		if ($('#534a').val().length > 0) {
-			tmp_534 = tmp_534 + '^a' + $('#534a').val();
-		}
-
-		if ($('#534c').val().length > 0) {
-			tmp_534 = tmp_534 + '^c' + $('#534c').val();
-		}
-
-		if ($('#534l').val().length > 0) {
-			tmp_534 = tmp_534 + '^l' + $('#534l').val();
-		}
-
-		if ($('#534p').val().length > 0) {
-			tmp_534 = tmp_534 + '^p' + $('#534p').val();
-		}
-		
-		if (tmp_534.length > 0) {
-			$("#534").val('##' + tmp_534);
-			$("#l-534").html('##' + tmp_534);
-		} else {
-			$("#534").val('');
-			$("#l-534").html('&nbsp;');
-		}
-	});
-
 	$("#546a").bind('keyup change', function(event) {
 		var tmp_546 = "";
 
@@ -6639,118 +3689,6 @@ $(document).ready(function() {
 		} else {
 			$("#546").val('');
 			$("#l-546").html('&nbsp;');
-		}
-	});
-
-	$("#555a").bind('keyup change', function(event) {
-		var tmp_555 = "";
-
-		if ($('#555a').val().length > 0) {
-			tmp_555 = tmp_555 + '^a' + $('#555a').val();
-		}
-
-		if ($('#555b').val().length > 0) {
-			tmp_555 = tmp_555 + '^b' + $('#555b').val();
-		}
-
-		if ($('#555d').val().length > 0) {
-			tmp_555 = tmp_555 + '^d' + $('#555d').val();
-		}
-
-		if ($('#555u').val().length > 0) {
-			tmp_555 = tmp_555 + '^u' + $('#555u').val();
-		}
-		
-		if (tmp_555.length > 0) {
-			$("#555").val('##' + tmp_555);
-			$("#l-555").html('##' + tmp_555);
-		} else {
-			$("#555").val('');
-			$("#l-555").html('&nbsp;');
-		}
-	});
-
-	$("#555b").bind('keyup change', function(event) {
-		var tmp_555 = "";
-
-		if ($('#555a').val().length > 0) {
-			tmp_555 = tmp_555 + '^a' + $('#555a').val();
-		}
-
-		if ($('#555b').val().length > 0) {
-			tmp_555 = tmp_555 + '^b' + $('#555b').val();
-		}
-
-		if ($('#555d').val().length > 0) {
-			tmp_555 = tmp_555 + '^d' + $('#555d').val();
-		}
-
-		if ($('#555u').val().length > 0) {
-			tmp_555 = tmp_555 + '^u' + $('#555u').val();
-		}
-		
-		if (tmp_555.length > 0) {
-			$("#555").val('##' + tmp_555);
-			$("#l-555").html('##' + tmp_555);
-		} else {
-			$("#555").val('');
-			$("#l-555").html('&nbsp;');
-		}
-	});
-
-	$("#555d").bind('keyup change', function(event) {
-		var tmp_555 = "";
-
-		if ($('#555a').val().length > 0) {
-			tmp_555 = tmp_555 + '^a' + $('#555a').val();
-		}
-
-		if ($('#555b').val().length > 0) {
-			tmp_555 = tmp_555 + '^b' + $('#555b').val();
-		}
-
-		if ($('#555d').val().length > 0) {
-			tmp_555 = tmp_555 + '^d' + $('#555d').val();
-		}
-
-		if ($('#555u').val().length > 0) {
-			tmp_555 = tmp_555 + '^u' + $('#555u').val();
-		}
-		
-		if (tmp_555.length > 0) {
-			$("#555").val('##' + tmp_555);
-			$("#l-555").html('##' + tmp_555);
-		} else {
-			$("#555").val('');
-			$("#l-555").html('&nbsp;');
-		}
-	});
-
-	$("#555u").bind('keyup change', function(event) {
-		var tmp_555 = "";
-
-		if ($('#555a').val().length > 0) {
-			tmp_555 = tmp_555 + '^a' + $('#555a').val();
-		}
-
-		if ($('#555b').val().length > 0) {
-			tmp_555 = tmp_555 + '^b' + $('#555b').val();
-		}
-
-		if ($('#555d').val().length > 0) {
-			tmp_555 = tmp_555 + '^d' + $('#555d').val();
-		}
-
-		if ($('#555u').val().length > 0) {
-			tmp_555 = tmp_555 + '^u' + $('#555u').val();
-		}
-		
-		if (tmp_555.length > 0) {
-			$("#555").val('##' + tmp_555);
-			$("#l-555").html('##' + tmp_555);
-		} else {
-			$("#555").val('');
-			$("#l-555").html('&nbsp;');
 		}
 	});
 
@@ -8898,630 +5836,6 @@ $(document).ready(function() {
 		}
 	});
 
-	$("#773i1").change(function(event) {
-		var tmp_773 = "";
-
-		if ($('#773a').val().length > 0) {
-			tmp_773 = tmp_773 + '^a' + $('#773a').val();
-		}
-
-		if ($('#773b').val().length > 0) {
-			tmp_773 = tmp_773 + '^b' + $('#773b').val();
-		}
-
-		if ($('#773d').val().length > 0) {
-			tmp_773 = tmp_773 + '^d' + $('#773d').val();
-		}
-
-		if ($('#773g').val().length > 0) {
-			tmp_773 = tmp_773 + '^g' + $('#773g').val();
-		}
-
-		if ($('#773h').val().length > 0) {
-			tmp_773 = tmp_773 + '^h' + $('#773h').val();
-		}
-
-		if ($('#773k').val().length > 0) {
-			tmp_773 = tmp_773 + '^k' + $('#773k').val();
-		}
-
-		if ($('#773n').val().length > 0) {
-			tmp_773 = tmp_773 + '^n' + $('#773n').val();
-		}
-
-		if ($('#773q').val().length > 0) {
-			tmp_773 = tmp_773 + '^q' + $('#773q').val();
-		}
-
-		if ($('#773t').val().length > 0) {
-			tmp_773 = tmp_773 + '^t' + $('#773t').val();
-		}
-
-		if ($('#773z').val().length > 0) {
-			tmp_773 = tmp_773 + '^z' + $('#773z').val();
-		}
-		
-		if (tmp_773.length > 0) {
-			$("#773").val($("#773i1").val() + $("#773i2").val() + tmp_773);
-			$("#l-773").html($("#773i1").val() + $("#773i2").val() + tmp_773);
-		} else {
-			$("#773").val('');
-			$("#l-773").html('&nbsp;');
-		}
-	});
-
-	$("#773i2").change(function(event) {
-		var tmp_773 = "";
-
-		if ($('#773a').val().length > 0) {
-			tmp_773 = tmp_773 + '^a' + $('#773a').val();
-		}
-
-		if ($('#773b').val().length > 0) {
-			tmp_773 = tmp_773 + '^b' + $('#773b').val();
-		}
-
-		if ($('#773d').val().length > 0) {
-			tmp_773 = tmp_773 + '^d' + $('#773d').val();
-		}
-
-		if ($('#773g').val().length > 0) {
-			tmp_773 = tmp_773 + '^g' + $('#773g').val();
-		}
-
-		if ($('#773h').val().length > 0) {
-			tmp_773 = tmp_773 + '^h' + $('#773h').val();
-		}
-
-		if ($('#773k').val().length > 0) {
-			tmp_773 = tmp_773 + '^k' + $('#773k').val();
-		}
-
-		if ($('#773n').val().length > 0) {
-			tmp_773 = tmp_773 + '^n' + $('#773n').val();
-		}
-
-		if ($('#773q').val().length > 0) {
-			tmp_773 = tmp_773 + '^q' + $('#773q').val();
-		}
-
-		if ($('#773t').val().length > 0) {
-			tmp_773 = tmp_773 + '^t' + $('#773t').val();
-		}
-
-		if ($('#773z').val().length > 0) {
-			tmp_773 = tmp_773 + '^z' + $('#773z').val();
-		}
-		
-		if (tmp_773.length > 0) {
-			$("#773").val($("#773i1").val() + $("#773i2").val() + tmp_773);
-			$("#l-773").html($("#773i1").val() + $("#773i2").val() + tmp_773);
-		} else {
-			$("#773").val('');
-			$("#l-773").html('&nbsp;');
-		}
-	});
-
-	$("#773a").bind('keyup change', function(event) {
-		var tmp_773 = "";
-
-		if ($('#773a').val().length > 0) {
-			tmp_773 = tmp_773 + '^a' + $('#773a').val();
-		}
-
-		if ($('#773b').val().length > 0) {
-			tmp_773 = tmp_773 + '^b' + $('#773b').val();
-		}
-
-		if ($('#773d').val().length > 0) {
-			tmp_773 = tmp_773 + '^d' + $('#773d').val();
-		}
-
-		if ($('#773g').val().length > 0) {
-			tmp_773 = tmp_773 + '^g' + $('#773g').val();
-		}
-
-		if ($('#773h').val().length > 0) {
-			tmp_773 = tmp_773 + '^h' + $('#773h').val();
-		}
-
-		if ($('#773k').val().length > 0) {
-			tmp_773 = tmp_773 + '^k' + $('#773k').val();
-		}
-
-		if ($('#773n').val().length > 0) {
-			tmp_773 = tmp_773 + '^n' + $('#773n').val();
-		}
-
-		if ($('#773q').val().length > 0) {
-			tmp_773 = tmp_773 + '^q' + $('#773q').val();
-		}
-
-		if ($('#773t').val().length > 0) {
-			tmp_773 = tmp_773 + '^t' + $('#773t').val();
-		}
-
-		if ($('#773z').val().length > 0) {
-			tmp_773 = tmp_773 + '^z' + $('#773z').val();
-		}
-		
-		if (tmp_773.length > 0) {
-			$("#773").val($("#773i1").val() + $("#773i2").val() + tmp_773);
-			$("#l-773").html($("#773i1").val() + $("#773i2").val() + tmp_773);
-		} else {
-			$("#773").val('');
-			$("#l-773").html('&nbsp;');
-		}
-	});
-
-	$("#773b").bind('keyup change', function(event) {
-		var tmp_773 = "";
-
-		if ($('#773a').val().length > 0) {
-			tmp_773 = tmp_773 + '^a' + $('#773a').val();
-		}
-
-		if ($('#773b').val().length > 0) {
-			tmp_773 = tmp_773 + '^b' + $('#773b').val();
-		}
-
-		if ($('#773d').val().length > 0) {
-			tmp_773 = tmp_773 + '^d' + $('#773d').val();
-		}
-
-		if ($('#773g').val().length > 0) {
-			tmp_773 = tmp_773 + '^g' + $('#773g').val();
-		}
-
-		if ($('#773h').val().length > 0) {
-			tmp_773 = tmp_773 + '^h' + $('#773h').val();
-		}
-
-		if ($('#773k').val().length > 0) {
-			tmp_773 = tmp_773 + '^k' + $('#773k').val();
-		}
-
-		if ($('#773n').val().length > 0) {
-			tmp_773 = tmp_773 + '^n' + $('#773n').val();
-		}
-
-		if ($('#773q').val().length > 0) {
-			tmp_773 = tmp_773 + '^q' + $('#773q').val();
-		}
-
-		if ($('#773t').val().length > 0) {
-			tmp_773 = tmp_773 + '^t' + $('#773t').val();
-		}
-
-		if ($('#773z').val().length > 0) {
-			tmp_773 = tmp_773 + '^z' + $('#773z').val();
-		}
-		
-		if (tmp_773.length > 0) {
-			$("#773").val($("#773i1").val() + $("#773i2").val() + tmp_773);
-			$("#l-773").html($("#773i1").val() + $("#773i2").val() + tmp_773);
-		} else {
-			$("#773").val('');
-			$("#l-773").html('&nbsp;');
-		}
-	});
-
-	$("#773d").bind('keyup change', function(event) {
-		var tmp_773 = "";
-
-		if ($('#773a').val().length > 0) {
-			tmp_773 = tmp_773 + '^a' + $('#773a').val();
-		}
-
-		if ($('#773b').val().length > 0) {
-			tmp_773 = tmp_773 + '^b' + $('#773b').val();
-		}
-
-		if ($('#773d').val().length > 0) {
-			tmp_773 = tmp_773 + '^d' + $('#773d').val();
-		}
-
-		if ($('#773g').val().length > 0) {
-			tmp_773 = tmp_773 + '^g' + $('#773g').val();
-		}
-
-		if ($('#773h').val().length > 0) {
-			tmp_773 = tmp_773 + '^h' + $('#773h').val();
-		}
-
-		if ($('#773k').val().length > 0) {
-			tmp_773 = tmp_773 + '^k' + $('#773k').val();
-		}
-
-		if ($('#773n').val().length > 0) {
-			tmp_773 = tmp_773 + '^n' + $('#773n').val();
-		}
-
-		if ($('#773q').val().length > 0) {
-			tmp_773 = tmp_773 + '^q' + $('#773q').val();
-		}
-
-		if ($('#773t').val().length > 0) {
-			tmp_773 = tmp_773 + '^t' + $('#773t').val();
-		}
-
-		if ($('#773z').val().length > 0) {
-			tmp_773 = tmp_773 + '^z' + $('#773z').val();
-		}
-		
-		if (tmp_773.length > 0) {
-			$("#773").val($("#773i1").val() + $("#773i2").val() + tmp_773);
-			$("#l-773").html($("#773i1").val() + $("#773i2").val() + tmp_773);
-		} else {
-			$("#773").val('');
-			$("#l-773").html('&nbsp;');
-		}
-	});
-
-	$("#773g").bind('keyup change', function(event) {
-		var tmp_773 = "";
-
-		if ($('#773a').val().length > 0) {
-			tmp_773 = tmp_773 + '^a' + $('#773a').val();
-		}
-
-		if ($('#773b').val().length > 0) {
-			tmp_773 = tmp_773 + '^b' + $('#773b').val();
-		}
-
-		if ($('#773d').val().length > 0) {
-			tmp_773 = tmp_773 + '^d' + $('#773d').val();
-		}
-
-		if ($('#773g').val().length > 0) {
-			tmp_773 = tmp_773 + '^g' + $('#773g').val();
-		}
-
-		if ($('#773h').val().length > 0) {
-			tmp_773 = tmp_773 + '^h' + $('#773h').val();
-		}
-
-		if ($('#773k').val().length > 0) {
-			tmp_773 = tmp_773 + '^k' + $('#773k').val();
-		}
-
-		if ($('#773n').val().length > 0) {
-			tmp_773 = tmp_773 + '^n' + $('#773n').val();
-		}
-
-		if ($('#773q').val().length > 0) {
-			tmp_773 = tmp_773 + '^q' + $('#773q').val();
-		}
-
-		if ($('#773t').val().length > 0) {
-			tmp_773 = tmp_773 + '^t' + $('#773t').val();
-		}
-
-		if ($('#773z').val().length > 0) {
-			tmp_773 = tmp_773 + '^z' + $('#773z').val();
-		}
-		
-		if (tmp_773.length > 0) {
-			$("#773").val($("#773i1").val() + $("#773i2").val() + tmp_773);
-			$("#l-773").html($("#773i1").val() + $("#773i2").val() + tmp_773);
-		} else {
-			$("#773").val('');
-			$("#l-773").html('&nbsp;');
-		}
-	});
-
-	$("#773h").bind('keyup change', function(event) {
-		var tmp_773 = "";
-
-		if ($('#773a').val().length > 0) {
-			tmp_773 = tmp_773 + '^a' + $('#773a').val();
-		}
-
-		if ($('#773b').val().length > 0) {
-			tmp_773 = tmp_773 + '^b' + $('#773b').val();
-		}
-
-		if ($('#773d').val().length > 0) {
-			tmp_773 = tmp_773 + '^d' + $('#773d').val();
-		}
-
-		if ($('#773g').val().length > 0) {
-			tmp_773 = tmp_773 + '^g' + $('#773g').val();
-		}
-
-		if ($('#773h').val().length > 0) {
-			tmp_773 = tmp_773 + '^h' + $('#773h').val();
-		}
-
-		if ($('#773k').val().length > 0) {
-			tmp_773 = tmp_773 + '^k' + $('#773k').val();
-		}
-
-		if ($('#773n').val().length > 0) {
-			tmp_773 = tmp_773 + '^n' + $('#773n').val();
-		}
-
-		if ($('#773q').val().length > 0) {
-			tmp_773 = tmp_773 + '^q' + $('#773q').val();
-		}
-
-		if ($('#773t').val().length > 0) {
-			tmp_773 = tmp_773 + '^t' + $('#773t').val();
-		}
-
-		if ($('#773z').val().length > 0) {
-			tmp_773 = tmp_773 + '^z' + $('#773z').val();
-		}
-		
-		if (tmp_773.length > 0) {
-			$("#773").val($("#773i1").val() + $("#773i2").val() + tmp_773);
-			$("#l-773").html($("#773i1").val() + $("#773i2").val() + tmp_773);
-		} else {
-			$("#773").val('');
-			$("#l-773").html('&nbsp;');
-		}
-	});
-
-	$("#773k").bind('keyup change', function(event) {
-		var tmp_773 = "";
-
-		if ($('#773a').val().length > 0) {
-			tmp_773 = tmp_773 + '^a' + $('#773a').val();
-		}
-
-		if ($('#773b').val().length > 0) {
-			tmp_773 = tmp_773 + '^b' + $('#773b').val();
-		}
-
-		if ($('#773d').val().length > 0) {
-			tmp_773 = tmp_773 + '^d' + $('#773d').val();
-		}
-
-		if ($('#773g').val().length > 0) {
-			tmp_773 = tmp_773 + '^g' + $('#773g').val();
-		}
-
-		if ($('#773h').val().length > 0) {
-			tmp_773 = tmp_773 + '^h' + $('#773h').val();
-		}
-
-		if ($('#773k').val().length > 0) {
-			tmp_773 = tmp_773 + '^k' + $('#773k').val();
-		}
-
-		if ($('#773n').val().length > 0) {
-			tmp_773 = tmp_773 + '^n' + $('#773n').val();
-		}
-
-		if ($('#773q').val().length > 0) {
-			tmp_773 = tmp_773 + '^q' + $('#773q').val();
-		}
-
-		if ($('#773t').val().length > 0) {
-			tmp_773 = tmp_773 + '^t' + $('#773t').val();
-		}
-
-		if ($('#773z').val().length > 0) {
-			tmp_773 = tmp_773 + '^z' + $('#773z').val();
-		}
-		
-		if (tmp_773.length > 0) {
-			$("#773").val($("#773i1").val() + $("#773i2").val() + tmp_773);
-			$("#l-773").html($("#773i1").val() + $("#773i2").val() + tmp_773);
-		} else {
-			$("#773").val('');
-			$("#l-773").html('&nbsp;');
-		}
-	});
-
-	$("#773n").bind('keyup change', function(event) {
-		var tmp_773 = "";
-
-		if ($('#773a').val().length > 0) {
-			tmp_773 = tmp_773 + '^a' + $('#773a').val();
-		}
-
-		if ($('#773b').val().length > 0) {
-			tmp_773 = tmp_773 + '^b' + $('#773b').val();
-		}
-
-		if ($('#773d').val().length > 0) {
-			tmp_773 = tmp_773 + '^d' + $('#773d').val();
-		}
-
-		if ($('#773g').val().length > 0) {
-			tmp_773 = tmp_773 + '^g' + $('#773g').val();
-		}
-
-		if ($('#773h').val().length > 0) {
-			tmp_773 = tmp_773 + '^h' + $('#773h').val();
-		}
-
-		if ($('#773k').val().length > 0) {
-			tmp_773 = tmp_773 + '^k' + $('#773k').val();
-		}
-
-		if ($('#773n').val().length > 0) {
-			tmp_773 = tmp_773 + '^n' + $('#773n').val();
-		}
-
-		if ($('#773q').val().length > 0) {
-			tmp_773 = tmp_773 + '^q' + $('#773q').val();
-		}
-
-		if ($('#773t').val().length > 0) {
-			tmp_773 = tmp_773 + '^t' + $('#773t').val();
-		}
-
-		if ($('#773z').val().length > 0) {
-			tmp_773 = tmp_773 + '^z' + $('#773z').val();
-		}
-		
-		if (tmp_773.length > 0) {
-			$("#773").val($("#773i1").val() + $("#773i2").val() + tmp_773);
-			$("#l-773").html($("#773i1").val() + $("#773i2").val() + tmp_773);
-		} else {
-			$("#773").val('');
-			$("#l-773").html('&nbsp;');
-		}
-	});
-
-	$("#773q").bind('keyup change', function(event) {
-		var tmp_773 = "";
-
-		if ($('#773a').val().length > 0) {
-			tmp_773 = tmp_773 + '^a' + $('#773a').val();
-		}
-
-		if ($('#773b').val().length > 0) {
-			tmp_773 = tmp_773 + '^b' + $('#773b').val();
-		}
-
-		if ($('#773d').val().length > 0) {
-			tmp_773 = tmp_773 + '^d' + $('#773d').val();
-		}
-
-		if ($('#773g').val().length > 0) {
-			tmp_773 = tmp_773 + '^g' + $('#773g').val();
-		}
-
-		if ($('#773h').val().length > 0) {
-			tmp_773 = tmp_773 + '^h' + $('#773h').val();
-		}
-
-		if ($('#773k').val().length > 0) {
-			tmp_773 = tmp_773 + '^k' + $('#773k').val();
-		}
-
-		if ($('#773n').val().length > 0) {
-			tmp_773 = tmp_773 + '^n' + $('#773n').val();
-		}
-
-		if ($('#773q').val().length > 0) {
-			tmp_773 = tmp_773 + '^q' + $('#773q').val();
-		}
-
-		if ($('#773t').val().length > 0) {
-			tmp_773 = tmp_773 + '^t' + $('#773t').val();
-		}
-
-		if ($('#773z').val().length > 0) {
-			tmp_773 = tmp_773 + '^z' + $('#773z').val();
-		}
-		
-		if (tmp_773.length > 0) {
-			$("#773").val($("#773i1").val() + $("#773i2").val() + tmp_773);
-			$("#l-773").html($("#773i1").val() + $("#773i2").val() + tmp_773);
-		} else {
-			$("#773").val('');
-			$("#l-773").html('&nbsp;');
-		}
-	});
-
-	$("#773t").bind('keyup change', function(event) {
-		var tmp_773 = "";
-
-		if ($('#773a').val().length > 0) {
-			tmp_773 = tmp_773 + '^a' + $('#773a').val();
-		}
-
-		if ($('#773b').val().length > 0) {
-			tmp_773 = tmp_773 + '^b' + $('#773b').val();
-		}
-
-		if ($('#773d').val().length > 0) {
-			tmp_773 = tmp_773 + '^d' + $('#773d').val();
-		}
-
-		if ($('#773g').val().length > 0) {
-			tmp_773 = tmp_773 + '^g' + $('#773g').val();
-		}
-
-		if ($('#773h').val().length > 0) {
-			tmp_773 = tmp_773 + '^h' + $('#773h').val();
-		}
-
-		if ($('#773k').val().length > 0) {
-			tmp_773 = tmp_773 + '^k' + $('#773k').val();
-		}
-
-		if ($('#773n').val().length > 0) {
-			tmp_773 = tmp_773 + '^n' + $('#773n').val();
-		}
-
-		if ($('#773q').val().length > 0) {
-			tmp_773 = tmp_773 + '^q' + $('#773q').val();
-		}
-
-		if ($('#773t').val().length > 0) {
-			tmp_773 = tmp_773 + '^t' + $('#773t').val();
-		}
-
-		if ($('#773z').val().length > 0) {
-			tmp_773 = tmp_773 + '^z' + $('#773z').val();
-		}
-		
-		if (tmp_773.length > 0) {
-			$("#773").val($("#773i1").val() + $("#773i2").val() + tmp_773);
-			$("#l-773").html($("#773i1").val() + $("#773i2").val() + tmp_773);
-		} else {
-			$("#773").val('');
-			$("#l-773").html('&nbsp;');
-		}
-	});
-
-	$("#773z").bind('keyup change', function(event) {
-		var tmp_773 = "";
-
-		if ($('#773a').val().length > 0) {
-			tmp_773 = tmp_773 + '^a' + $('#773a').val();
-		}
-
-		if ($('#773b').val().length > 0) {
-			tmp_773 = tmp_773 + '^b' + $('#773b').val();
-		}
-
-		if ($('#773d').val().length > 0) {
-			tmp_773 = tmp_773 + '^d' + $('#773d').val();
-		}
-
-		if ($('#773g').val().length > 0) {
-			tmp_773 = tmp_773 + '^g' + $('#773g').val();
-		}
-
-		if ($('#773h').val().length > 0) {
-			tmp_773 = tmp_773 + '^h' + $('#773h').val();
-		}
-
-		if ($('#773k').val().length > 0) {
-			tmp_773 = tmp_773 + '^k' + $('#773k').val();
-		}
-
-		if ($('#773n').val().length > 0) {
-			tmp_773 = tmp_773 + '^n' + $('#773n').val();
-		}
-
-		if ($('#773q').val().length > 0) {
-			tmp_773 = tmp_773 + '^q' + $('#773q').val();
-		}
-
-		if ($('#773t').val().length > 0) {
-			tmp_773 = tmp_773 + '^t' + $('#773t').val();
-		}
-
-		if ($('#773z').val().length > 0) {
-			tmp_773 = tmp_773 + '^z' + $('#773z').val();
-		}
-		
-		if (tmp_773.length > 0) {
-			$("#773").val($("#773i1").val() + $("#773i2").val() + tmp_773);
-			$("#l-773").html($("#773i1").val() + $("#773i2").val() + tmp_773);
-		} else {
-			$("#773").val('');
-			$("#l-773").html('&nbsp;');
-		}
-	});
-
 	$("#850a").bind('keyup change', function(event) {
 		var tmp_850 = "";
 
@@ -10101,7 +6415,37 @@ $(document).ready(function() {
 	//-------------- Validaciones ---------------
 	
 	// Campos obligatorios vacíos.
-	$('#IconographieAddForm').submit(function(event) {
+	$('#AcademicPaperAddForm').submit(function(event) {
+// 		if ($('#041a').val() == ""){
+// 			alert("EL campo 'Código de idioma' no puede estar vacío.");
+// 			$(".tabs").hide();
+// 			$('.active').removeClass('active');
+// 			$('#t0xx').parent().addClass('active');
+// 			$('#0xx').show();
+// 			$('#041a').focus();
+// 			return false;
+// 		}
+
+// 		if ($('#041b').val() == ""){
+// 			alert("EL campo 'Código de idioma del sumario o resumen' no puede estar vacío.");
+// 			$(".tabs").hide();
+// 			$('.active').removeClass('active');
+// 			$('#t0xx').parent().addClass('active');
+// 			$('#0xx').show();
+// 			$('#041b').focus();
+// 			return false;
+// 		}
+
+// 		if ($('#041h').val() == ""){
+// 			alert("EL campo 'Código de idioma original' no puede estar vacío.");
+// 			$(".tabs").hide();
+// 			$('.active').removeClass('active');
+// 			$('#t0xx').parent().addClass('active');
+// 			$('#0xx').show();
+// 			$('#041h').focus();
+// 			return false;
+// 		}
+		
 		if ($('#100a').val() == ""){
 			alert("EL campo 'Nombre de persona' no puede estar vacío.");
 			$(".tabs").hide();
@@ -10171,23 +6515,15 @@ $(document).ready(function() {
 			$('#653a').focus();
 			return false;
 
-		}if ($('#773t').val() == ""){
-			alert("EL campo 'Autor.' No puede estar vacío.");
-			$(".tabs").hide();
-			$('.active').removeClass('active');
-			$('#t7xx').parent().addClass('active');
-			$('#7xx').show();
-			$('#773t').focus();
-			return false;
 		}
 
-		if ($('#IconographieCover').val() == ""){
+		if ($('#AcademicPaperCover').val() == ""){
 			alert("Debe seleccionar una portada para la obra.");
 			$('#ItemItem').focus();
 			return false;
 		}
 
-		if ($('#IconographieItem').val() == ""){
+		if ($('#AcademicPaperItem').val() == ""){
 			alert("Debe seleccionar el archivo o documento de la obra.");
 			$('#ItemItem').focus();
 			return false;

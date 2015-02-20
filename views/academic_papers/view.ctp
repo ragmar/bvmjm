@@ -138,7 +138,7 @@ function marc21_decode($camp = null) {
   
 <ul class="breadcrumb" style="margin: 0">
   <li><a href="<?php echo $this->base; ?>">Inicio</a></li>
-  <li><a href="<?php echo $this->base; ?>/iconographies">Iconografía Musical Venezolana</a></li>
+  <li><a href="<?php echo $this->base; ?>/academic_papers">Trabajos Acad&eacute;micos</a></li>
   <li>
   	<?php
 		if (!empty($item['Item']['245'])) {

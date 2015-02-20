@@ -60,97 +60,97 @@ class AcademicPapersController extends AppController {
 			$conditions2['Item.h-007'] = 'a'; // Tipo libro.
 
 
-			if (!empty($search['Iconographie']['title'])) {
-				$conditions['Item.title LIKE'] = '%' . $search['Iconographie']['title'] . '%';
+			if (!empty($search['AcademicPaper']['title'])) {
+				$conditions['Item.title LIKE'] = '%' . $search['AcademicPaper']['title'] . '%';
 			}
 			
-			if (!empty($search['Iconographie']['author_id'])) {
-				$conditions['Item.author_id'] = $search['Iconographie']['author_id'];
+			if (!empty($search['AcademicPaper']['author_id'])) {
+				$conditions['Item.author_id'] = $search['AcademicPaper']['author_id'];
 			}
 			
-			if (!empty($search['Iconographie']['type_id'])) {
-				$conditions['Item.type_id'] = $search['Iconographie']['type_id'];
+			if (!empty($search['AcademicPaper']['type_id'])) {
+				$conditions['Item.type_id'] = $search['AcademicPaper']['type_id'];
 			}
 			
-			if (!empty($search['Iconographie']['topic_id'])) {
-				$conditions['Item.topic_id'] = $search['Iconographie']['topic_id'];
+			if (!empty($search['AcademicPaper']['topic_id'])) {
+				$conditions['Item.topic_id'] = $search['AcademicPaper']['topic_id'];
 			}
 			
-			if (!empty($search['Iconographie']['year'])) {
-				$conditions['Item.year'] = $search['Iconographie']['year'];
+			if (!empty($search['AcademicPaper']['year'])) {
+				$conditions['Item.year'] = $search['AcademicPaper']['year'];
 			}
 
-			if (!empty($search['Iconographie']['source'])) {
-				$conditions['Item.source'] = $search['Iconographie']['source'];
+			if (!empty($search['AcademicPaper']['source'])) {
+				$conditions['Item.source'] = $search['AcademicPaper']['source'];
 			}
 
-			if (!empty($search['Iconographie']['matter'])) {
-				$conditions['Item.matter'] = $search['Iconographie']['matter'];
+			if (!empty($search['AcademicPaper']['matter'])) {
+				$conditions['Item.matter'] = $search['AcademicPaper']['matter'];
 			}
-			if (!empty($search['Iconographie']['mattername'])) {
-				$conditions['Item.mattername'] = $search['Iconographie']['mattername'];
-			}
-
-			if (!empty($search['Iconographie']['title'])) {
-				$conditions1['Item.title LIKE'] = '%' . $search['Iconographie']['title'] . '%';
-			}
-			
-			if (!empty($search['Iconographie']['author_id'])) {
-				$conditions1['Item.author_id'] = $search['Iconographie']['author_id'];
-			}
-			
-			if (!empty($search['Iconographie']['type_id'])) {
-				$conditions1['Item.type_id'] = $search['Iconographie']['type_id'];
-			}
-			
-			if (!empty($search['Iconographie']['topic_id'])) {
-				$conditions['Item.topic_id'] = $search['Iconographie']['topic_id'];
-			}
-			
-			if (!empty($search['Iconographie']['year'])) {
-				$conditions1['Item.year'] = $search['Iconographie']['year'];
+			if (!empty($search['AcademicPaper']['mattername'])) {
+				$conditions['Item.mattername'] = $search['AcademicPaper']['mattername'];
 			}
 
-			if (!empty($search['Iconographie']['source'])) {
-				$conditions1['Item.source'] = $search['Iconographie']['source'];
-			}
-
-			if (!empty($search['Iconographie']['matter'])) {
-				$conditions1['Item.matter'] = $search['Iconographie']['matter'];
-			}
-			if (!empty($search['Iconographie']['mattername'])) {
-				$conditions1['Item.mattername'] = $search['Iconographie']['mattername'];
-			}
-
-			if (!empty($search['Iconographie']['title'])) {
-				$conditions2['Item.title LIKE'] = '%' . $search['Iconographie']['title'] . '%';
+			if (!empty($search['AcademicPaper']['title'])) {
+				$conditions1['Item.title LIKE'] = '%' . $search['AcademicPaper']['title'] . '%';
 			}
 			
-			if (!empty($search['Iconographie']['author_id'])) {
-				$conditions2['Item.author_id'] = $search['Iconographie']['author_id'];
+			if (!empty($search['AcademicPaper']['author_id'])) {
+				$conditions1['Item.author_id'] = $search['AcademicPaper']['author_id'];
 			}
 			
-			if (!empty($search['Iconographie']['type_id'])) {
-				$conditions2['Item.type_id'] = $search['Iconographie']['type_id'];
+			if (!empty($search['AcademicPaper']['type_id'])) {
+				$conditions1['Item.type_id'] = $search['AcademicPaper']['type_id'];
 			}
 			
-			if (!empty($search['Iconographie']['topic_id'])) {
-				$conditions2['Item.topic_id'] = $search['Iconographie']['topic_id'];
+			if (!empty($search['AcademicPaper']['topic_id'])) {
+				$conditions['Item.topic_id'] = $search['AcademicPaper']['topic_id'];
 			}
 			
-			if (!empty($search['Iconographie']['year'])) {
-				$conditions2['Item.year'] = $search['Iconographie']['year'];
+			if (!empty($search['AcademicPaper']['year'])) {
+				$conditions1['Item.year'] = $search['AcademicPaper']['year'];
 			}
 
-			if (!empty($search['Iconographie']['source'])) {
-				$conditions2['Item.source'] = $search['Iconographie']['source'];
+			if (!empty($search['AcademicPaper']['source'])) {
+				$conditions1['Item.source'] = $search['AcademicPaper']['source'];
 			}
 
-			if (!empty($search['Iconographie']['matter'])) {
-				$conditions2['Item.matter'] = $search['Iconographie']['matter'];
+			if (!empty($search['AcademicPaper']['matter'])) {
+				$conditions1['Item.matter'] = $search['AcademicPaper']['matter'];
 			}
-			if (!empty($search['Iconographie']['mattername'])) {
-				$conditions2['Item.mattername'] = $search['Iconographie']['mattername'];
+			if (!empty($search['AcademicPaper']['mattername'])) {
+				$conditions1['Item.mattername'] = $search['AcademicPaper']['mattername'];
+			}
+
+			if (!empty($search['AcademicPaper']['title'])) {
+				$conditions2['Item.title LIKE'] = '%' . $search['AcademicPaper']['title'] . '%';
+			}
+			
+			if (!empty($search['AcademicPaper']['author_id'])) {
+				$conditions2['Item.author_id'] = $search['AcademicPaper']['author_id'];
+			}
+			
+			if (!empty($search['AcademicPaper']['type_id'])) {
+				$conditions2['Item.type_id'] = $search['AcademicPaper']['type_id'];
+			}
+			
+			if (!empty($search['AcademicPaper']['topic_id'])) {
+				$conditions2['Item.topic_id'] = $search['AcademicPaper']['topic_id'];
+			}
+			
+			if (!empty($search['AcademicPaper']['year'])) {
+				$conditions2['Item.year'] = $search['AcademicPaper']['year'];
+			}
+
+			if (!empty($search['AcademicPaper']['source'])) {
+				$conditions2['Item.source'] = $search['AcademicPaper']['source'];
+			}
+
+			if (!empty($search['AcademicPaper']['matter'])) {
+				$conditions2['Item.matter'] = $search['AcademicPaper']['matter'];
+			}
+			if (!empty($search['AcademicPaper']['mattername'])) {
+				$conditions2['Item.mattername'] = $search['AcademicPaper']['mattername'];
 			}
 			
 			
@@ -169,7 +169,7 @@ class AcademicPapersController extends AppController {
 		$this->Item->recursive = 1;
 		
 		if (!empty($this->data)) { // Si llegan datos de una busqueda.
-			$this->data['Iconographie']['year'] = $this->data['Iconographie']['year']['year']; // Se arregla el campo year.
+			$this->data['AcademicPaper']['year'] = $this->data['AcademicPaper']['year']['year']; // Se arregla el campo year.
 			$this->Session->write('Search', $this->data); // Se guarda en sesion la busqueda.
 			$conditions = $this->buildConditions($this->data);
 			//debug($conditions); die;
@@ -210,25 +210,25 @@ class AcademicPapersController extends AppController {
 			$conditions2['Item.h-007'] = 'a'; // Tipo libro.
 			$conditions['Item.published'] = '1'; // Publicado.*/
 			
-			if (!empty($this->data['iconographies']['Titulo'])) {
-				$conditions['Item.245 LIKE'] = '%^a' . $this->data['iconographies']['Titulo'] . '%';
+			if (!empty($this->data['academic_papers']['Titulo'])) {
+				$conditions['Item.245 LIKE'] = '%^a' . $this->data['academic_papers']['Titulo'] . '%';
 			}
 				
-			if (!empty($this->data['iconographies']['Autor'])) {
-				$conditions['Item.100 LIKE'] = '%^a' . $this->data['iconographies']['Autor'] . '%';
+			if (!empty($this->data['academic_papers']['Autor'])) {
+				$conditions['Item.100 LIKE'] = '%^a' . $this->data['academic_papers']['Autor'] . '%';
 			}
 				
-			if (!empty($this->data['iconographies']['Materia'])) {
-				$conditions['Item.653 LIKE'] = '%^a' . $this->data['iconographies']['Materia'] . '%';
+			if (!empty($this->data['academic_papers']['Materia'])) {
+				$conditions['Item.653 LIKE'] = '%^a' . $this->data['academic_papers']['Materia'] . '%';
 			}
-			if (!empty($this->data['iconographies']['Fuente'])) {
-				$conditions['Item.773 LIKE'] = '%^t' . $this->data['iconographies']['Fuente'] . '%';
+			if (!empty($this->data['academic_papers']['Fuente'])) {
+				$conditions['Item.773 LIKE'] = '%^t' . $this->data['academic_papers']['Fuente'] . '%';
 			}	
-			if (!empty($this->data['iconographies']['Temas'])) {
-				$conditions['Item.650 LIKE'] = '%^a' . $this->data['iconographies']['Temas'] . '%';
+			if (!empty($this->data['academic_papers']['Temas'])) {
+				$conditions['Item.650 LIKE'] = '%^a' . $this->data['academic_papers']['Temas'] . '%';
 			}
-			if (!empty($this->data['iconographies']['Año'])) {
-				$conditions['Item.260 LIKE'] = '%^c' . $this->data['iconographies']['Año'] . '%';
+			if (!empty($this->data['academic_papers']['Año'])) {
+				$conditions['Item.260 LIKE'] = '%^c' . $this->data['academic_papers']['Año'] . '%';
 			}
 		
 			
@@ -243,7 +243,7 @@ class AcademicPapersController extends AppController {
 		
 		/*
 			if (!empty($this->data)) { // Si llegan datos de una busqueda.
-		$this->data['Iconographie']['year'] = $this->data['Iconographie']['year']['year']; // Se arregla el campo year.
+		$this->data['AcademicPaper']['year'] = $this->data['AcademicPaper']['year']['year']; // Se arregla el campo year.
 		$this->Session->write('Search', $this->data); // Se guarda en sesion la busqueda.
 		$conditions = $this->buildConditions($this->data);
 		//debug($conditions); die;
@@ -279,7 +279,7 @@ class AcademicPapersController extends AppController {
 		
 		/*
 		if (!empty($this->data)) { // Si llegan datos de una busqueda.
-			$this->data['Iconographie']['year'] = $this->data['Iconographie']['year']['year']; // Se arregla el campo year.
+			$this->data['AcademicPaper']['year'] = $this->data['AcademicPaper']['year']['year']; // Se arregla el campo year.
 			$this->Session->write('Search', $this->data); // Se guarda en sesion la busqueda.
 			$conditions = $this->buildConditions($this->data);
 			//debug($conditions); die;
@@ -441,7 +441,7 @@ class AcademicPapersController extends AppController {
 		
 		/*
 		if (!empty($this->data)) { // Si llegan datos de una busqueda.
-			$this->data['Iconographies']['year'] = $this->data['Iconographies']['year']['year']; // Se arregla el campo year.
+			$this->data['AcademicPapers']['year'] = $this->data['AcademicPapers']['year']['year']; // Se arregla el campo year.
 			$this->Session->write('Search', $this->data); // Se guarda en sesion la busqueda.
 			$conditions = $this->buildConditions($this->data);
 			//debug($conditions); die;
@@ -596,24 +596,24 @@ class AcademicPapersController extends AppController {
 			$this->Item->recursive = -1;
 			$conditions = array('Item.h-006' => 'k', 'Item.h-007' => 'a', 'Item.published' => '1');	
 			
-			if (!empty($this->data['Iconographie']['245'])) { // Titulo
-				$conditions['Item.245 LIKE'] = '%' . $this->data['Iconographie']['245'] . '%'; 
+			if (!empty($this->data['AcademicPaper']['245'])) { // Titulo
+				$conditions['Item.245 LIKE'] = '%' . $this->data['AcademicPaper']['245'] . '%'; 
 			}
 			
-			if (!empty($this->data['Iconographie']['100'])) { // Autor
-				$conditions['Item.100 LIKE'] = '%' . $this->data['Iconographie']['100'] . '%';
+			if (!empty($this->data['AcademicPaper']['100'])) { // Autor
+				$conditions['Item.100 LIKE'] = '%' . $this->data['AcademicPaper']['100'] . '%';
 			}
 
-			if (!empty($this->data['Iconographie']['653'])) { // Materia
-				$conditions['Item.653 LIKE'] = '%' . $this->data['Iconographie']['653'] . '%';
+			if (!empty($this->data['AcademicPaper']['653'])) { // Materia
+				$conditions['Item.653 LIKE'] = '%' . $this->data['AcademicPaper']['653'] . '%';
 			}
 
-			if (!empty($this->data['Iconographie']['260'])) { // Lugar, editor o fecha
-				$conditions['Item.260 LIKE'] = '%' . $this->data['Iconographie']['260'] . '%';
+			if (!empty($this->data['AcademicPaper']['260'])) { // Lugar, editor o fecha
+				$conditions['Item.260 LIKE'] = '%' . $this->data['AcademicPaper']['260'] . '%';
 			}
 			
-			if (!empty($this->data['Iconographie']['690'])) { // Siglo
-				$conditions['Item.690 LIKE'] = '%' . $this->data['Iconographie']['690'] . '%';
+			if (!empty($this->data['AcademicPaper']['690'])) { // Siglo
+				$conditions['Item.690 LIKE'] = '%' . $this->data['AcademicPaper']['690'] . '%';
 			}
 			
 			//debug($conditions); die;
@@ -642,7 +642,7 @@ class AcademicPapersController extends AppController {
 		//App::import('Vendor', 'pdf2text');
 		
 		//$a = new PDF2Text();
-		//$a->setFilename('C:\xampp\htdocs\tesis\webroot\files\iconographies\prueba.pdf');
+		//$a->setFilename('C:\xampp\htdocs\tesis\webroot\files\academic_papers\prueba.pdf');
 		//$a->decodePDF();
 		//echo utf8_encode($a->output());
 		//die;
@@ -666,34 +666,34 @@ class AcademicPapersController extends AppController {
 			$data = $this->data;
 			$time = time();
 
-			if ($_FILES['data']['error']['Iconographie']['cover'] == 0){
+			if ($_FILES['data']['error']['AcademicPaper']['cover'] == 0){
 				$uploaddir = "..".DS."webroot".DS."covers".DS;
-				$uploadfile = $uploaddir . basename($time.'_'.$this->data['Iconographie']['cover']['name']);
-				copy($_FILES['data']['tmp_name']['Iconographie']['cover'], $uploadfile);
+				$uploadfile = $uploaddir . basename($time.'_'.$this->data['AcademicPaper']['cover']['name']);
+				copy($_FILES['data']['tmp_name']['AcademicPaper']['cover'], $uploadfile);
 			}
 
-			if ($_FILES['data']['error']['Iconographie']['item'] == 0){
+			if ($_FILES['data']['error']['AcademicPaper']['item'] == 0){
 				$uploaddir = "..".DS."webroot".DS."files".DS;
-				$uploadfile = $uploaddir . basename($time.'_'.$this->data['Iconographie']['item']['name']);
-				copy($_FILES['data']['tmp_name']['Iconographie']['item'], $uploadfile);
+				$uploadfile = $uploaddir . basename($time.'_'.$this->data['AcademicPaper']['item']['name']);
+				copy($_FILES['data']['tmp_name']['AcademicPaper']['item'], $uploadfile);
 			}
 			
-			if ($_FILES['data']['error']['Iconographie']['item'] == 0){
+			if ($_FILES['data']['error']['AcademicPaper']['item'] == 0){
 				
-				$data['Iconographie']['item_file_path'] = $time.'_'.$data['Iconographie']['item']['name'];
-				$data['Iconographie']['item_content_type'] = $data['Iconographie']['item']['type'];
-				$data['Iconographie']['item_file_size'] = $data['Iconographie']['item']['size'];
-				$data['Iconographie']['item_file_name'] = $data['Iconographie']['item']['name'];
+				$data['AcademicPaper']['item_file_path'] = $time.'_'.$data['AcademicPaper']['item']['name'];
+				$data['AcademicPaper']['item_content_type'] = $data['AcademicPaper']['item']['type'];
+				$data['AcademicPaper']['item_file_size'] = $data['AcademicPaper']['item']['size'];
+				$data['AcademicPaper']['item_file_name'] = $data['AcademicPaper']['item']['name'];
 				
-				$data['Iconographie']['cover_path'] = $time.'_'.$data['Iconographie']['cover']['name'];
-				$data['Iconographie']['cover_type'] = $this->data['Iconographie']['cover']['type'];
-				$data['Iconographie']['cover_size'] = $this->data['Iconographie']['cover']['size'];
-				$data['Iconographie']['cover_name'] = $this->data['Iconographie']['cover']['name'];
+				$data['AcademicPaper']['cover_path'] = $time.'_'.$data['AcademicPaper']['cover']['name'];
+				$data['AcademicPaper']['cover_type'] = $this->data['AcademicPaper']['cover']['type'];
+				$data['AcademicPaper']['cover_size'] = $this->data['AcademicPaper']['cover']['size'];
+				$data['AcademicPaper']['cover_name'] = $this->data['AcademicPaper']['cover']['name'];
 				
-				unset($data['Iconographie']['cover']);
-				unset($data['Iconographie']['item']);
-				$data['Item'] = $data['Iconographie'];
-				unset($data['Iconographie']);
+				unset($data['AcademicPaper']['cover']);
+				unset($data['AcademicPaper']['item']);
+				$data['Item'] = $data['AcademicPaper'];
+				unset($data['AcademicPaper']);
 				
 				$this->Item->create();
 				if ($this->Item->save($data)) {
@@ -915,40 +915,40 @@ class AcademicPapersController extends AppController {
 			$data = $this->data;
 			$time = time();
 			
-			if ($_FILES['data']['error']['Iconographie']['cover'] == 0){
+			if ($_FILES['data']['error']['AcademicPaper']['cover'] == 0){
 				$uploaddir = "..".DS."webroot".DS."covers".DS;
-				$uploadfile = $uploaddir . basename($time.'_'.$this->data['Iconographie']['cover']['name']);
-				copy($_FILES['data']['tmp_name']['Iconographie']['cover'], $uploadfile);
+				$uploadfile = $uploaddir . basename($time.'_'.$this->data['AcademicPaper']['cover']['name']);
+				copy($_FILES['data']['tmp_name']['AcademicPaper']['cover'], $uploadfile);
 				unlink($uploaddir.$item['Item']['cover_path']);
 			}
 			
-			if ($_FILES['data']['error']['Iconographie']['item'] == 0){
+			if ($_FILES['data']['error']['AcademicPaper']['item'] == 0){
 				$uploaddir = "..".DS."webroot".DS."files".DS;
-				$uploadfile = $uploaddir . basename($time.'_'.$this->data['Iconographie']['item']['name']);
-				copy($_FILES['data']['tmp_name']['Iconographie']['item'], $uploadfile);
+				$uploadfile = $uploaddir . basename($time.'_'.$this->data['AcademicPaper']['item']['name']);
+				copy($_FILES['data']['tmp_name']['AcademicPaper']['item'], $uploadfile);
 				unlink($uploaddir.$item['Item']['item_file_path']);
 			}
 			
-			//if ($_FILES['data']['error']['Iconographie']['item'] == 0){
+			//if ($_FILES['data']['error']['AcademicPaper']['item'] == 0){
 			
-			if ($_FILES['data']['error']['Iconographie']['item'] == 0){
-				$data['Iconographie']['item_file_path'] = $time.'_'.$data['Iconographie']['item']['name'];
-				$data['Iconographie']['item_content_type'] = $data['Iconographie']['item']['type'];
-				$data['Iconographie']['item_file_size'] = $data['Iconographie']['item']['size'];
-				$data['Iconographie']['item_file_name'] = $data['Iconographie']['item']['name'];
+			if ($_FILES['data']['error']['AcademicPaper']['item'] == 0){
+				$data['AcademicPaper']['item_file_path'] = $time.'_'.$data['AcademicPaper']['item']['name'];
+				$data['AcademicPaper']['item_content_type'] = $data['AcademicPaper']['item']['type'];
+				$data['AcademicPaper']['item_file_size'] = $data['AcademicPaper']['item']['size'];
+				$data['AcademicPaper']['item_file_name'] = $data['AcademicPaper']['item']['name'];
 			}
-			unset($data['Iconographie']['item']);
+			unset($data['AcademicPaper']['item']);
 			
-			if ($_FILES['data']['error']['Iconographie']['cover'] == 0){
-				$data['Iconographie']['cover_path'] = $time.'_'.$data['Iconographie']['cover']['name'];
-				$data['Iconographie']['cover_type'] = $this->data['Iconographie']['cover']['type'];
-				$data['Iconographie']['cover_size'] = $this->data['Iconographie']['cover']['size'];
-				$data['Iconographie']['cover_name'] = $this->data['Iconographie']['cover']['name'];
+			if ($_FILES['data']['error']['AcademicPaper']['cover'] == 0){
+				$data['AcademicPaper']['cover_path'] = $time.'_'.$data['AcademicPaper']['cover']['name'];
+				$data['AcademicPaper']['cover_type'] = $this->data['AcademicPaper']['cover']['type'];
+				$data['AcademicPaper']['cover_size'] = $this->data['AcademicPaper']['cover']['size'];
+				$data['AcademicPaper']['cover_name'] = $this->data['AcademicPaper']['cover']['name'];
 			}
-			unset($data['Iconographie']['cover']);
+			unset($data['AcademicPaper']['cover']);
 			
-			$data['Item'] = $data['Iconographie'];
-			unset($data['Iconographie']);
+			$data['Item'] = $data['AcademicPaper'];
+			unset($data['AcademicPaper']);
 			
 			if ($this->Item->save($data)) {
 				$this->Session->setFlash(__('El archivo ha sido guardado.', true));

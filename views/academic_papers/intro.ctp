@@ -53,7 +53,7 @@
 
 <div class="books index" style="text-align: justify; float: ">
 	<div class="col-md-12 column">
-		<h2>Módulo de Iconografía Musical Venezolana</h2>
+		<h2>Módulo de Trabajos Acad&eacute;micos</h2>
 		<hr style="border-color: black; margin: 10px;">
 		
 		<p style="text-align: justify;">La iconografía musical es considerada como una ciencia y método de investigación auxiliar de la musicología, que consiste en la interpretación de documentos gráficos (pinturas, fotografías, grabados) u objetos tridimensionales (esculturas, relieves) que estén provistos de escenas, temáticas, simbologías e instrumentos vinculados con la música. El módulo Iconografía de la Biblioteca Virtual Musicológica Juan Meserón proporciona acceso libre y gratuito a  este tipo de documentos gráficos digitalizados presentes en la bibliografía y hemerografía venezolanas de los siglos XVIII al XXI.</p><br />
