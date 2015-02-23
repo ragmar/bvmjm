@@ -14,7 +14,6 @@ echo $this->Html->script('turn');
 //echo $this->Html->script('wijmo/jquery.wijmo-complete.all.2.2.1.min');
 //echo $this->Html->script('wijmo/jquery.wijmo.wijcarousel');
 echo $this->Html->script('bootstrap/bootstrap-tab');
-echo $this->Html->script('jquery.printPage.js');
 //echo $this->Html->script('pdfobject_source');
 
 
@@ -92,9 +91,6 @@ function marc21_decode($camp = null) {
 </style>
 
 <script type="text/javascript">
-  $(document).ready(function() {
-    $(".btnPrint").printPage();
-  });
   
  function imprimir()
      {
@@ -115,7 +111,7 @@ function marc21_decode($camp = null) {
      	html += '<h1> <?php echo $title['a'] ?></h1>';
      	html += '<hr>';
      	html += '<div id="bljaIMGte" >';
-        html += '<?php echo $this->Html->image('/webroot/covers/' . $item['Item']['cover_path'], array('width' => '500px', 'height'=>'600px', 'margin-left'=>'900px'))?>' ;
+        html += '<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $this->base . '/webroot/files/' . $item['Item']['item_file_path']; ?>' ;
         html += '<div id="caja" style= "color: #fff;background-color: #fff;;width: 502px;margin-left: -1px;margin-top:508px;position: absolute;opacity: 0.7;height:132px"><p style="text-align:center;color: #6C3F30;margin-top:-2px" ><b>Universidad Central de Venezuela </br>Biblioteca Virtual Musicológica "Juan Meserón"</b></p>';	
         html += '<div id="img" style="margin-left: 130px;width:100px; height: 40px;margin-top:-20px;"> <?php echo $this->Html->image('/webroot/img/iconografia/logo5.png', array('display'=>'block','margin-right'=>'auto','margin-left'=>'auto','width'=> '175px', 'height'=>'46px', 'margin-top'=>'-20px'))?>';
         html += '</div>';
@@ -168,7 +164,7 @@ function marc21_decode($camp = null) {
 		</div>
 	</div>
 	<div class="col-md-7 column">
-		<h2>Detalles de la obra</h2>
+		<h2>Detalles del Trabajo Acad&eacute;mico</h2>
 				
 		<div>
 			<dl class="dl-horizontal">
@@ -197,15 +193,6 @@ function marc21_decode($camp = null) {
 						}
 					?>
 				</dd>
-				<?php if (!empty($item['Item']['690'])) { ?>
-				<dt><?php __('Siglo'); ?>:</dt>
-				<dd>
-					<?php
-						$century = marc21_decode($item['Item']['690']);
-						echo $century['a'];
-					?>
-				</dd>
-				<?php } ?>
 				<?php if (!empty($item['Item']['100'])) { ?>
 				<dt><?php __('Author'); ?>:</dt>
 				<dd>
@@ -241,28 +228,6 @@ function marc21_decode($camp = null) {
 					?>
 				</dd>
 				<?php } ?>
-				
-				<?php if (!empty($item['Item']['773'])) { ?>
-				<dt><?php __('Fuente'); ?>:</dt>
-				<dd>
-					<?php
-						if (!empty($item['Item']['773'])) {
-							$source = marc21_decode($item['Item']['773']);
-							echo $source['t'];
-						}
-					?>
-				</dd>
-				<?php } ?>
-				<!--
-				<dt><?php __('Created'); ?>:</dt>
-				<dd>
-					<?php echo $time->format('d-m-Y', $item['Item']['created']); ?>
-				</dd>
-				<dt><?php __('Modified'); ?>:</dt>
-				<dd>
-					<?php echo $time->format('d-m-Y', $item['Item']['modified']); ?>
-				</dd>
-				-->
 			</dl>
 		</div>
 	</div>
@@ -274,8 +239,8 @@ function marc21_decode($camp = null) {
 		<form id="UserItemAddForm" name="UserItemAddForm" accept-charset="utf-8" method="post" action="<?php echo $this->base; ?>/user_items/add">
 			<?php
 				if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') != '3'))) {
-					echo $this->Html->link('Agregar Obra', array('action' => '/add'), array('class' => 'btn-primary', 'title' => 'Agregar Obra'));
-					echo $this->Html->link('Modificar Obra', array('action' => '/edit/'.$item['Item']['id']), array('class' => 'btn-primary', 'title' => 'Modificar Obra'));
+					echo $this->Html->link('Agregar Trabajo Académico', array('action' => '/add'), array('class' => 'btn-primary', 'title' => 'Agregar Trabajo Académicos'));
+					echo $this->Html->link('Modificar Trabajo Académico', array('action' => '/edit/'.$item['Item']['id']), array('class' => 'btn-primary', 'title' => 'Modificar Trabajo Académico'));
 				}
 			?>
 			<?php
@@ -284,13 +249,9 @@ function marc21_decode($camp = null) {
 				echo $this->Html->link('Agregar a Mi Biblioteca', array('action' => '#'), array('id' => 'biblioteca', 'class' => 'btn-primary', 'title' => 'Agregar a Mi Biblioteca', 'onclick' => 'return false;'));
 				echo $this->Html->link('Ver Formato MARC21', array('action' => 'marc21/'.$item['Item']['id']), array('class' => 'btn-primary', 'title' => 'Formato MARC21'));
 			?>
-			<?php if (!empty($item['Item']['cover_path'])) { ?>
-				<a href="http://<?php echo $_SERVER['HTTP_HOST'] . $this->base . '/webroot/covers/' . $item['Item']['cover_path']; ?>" class="btn-primary" target="_blank" title="Descargue el documento en su computadora.">Descargar Imagen</a>
+			<?php if (!empty($item['Item']['item_file_path'])) { ?>
+				<a href="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $this->base . '/webroot/files/' . $item['Item']['item_file_path']; ?>" class="btn-primary" target="_blank" title="Descargue el documento en su computadora.">Descargue Trabajo Acad&eacute;mico</a>
 			<?php } ?>
-			
-			<?php if (!empty($item['Item']['cover_path'])) { ?>
-				<a href="#" onclick="return imprimir();" class="btn-primary" target="_blank" title="Imprimir Imagen.">Imprimir Imagen</a>
-			<?php } ?>	
 		</form>
 	</div>
 	

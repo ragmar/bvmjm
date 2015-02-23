@@ -234,7 +234,7 @@ class AcademicPapersController extends AppController {
 			
 		} else {
 		//	$conditions = array('Item.h-006' => 'k', 'Item.h-007' => 'a', 'Item.published' => '1');
-		$conditions = array('OR' => array(array('Item.h-006' => 'k', 'Item.h-007' => 'a', 'Item.published' => '1'), //||
+		$conditions = array('OR' => array(array('Item.h-006' => 't', 'Item.h-007' => 'm', 'Item.published' => '1'), //||
 		array('Item.h-006' => 'k', 'Item.h-007' => 'b', 'Item.published' => '1'), array('Item.h-006' => 'k', 'Item.h-007' => 'm', 'Item.published' => '1')));
 		}
 

@@ -6,7 +6,7 @@ class DATABASE_CONFIG {
 		'persistent' => false,
 		'host' => 'localhost',
 		'login' => 'root',
-		'password' => '12345678',
+		'password' => 'root',
 		'database' => 'tesis',
 		'encoding' => 'utf8'
 	);

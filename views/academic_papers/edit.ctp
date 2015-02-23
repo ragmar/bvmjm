@@ -45,36 +45,6 @@ th {
 
 <h5>Datos de Cabecera o Líder</h5>
 
-<!--
-<div style="text-align: center;">
-	<select id="tipo" class="form-control">
-			<option value="0">Seleccione el tipo de registro</option>
-		<optgroup label="MATERIAL TEXTUAL">
-			<option value="1">Libro</option>
-			<option value="2">Revista</option>
-			<option value="3">Parte de Libro</option>
-			<option value="4">Parte de Revista</option>
-		</optgroup>
-		<optgroup label="MÚSICA ESCRITA">
-			<option value="5">Música Impresa</option>
-			<option value="6">Música Manuscrita</option>
-			<option value="7">Música Impresa (parte componente)</option>
-			<option value="8">Música Manuscrita (parte componente)</option>
-			<option value="9">Música Impresa (parte de revista)</option>
-			<option value="10">Música Impresa (colección)</option>
-			<option value="11">Música Manuscrita (colección facticia)</option>
-		</optgroup>
-		<optgroup label="MATERIAL GRÁFICO">
-			<option value="12">Imágenes fijas bidimensionales</option>
-			<option value="13">Imágenes fijas bidimensionales (parte de libro)</option>
-			<option value="14">Imágenes fijas bidimensionales (parte de revista)</option>
-		</optgroup>
-	</select>
-</div>
-
-<br />
--->
-
 <table class="table">
 	<tr>
 		<th><label>Estado del Registro.</label></th>
@@ -107,12 +77,12 @@ th {
 				'g' => 'g - Material gráfico proyectable.',
 				'i' => 'i - Grabación sonora no musical.',
 				'j' => 'j - Grabación sonora musical.',*/
-				'k' => 'k - Material gráfico bidimensional, no proyectable.',
+// 				'k' => 'k - Material gráfico bidimensional, no proyectable.',
 				/*'m' => 'm - Archivo de ordenador.',
 				'o' => 'o - Kit.',
 				'p' => 'p - Material mixto.',
-				'r' => 'r - Objeto tridimensional artificial o natural.',
-				't' => 't - Material textual manuscrito.'*/
+				'r' => 'r - Objeto tridimensional artificial o natural.',*/
+				't' => 't - Material textual manuscrito.'
 				),
 			'selected' => $item['Item']['h-006']/*,
 			'empty' => 'Seleccione'*/
