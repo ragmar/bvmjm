@@ -119,9 +119,9 @@ function marc21_decode($camp = null) {
 		}
 		
 		// Trabajos académicos.
-		if (($t1 == 'a') && ($t2 == 'a')) {
+		if (($t1 == 't') && ($t2 == 'm')) {
 			$color = "#d1c7be";
-			$controller = "";
+			$controller = "academic_papers";
 		}
 	?>
 	<tr>
@@ -240,6 +240,11 @@ function marc21_decode($camp = null) {
 					if (($t1 == 'k') && ($t2 == 'b')) {
 						echo "Iconografía Musical";
 					}
+					
+					// Trabajos Académicos.
+					if (($t1 == 't') && ($t2 == 'm')) {
+						echo "Trabajos Académicos";
+					}
 				?>
 				</dd>
 			</dl>
@@ -279,6 +284,7 @@ function marc21_decode($camp = null) {
 		<?php echo $this->Html->link(__('Iconografía Musical', true),'/iconographies/advanced_search', array('class' => 'btn btn-primary')); ?>
 		<?php echo $this->Html->link(__('Música Impresa', true),'/printeds/advanced_search', array('class' => 'btn btn-primary')); ?>
 		<?php echo $this->Html->link(__('Música Manuscrita', true),'/manuscripts/advanced_search', array('class' => 'btn btn-primary')); ?>
+		<?php echo $this->Html->link(__('Trabajos Académicos', true),'/academic_papers/advanced_search', array('class' => 'btn btn-primary')); ?>
 		<br />
 		</div>
 

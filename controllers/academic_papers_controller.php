@@ -199,9 +199,9 @@ class AcademicPapersController extends AppController {
 	
 	function index() {
 		if (!empty($this->data)) {
-			$conditions =  array('OR' => array(array('Item.h-006' => 'k', 'Item.h-007' => 'a', 'Item.published' => '1'), //||
-			array('Item.h-006' => 'k', 'Item.h-007' => 'b', 'Item.published' => '1'), 
-			array('Item.h-006' => 'k', 'Item.h-007' => 'm', 'Item.published' => '1')));
+			$conditions =  array('OR' => array(array('Item.h-006' => 't', 'Item.h-007' => 'a', 'Item.published' => '1'), //||
+			array('Item.h-006' => 't', 'Item.h-007' => 'b', 'Item.published' => '1'), 
+			array('Item.h-006' => 't', 'Item.h-007' => 'm', 'Item.published' => '1')));
 		/*	$conditions['Item.h-006'] = 'k'; // Tipo libro.
 			$conditions['Item.h-007'] = 'b'; // Tipo libro.
 			$conditions1['Item.h-006'] = 'k'; // Tipo libro.
@@ -227,39 +227,14 @@ class AcademicPapersController extends AppController {
 			if (!empty($this->data['academic_papers']['Temas'])) {
 				$conditions['Item.650 LIKE'] = '%^a' . $this->data['academic_papers']['Temas'] . '%';
 			}
-			if (!empty($this->data['academic_papers']['Año'])) {
-				$conditions['Item.260 LIKE'] = '%^c' . $this->data['academic_papers']['Año'] . '%';
-			}
-		
 			
 		} else {
 		//	$conditions = array('Item.h-006' => 'k', 'Item.h-007' => 'a', 'Item.published' => '1');
 		$conditions = array('OR' => array(array('Item.h-006' => 't', 'Item.h-007' => 'm', 'Item.published' => '1'), //||
-		array('Item.h-006' => 'k', 'Item.h-007' => 'b', 'Item.published' => '1'), array('Item.h-006' => 'k', 'Item.h-007' => 'm', 'Item.published' => '1')));
+		array('Item.h-006' => 't', 'Item.h-007' => 'b', 'Item.published' => '1'), array('Item.h-006' => 't', 'Item.h-007' => 'm', 'Item.published' => '1')));
 		}
-
-		//debug($this->data);
-		//debug($conditions); die;
-		
-		/*
-			if (!empty($this->data)) { // Si llegan datos de una busqueda.
-		$this->data['AcademicPaper']['year'] = $this->data['AcademicPaper']['year']['year']; // Se arregla el campo year.
-		$this->Session->write('Search', $this->data); // Se guarda en sesion la busqueda.
-		$conditions = $this->buildConditions($this->data);
-		//debug($conditions); die;
-			
-		} else { // Si se viene del home o del paginador ...
-			
-		//$this->Session->delete('Search');
-		//if (isset($this->passedArgs[0]) && (substr($this->passedArgs[0], 0, 4) != "page")) {
-		if ($this->Session->check('Search')) {
-		$conditions = $this->buildConditions($this->Session->read('Search'));
-		}
-		//}
-		}*/
 	
 		$this->Item->recursive = 1;
-	
 		$this->paginate = array(
 				//'limit' => '1',
 				'conditions' => $conditions,
@@ -910,7 +885,7 @@ class AcademicPapersController extends AppController {
 
 		$item = $this->Item->read(null, $id);
 		$this->set('item', $item);
-
+		
 		if (!empty($this->data)) {
 			$data = $this->data;
 			$time = time();
@@ -949,7 +924,6 @@ class AcademicPapersController extends AppController {
 			
 			$data['Item'] = $data['AcademicPaper'];
 			unset($data['AcademicPaper']);
-			
 			if ($this->Item->save($data)) {
 				$this->Session->setFlash(__('El archivo ha sido guardado.', true));
 				$this->redirect(array('action' => 'view', $data['Item']['id']));

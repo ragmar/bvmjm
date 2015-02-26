@@ -49,7 +49,7 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 		<table class="table">
 		<tr>
 			<th><?php __('Cover');?></th>
-			<th><?php __('Detalles de la Obra');?></th>
+			<th><?php __('Detalles del Trabajo');?></th>
 		</tr>
 		<?php foreach ($items as $item): ?>
 		<?php //$color = "#b3bbce"; ?>
@@ -106,27 +106,12 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 							}
 						?>
 					</dd>
-					<?php if (!empty($item['Item']['653'])) { ?>
-					<dt style="width: 120px"><?php __('Materia:');?></dt>
-					<dd style="margin-left: 130px">
-					<?php
-						$matter = marc21_decode($item['Item']['653']);
-						if (!empty($this->data['academic_papers']['Materia'])) {
-							echo '<b>' . $matter['a'] . '.</b>';
-						} else {
-							echo $matter['a'] . '.';
-						}
-					?>
-					</dd>
-					<?php } ?>
-					<dt style="width: 120px"><?php __('Publicación:');?></dt>
+					<dt style="width: 120px"><?php __('Tutor:');?></dt>
 					<dd style="margin-left: 130px">
 						<?php
 							if (!empty($item['Item']['260'])) {
 								$publication = marc21_decode($item['Item']['260']);
-								echo $publication['a'] . '.';
 								if (isset($publication['b'])) {echo ' ' . $publication['b']. '.';}
-								if (isset($publication['c'])) {echo ' ' . $publication['c']. '.';}
 							}
 						?>
 					</dd>
@@ -145,11 +130,11 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 					<?php } ?>
 					
 					<?php if (!empty($item['Item']['650'])) { ?>
-					<dt style="width: 120px"><?php __('Temas:');?></dt>
+					<dt style="width: 120px"><?php __('Materia:');?></dt>
 					<dd style="margin-left: 130px">
 					<?php
 						$mattername = marc21_decode($item['Item']['650']);
-						if (!empty($this->data['academic_papers']['Temas'])) {
+						if (!empty($this->data['academic_papers']['Materia'])) {
 							echo '<b>' . $mattername['a'] . '.</b>';
 						} else {
 							echo $mattername['a'] . '.';
@@ -157,7 +142,19 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 					?>
 					</dd>
 					<?php } ?>
-					
+					<?php if (!empty($item['Item']['653'])) { ?>
+					<dt style="width: 120px"><?php __('Palabras clave:');?></dt>
+					<dd style="margin-left: 130px">
+					<?php
+						$matter = marc21_decode($item['Item']['653']);
+						if (!empty($this->data['academic_papers']['PalabrasClave'])) {
+							echo '<b>' . $matter['a'] . '.</b>';
+						} else {
+							echo $matter['a'] . '.';
+						}
+					?>
+					</dd>
+					<?php } ?>
 					<dt style="width: 120px">
 					<?php if (($this->Session->check('Auth.User') && ($this->Session->read('Auth.User.group_id') != '3'))) { ?>
 						<?php //echo $this->Html->link(__('Delete', true), array('action' => 'delete', $item['Item']['id']), null, sprintf(__("¿Desea eliminar '%s'?", true), $item['Item']['title'])); ?>
@@ -282,7 +279,7 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 		</script>
 		
 		<div style="clear: both;">		
-			<label>Temas:</label><br />
+			<label>Materia:</label><br />
 			<?php echo $this->Form->hidden('Temas', array('class' => 'form-control', 'label' => 'Temas')); ?>
 			<?php echo $this->Html->link('A', array('action' => '/A'), array('id' => 'temas-A', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("A"); $("#academicPapersIndexForm").submit(); return false;')); ?>
 			<?php echo $this->Html->link('B', array('action' => '/B'), array('id' => 'temas-B', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("B"); $("#academicPapersIndexForm").submit(); return false;')); ?>

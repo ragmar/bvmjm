@@ -14,3 +14,5 @@
 2015-02-20 16:24:36 Warning: Warning (2): Cannot unset offset in a non-array variable in [/home/gazzd/projects/bvmjm/views/academic_papers/marc21.ctp, line 64]
 2015-02-20 16:24:36 Warning: Warning (2): Cannot unset offset in a non-array variable in [/home/gazzd/projects/bvmjm/views/academic_papers/marc21.ctp, line 65]
 2015-02-20 16:24:36 Warning: Warning (2): Invalid argument supplied for foreach() in [/home/gazzd/projects/bvmjm/views/academic_papers/marc21.ctp, line 67]
+2015-02-25 11:53:47 Warning: Warning (2): Illegal string offset 'indicators' in [/home/gazzd/projects/bvmjm/views/academic_papers/edit.ctp, line 1343]
+2015-02-25 11:53:47 Warning: Warning (2): Illegal string offset 'indicators' in [/home/gazzd/projects/bvmjm/views/academic_papers/edit.ctp, line 1353]

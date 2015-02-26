@@ -32,7 +32,7 @@
 			<h5>Documentos</h5><br />
 		</div>
 		<div style="width: 12%; float: left;"><br />
-			<?php echo $this->Html->link($html->image('ts/ima_tesis.jpg', array('alt' => 'Trabajos Académicos', 'width' => '100px', 'class' => 'img-thumbnail')), '/', array('escape' => false)); ?>
+			<?php echo $this->Html->link($html->image('ts/ima_tesis.jpg', array('alt' => 'Trabajos Académicos', 'width' => '100px', 'class' => 'img-thumbnail')), '/academic_papers', array('escape' => false)); ?>
 			<h5>Trabajos Académicos</h5><br />
 		</div>
 		<div style="width: 8%; float: left;">&nbsp;</div>

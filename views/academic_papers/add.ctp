@@ -31,14 +31,14 @@ th {
 		<?php
 			echo $this->Form->input('h-005', array('label' => false, 'class' => 'form-control',
 				'options' => array(
-					'a' => 'a - Aumentado el nivel de codificación.', 
-					'c' => 'c - Corregido o revisado.',
-					'd' => 'd - Suprimido.',
+// 					'a' => 'a - Aumentado el nivel de codificación.', 
+// 					'c' => 'c - Corregido o revisado.',
+// 					'd' => 'd - Suprimido.',
 					'n' => 'n - Nuevo.',
-					'p' => 'p - Aumentado el nivel de codificación utilizado antes de la publicación.'
+// 					'p' => 'p - Aumentado el nivel de codificación utilizado antes de la publicación.'
 					),
 				'selected' => 'n',
-				'empty' => 'Seleccione'
+// 				'empty' => 'Seleccione'
 			));?>
 		</td>
 	</tr>
@@ -74,13 +74,13 @@ th {
 		<?php
 		echo $this->Form->input('h-007', array('label' => false, 'class' => 'form-control',
 			'options' => array(
-				'a' => 'a - Parte componente monográfica.',
-				'b' => 'b - Parte componente seriada.',
-				'c' => 'c - Colección.',
-				'd' => 'd - Subunidad.',
-				'i' => 'i - Recurso integrable.',
+// 				'a' => 'a - Parte componente monográfica.',
+// 				'b' => 'b - Parte componente seriada.',
+// 				'c' => 'c - Colección.',
+// 				'd' => 'd - Subunidad.',
+// 				'i' => 'i - Recurso integrable.',
 				'm' => 'm - Monografía.',
-				's' => 's - Publicación seriada.'
+// 				's' => 's - Publicación seriada.'
 			),
 			'selected' => 'm'/*,
 			'empty' => 'Seleccione'*/
@@ -93,19 +93,19 @@ th {
 		<?php
 		echo $this->Form->input('h-017', array('label' => false, 'class' => 'form-control',
 			'options' => array(
-				'#' => '# - Nivel completo.',
-				'1' => '1 - Nivel completo, material no examinado.',
-				'2' => '2 - Nivel incompleto, material no examinado.',
-				'3' => '3 - Nivel abreviado.',
-				'4' => '4 - Nivel básico.',
-				'5' => '5 - Nivel parcial (preliminar).',
+// 				'#' => '# - Nivel completo.',
+// 				'1' => '1 - Nivel completo, material no examinado.',
+// 				'2' => '2 - Nivel incompleto, material no examinado.',
+// 				'3' => '3 - Nivel abreviado.',
+// 				'4' => '4 - Nivel básico.',
+// 				'5' => '5 - Nivel parcial (preliminar).',
 				'7' => '7 - Nivel mínimo.',
-				'8' => '8 - Nivel de prepublicación.',
-				'u' => 'u - Desconocido.',
-				'z' => 'z - No aplicable.'
+// 				'8' => '8 - Nivel de prepublicación.',
+// 				'u' => 'u - Desconocido.',
+// 				'z' => 'z - No aplicable.'
 			),
 			'selected' => '7',
-			'empty' => 'Seleccione'
+// 			'empty' => 'Seleccione'
 		));?>
 		</td>
 	</tr>
@@ -115,14 +115,14 @@ th {
 		<?php
 		echo $this->Form->input('h-018', array('label' => false, 'class' => 'form-control',
 			'options' => array(
-				'#' => '# - No es ISBD.',
+// 				'#' => '# - No es ISBD.',
 				'a' => 'a - AACR 2.',
-				'c' => 'c - ISBD sin puntuación.',
-				'i' => 'i - ISBD con puntuación.',
-				'u' => 'u - Desconocida.'
+// 				'c' => 'c - ISBD sin puntuación.',
+// 				'i' => 'i - ISBD con puntuación.',
+// 				'u' => 'u - Desconocida.'
 			),
 			'selected' => 'a',
-			'empty' => 'Seleccione'
+// 			'empty' => 'Seleccione'
 		));
 		?>
 		</td>
@@ -163,22 +163,22 @@ th {
 		<td>Tipo de fecha/estado de la publicación.</td>
 		<td><?php echo $this->Form->input('008-06', array('id' => '008-06', 'label' => false, 'class' => 'form-control', 'div' => false, 
 			'options' => array(
-				'b' => 'b - No consta información; implica fechas A.C.',
-				'c' => 'c - Recurso continuado con publicación en curso',
-				'd' => 'd - Publicación cerrada',
-				'e' => 'e - Fecha detallada',
-				'i' => 'i - Fechas comprendidas en una colección',
-				'k' => 'k - Rango de años del grueso de la colección',
-				'm' => 'm - Fechas múltiples',
-				'n' => 'n - Fecha desconocida',
-				'p' => 'p - Fechas de distribución/estreno/edición y de sesión de producción/grabación cuando difiere',
-				'q' => 'q - Fecha dudosa',
-				'r' => 'r - Fechas de la reimpresión/reedición y del original',
+// 				'b' => 'b - No consta información; implica fechas A.C.',
+// 				'c' => 'c - Recurso continuado con publicación en curso',
+// 				'd' => 'd - Publicación cerrada',
+// 				'e' => 'e - Fecha detallada',
+// 				'i' => 'i - Fechas comprendidas en una colección',
+// 				'k' => 'k - Rango de años del grueso de la colección',
+// 				'm' => 'm - Fechas múltiples',
+// 				'n' => 'n - Fecha desconocida',
+// 				'p' => 'p - Fechas de distribución/estreno/edición y de sesión de producción/grabación cuando difiere',
+// 				'q' => 'q - Fecha dudosa',
+// 				'r' => 'r - Fechas de la reimpresión/reedición y del original',
 				's' => 's - Fecha única conocida/probable',
-				't' => 't - Fechas de publicación y de copyright',
-				'u' => 'u - Estado desconocido',
-				'|' => '| - No se utiliza'
-			), 'selected' => 'c'
+// 				't' => 't - Fechas de publicación y de copyright',
+// 				'u' => 'u - Estado desconocido',
+// 				'|' => '| - No se utiliza'
+			), 'selected' => 's'
 		)); ?></td>
 	</tr>
 	<tr>
@@ -606,21 +606,21 @@ th {
 		<td>Naturaleza del contenido.</td>
 		<td><?php echo $this->Form->input('008-24-27', array('id' => '008-24-27', 'label' => false, 'class' => 'form-control', 'div' => false, 
 			'options' => array(
-				'#' => '# - No se especifica la naturaleza del contenido',
-				'a' => 'a - Resúmenes/sumarios',
+// 				'#' => '# - No se especifica la naturaleza del contenido',
+// 				'a' => 'a - Resúmenes/sumarios',
 				'b' => 'b - Bibliografías',
-				'c' => 'c - Catálogos',
-				'd' => 'd - Diccionarios',
-				'e' => 'e - Enciclopedias',
-				'f' => 'f - Manuales',
-				'g' => 'g - Artículos sobre temas legales',
-				'i' => 'i - Índices',
-				'j' => 'j - Documentos de patente',
-				'k' => 'k - Discografías',
-				'l' => 'l - Legislación',
+// 				'c' => 'c - Catálogos',
+// 				'd' => 'd - Diccionarios',
+// 				'e' => 'e - Enciclopedias',
+// 				'f' => 'f - Manuales',
+// 				'g' => 'g - Artículos sobre temas legales',
+// 				'i' => 'i - Índices',
+// 				'j' => 'j - Documentos de patente',
+// 				'k' => 'k - Discografías',
+// 				'l' => 'l - Legislación',
 				'm' => 'm - Tesis',
-				'n' => 'n - Estado de la cuestión en una materia',
-				'o' => 'o - Reseñas',
+// 				'n' => 'n - Estado de la cuestión en una materia',
+// 				'o' => 'o - Reseñas',
 			)
 		)); ?></td>
 	</tr>
