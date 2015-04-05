@@ -52,7 +52,7 @@ function marc21_decode($camp = null) {
 			<?php if ($userItem['Item']['id']) { ?>
 			<tr<?php echo $class;?>>
 				<td>
-					<?php $controller = array('1' => 'books', '2' => 'magazines', '3' => 'manuscripts', '4' => 'printed', '5' => 'iconographies', '6' => 'works'); ?>
+					<?php $controller = array('0' => 'academic_papers', '1' => 'books', '2' => 'magazines', '3' => 'manuscripts', '4' => 'printed', '5' => 'iconographies', '6' => 'works'); ?>
 					<?php
 						$t1 = $userItem['Item']['h-006'];
 						$t2 = $userItem['Item']['h-007'];
@@ -145,6 +145,11 @@ function marc21_decode($camp = null) {
 					// Música manuscrita.
 					if (($t1 == 'd') && ($t2 == 'm')) {
 						echo "Música Manuscrita.";
+					}
+					
+					// Trabajos académicos.
+					if (($t1 == 't') && ($t2 == 'm')) {
+						echo "Trabajos Académicos.";
 					}
 				?>
 				</td>

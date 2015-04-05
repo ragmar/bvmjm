@@ -47,119 +47,6 @@ class AcademicPapersController extends AppController {
 		}
 	}
 	
-	/*	function buildConditions ($search){ // Funcion que arma las condiciones para el paginador a partir de el arreglo con los campos de búsqueda.
-		if (!empty($search)){
-			$conditions = array();
-			$conditions1 = array();
-			$conditions2= array();
-			$conditions['Item.h-006'] = 'k'; // Tipo libro.
-			$conditions['Item.h-007'] = 'b'; // Tipo libro.
-			$conditions1['Item.h-006'] = 'k'; // Tipo libro.
-			$conditions1['Item.h-007'] = 'm'; // Tipo libro.
-			$conditions2['Item.h-006'] = 'k'; // Tipo libro.
-			$conditions2['Item.h-007'] = 'a'; // Tipo libro.
-
-
-			if (!empty($search['AcademicPaper']['title'])) {
-				$conditions['Item.title LIKE'] = '%' . $search['AcademicPaper']['title'] . '%';
-			}
-			
-			if (!empty($search['AcademicPaper']['author_id'])) {
-				$conditions['Item.author_id'] = $search['AcademicPaper']['author_id'];
-			}
-			
-			if (!empty($search['AcademicPaper']['type_id'])) {
-				$conditions['Item.type_id'] = $search['AcademicPaper']['type_id'];
-			}
-			
-			if (!empty($search['AcademicPaper']['topic_id'])) {
-				$conditions['Item.topic_id'] = $search['AcademicPaper']['topic_id'];
-			}
-			
-			if (!empty($search['AcademicPaper']['year'])) {
-				$conditions['Item.year'] = $search['AcademicPaper']['year'];
-			}
-
-			if (!empty($search['AcademicPaper']['source'])) {
-				$conditions['Item.source'] = $search['AcademicPaper']['source'];
-			}
-
-			if (!empty($search['AcademicPaper']['matter'])) {
-				$conditions['Item.matter'] = $search['AcademicPaper']['matter'];
-			}
-			if (!empty($search['AcademicPaper']['mattername'])) {
-				$conditions['Item.mattername'] = $search['AcademicPaper']['mattername'];
-			}
-
-			if (!empty($search['AcademicPaper']['title'])) {
-				$conditions1['Item.title LIKE'] = '%' . $search['AcademicPaper']['title'] . '%';
-			}
-			
-			if (!empty($search['AcademicPaper']['author_id'])) {
-				$conditions1['Item.author_id'] = $search['AcademicPaper']['author_id'];
-			}
-			
-			if (!empty($search['AcademicPaper']['type_id'])) {
-				$conditions1['Item.type_id'] = $search['AcademicPaper']['type_id'];
-			}
-			
-			if (!empty($search['AcademicPaper']['topic_id'])) {
-				$conditions['Item.topic_id'] = $search['AcademicPaper']['topic_id'];
-			}
-			
-			if (!empty($search['AcademicPaper']['year'])) {
-				$conditions1['Item.year'] = $search['AcademicPaper']['year'];
-			}
-
-			if (!empty($search['AcademicPaper']['source'])) {
-				$conditions1['Item.source'] = $search['AcademicPaper']['source'];
-			}
-
-			if (!empty($search['AcademicPaper']['matter'])) {
-				$conditions1['Item.matter'] = $search['AcademicPaper']['matter'];
-			}
-			if (!empty($search['AcademicPaper']['mattername'])) {
-				$conditions1['Item.mattername'] = $search['AcademicPaper']['mattername'];
-			}
-
-			if (!empty($search['AcademicPaper']['title'])) {
-				$conditions2['Item.title LIKE'] = '%' . $search['AcademicPaper']['title'] . '%';
-			}
-			
-			if (!empty($search['AcademicPaper']['author_id'])) {
-				$conditions2['Item.author_id'] = $search['AcademicPaper']['author_id'];
-			}
-			
-			if (!empty($search['AcademicPaper']['type_id'])) {
-				$conditions2['Item.type_id'] = $search['AcademicPaper']['type_id'];
-			}
-			
-			if (!empty($search['AcademicPaper']['topic_id'])) {
-				$conditions2['Item.topic_id'] = $search['AcademicPaper']['topic_id'];
-			}
-			
-			if (!empty($search['AcademicPaper']['year'])) {
-				$conditions2['Item.year'] = $search['AcademicPaper']['year'];
-			}
-
-			if (!empty($search['AcademicPaper']['source'])) {
-				$conditions2['Item.source'] = $search['AcademicPaper']['source'];
-			}
-
-			if (!empty($search['AcademicPaper']['matter'])) {
-				$conditions2['Item.matter'] = $search['AcademicPaper']['matter'];
-			}
-			if (!empty($search['AcademicPaper']['mattername'])) {
-				$conditions2['Item.mattername'] = $search['AcademicPaper']['mattername'];
-			}
-			
-			
-			return ($conditions || $conditions1 || $conditions2) ;
-		} else {
-			return false;
-		}
-	}
-	*/
 	function intro() {
 		
 	}
@@ -210,22 +97,20 @@ class AcademicPapersController extends AppController {
 			$conditions2['Item.h-007'] = 'a'; // Tipo libro.
 			$conditions['Item.published'] = '1'; // Publicado.*/
 			
-			if (!empty($this->data['academic_papers']['Titulo'])) {
-				$conditions['Item.245 LIKE'] = '%^a' . $this->data['academic_papers']['Titulo'] . '%';
+			if (!empty($this->data['academicPapers']['Titulo'])) {
+				$conditions['Item.245 LIKE'] = '%^a' . $this->data['academicPapers']['Titulo'] . '%';
 			}
-				
-			if (!empty($this->data['academic_papers']['Autor'])) {
-				$conditions['Item.100 LIKE'] = '%^a' . $this->data['academic_papers']['Autor'] . '%';
+			if (!empty($this->data['academicPapers']['Autor'])) {
+				$conditions['Item.100 LIKE'] = '%^a' . $this->data['academicPapers']['Autor'] . '%';
 			}
-				
-			if (!empty($this->data['academic_papers']['Materia'])) {
-				$conditions['Item.653 LIKE'] = '%^a' . $this->data['academic_papers']['Materia'] . '%';
+			if (!empty($this->data['academicPapers']['Tutor'])) {
+				$conditions['Item.260 LIKE'] = '%^b' . $this->data['academicPapers']['Tutor'] . '%';
 			}
-			if (!empty($this->data['academic_papers']['Fuente'])) {
-				$conditions['Item.773 LIKE'] = '%^t' . $this->data['academic_papers']['Fuente'] . '%';
-			}	
-			if (!empty($this->data['academic_papers']['Temas'])) {
-				$conditions['Item.650 LIKE'] = '%^a' . $this->data['academic_papers']['Temas'] . '%';
+			if (!empty($this->data['academicPapers']['Materia'])) {
+				$conditions['Item.650 LIKE'] = '%^a' . $this->data['academicPapers']['Materia'] . '%';
+			}
+			if (!empty($this->data['academicPapers']['PalabrasClave'])) {
+				$conditions['Item.653 LIKE'] = '%^a' . $this->data['academicPapers']['PalabrasClave'] . '%';
 			}
 			
 		} else {
@@ -569,7 +454,7 @@ class AcademicPapersController extends AppController {
 		if (!empty($this->data)) {
 			$this->layout = 'default';
 			$this->Item->recursive = -1;
-			$conditions = array('Item.h-006' => 'k', 'Item.h-007' => 'a', 'Item.published' => '1');	
+			$conditions = array('Item.h-006' => 't', 'Item.h-007' => 'm', 'Item.published' => '1');	
 			
 			if (!empty($this->data['AcademicPaper']['245'])) { // Titulo
 				$conditions['Item.245 LIKE'] = '%' . $this->data['AcademicPaper']['245'] . '%'; 
@@ -579,7 +464,7 @@ class AcademicPapersController extends AppController {
 				$conditions['Item.100 LIKE'] = '%' . $this->data['AcademicPaper']['100'] . '%';
 			}
 
-			if (!empty($this->data['AcademicPaper']['653'])) { // Materia
+			if (!empty($this->data['AcademicPaper']['653'])) { // Palabras clave
 				$conditions['Item.653 LIKE'] = '%' . $this->data['AcademicPaper']['653'] . '%';
 			}
 
@@ -587,8 +472,8 @@ class AcademicPapersController extends AppController {
 				$conditions['Item.260 LIKE'] = '%' . $this->data['AcademicPaper']['260'] . '%';
 			}
 			
-			if (!empty($this->data['AcademicPaper']['690'])) { // Siglo
-				$conditions['Item.690 LIKE'] = '%' . $this->data['AcademicPaper']['690'] . '%';
+			if (!empty($this->data['AcademicPaper']['650'])) { // Materia
+				$conditions['Item.650 LIKE'] = '%' . $this->data['AcademicPaper']['650'] . '%';
 			}
 			
 			//debug($conditions); die;
@@ -610,6 +495,8 @@ class AcademicPapersController extends AppController {
 				$s = array('user_id' => '0', 'ip' => $_SERVER['REMOTE_ADDR'], 'search' => $conditions);
 			}
 			$this->Search->save($s);*/
+		}else{
+			$this->set('items', array());
 		}
 	}
 	
