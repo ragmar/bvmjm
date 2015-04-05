@@ -115,20 +115,6 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 							}
 						?>
 					</dd>
-					<?php if (!empty($item['Item']['773'])) { ?>
-					<dt style="width: 120px"><?php __('Fuente:');?></dt>
-					<dd style="margin-left: 130px">
-					<?php
-						$source = marc21_decode($item['Item']['773']);
-						if (!empty($this->data['academic_papers']['Fuente'])) {
-							echo '<b>' . $source['t'] . '.</b>';
-						} else {
-							echo $source['t'] . '.';
-						}
-					?>
-					</dd>
-					<?php } ?>
-					
 					<?php if (!empty($item['Item']['650'])) { ?>
 					<dt style="width: 120px"><?php __('Materia:');?></dt>
 					<dd style="margin-left: 130px">
@@ -198,7 +184,7 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 		<label style="border-bottom: solid 1px #6C3F30;"><?php __('Filtrar por:'); ?></label>
 		<br />
 		
-		<?php echo $this->Form->create('academic_papers'); ?>
+		<?php echo $this->Form->create('academicPapers'); ?>
 
 		<div style="clear: both;">
 			<label>Título:</label><br />
@@ -232,8 +218,8 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 			<?php echo $this->Html->link('Todos', array('action' => ''), array('id' => 'titulo-todos', 'class' => 'btn-primary', 'style' => 'width: 66px;', 'onclick' => '$("#academicPapersTitulo").val(""); $("#academicPapersIndexForm").submit(); return false;')); ?>
 		</div>
 		<script type="text/javascript">
-			if ("<?php echo $this->data['academic_papers']['Titulo']; ?>" != "") {
-				$("#<?php echo "titulo-".$this->data['academic_papers']['Titulo']; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 15px;');
+			if ("<?php echo $this->data['academicPapers']['Titulo']; ?>" != "") {
+				$("#<?php echo "titulo-".$this->data['academicPapers']['Titulo']; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 15px;');
 			} else {
 				$("#<?php echo "titulo-todos"; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 66px;');
 			}
@@ -271,8 +257,8 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 			<?php echo $this->Html->link('Todos', array('action' => '/'), array('id' => 'autor-todos', 'class' => 'btn-primary', 'style' => 'width: 66px;', 'onclick' => '$("#academicPapersAutor").val(""); $("#academicPapersIndexForm").submit(); return false;')); ?>
 		</div>
 		<script type="text/javascript">
-			if ("<?php echo $this->data['academic_papers']['Autor']; ?>" != "") {
-				$("#<?php echo "autor-".$this->data['academic_papers']['Autor']; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 15px;');
+			if ("<?php echo $this->data['academicPapers']['Autor']; ?>" != "") {
+				$("#<?php echo "autor-".$this->data['academicPapers']['Autor']; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 15px;');
 			} else {
 				$("#<?php echo "autor-todos"; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 66px;');
 			}
@@ -280,56 +266,82 @@ if (!empty($this->data)) { // Si viene de una búsqueda.
 		
 		<div style="clear: both;">		
 			<label>Materia:</label><br />
-			<?php echo $this->Form->hidden('Temas', array('class' => 'form-control', 'label' => 'Temas')); ?>
-			<?php echo $this->Html->link('A', array('action' => '/A'), array('id' => 'temas-A', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("A"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('B', array('action' => '/B'), array('id' => 'temas-B', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("B"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('C', array('action' => '/C'), array('id' => 'temas-C', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("C"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('D', array('action' => '/D'), array('id' => 'temas-D', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("D"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('E', array('action' => '/E'), array('id' => 'temas-E', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("E"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('F', array('action' => '/F'), array('id' => 'temas-F', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("F"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('G', array('action' => '/G'), array('id' => 'temas-G', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("G"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('H', array('action' => '/H'), array('id' => 'temas-H', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("H"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('I', array('action' => '/I'), array('id' => 'temas-I', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("I"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('J', array('action' => '/J'), array('id' => 'temas-J', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("J"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('K', array('action' => '/K'), array('id' => 'temas-K', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("K"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('L', array('action' => '/L'), array('id' => 'temas-L', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("L"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('M', array('action' => '/M'), array('id' => 'temas-M', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("M"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('N', array('action' => '/N'), array('id' => 'temas-N', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("N"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('O', array('action' => '/O'), array('id' => 'temas-O', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("O"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('P', array('action' => '/P'), array('id' => 'temas-P', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("P"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Q', array('action' => '/Q'), array('id' => 'temas-Q', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("Q"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('R', array('action' => '/R'), array('id' => 'temas-R', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("R"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('S', array('action' => '/S'), array('id' => 'temas-S', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("S"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('T', array('action' => '/T'), array('id' => 'temas-T', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("T"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('U', array('action' => '/U'), array('id' => 'temas-U', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("U"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('V', array('action' => '/V'), array('id' => 'temas-V', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("V"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('W', array('action' => '/W'), array('id' => 'temas-W', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("W"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('X', array('action' => '/X'), array('id' => 'temas-X', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("X"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Y', array('action' => '/Y'), array('id' => 'temas-Y', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("Y"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Z', array('action' => '/Z'), array('id' => 'temas-Z', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersTemas").val("Z"); $("#academicPapersIndexForm").submit(); return false;')); ?>
-			<?php echo $this->Html->link('Todos', array('action' => '/'), array('id' => 'temas-todos', 'class' => 'btn-primary', 'style' => 'width: 66px;', 'onclick' => '$("#academicPapersTemas").val(""); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Form->hidden('Materia', array('class' => 'form-control', 'label' => 'Materia')); ?>
+			<?php echo $this->Html->link('A', array('action' => '/A'), array('id' => 'materias-A', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("A"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('B', array('action' => '/B'), array('id' => 'materias-B', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("B"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('C', array('action' => '/C'), array('id' => 'materias-C', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("C"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('D', array('action' => '/D'), array('id' => 'materias-D', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("D"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('E', array('action' => '/E'), array('id' => 'materias-E', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("E"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('F', array('action' => '/F'), array('id' => 'materias-F', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("F"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('G', array('action' => '/G'), array('id' => 'materias-G', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("G"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('H', array('action' => '/H'), array('id' => 'materias-H', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("H"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('I', array('action' => '/I'), array('id' => 'materias-I', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("I"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('J', array('action' => '/J'), array('id' => 'materias-J', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("J"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('K', array('action' => '/K'), array('id' => 'materias-K', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("K"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('L', array('action' => '/L'), array('id' => 'materias-L', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("L"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('M', array('action' => '/M'), array('id' => 'materias-M', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("M"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('N', array('action' => '/N'), array('id' => 'materias-N', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("N"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('O', array('action' => '/O'), array('id' => 'materias-O', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("O"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('P', array('action' => '/P'), array('id' => 'materias-P', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("P"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Q', array('action' => '/Q'), array('id' => 'materias-Q', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("Q"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('R', array('action' => '/R'), array('id' => 'materias-R', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("R"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('S', array('action' => '/S'), array('id' => 'materias-S', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("S"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('T', array('action' => '/T'), array('id' => 'materias-T', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("T"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('U', array('action' => '/U'), array('id' => 'materias-U', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("U"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('V', array('action' => '/V'), array('id' => 'materias-V', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("V"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('W', array('action' => '/W'), array('id' => 'materias-W', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("W"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('X', array('action' => '/X'), array('id' => 'materias-X', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("X"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Y', array('action' => '/Y'), array('id' => 'materias-Y', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("Y"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Z', array('action' => '/Z'), array('id' => 'materias-Z', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersMateria").val("Z"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Todos', array('action' => '/'), array('id' => 'materias-todos', 'class' => 'btn-primary', 'style' => 'width: 66px;', 'onclick' => '$("#academicPapersMateria").val(""); $("#academicPapersIndexForm").submit(); return false;')); ?>
 		</div>
 		<script type="text/javascript">
-			if ("<?php echo $this->data['academic_papers']['Temas']; ?>" != "") {
-				$("#<?php echo "temas-".$this->data['academic_papers']['Temas']; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 15px;');
+			if ("<?php echo $this->data['academicPapers']['Materia']; ?>" != "") {
+				$("#<?php echo "materias-".$this->data['academicPapers']['Materia']; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 15px;');
 			} else {
-				$("#<?php echo "temas-todos"; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 66px;');
+				$("#<?php echo "materias-todos"; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 66px;');
 			}
 		</script>
 
 		<div style="clear: both;">		
-			<label>Año:</label><br />
-			<?php echo $this->Form->hidden('Año', array('class' => 'form-control', 'label' => 'Año')); ?>
-
-		<?php echo $this->Html->link(__('Ver Lista de Años', true), array('action' => 'year/'), array('class' => 'btn-primary', 'style' => 'width: 125px;'));?>
+			<label>Palabras Clave:</label><br />
+			<?php echo $this->Form->hidden('PalabrasClave', array('class' => 'form-control', 'label' => 'Palabras Clave')); ?>
+			<?php echo $this->Html->link('A', array('action' => '/A'), array('id' => 'palabras-clave-A', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("A"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('B', array('action' => '/B'), array('id' => 'palabras-clave-B', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("B"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('C', array('action' => '/C'), array('id' => 'palabras-clave-C', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("C"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('D', array('action' => '/D'), array('id' => 'palabras-clave-D', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("D"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('E', array('action' => '/E'), array('id' => 'palabras-clave-E', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("E"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('F', array('action' => '/F'), array('id' => 'palabras-clave-F', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("F"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('G', array('action' => '/G'), array('id' => 'palabras-clave-G', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("G"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('H', array('action' => '/H'), array('id' => 'palabras-clave-H', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("H"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('I', array('action' => '/I'), array('id' => 'palabras-clave-I', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("I"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('J', array('action' => '/J'), array('id' => 'palabras-clave-J', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("J"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('K', array('action' => '/K'), array('id' => 'palabras-clave-K', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("K"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('L', array('action' => '/L'), array('id' => 'palabras-clave-L', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("L"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('M', array('action' => '/M'), array('id' => 'palabras-clave-M', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("M"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('N', array('action' => '/N'), array('id' => 'palabras-clave-N', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("N"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('O', array('action' => '/O'), array('id' => 'palabras-clave-O', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("O"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('P', array('action' => '/P'), array('id' => 'palabras-clave-P', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("P"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Q', array('action' => '/Q'), array('id' => 'palabras-clave-Q', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("Q"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('R', array('action' => '/R'), array('id' => 'palabras-clave-R', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("R"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('S', array('action' => '/S'), array('id' => 'palabras-clave-S', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("S"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('T', array('action' => '/T'), array('id' => 'palabras-clave-T', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("T"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('U', array('action' => '/U'), array('id' => 'palabras-clave-U', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("U"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('V', array('action' => '/V'), array('id' => 'palabras-clave-V', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("V"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('W', array('action' => '/W'), array('id' => 'palabras-clave-W', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("W"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('X', array('action' => '/X'), array('id' => 'palabras-clave-X', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("X"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Y', array('action' => '/Y'), array('id' => 'palabras-clave-Y', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("Y"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Z', array('action' => '/Z'), array('id' => 'palabras-clave-Z', 'class' => 'btn-primary', 'onclick' => '$("#academicPapersPalabrasClave").val("Z"); $("#academicPapersIndexForm").submit(); return false;')); ?>
+			<?php echo $this->Html->link('Todos', array('action' => '/'), array('id' => 'palabras-clave-todos', 'class' => 'btn-primary', 'style' => 'width: 66px;', 'onclick' => '$("#academicPapersPalabrasClave").val(""); $("#academicPapersIndexForm").submit(); return false;')); ?>
 		</div>
 		<script type="text/javascript">
-			if ("<?php echo $this->data['academic_papers']['Temas']; ?>" != "") {
-				$("#<?php echo "temas-".$this->data['academic_papers']['Temas']; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 15px;');
+			if ("<?php echo $this->data['academicPapers']['PalabrasClave']; ?>" != "") {
+				$("#<?php echo "palabras-clave-".$this->data['academicPapers']['PalabrasClave']; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 15px;');
 			} else {
-				$("#<?php echo "temas-todos"; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 66px;');
+				$("#<?php echo "palabras-clave-todos"; ?>").attr('style', 'background-color: #e8ded4; border: solid 1px #6c3f30; color: #6c3f30; width: 66px;');
 			}
 		</script>
+		
 		<br />
 		<?php //echo $this->Form->submit('Buscar', array('class' => 'btn btn-primary', 'div' => false)); ?>
 		<?php echo $this->Form->end(); ?>
