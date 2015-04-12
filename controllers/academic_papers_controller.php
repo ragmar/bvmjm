@@ -628,16 +628,16 @@ class AcademicPapersController extends AppController {
 			$this->set(compact('titles', false));
 		}
 		
-		// ------------------------- Sub-Campo 260a ------------------------- //
+	// ------------------------- Sub-Campo 260a ------------------------- //
 		
 		$places = $this->Item->find('list', array('fields' => array('260')));
 		
 		if ($places) {
-			$list = "";
+			$list = array();
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($places as $a => $v){
 				$v = $this->marc21_decode($v);
-				$list[$a] = $v['a'];
+				if (isset($v['a'])) {$list[$a] = $v['a'];}
 			}
 	
 			$list = array_unique($list); // Elimina repetidos.
@@ -646,7 +646,11 @@ class AcademicPapersController extends AppController {
 			// Recorre para darle el formato deseado.
 			$l = "";
 			foreach ($list as $a => $v){
-				$l = $l . "{ value: '" . $v . "', data: '" . $v . "' }, ";
+				if ($l == "") {
+					$l = '{ value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				} else {
+					$l = $l . ', { value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				}
 			}
 			
 			$places = "[" . $l . "]";
@@ -660,11 +664,11 @@ class AcademicPapersController extends AppController {
 		$editors = $this->Item->find('list', array('fields' => array('260')));
 		
 		if ($editors) {
-			$list = "";
+			$list = array();
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($editors as $a => $v){
 				$v = $this->marc21_decode($v);
-				$list[$a] = $v['b'];
+				if (isset($v['b'])) {$list[$a] = $v['b'];}
 			}
 			
 			$list = array_unique($list); // Elimina repetidos.
@@ -673,7 +677,11 @@ class AcademicPapersController extends AppController {
 			// Recorre para darle el formato deseado.
 			$l = "";
 			foreach ($list as $a => $v){
-				$l = $l . "{ value: '" . $v . "', data: '" . $v . "' }, ";
+				if ($l == "") {
+					$l = '{ value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				} else {
+					$l = $l . ', { value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				}
 			}
 			
 			$editors = "[" . $l . "]";
@@ -687,11 +695,11 @@ class AcademicPapersController extends AppController {
 		$years = $this->Item->find('list', array('fields' => array('260')));
 		
 		if ($years) {
-			$list = "";
+			$list = array();
 			// Recorre para extraer el contenido del subcampo deseado.
 			foreach ($years as $a => $v){
 				$v = $this->marc21_decode($v);
-				$list[$a] = $v['c'];
+				if (isset($v['c'])) {$list[$a] = $v['c'];}
 			}
 			
 			$list = array_unique($list); // Elimina repetidos.
@@ -700,7 +708,11 @@ class AcademicPapersController extends AppController {
 			// Recorre para darle el formato deseado.
 			$l = "";
 			foreach ($list as $a => $v){
-				$l = $l . "{ value: '" . $v . "', data: '" . $v . "' }, ";
+				if ($l == "") {
+					$l = '{ value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				} else {
+					$l = $l . ', { value: "' . htmlspecialchars($v) . '", data: "' . htmlspecialchars($v) . '" }';
+				}
 			}
 			
 			$years = "[" . $l . "]";

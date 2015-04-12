@@ -2,7 +2,49 @@
 <html lang="es">
 <head>
   <?php echo $this->Html->charset(); ?>
-  <title>Biblioteca Virtual Musicológica Juan Meserón</title>
+  
+  <?php
+  	$actions['default'] = "";
+  	$actions['add'] = "Agregar";
+  	$actions['edit'] = "Modificar";
+  	$actions['view'] = "Ver";
+  	$actions['delete'] = "Eliminar";
+  	$actions['index'] = "Listar";
+  	$actions['display'] = "Inicio";
+  	$actions['marc21'] = "MARC21";
+  	$actions['login'] = "Ingreso";
+  	$actions['register'] = "Registro";
+  	$actions['reset'] = "Contraseña";
+  	$actions['links'] = "Listar";
+  	$actions['faqs'] = "Preguntas Frecuentes";
+  	$actions['search'] = "Buscar";
+  	$actions['advanced_search'] = "Búsqueda Avanzada";
+  	
+  	$controllers['pages'] = "";
+  	$controllers['items'] = "Obras";
+  	$controllers['users'] = "Usuarios";
+  	$controllers['user_items'] = "Mi Biblioteca";
+  	$controllers['academic_papers'] = "Trabajos Académicos";
+  	$controllers['books'] = "Libros";
+  	$controllers['printeds'] = "Música Impresa";
+  	$controllers['manuscripts'] = "Música Manuscrita";
+  	$controllers['magazines'] = "Hemerografías";
+  	$controllers['links'] = "Enlaces";
+  	$controllers['faqs'] = "Preguntas Frecuentes";
+  	$controllers['configurations'] = "Configuración";
+  	
+  ?>
+  
+  <title>BVMJM 
+  		<?php
+  			if (isset($actions[$this->Html->params['action']])) {
+  				echo $actions[$this->Html->params['action']] . ' ' . $controllers[$this->Html->params['controller']];
+  			} else {
+				echo $this->Html->params['action'] . ' ' . $this->Html->params['controller'];
+  			}
+  		?>
+  </title>
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
@@ -26,7 +68,7 @@
   <!--<link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/apple-touch-icon-72-precomposed.png"> -->
   <!--<link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png"> -->
   
-	<link rel="shortcut icon" href="img/nuevo/favicon.ico">
+	<link rel="shortcut icon" href="<?php echo $this->base;?>/img/nuevo/favicon.ico">
   
 	<?php echo $this->Html->script('nuevo/jquery.min'); ?>
 	<?php echo $this->Html->script('nuevo/bootstrap.min'); ?>
@@ -72,16 +114,16 @@
 									<?php echo $this->Html->link('Hemerografías', '/magazines'); ?>
 								</li>
 								<li>
-									<?php echo $this->Html->link('Música Manuscrita', '/'); ?>
+									<?php echo $this->Html->link('Música Manuscrita', '/manuscripts'); ?>
 								</li>
 								<li>
-									<?php echo $this->Html->link('Música Impresa', '/'); ?>
+									<?php echo $this->Html->link('Música Impresa', '/printeds'); ?>
 								</li>
 								<li>
-									<?php echo $this->Html->link('Iconografías', '/'); ?>
+									<?php echo $this->Html->link('Iconografías', '/iconogrphies'); ?>
 								</li>
 								<li>
-									<?php echo $this->Html->link('Documentos', '/'); ?>
+									<?php echo $this->Html->link('Documentos', '/documents'); ?>
 								</li>
 								<li>
 									<?php echo $this->Html->link('Trabajos Académicos', '/academic_papers'); ?>
@@ -90,7 +132,7 @@
 						</li>
 					</ul>
 					
-					<?php echo $this->Form->create('Item', array('action' => 'search', 'class' => 'navbar-form navbar-left')); ?>
+					<?php echo $this->Form->create('Item', array('action' => 'search', 'class' => 'navbar-form', 'style' => 'width: 45%; float: left')); ?>
 						<div class="input-group">
 							<input id="search" type="text" class="form-control" name="data[Item][search]" title="Realice la búsqueda de obras en la biblioteca por Título, Autor, Publicación o Materia.">
 							<div class="input-group-btn">
@@ -103,10 +145,10 @@
 								<ul class="dropdown-menu dropdown-menu-right" role="menu">
 								  <li><a href="<?php echo $this->base; ?>/books/advanced_search">Libros</a></li>
 								  <li><a href="<?php echo $this->base; ?>/magazines/advanced_search">Hemerografías</a></li>
-								  <li><a href="#">Música Manuscrita</a></li>
-								  <li><a href="#">Música Impresa</a></li>
-								  <li><a href="#">Iconógrafías</a></li>
-								  <li><a href="#">Documentos</a></li>
+								  <li><a href="<?php echo $this->base; ?>/manuscripts/advanced_search">Música Manuscrita</a></li>
+								  <li><a href="<?php echo $this->base; ?>/printeds/advanced_search">Música Impresa</a></li>
+								  <li><a href="<?php echo $this->base; ?>/iconographies/advanced_search">Iconógrafías</a></li>
+								  <li><a href="<?php echo $this->base; ?>/documents/advanced_search">Documentos</a></li>
 								  <li><a href="<?php echo $this->base; ?>/academic_papers/advanced_search">Trabajos Académicos</a></li>
 								</ul>
 							</div>
@@ -151,55 +193,6 @@
 				<?php echo $this->Html->image('nuevo/logo_meseron.jpg', array('style' => 'width: 30%; height: 160px; float: left;')); ?>
 				<?php echo $this->Html->image('nuevo/imagen_up.jpg', array('style' => 'width: 70%; height: 160px; float: left;')); ?>
 			</div>
-			
-			<!--
-			<div class="carousel slide" id="carousel-850204">
-				<ol class="carousel-indicators">
-					<li class="active" data-slide-to="0" data-target="#carousel-850204">
-					</li>
-					<li data-slide-to="1" data-target="#carousel-850204">
-					</li>
-					<li data-slide-to="2" data-target="#carousel-850204">
-					</li>
-				</ol>
-				<div class="carousel-inner">
-					<div class="item active">
-						<img alt="" src="/">
-						<div class="carousel-caption">
-							<h4>
-								First Thumbnail label
-							</h4>
-							<p>
-								Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-							</p>
-						</div>
-					</div>
-					<div class="item">
-						<img alt="" src="/">
-						<div class="carousel-caption">
-							<h4>
-								Second Thumbnail label
-							</h4>
-							<p>
-								Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-							</p>
-						</div>
-					</div>
-					<div class="item">
-						<img alt="" src="/">
-						<div class="carousel-caption">
-							<h4>
-								Third Thumbnail label
-							</h4>
-							<p>
-								Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-							</p>
-						</div>
-					</div>
-				</div> <a class="left carousel-control" href="#carousel-850204" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-850204" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-			</div>
-			-->
-			
 		</div>
 	</div>
 	
@@ -250,5 +243,6 @@ $(document).ready(function () {
 	$('.pagination').children().addClass('pagination');
 });
 </script>
+<?php echo $this->element('sql_dump'); ?>
 </body>
 </html>
